@@ -1,0 +1,1052 @@
+/* ========================================================
+   K. SRIYUTH - FUSED PORTFOLIO EXPERIENCE ENGINE
+   Aesthetic: Neo-Brutalist Pastel & Cybernetic Fusion
+   Features: GSAP Motion, Web Audio FX, AI Automation Simulator,
+             Command Palette, 3D/Video Stage, Deep-Dive Modals
+   ======================================================== */
+
+gsap.registerPlugin(ScrollTrigger);
+
+document.addEventListener("DOMContentLoaded", () => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+    const motionEnabled = !prefersReducedMotion;
+
+    /* ========================================================
+       1. SYNTHESIZED WEB AUDIO FX (Subtle & Tactile)
+       ======================================================== */
+    class SoundEngine {
+        constructor() {
+            this.ctx = null;
+            this.enabled = localStorage.getItem("sriyuth_sound") === "true";
+            this.initToggle();
+        }
+
+        initContext() {
+            if (!this.ctx) {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtx) this.ctx = new AudioCtx();
+            }
+            if (this.ctx && this.ctx.state === "suspended") {
+                this.ctx.resume();
+            }
+        }
+
+        playClick() {
+            if (!this.enabled) return;
+            try {
+                this.initContext();
+                if (!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(800, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(320, this.ctx.currentTime + 0.04);
+                gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.04);
+            } catch(e) {}
+        }
+
+        playBlip() {
+            if (!this.enabled) return;
+            try {
+                this.initContext();
+                if (!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = "triangle";
+                osc.frequency.setValueAtTime(540, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(720, this.ctx.currentTime + 0.03);
+                gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.03);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.03);
+            } catch(e) {}
+        }
+
+        playSuccess() {
+            if (!this.enabled) return;
+            try {
+                this.initContext();
+                if (!this.ctx) return;
+                const notes = [440, 554.37, 659.25, 880];
+                notes.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = "sine";
+                    const startTime = this.ctx.currentTime + (idx * 0.06);
+                    osc.frequency.setValueAtTime(freq, startTime);
+                    gain.gain.setValueAtTime(0.06, startTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.12);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(startTime);
+                    osc.stop(startTime + 0.12);
+                });
+            } catch(e) {}
+        }
+
+        initToggle() {
+            const soundBtn = document.getElementById("soundToggle");
+            const soundIcon = document.getElementById("soundIcon");
+            const soundStatus = document.getElementById("soundStatus");
+
+            const updateUI = () => {
+                if (soundIcon) soundIcon.className = this.enabled ? "ph-bold ph-speaker-high text-xl" : "ph-bold ph-speaker-slash text-xl opacity-60";
+                if (soundStatus) soundStatus.innerText = this.enabled ? "SFX ON" : "SFX OFF";
+                if (soundBtn) {
+                    soundBtn.classList.toggle("bg-a1", this.enabled);
+                    soundBtn.setAttribute("aria-label", this.enabled ? "Sound effects enabled" : "Sound effects muted");
+                }
+            };
+
+            updateUI();
+
+            if (soundBtn) {
+                soundBtn.addEventListener("click", () => {
+                    this.enabled = !this.enabled;
+                    localStorage.setItem("sriyuth_sound", String(this.enabled));
+                    updateUI();
+                    if (this.enabled) this.playSuccess();
+                });
+            }
+        }
+    }
+
+    const sound = new SoundEngine();
+
+    // Attach sound triggers
+    document.querySelectorAll(".brutal-btn, .icon-btn, .cmd-item, .filter-tab, .sim-tab").forEach(el => {
+        el.addEventListener("mouseenter", () => sound.playBlip());
+        el.addEventListener("click", () => sound.playClick());
+    });
+
+
+    /* ========================================================
+       2. FLUID DUAL-LAYER CUSTOM CURSOR
+       ======================================================== */
+    class CustomCursor {
+        constructor() {
+            this.el = document.getElementById("cursor");
+            if (!this.el || !hasFinePointer || prefersReducedMotion) {
+                document.body.classList.add("no-custom-cursor");
+                if (this.el) this.el.style.display = "none";
+                return;
+            }
+
+            this.dot = this.el.querySelector(".custom-cursor__dot");
+            this.ring = this.el.querySelector(".custom-cursor__ring");
+
+            this.x = window.innerWidth / 2;
+            this.y = window.innerHeight / 2;
+            this.targetX = this.x;
+            this.targetY = this.y;
+            this.visible = false;
+            this.lerp = 0.24;
+
+            this.INTERACTIVE = "a, button, input, textarea, select, [role='button'], .hover-target, .cmd-item, .project-card, .filter-tab, .sim-tab";
+
+            this.bindEvents();
+            this.tick();
+        }
+
+        bindEvents() {
+            document.addEventListener("mousemove", (e) => {
+                this.targetX = e.clientX;
+                this.targetY = e.clientY;
+                if (!this.visible) {
+                    this.x = this.targetX;
+                    this.y = this.targetY;
+                    this.visible = true;
+                    this.el.classList.add("is-visible");
+                }
+            }, { passive: true });
+
+            document.addEventListener("mousedown", () => this.el.classList.add("is-clicking"));
+            document.addEventListener("mouseup", () => this.el.classList.remove("is-clicking"));
+
+            document.addEventListener("mouseover", (e) => {
+                if (e.target.closest(this.INTERACTIVE)) {
+                    this.el.classList.add("is-hover");
+                }
+            });
+
+            document.addEventListener("mouseout", (e) => {
+                if (e.target.closest(this.INTERACTIVE)) {
+                    const to = e.relatedTarget;
+                    if (!to || !to.closest || !to.closest(this.INTERACTIVE)) {
+                        this.el.classList.remove("is-hover");
+                    }
+                }
+            });
+
+            document.addEventListener("mouseleave", () => this.el.classList.remove("is-visible"));
+            document.addEventListener("mouseenter", () => {
+                if (this.visible) this.el.classList.add("is-visible");
+            });
+        }
+
+        tick() {
+            this.x += (this.targetX - this.x) * this.lerp;
+            this.y += (this.targetY - this.y) * this.lerp;
+            this.el.style.transform = `translate3d(${this.x}px, ${this.y}px, 0)`;
+            requestAnimationFrame(this.tick.bind(this));
+        }
+    }
+
+    new CustomCursor();
+
+
+    /* ========================================================
+       3. THEME TOGGLE (Persistent Light/Dark Mode)
+       ======================================================== */
+    const themeToggle = document.getElementById("themeToggle");
+    const html = document.documentElement;
+
+    const savedTheme = localStorage.getItem("sriyuth_theme");
+    if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        html.classList.add("dark");
+    } else {
+        html.classList.remove("dark");
+    }
+
+    function toggleTheme() {
+        sound.playClick();
+        html.classList.toggle("dark");
+        const isDark = html.classList.contains("dark");
+        localStorage.setItem("sriyuth_theme", isDark ? "dark" : "light");
+
+        // Update GitHub stats theme dynamically
+        const gitStats = document.getElementById("githubStatsImg");
+        const gitLangs = document.getElementById("githubLangsImg");
+        const themeParam = isDark ? "dark" : "default";
+        if (gitStats) {
+            gitStats.src = `https://github-readme-stats-eight-theta.vercel.app/api?username=lucky4-git1&show_icons=true&theme=${themeParam}&bg_color=00000000&hide_border=true`;
+        }
+        if (gitLangs) {
+            gitLangs.src = `https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=lucky4-git1&layout=compact&theme=${themeParam}&bg_color=00000000&hide_border=true`;
+        }
+    }
+
+    if (themeToggle) themeToggle.addEventListener("click", toggleTheme);
+
+
+    /* ========================================================
+       4. COMMAND PALETTE (CTRL + K / Launcher)
+       ======================================================== */
+    const cmdPalette = document.getElementById("cmdPalette");
+    const cmdInput = document.getElementById("cmdInput");
+    const cmdItems = document.querySelectorAll(".cmd-item");
+    const cmdTrigger = document.getElementById("cmdTrigger");
+
+    function openCmdPalette() {
+        sound.playClick();
+        cmdPalette.classList.add("active");
+        cmdPalette.setAttribute("aria-hidden", "false");
+        setTimeout(() => {
+            if (cmdInput) {
+                cmdInput.value = "";
+                cmdInput.focus();
+                filterCmdItems("");
+            }
+        }, 50);
+    }
+
+    function closeCmdPalette() {
+        cmdPalette.classList.remove("active");
+        cmdPalette.setAttribute("aria-hidden", "true");
+    }
+
+    function filterCmdItems(query) {
+        const q = query.toLowerCase().trim();
+        cmdItems.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            item.style.display = text.includes(q) ? "flex" : "none";
+        });
+    }
+
+    if (cmdTrigger) cmdTrigger.addEventListener("click", openCmdPalette);
+
+    document.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+            e.preventDefault();
+            if (cmdPalette.classList.contains("active")) {
+                closeCmdPalette();
+            } else {
+                openCmdPalette();
+            }
+        }
+        if (e.key === "Escape" && cmdPalette.classList.contains("active")) {
+            closeCmdPalette();
+        }
+    });
+
+    cmdPalette.addEventListener("click", (e) => {
+        if (e.target === cmdPalette) closeCmdPalette();
+    });
+
+    if (cmdInput) {
+        cmdInput.addEventListener("input", (e) => filterCmdItems(e.target.value));
+    }
+
+    cmdItems.forEach(item => {
+        item.addEventListener("click", () => {
+            const action = item.getAttribute("data-action");
+            const target = item.getAttribute("data-target");
+
+            closeCmdPalette();
+
+            if (action === "theme") {
+                toggleTheme();
+            } else if (action === "sound") {
+                const soundBtn = document.getElementById("soundToggle");
+                if (soundBtn) soundBtn.click();
+            } else if (action === "scroll" && target) {
+                const el = document.querySelector(target);
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            } else if (action === "resume") {
+                window.open("K_Sriyuth_Resume.pdf", "_blank");
+            } else if (action === "simulator") {
+                const el = document.querySelector("#automations");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                startSimulatedWorkflow("simpleide");
+            }
+        });
+    });
+
+
+    /* ========================================================
+       5. HERO STAGE TOGGLE (Spline 3D Robot vs Ambient Video)
+       ======================================================== */
+    const stageVideoBtn = document.getElementById("stageVideoBtn");
+    const stage3DBtn = document.getElementById("stage3DBtn");
+    const heroVideoWrapper = document.getElementById("heroVideoWrapper");
+    const heroSplineWrapper = document.getElementById("heroSplineWrapper");
+
+    if (stageVideoBtn && stage3DBtn && heroVideoWrapper && heroSplineWrapper) {
+        stageVideoBtn.addEventListener("click", () => {
+            sound.playClick();
+            stageVideoBtn.classList.add("bg-a1", "text-black");
+            stageVideoBtn.classList.remove("bg-card", "text-text");
+            stage3DBtn.classList.remove("bg-a1", "text-black");
+            stage3DBtn.classList.add("bg-card", "text-text");
+
+            heroVideoWrapper.style.display = "block";
+            heroSplineWrapper.style.display = "none";
+        });
+
+        stage3DBtn.addEventListener("click", () => {
+            sound.playClick();
+            stage3DBtn.classList.add("bg-a1", "text-black");
+            stage3DBtn.classList.remove("bg-card", "text-text");
+            stageVideoBtn.classList.remove("bg-a1", "text-black");
+            stageVideoBtn.classList.add("bg-card", "text-text");
+
+            heroVideoWrapper.style.display = "none";
+            heroSplineWrapper.style.display = "block";
+        });
+    }
+
+
+    /* ========================================================
+       6. INTERACTIVE AI AUTOMATION TERMINAL SIMULATOR
+       ======================================================== */
+    const automationWorkflows = {
+        simpleide: {
+            title: "SimpleIDE - AI Agent Desktop Workflow",
+            desc: "Electron & Vite environment dispatching local AI reasoning to parse code, run AST diffs, and generate unit tests.",
+            steps: [
+                { delay: 300, text: "[INIT] Starting SimpleIDE Agent Core v2.4 (Electron IPC Bridge)..." },
+                { delay: 700, text: "[AST_SCAN] Parsing workspace AST: 32 files mapped. Resolving dependencies..." },
+                { delay: 1200, text: "[AGENT] Context window loaded: React 18, Vite, Tailwind CSS config." },
+                { delay: 1800, text: "[AI_REASONING] Generating intelligent refactor proposal for state synchronization..." },
+                { delay: 2400, text: "[DIFF_CHECK] 14 lines added, 3 redundant re-renders pruned. Linting PASSED." },
+                { delay: 3000, text: "[SUCCESS] Workspace updated cleanly. Latency: 420ms. Ready for user preview." }
+            ]
+        },
+        whatsapp: {
+            title: "WhatsApp AI Autonomous Bot Pipeline",
+            desc: "Webhook listener receiving inbound customer messages, running LLM intent classification, and routing responses.",
+            steps: [
+                { delay: 300, text: "[WEBHOOK_IN] POST /api/whatsapp/webhook received from client +91-XXXXXXXXXX" },
+                { delay: 800, text: "[INTENT_CLASSIFIER] Message: 'Need pricing and integration timeline for inventory portal.'" },
+                { delay: 1400, text: "[NLP_ENGINE] Detected intent: LEAD_INQUIRY_HIGH_PRIORITY (Confidence: 98.4%)" },
+                { delay: 2100, text: "[AGENT_ACTION] Synthesizing context-aware personalized quote & booking link..." },
+                { delay: 2700, text: "[CRM_SYNC] Created lead record #8491 in database with tag: 'Commercial Quote'" },
+                { delay: 3200, text: "[DISPATCH] WhatsApp Cloud API message transmitted successfully (HTTP 200 OK)." }
+            ]
+        },
+        ema: {
+            title: "EMA - Email Marketing Automation Engine",
+            desc: "TypeScript automation pipeline executing cold outreach segmentation, dynamic content injection, and webhook scheduling.",
+            steps: [
+                { delay: 300, text: "[CRON_TRIGGER] Executing batch cycle 'Q4 Developer Outreach Pipeline'..." },
+                { delay: 800, text: "[SEGMENTATION] Filtered 4,200 leads down to 350 active tech founders." },
+                { delay: 1500, text: "[DYNAMIC_GEN] Injecting custom GitHub portfolio references into template body..." },
+                { delay: 2200, text: "[DKIM_SPF] Validating DNS deliverability scores... Sender score: 99.8/100." },
+                { delay: 2800, text: "[QUEUE_DISPATCH] 350 personalized emails queued across 10 rolling worker threads." },
+                { delay: 3300, text: "[METRIC] Predicted open rate: 46.2%. Webhook tracking listeners live." }
+            ]
+        },
+        rewritebot: {
+            title: "RewriteBot - AI Semantic Rewrite Engine",
+            desc: "Next.js & Vercel deployment optimizing drafts into crisp, brutalist, high-converting copy.",
+            steps: [
+                { delay: 300, text: "[INGEST] Ingesting source draft: 480 words, Flesch Reading Ease: 42." },
+                { delay: 800, text: "[SEMANTIC_MAP] Detecting passive voice and redundant corporate filler..." },
+                { delay: 1500, text: "[AI_PASS] Transforming into punchy, active, developer-first communication." },
+                { delay: 2300, text: "[DIFF] Word count reduced: 480 -> 210. Readability score improved: +38%." },
+                { delay: 3000, text: "[EXPORT] Deployed to https://rewritebot-client.vercel.app with instant copy." }
+            ]
+        }
+    };
+
+    let activeSimTimeout = null;
+
+    function startSimulatedWorkflow(key) {
+        const wf = automationWorkflows[key] || automationWorkflows.simpleide;
+        const terminalOutput = document.getElementById("terminalOutput");
+        const simMetaTitle = document.getElementById("simMetaTitle");
+        const simMetaDesc = document.getElementById("simMetaDesc");
+
+        if (simMetaTitle) simMetaTitle.innerText = wf.title;
+        if (simMetaDesc) simMetaDesc.innerText = wf.desc;
+
+        // Clear existing running scripts
+        if (activeSimTimeout) {
+            clearTimeout(activeSimTimeout);
+            activeSimTimeout = null;
+        }
+
+        if (terminalOutput) {
+            terminalOutput.innerHTML = `
+                <div class="terminal-log-line text-slate-400 font-mono text-xs">
+                    [${new Date().toLocaleTimeString()}] INITIATING: ${wf.title}
+                </div>
+            `;
+
+            wf.steps.forEach((step, idx) => {
+                setTimeout(() => {
+                    const isLast = idx === wf.steps.length - 1;
+                    const colorClass = isLast ? "text-a4 font-bold" : "text-slate-200";
+                    const line = document.createElement("div");
+                    line.className = `terminal-log-line ${colorClass}`;
+                    line.innerHTML = `<span class="opacity-40">[${new Date().toLocaleTimeString()}]</span> ${step.text}`;
+                    terminalOutput.appendChild(line);
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    sound.playBlip();
+
+                    if (isLast) sound.playSuccess();
+                }, step.delay);
+            });
+        }
+    }
+
+    // Bind tab clicks in simulator
+    document.querySelectorAll(".sim-tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+            document.querySelectorAll(".sim-tab").forEach(t => {
+                t.classList.remove("bg-a1", "text-black");
+                t.classList.add("bg-card", "text-text");
+            });
+            tab.classList.add("bg-a1", "text-black");
+            tab.classList.remove("bg-card", "text-text");
+
+            const workflowKey = tab.getAttribute("data-workflow");
+            startSimulatedWorkflow(workflowKey);
+        });
+    });
+
+    const runSimBtn = document.getElementById("runSimBtn");
+    if (runSimBtn) {
+        runSimBtn.addEventListener("click", () => {
+            sound.playClick();
+            const activeTab = document.querySelector(".sim-tab.bg-a1");
+            const key = activeTab ? activeTab.getAttribute("data-workflow") : "simpleide";
+            startSimulatedWorkflow(key);
+        });
+    }
+
+
+    /* ========================================================
+       7. PROJECT DATA & DEEP-DIVE MODAL GALLERY
+       ======================================================== */
+    const projectsData = {
+        hyperpure: {
+            title: "Hyperpure UI/UX Clone",
+            category: "clone",
+            badge: "UI/UX Clone",
+            images: [
+                "images/hyperpure1.png",
+                "images/hyperpurecheckout.png",
+                "images/hyperpureorderplaced.png"
+            ],
+            desc: "A complete UI recreation of the Hyperpure platform built using HTML, CSS, JavaScript and Bootstrap. The project includes responsive layouts, product sections, cart UI and checkout page design. It focuses on modern UI patterns and realistic e-commerce interface behavior.",
+            tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
+            liveUrl: "https://lucky4-git1.github.io/Hyperpure/",
+            gitUrl: "https://github.com/lucky4-git1/Hyperpure",
+            highlights: [
+                "Complete UI recreation of Hyperpure website with product catalog and checkout flow",
+                "Dynamic cart functionality with live quantity adjustments and price calculations",
+                "Fully responsive design and realistic e-commerce interface behavior"
+            ]
+        },
+        mutube: {
+            title: "MuTube personal media player",
+            category: "app",
+            badge: "JavaScript App",
+            images: [
+                "images/mutube.png",
+                "images/mutubemodal.jpg",
+                "images/mutubevid.jpeg",
+                "images/mutubeplaylist.jpeg",
+                "images/mutubeupload.jpeg"
+            ],
+            desc: "A personal media player web app called MuTube built with HTML, CSS and JavaScript. It features a modern UI design with a dark theme, a responsive layout that works on all devices, and interactive controls for playing audio and video files. Users can create playlists, shuffle songs, and view media information. The app focuses on providing a sleek and user-friendly experience for managing and enjoying personal media collections, with persistent data storage using IndexedDB to save user playlists and preferences.",
+            tech: ["HTML", "CSS", "JavaScript", "Bootstrap", "IndexedDB"],
+            liveUrl: "https://lucky4-git1.github.io/MuTube-media-player-v1.0/",
+            gitUrl: "https://github.com/lucky4-git1/MuTube-media-player-v1.0.git",
+            highlights: [
+                "Offline MP3 & MP4 media player with custom player controls and equalizer themes",
+                "Persistent client-side data storage using IndexedDB for playlists and user preferences",
+                "Interactive playlist creation, drag-and-drop, track shuffle, and dark theme UI"
+            ]
+        },
+        atherone: {
+            title: "Atherone 3D scrollytelling web-app made with spline",
+            category: "app",
+            badge: "Experiments & 3D",
+            images: [
+                "images/atherone1.jpeg",
+                "images/atherone2.jpeg",
+                "images/atherone3.jpeg"
+            ],
+            desc: "Web product design and development project. A 3D scrollytelling web-app made with Spline, showcasing a fictional space exploration company called Atherone. The app features interactive 3D models, smooth scrolling animations, and a modern design aesthetic. It serves as a portfolio piece demonstrating skills in 3D web development, user experience design, and creative storytelling through web technologies.",
+            tech: ["HTML", "React", "GSAP", "Spline", "TypeScript", "Tailwind CSS"],
+            liveUrl: "https://atherone-scrolly-app.netlify.app/",
+            gitUrl: "https://github.com/lucky4-git1/atherone.git",
+            highlights: [
+                "Interactive 3D models integrated into React using Spline 3D viewport canvas",
+                "Smooth cinematic scrolling animations tied to GSAP ScrollTrigger",
+                "Deployed live on Netlify showcasing creative storytelling and modern aesthetics"
+            ]
+        },
+        district: {
+            title: "District UI/UX Clone",
+            category: "clone",
+            badge: "UI/UX Clone",
+            images: [
+                "images/district (1).png",
+                "images/district (2).png",
+                "images/district3.jpeg",
+                "images/district4.jpeg"
+            ],
+            desc: "UI/UX recreation of District home page UI clone using pure HTML, CSS and JavaScript. Fully responsive and interactive clone with modern design and animations.",
+            tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
+            liveUrl: "https://lucky4-git1.github.io/District-UI-clone/",
+            gitUrl: "https://github.com/lucky4-git1/District-UI-clone.git",
+            highlights: [
+                "Recreation of District lifestyle and event platform with micro-interactions",
+                "Fully responsive layout and navigation across mobile and desktop devices",
+                "Pure front-end engineering with clean modern aesthetics"
+            ]
+        },
+        youtube: {
+            title: "YouTube UI/UX Clone",
+            category: "clone",
+            badge: "UI/UX Clone",
+            images: [
+                "images/yt1 (2).png",
+                "images/yt1 (1).png"
+            ],
+            desc: "UI/UX recreation of YouTube home page UI clone using pure HTML, CSS and JavaScript. Fully responsive and interactive clone with modern design and animations. Features a collapsible sidebar, dynamic video browsing page with video player, and comments section.",
+            tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
+            liveUrl: "https://lucky4-git1.github.io/Youtube-UI-clone-/",
+            gitUrl: "https://github.com/lucky4-git1/Youtube-UI-clone-.git",
+            highlights: [
+                "Fully responsive YouTube video browsing layout with sticky glass navbar",
+                "Collapsible dual-state sidebar and dynamic video viewing interface",
+                "Hover video previews and search suggestion interactions"
+            ]
+        },
+        blinkit: {
+            title: "Blinkit Clone",
+            category: "clone",
+            badge: "UI/UX Clone",
+            images: [
+                "images/blinkit1.jpeg",
+                "images/blinkit3.jpeg",
+                "images/blinkit2.jpeg"
+            ],
+            desc: "UI recreation of Blinkit website using Bootstrap. Focus on responsive design and modern aesthetics. Fully optimized, easy to understand quick-commerce interface clone.",
+            tech: ["HTML", "CSS", "Bootstrap", "JavaScript"],
+            liveUrl: "https://lucky4-git1.github.io/Blinkit-UI-clone/",
+            gitUrl: "https://github.com/lucky4-git1/Blinkit-UI-clone.git",
+            highlights: [
+                "Optimized responsive layout recreating Blinkit quick-commerce homepage",
+                "Category carousels and quick-add product card interactions",
+                "Fast loading and mobile-first responsive architecture"
+            ]
+        },
+        tspsc: {
+            title: "TSPSC Clone",
+            category: "clone",
+            badge: "UI/UX Clone",
+            images: [
+                "images/tspschome.jpeg",
+                "images/tspsc landing pg.jpeg"
+            ],
+            desc: "This is a UI clone of the TSPSC website made by me as a front-end project. It is coded in HTML, CSS, and Bootstrap. Focus on responsive design and modern portal aesthetics.",
+            tech: ["HTML", "CSS", "Bootstrap"],
+            liveUrl: "https://lucky4-git1.github.io/Tspsc-UI-clone-/",
+            gitUrl: "https://github.com/lucky4-git1/Tspsc-UI-clone-.git",
+            highlights: [
+                "Government public service commission portal layout recreation",
+                "Responsive navigation, announcements feed, and candidate portal UI",
+                "Built with semantic HTML, CSS, and Bootstrap components"
+            ]
+        },
+        amazon: {
+            title: "Amazon UI Clone",
+            category: "clone",
+            badge: "UI/UX Clone",
+            images: [
+                "images/amazon2.jpeg",
+                "images/Screenshot_6-2-2026_222837_lucky4-git1.github.io.jpeg"
+            ],
+            desc: "UI recreation of Amazon website UI clone using pure HTML and CSS. Featuring multi-tier mega header, delivery selector, category banners, and responsive product grids.",
+            tech: ["HTML", "CSS"],
+            liveUrl: "https://lucky4-git1.github.io/amazon-ui-clone/",
+            gitUrl: "https://github.com/lucky4-git1/amazon-ui-clone.git",
+            highlights: [
+                "Pure HTML & CSS recreation of Amazon e-commerce layout without frameworks",
+                "Complex header navigation, multi-column mega menu, and product grids",
+                "Accurate responsive breakpoints and layout precision"
+            ]
+        },
+        cricket: {
+            title: "TOP INDIAN CRICKETERS",
+            category: "app",
+            badge: "Experiments",
+            images: [
+                "images/cricket.jpeg",
+                "images/cricketcv.jpeg"
+            ],
+            desc: "A modern cards list of famous Indian Cricketers with changing gradient background and live Wikipedia page link, and an about me section.",
+            tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
+            liveUrl: "https://lucky4-git1.github.io/my-top-Indian-Cricketers-list/",
+            gitUrl: "https://github.com/lucky4-git1/my-top-Indian-Cricketers-list",
+            highlights: [
+                "Interactive athlete cards with dynamic animated gradient backgrounds",
+                "Live Wikipedia article links and profile information",
+                "Responsive card grid built with Bootstrap and JavaScript"
+            ]
+        },
+        simpleide: {
+            title: "SimpleIDE",
+            category: "ai",
+            badge: "AI Desktop Tool",
+            images: [],
+            desc: "SimpleIDE is an open-source AI-powered desktop IDE built with Electron, React, and Vite. It features an integrated AI agent, lightweight modern UI, and developer-focused workflows for rapid prototyping and productivity.",
+            tech: ["Electron", "React", "Vite", "JavaScript", "AI Agent"],
+            liveUrl: "https://github.com/lucky4-git1/SimpleIDE",
+            gitUrl: "https://github.com/lucky4-git1/SimpleIDE",
+            highlights: [
+                "Open-source AI-powered desktop code editor built on Electron & React",
+                "Integrated autonomous coding agent for rapid local developer productivity",
+                "Lightweight UI and modular developer workflow architecture"
+            ]
+        },
+        rewritebot: {
+            title: "RewriteBot",
+            category: "ai",
+            badge: "AI Web App (Vercel)",
+            images: [],
+            desc: "AI-powered writing and copy refactor tool deployed live on Vercel at rewritebot-client.vercel.app. Transforms text into clear, punchy, professional output.",
+            tech: ["TypeScript", "React", "Next.js", "Vercel", "AI"],
+            liveUrl: "https://rewritebot-client.vercel.app",
+            gitUrl: "https://github.com/lucky4-git1/rewritebot",
+            highlights: [
+                "Deployed live in production on Vercel at rewritebot-client.vercel.app",
+                "Instant AI text refactoring with tone adjustments and copy optimization",
+                "Clean responsive interface built with TypeScript and Next.js"
+            ]
+        },
+        gitdrop: {
+            title: "Gitdrop",
+            category: "ai",
+            badge: "Web App (Vercel)",
+            images: [],
+            desc: "Web application built with TypeScript and deployed live on Vercel at gitdrop-three.vercel.app.",
+            tech: ["TypeScript", "Next.js", "Vercel"],
+            liveUrl: "https://gitdrop-three.vercel.app",
+            gitUrl: "https://github.com/lucky4-git1/Gitdrop",
+            highlights: [
+                "Deployed live on Vercel at gitdrop-three.vercel.app",
+                "Modern TypeScript web architecture with fast load times"
+            ]
+        },
+        whatsappai: {
+            title: "WhatsApp AI Automation",
+            category: "ai",
+            badge: "AI Automation",
+            images: [],
+            desc: "Automated WhatsApp workflow with AI integration for customer conversation and message handling. Built with TypeScript and Node.js.",
+            tech: ["TypeScript", "Node.js", "WhatsApp API", "AI"],
+            liveUrl: "https://github.com/lucky4-git1/whatsapp-ai-automation",
+            gitUrl: "https://github.com/lucky4-git1/whatsapp-ai-automation",
+            highlights: [
+                "Autonomous WhatsApp message processing and customer conversation pipeline",
+                "Webhook-driven integration connecting to AI models for intelligent replies"
+            ]
+        },
+        ema: {
+            title: "EMA (Email Market Automation)",
+            category: "ai",
+            badge: "Marketing Pipeline",
+            images: [],
+            desc: "Email marketing automation system built in TypeScript for campaign workflows and automated communications.",
+            tech: ["TypeScript", "Node.js", "Automation"],
+            liveUrl: "https://github.com/lucky4-git1/EMA-email-market-automation",
+            gitUrl: "https://github.com/lucky4-git1/EMA-email-market-automation",
+            highlights: [
+                "Automated email marketing scheduling and campaign execution pipeline",
+                "TypeScript backend structured for reliable queue processing"
+            ]
+        }
+    };
+
+    // Filter Logic
+    const filterTabs = document.querySelectorAll(".filter-tab");
+    const projectCards = document.querySelectorAll(".project-card-wrap");
+
+    filterTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            sound.playClick();
+            filterTabs.forEach(t => {
+                t.classList.remove("bg-a1", "text-black");
+                t.classList.add("bg-card", "text-text");
+            });
+            tab.classList.add("bg-a1", "text-black");
+            tab.classList.remove("bg-card", "text-text");
+
+            const filter = tab.getAttribute("data-filter");
+
+            projectCards.forEach(card => {
+                const category = card.getAttribute("data-category");
+                const shouldShow = filter === "all" || category === filter;
+                
+                if (shouldShow) {
+                    card.style.display = "block";
+                    gsap.fromTo(card, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" });
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    });
+
+    // Modal Gallery State & Controls
+    const projectModal = document.getElementById("projectModal");
+    const modalClose = document.getElementById("modalClose");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBadge = document.getElementById("modalBadge");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalTech = document.getElementById("modalTech");
+    const modalHighlights = document.getElementById("modalHighlights");
+    const modalLive = document.getElementById("modalLive");
+    const modalGit = document.getElementById("modalGit");
+    const modalSliderImg = document.getElementById("modalSliderImg");
+    const modalPrev = document.getElementById("modalPrev");
+    const modalNext = document.getElementById("modalNext");
+    const modalCounter = document.getElementById("modalCounter");
+
+    let currentProject = null;
+    let currentImageIndex = 0;
+
+    function openProjectModal(key) {
+        const p = projectsData[key];
+        if (!p) return;
+        currentProject = p;
+        currentImageIndex = 0;
+
+        sound.playClick();
+
+        if (modalTitle) modalTitle.innerText = p.title;
+        if (modalBadge) modalBadge.innerText = p.badge;
+        if (modalDesc) modalDesc.innerText = p.desc;
+
+        if (modalTech) {
+            modalTech.innerHTML = p.tech.map(t => `<span class="brutal-badge badge-lime">${t}</span>`).join(" ");
+        }
+
+        if (modalHighlights) {
+            modalHighlights.innerHTML = p.highlights.map(h => `<li class="flex items-start gap-2 mb-2"><i class="ph-bold ph-check-circle text-a4 mt-1"></i><span>${h}</span></li>`).join("");
+        }
+
+        if (modalLive) {
+            modalLive.href = p.liveUrl;
+            modalLive.style.display = p.liveUrl ? "inline-flex" : "none";
+        }
+
+        if (modalGit) {
+            modalGit.href = p.gitUrl;
+            modalGit.style.display = p.gitUrl ? "inline-flex" : "none";
+        }
+
+        updateModalImage();
+
+        projectModal.classList.add("active");
+        projectModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+    }
+
+    function updateModalImage() {
+        if (!currentProject) return;
+        const modalMediaWrap = modalSliderImg ? modalSliderImg.parentElement : null;
+        let fallbackBanner = document.getElementById("modalFallbackBanner");
+
+        if (!currentProject.images || !currentProject.images.length) {
+            if (modalSliderImg) modalSliderImg.style.display = "none";
+            if (modalCounter) modalCounter.innerText = "REPO ASSET";
+            if (!fallbackBanner && modalMediaWrap) {
+                fallbackBanner = document.createElement("div");
+                fallbackBanner.id = "modalFallbackBanner";
+                fallbackBanner.className = "w-full h-full flex flex-col items-center justify-center p-8 text-center font-mono";
+                modalMediaWrap.appendChild(fallbackBanner);
+            }
+            if (fallbackBanner) {
+                fallbackBanner.style.display = "flex";
+                fallbackBanner.innerHTML = `
+                    <div class="w-16 h-16 bg-a1 text-black brutal-border flex items-center justify-center text-3xl mb-4 font-black">
+                        <i class="ph-bold ph-terminal-window"></i>
+                    </div>
+                    <div class="text-xl font-black text-white uppercase mb-2">${currentProject.title}</div>
+                    <p class="text-xs text-slate-300 max-w-md">${currentProject.desc}</p>
+                `;
+            }
+            if (modalPrev) modalPrev.style.display = "none";
+            if (modalNext) modalNext.style.display = "none";
+            return;
+        }
+
+        if (fallbackBanner) fallbackBanner.style.display = "none";
+        if (modalSliderImg) {
+            modalSliderImg.style.display = "block";
+            modalSliderImg.src = currentProject.images[currentImageIndex];
+            modalSliderImg.alt = `${currentProject.title} screenshot ${currentImageIndex + 1}`;
+        }
+        if (modalCounter) {
+            modalCounter.innerText = `${currentImageIndex + 1} / ${currentProject.images.length}`;
+        }
+        if (modalPrev) modalPrev.style.display = currentProject.images.length > 1 ? "inline-flex" : "none";
+        if (modalNext) modalNext.style.display = currentProject.images.length > 1 ? "inline-flex" : "none";
+    }
+
+    function prevModalImage() {
+        if (!currentProject || !currentProject.images.length) return;
+        sound.playClick();
+        currentImageIndex = (currentImageIndex - 1 + currentProject.images.length) % currentProject.images.length;
+        updateModalImage();
+    }
+
+    function nextModalImage() {
+        if (!currentProject || !currentProject.images.length) return;
+        sound.playClick();
+        currentImageIndex = (currentImageIndex + 1) % currentProject.images.length;
+        updateModalImage();
+    }
+
+    function closeProjectModal() {
+        sound.playClick();
+        projectModal.classList.remove("active");
+        projectModal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+    }
+
+    if (modalPrev) modalPrev.addEventListener("click", prevModalImage);
+    if (modalNext) modalNext.addEventListener("click", nextModalImage);
+    if (modalClose) modalClose.addEventListener("click", closeProjectModal);
+
+    projectModal.addEventListener("click", (e) => {
+        if (e.target === projectModal) closeProjectModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (!projectModal.classList.contains("active")) return;
+        if (e.key === "Escape") closeProjectModal();
+        if (e.key === "ArrowLeft") prevModalImage();
+        if (e.key === "ArrowRight") nextModalImage();
+    });
+
+    // Attach open triggers on all project cards
+    document.querySelectorAll(".open-modal-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const projectKey = btn.getAttribute("data-project");
+            openProjectModal(projectKey);
+        });
+    });
+
+
+    /* ========================================================
+       8. NUMBER COUNTERS (ScrollTrigger)
+       ======================================================== */
+    const counters = document.querySelectorAll(".number-counter");
+    counters.forEach(counter => {
+        const target = +counter.getAttribute("data-target");
+
+        ScrollTrigger.create({
+            trigger: counter,
+            start: "top 90%",
+            once: true,
+            onEnter: () => {
+                if (!motionEnabled) {
+                    counter.innerText = target + "+";
+                    return;
+                }
+                const obj = { val: 0 };
+                gsap.to(obj, {
+                    val: target,
+                    duration: 1.8,
+                    ease: "power2.out",
+                    onUpdate: () => {
+                        counter.innerText = Math.floor(obj.val) + "+";
+                    }
+                });
+            }
+        });
+    });
+
+
+    /* ========================================================
+       9. GSAP REVEALS & ENTRANCE ANIMATIONS
+       ======================================================== */
+    if (motionEnabled) {
+        gsap.from(".hero-anim", {
+            y: 60,
+            opacity: 0,
+            duration: 0.9,
+            stagger: 0.12,
+            ease: "power3.out",
+            delay: 0.1
+        });
+
+        gsap.utils.toArray(".gs-section-header").forEach(header => {
+            gsap.from(header, {
+                scrollTrigger: {
+                    trigger: header,
+                    start: "top 85%"
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.7,
+                ease: "power3.out"
+            });
+        });
+
+        gsap.utils.toArray(".project-card-wrap").forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 88%"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.65,
+                ease: "power3.out"
+            });
+        });
+    }
+
+
+    /* ========================================================
+       10. LIVE HYDERABAD CLOCK & TIMEZONE
+       ======================================================== */
+    const timeEl = document.getElementById("currentTime");
+    if (timeEl) {
+        const updateTime = () => {
+            // Hyderabad is IST (UTC+5:30)
+            const now = new Date();
+            const options = { timeZone: "Asia/Kolkata", hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" };
+            timeEl.innerText = now.toLocaleTimeString("en-US", options);
+        };
+        updateTime();
+        setInterval(updateTime, 1000);
+    }
+
+
+    /* ========================================================
+       11. MOBILE MENU TOGGLE
+       ======================================================== */
+    const mobileBtn = document.getElementById("mobileMenuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileLinks = document.querySelectorAll(".mobile-nav-link");
+
+    let menuOpen = false;
+    function setMobileMenu(open) {
+        menuOpen = open;
+        mobileMenu.style.transform = open ? "translateY(0)" : "translateY(-100%)";
+        mobileBtn.setAttribute("aria-expanded", String(open));
+        document.body.style.overflow = open ? "hidden" : "";
+        sound.playClick();
+    }
+
+    if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener("click", () => setMobileMenu(!menuOpen));
+        mobileLinks.forEach(l => l.addEventListener("click", () => setMobileMenu(false)));
+    }
+
+
+    /* ========================================================
+       12. CONTACT FORM FEEDBACK & DIRECT COPY
+       ======================================================== */
+    const contactForm = document.getElementById("contactForm");
+    const copyEmailBtn = document.getElementById("copyEmailBtn");
+
+    if (copyEmailBtn) {
+        copyEmailBtn.addEventListener("click", () => {
+            sound.playClick();
+            navigator.clipboard.writeText("sriyuthk122@gmail.com").then(() => {
+                const originalText = copyEmailBtn.innerText;
+                copyEmailBtn.innerText = "COPIED TO CLIPBOARD!";
+                copyEmailBtn.classList.add("bg-a4", "text-black");
+                sound.playSuccess();
+                setTimeout(() => {
+                    copyEmailBtn.innerText = originalText;
+                    copyEmailBtn.classList.remove("bg-a4", "text-black");
+                }, 2000);
+            });
+        });
+    }
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            sound.playSuccess();
+            const btn = contactForm.querySelector("button[type='submit']");
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="ph-bold ph-check-circle text-xl"></i> TRANSMISSION DELIVERED!`;
+            btn.classList.remove("brutal-btn-primary");
+            btn.classList.add("brutal-btn-mint");
+
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.add("brutal-btn-primary");
+                btn.classList.remove("brutal-btn-mint");
+                contactForm.reset();
+            }, 3000);
+        });
+    }
+
+    // Auto-boot simulator on page load
+    setTimeout(() => {
+        startSimulatedWorkflow("simpleide");
+    }, 1200);
+});

@@ -1,0 +1,9 @@
+# Nested cloned repo reference
+k.sriyuth/
+
+# Temporary & runtime files
+*.log
+*.tmp
+__pycache__/
+.DS_Store
+Thumbs.db

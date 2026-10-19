@@ -1,0 +1,610 @@
+{
+  "rebuildOptions": {
+    "indexPolicy": "indexed",
+    "gltfExporter": "legacy",
+    "geometryPolicy": "warn",
+    "optimize": "off",
+    "instance": "auto"
+  },
+  "requirements": {
+    "kind": "kiln.requirements-context.v1",
+    "requirements": {
+      "kind": "kiln.asset-requirements",
+      "schemaVersion": 1,
+      "labels": [],
+      "frame": {
+        "units": "m",
+        "forward": "+X",
+        "up": "+Y",
+        "right": "+Z",
+        "groundY": 0
+      },
+      "requirements": {}
+    },
+    "policyHash": "sha256:9efcec929bf8a510c7dd0e18b687381e3824ff3d26cc20307f601d17535e5f34",
+    "adviceHash": "sha256:ca1f59b45e82e712e06149909000e2bc37b8cf159af70e32847088cecf153268"
+  },
+  "artifactGlbSha256": "sha256:89de8a84d665904140b1ab1ca5c25ad1b6f3433877f01534a7fbdc76c59a171f",
+  "tris": 4800,
+  "meta": {
+    "name": "Neural Artifact Node",
+    "role": "wonder",
+    "indexBuffers": {
+      "version": "kiln.index-buffers.v1",
+      "policy": "indexed",
+      "primitivesConverted": 0,
+      "bufferBytesBefore": 114328,
+      "bufferBytesAfter": 114328
+    },
+    "tris": 4800,
+    "primitiveUsage": {
+      "createRoot": 1,
+      "gameMaterial": 4,
+      "sphereGeo": 3,
+      "createPart": 19,
+      "createPivot": 10,
+      "torusGeo": 2,
+      "boxGeo": 6,
+      "cylinderGeo": 8
+    },
+    "instanceability": {
+      "grade": "C",
+      "summary": "C (informational, not a QA verdict), set by 4 distinct materials (C at 4-6). Also: 9 geometries; 19 draw calls.",
+      "reasons": [
+        "grade C set by 4 distinct materials (C at 4-6)",
+        "4 materials, 9 geometries, 19 draw calls"
+      ],
+      "metrics": {
+        "uniqueGeometries": 9,
+        "uniqueMaterials": 4,
+        "meshNodes": 19,
+        "meshInstances": 19,
+        "drawCalls": 19,
+        "textureCount": 0,
+        "skinned": false,
+        "transparentMaterials": 0,
+        "triangles": 4800
+      }
+    },
+    "tier": "C",
+    "gltfValidation": {
+      "uri": "model.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-10-19T11:14:24.808Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 9,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/1/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/2/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/3/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/4/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/5/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/6/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/7/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/8/primitives/0/attributes/TEXCOORD_0"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Kiln",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 86068
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 4,
+        "hasMorphTargets": false,
+        "hasSkins": false,
+        "hasTextures": false,
+        "hasDefaultScene": true,
+        "drawCallCount": 9,
+        "totalVertexCount": 2729,
+        "totalTriangleCount": 4500,
+        "maxUVs": 1,
+        "maxInfluences": 0,
+        "maxAttributes": 3
+      }
+    },
+    "qaReport": {
+      "kind": "kiln.asset-qa-report",
+      "schemaVersion": 2,
+      "qaProfile": "asset.requirements.v1",
+      "policyHash": "sha256:9efcec929bf8a510c7dd0e18b687381e3824ff3d26cc20307f601d17535e5f34",
+      "adviceHash": "sha256:ca1f59b45e82e712e06149909000e2bc37b8cf159af70e32847088cecf153268",
+      "acceptance": "accepted",
+      "disposition": "pass",
+      "dimensions": {
+        "exportIntegrity": {
+          "status": "pass",
+          "findings": [],
+          "metrics": {
+            "gltfErrors": 0,
+            "gltfWarnings": 0
+          }
+        },
+        "requirementReadiness": {
+          "status": "pass",
+          "findings": []
+        },
+        "promptAlignment": {
+          "status": "notEvaluated",
+          "findings": []
+        },
+        "visualQuality": {
+          "status": "pass",
+          "findings": [
+            {
+              "code": "GEO_PART_SELF_INTERSECTION",
+              "disposition": "observe",
+              "dimension": "visualQuality",
+              "profile": "geometry.selfIntersection",
+              "message": "Parts \"Mesh_Sat1_Body\" and \"Mesh_Sat1_Core\" occupy the same space: they share 0.000351 m³, which is 100.0% of the smaller part.",
+              "affected": {
+                "node": "Mesh_Sat1_Body"
+              },
+              "measurement": {
+                "name": "intersectionVolumeFraction",
+                "actual": 1,
+                "expected": 0.001
+              },
+              "repairText": "Check whether this overlap is intentional, such as a joined beam or embedded detail. For unintended solid overlap, move a part or use boolDiff to cut clearance. This observation does not test intersections within a single mesh, open surfaces, empty passage space or motion."
+            },
+            {
+              "code": "GEO_PART_SELF_INTERSECTION",
+              "disposition": "observe",
+              "dimension": "visualQuality",
+              "profile": "geometry.selfIntersection",
+              "message": "Parts \"Mesh_Sat2_Body\" and \"Mesh_Sat2_Core\" occupy the same space: they share 0.000675 m³, which is 90.0% of the smaller part.",
+              "affected": {
+                "node": "Mesh_Sat2_Body"
+              },
+              "measurement": {
+                "name": "intersectionVolumeFraction",
+                "actual": 0.900000022,
+                "expected": 0.001
+              },
+              "repairText": "Check whether this overlap is intentional, such as a joined beam or embedded detail. For unintended solid overlap, move a part or use boolDiff to cut clearance. This observation does not test intersections within a single mesh, open surfaces, empty passage space or motion."
+            },
+            {
+              "code": "GEO_PART_SELF_INTERSECTION",
+              "disposition": "observe",
+              "dimension": "visualQuality",
+              "profile": "geometry.selfIntersection",
+              "message": "Parts \"Mesh_Blade_2\" and \"Mesh_BladeEmitter_2\" occupy the same space: they share 0.0000155 m³, which is 28.8% of the smaller part.",
+              "affected": {
+                "node": "Mesh_Blade_2"
+              },
+              "measurement": {
+                "name": "intersectionVolumeFraction",
+                "actual": 0.287701816,
+                "expected": 0.001
+              },
+              "repairText": "Check whether this overlap is intentional, such as a joined beam or embedded detail. For unintended solid overlap, move a part or use boolDiff to cut clearance. This observation does not test intersections within a single mesh, open surfaces, empty passage space or motion."
+            },
+            {
+              "code": "GEO_PART_SELF_INTERSECTION",
+              "disposition": "observe",
+              "dimension": "visualQuality",
+              "profile": "geometry.selfIntersection",
+              "message": "Parts \"Mesh_Blade_3\" and \"Mesh_BladeEmitter_3\" occupy the same space: they share 0.0000155 m³, which is 28.8% of the smaller part.",
+              "affected": {
+                "node": "Mesh_Blade_3"
+              },
+              "measurement": {
+                "name": "intersectionVolumeFraction",
+                "actual": 0.287701816,
+                "expected": 0.001
+              },
+              "repairText": "Check whether this overlap is intentional, such as a joined beam or embedded detail. For unintended solid overlap, move a part or use boolDiff to cut clearance. This observation does not test intersections within a single mesh, open surfaces, empty passage space or motion."
+            },
+            {
+              "code": "GEO_PART_SELF_INTERSECTION",
+              "disposition": "observe",
+              "dimension": "visualQuality",
+              "profile": "geometry.selfIntersection",
+              "message": "Parts \"Mesh_Blade_5\" and \"Mesh_BladeEmitter_5\" occupy the same space: they share 0.0000155 m³, which is 28.8% of the smaller part.",
+              "affected": {
+                "node": "Mesh_Blade_5"
+              },
+              "measurement": {
+                "name": "intersectionVolumeFraction",
+                "actual": 0.287701816,
+                "expected": 0.001
+              },
+              "repairText": "Check whether this overlap is intentional, such as a joined beam or embedded detail. For unintended solid overlap, move a part or use boolDiff to cut clearance. This observation does not test intersections within a single mesh, open surfaces, empty passage space or motion."
+            },
+            {
+              "code": "GEO_PART_SELF_INTERSECTION",
+              "disposition": "observe",
+              "dimension": "visualQuality",
+              "profile": "geometry.selfIntersection",
+              "message": "Parts \"Mesh_Blade_6\" and \"Mesh_BladeEmitter_6\" occupy the same space: they share 0.0000155 m³, which is 28.8% of the smaller part.",
+              "affected": {
+                "node": "Mesh_Blade_6"
+              },
+              "measurement": {
+                "name": "intersectionVolumeFraction",
+                "actual": 0.287701816,
+                "expected": 0.001
+              },
+              "repairText": "Check whether this overlap is intentional, such as a joined beam or embedded detail. For unintended solid overlap, move a part or use boolDiff to cut clearance. This observation does not test intersections within a single mesh, open surfaces, empty passage space or motion."
+            },
+            {
+              "code": "GEO_PART_SELF_INTERSECTION",
+              "disposition": "observe",
+              "dimension": "visualQuality",
+              "profile": "geometry.selfIntersection",
+              "message": "Parts \"Mesh_Blade_1\" and \"Mesh_BladeEmitter_1\" occupy the same space: they share 0.0000155 m³, which is 28.8% of the smaller part.",
+              "affected": {
+                "node": "Mesh_Blade_1"
+              },
+              "measurement": {
+                "name": "intersectionVolumeFraction",
+                "actual": 0.287701812,
+                "expected": 0.001
+              },
+              "repairText": "Check whether this overlap is intentional, such as a joined beam or embedded detail. For unintended solid overlap, move a part or use boolDiff to cut clearance. This observation does not test intersections within a single mesh, open surfaces, empty passage space or motion."
+            },
+            {
+              "code": "GEO_PART_SELF_INTERSECTION",
+              "disposition": "observe",
+              "dimension": "visualQuality",
+              "profile": "geometry.selfIntersection",
+              "message": "Parts \"Mesh_Blade_4\" and \"Mesh_BladeEmitter_4\" occupy the same space: they share 0.0000155 m³, which is 28.8% of the smaller part.",
+              "affected": {
+                "node": "Mesh_Blade_4"
+              },
+              "measurement": {
+                "name": "intersectionVolumeFraction",
+                "actual": 0.287701812,
+                "expected": 0.001
+              },
+              "repairText": "Check whether this overlap is intentional, such as a joined beam or embedded detail. For unintended solid overlap, move a part or use boolDiff to cut clearance. This observation does not test intersections within a single mesh, open surfaces, empty passage space or motion."
+            }
+          ],
+          "metrics": {
+            "partVolumeCoverage": "complete-static-pairs",
+            "partVolumeScope": "Visible static closed mesh pairs, except alternates on different LOD levels; excludes intra-mesh intersections, motion, open surfaces and usable passage space. Positive overlap may be intentional.",
+            "partVolumeEligibleParts": 19,
+            "partVolumeCandidatePairs": 31,
+            "partVolumeCandidatesLowerBound": false,
+            "partVolumePairsTested": 31,
+            "partVolumeUnmeasurablePairs": 0,
+            "partVolumePairsNotReached": 0,
+            "partVolumeLodAlternatePairs": 0,
+            "partVolumeSkipped": 0
+          }
+        },
+        "runtimeCost": {
+          "status": "pass",
+          "findings": [],
+          "metrics": {
+            "instanceabilityGrade": "C",
+            "instanceabilitySummary": "C (informational, not a QA verdict), set by 4 distinct materials (C at 4-6). Also: 9 geometries; 19 draw calls.",
+            "uniqueGeometries": 9,
+            "uniqueMaterials": 4,
+            "meshNodes": 19,
+            "meshInstances": 19,
+            "drawCalls": 19,
+            "textureCount": 0,
+            "skinned": false,
+            "transparentMaterials": 0,
+            "triangles": 4800,
+            "materialCount": 4,
+            "opaqueMaterials": 4,
+            "maskedMaterials": 0,
+            "blendedMaterials": 0,
+            "singleSidedMaterials": 4,
+            "doubleSidedMaterials": 0,
+            "texturedMaterials": 0,
+            "materialExtensionCount": 0,
+            "materialExtensionsUsed": "",
+            "imageCount": 0,
+            "maxImageDimension": 0,
+            "decodedImageBytesRgba8": 0,
+            "estimatedGpuBytesWithMipmaps": 0,
+            "blendedSurfaceAreaRatio": 0
+          }
+        }
+      },
+      "rules": [
+        {
+          "id": "UNIVERSAL_SCENE_CONTENT_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "UNIVERSAL_FINITE_DATA_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "UNIVERSAL_INDEX_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "UNIVERSAL_ZERO_SCALE_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "UNIVERSAL_NODE_NAME_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "UNIVERSAL_ANIMATION_TARGET_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "MATERIAL_PORTABLE_PBR_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "ARCHITECTURE_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "ARCHITECTURE_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "CHARACTER_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "CHARACTER_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "VEHICLE_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "VEHICLE_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "VEHICLE_W6_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "VEGETATION_CONTACT_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "VEGETATION_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "PROP_CAPABILITY_EXACT_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "PROP_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "ENVIRONMENT_EXACT_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "ENVIRONMENT_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "VFX_EXACT_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "VFX_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "MODULAR_JOIN_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "ASSET_SCOPE_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "GEO_PART_SELF_INTERSECTION",
+          "mode": "observe",
+          "status": "evaluated"
+        },
+        {
+          "id": "GEO_PART_CONNECTIVITY",
+          "mode": "observe",
+          "status": "evaluated"
+        },
+        {
+          "id": "REF_COMPARISON",
+          "mode": "observe",
+          "status": "notEvaluated",
+          "reason": "Neutral measurement adapter remains to be qualified; no category fallback is used."
+        },
+        {
+          "id": "SWEEP_SELF_INTERSECTION",
+          "mode": "observe",
+          "status": "evaluated"
+        }
+      ],
+      "unevaluatedRequirements": []
+    }
+  },
+  "warnings": [],
+  "materialMetrics": {
+    "schemaVersion": 1,
+    "materialCount": 4,
+    "opaqueMaterials": 4,
+    "maskedMaterials": 0,
+    "blendedMaterials": 0,
+    "singleSidedMaterials": 4,
+    "doubleSidedMaterials": 0,
+    "texturedMaterials": 0,
+    "untexturedMaterials": 4,
+    "extensionCount": 0,
+    "extensionsUsed": [],
+    "materialExtensionCount": 0,
+    "materialExtensionsUsed": [],
+    "imageCount": 0,
+    "images": [],
+    "maxImageDimension": 0,
+    "totalImagePixels": 0,
+    "decodedImageBytesRgba8": 0,
+    "estimatedGpuBytesWithMipmaps": 0,
+    "totalSurfaceArea": 5.022731536600123,
+    "blendedSurfaceArea": 0,
+    "blendedSurfaceAreaRatio": 0,
+    "blendedMaterialAreas": []
+  },
+  "integrationManifest": {
+    "schemaVersion": "kiln.integration-manifest.v1",
+    "analyzerVersion": 1,
+    "artifactSha256": "89de8a84d665904140b1ab1ca5c25ad1b6f3433877f01534a7fbdc76c59a171f",
+    "units": "m",
+    "axes": {
+      "forward": "+X",
+      "up": "+Y",
+      "right": "+Z"
+    },
+    "bounds": {
+      "min": [
+        -0.9799999982118607,
+        -1.091915767974515,
+        -0.9442527165812017
+      ],
+      "max": [
+        0.969999997317791,
+        1.091915767974515,
+        0.9442527165812017
+      ],
+      "size": [
+        1.9499999955296516,
+        2.18383153594903,
+        1.8885054331624034
+      ],
+      "center": [
+        -0.005000000447034858,
+        0,
+        0
+      ]
+    },
+    "pivot": {
+      "convention": "author-origin",
+      "position": [
+        0,
+        0,
+        0
+      ]
+    },
+    "ground": {
+      "groundY": 0,
+      "contactTolerance": 0.02,
+      "minY": -1.091915767974515,
+      "offsetToGround": 1.091915767974515,
+      "grounded": false
+    },
+    "defaultScene": {
+      "index": 0,
+      "name": "Neural Artifact Node"
+    },
+    "requestedRole": "wonder",
+    "renderMetrics": {
+      "triangles": 4800,
+      "drawCalls": 19,
+      "uniqueGeometries": 9,
+      "uniqueMaterials": 4,
+      "textureCount": 0,
+      "transparentMaterials": 0,
+      "skinned": false
+    },
+    "structuralQa": {
+      "hasDefaultScene": true,
+      "finiteBounds": true,
+      "validatorErrors": 0,
+      "validatorWarnings": 0
+    },
+    "visualQa": "not_assessed"
+  },
+  "buildCache": {
+    "key": "sha256:6ca6e5668cac40fdefc0de1d6dde2addcc1f8e0ff5f9de211515ac853e823516",
+    "hit": false
+  }
+}

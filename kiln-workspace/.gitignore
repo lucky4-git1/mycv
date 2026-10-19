@@ -1,0 +1,4 @@
+.kiln/programs/
+.hermes/
+*.glb
+*.png

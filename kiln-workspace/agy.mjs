@@ -1,0 +1,12 @@
+import { spawn } from 'node:child_process';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root = dirname(fileURLToPath(import.meta.url));
+const args = process.argv.slice(2);
+const has = names => args.some(arg => names.some(name => arg === name || arg.startsWith(name + '=')));
+if (!has(['--project', '--new-project', '--conversation', '--continue', '-c'])) args.unshift('--new-project');
+args.unshift('--add-dir', root);
+if (has(['--print', '--prompt', '-p']) && !has(['--disable-slash-commands'])) args.unshift('--disable-slash-commands');
+const child = spawn('agy', args, { cwd: root, stdio: 'inherit', windowsHide: true });
+child.on('error', error => { console.error(error.message); process.exitCode = 1; });
+child.on('exit', code => { process.exitCode = code ?? 1; });

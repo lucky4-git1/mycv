@@ -27,6 +27,7 @@ def main():
     models = {
         "Hero Sculpture (Signature Upgrade)": r"d:\mycv-new-fullstack\portfolio-3d\public\models\hero-sculpture.glb",
         "Hero Mascot (Premium Autonomous)": r"d:\mycv-new-fullstack\portfolio-3d\public\models\hero-mascot.glb",
+        "Neural Artifact (Kiln 1.3 Procedural)": r"d:\mycv-new-fullstack\portfolio-3d\public\models\neural-artifact.glb",
         "Hero Core (Base)": r"d:\mycv-new-fullstack\portfolio-3d\public\models\hero.glb",
         "Robot Mascot (Base)": r"d:\mycv-new-fullstack\portfolio-3d\public\models\mascot.glb",
         "Interactive Tech Elements": r"d:\mycv-new-fullstack\portfolio-3d\public\models\tech-elements.glb",

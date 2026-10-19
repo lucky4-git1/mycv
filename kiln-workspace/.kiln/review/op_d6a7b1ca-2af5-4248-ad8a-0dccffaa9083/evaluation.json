@@ -1,0 +1,602 @@
+{
+  "rebuildOptions": {
+    "indexPolicy": "indexed",
+    "gltfExporter": "legacy",
+    "geometryPolicy": "warn",
+    "optimize": "off",
+    "instance": "auto"
+  },
+  "requirements": {
+    "kind": "kiln.requirements-context.v1",
+    "requirements": {
+      "kind": "kiln.asset-requirements",
+      "schemaVersion": 1,
+      "labels": [],
+      "frame": {
+        "units": "m",
+        "forward": "+X",
+        "up": "+Y",
+        "right": "+Z",
+        "groundY": 0
+      },
+      "requirements": {}
+    },
+    "policyHash": "sha256:9efcec929bf8a510c7dd0e18b687381e3824ff3d26cc20307f601d17535e5f34",
+    "adviceHash": "sha256:ca1f59b45e82e712e06149909000e2bc37b8cf159af70e32847088cecf153268"
+  },
+  "artifactGlbSha256": "sha256:95c88d7a554f6de63bc5acee4e6c498fd68b6804bc148d3940c2f359b5967a79",
+  "tris": 276,
+  "meta": {
+    "name": "Three portal frames",
+    "indexBuffers": {
+      "version": "kiln.index-buffers.v1",
+      "policy": "indexed",
+      "primitivesConverted": 0,
+      "bufferBytesBefore": 8112,
+      "bufferBytesAfter": 8112
+    },
+    "tris": 276,
+    "primitiveUsage": {
+      "createRoot": 1,
+      "gameMaterial": 2,
+      "createPivot": 9,
+      "boxGeo": 9,
+      "createPart": 10,
+      "sphereGeo": 1
+    },
+    "instanceability": {
+      "grade": "B",
+      "summary": "B (informational, not a QA verdict), set by 2 distinct materials (B at 2-3). Also: 5 geometries; 10 draw calls.",
+      "reasons": [
+        "grade B set by 2 distinct materials (B at 2-3)",
+        "2 materials, 5 geometries, 10 draw calls"
+      ],
+      "metrics": {
+        "uniqueGeometries": 5,
+        "uniqueMaterials": 2,
+        "meshNodes": 10,
+        "meshInstances": 10,
+        "drawCalls": 10,
+        "textureCount": 0,
+        "skinned": false,
+        "transparentMaterials": 0,
+        "triangles": 276
+      }
+    },
+    "tier": "B",
+    "gltfValidation": {
+      "uri": "model.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-10-19T11:10:51.695Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 10,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/1/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/2/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/3/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/4/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/5"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/6"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/13"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/18"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/19"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Kiln",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 6456
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 2,
+        "hasMorphTargets": false,
+        "hasSkins": false,
+        "hasTextures": false,
+        "hasDefaultScene": true,
+        "drawCallCount": 5,
+        "totalVertexCount": 213,
+        "totalTriangleCount": 216,
+        "maxUVs": 1,
+        "maxInfluences": 0,
+        "maxAttributes": 3
+      }
+    },
+    "qaReport": {
+      "kind": "kiln.asset-qa-report",
+      "schemaVersion": 2,
+      "qaProfile": "asset.requirements.v1",
+      "policyHash": "sha256:9efcec929bf8a510c7dd0e18b687381e3824ff3d26cc20307f601d17535e5f34",
+      "adviceHash": "sha256:ca1f59b45e82e712e06149909000e2bc37b8cf159af70e32847088cecf153268",
+      "acceptance": "accepted",
+      "disposition": "warn",
+      "dimensions": {
+        "exportIntegrity": {
+          "status": "pass",
+          "findings": [],
+          "metrics": {
+            "gltfErrors": 0,
+            "gltfWarnings": 0
+          }
+        },
+        "requirementReadiness": {
+          "status": "warn",
+          "findings": [
+            {
+              "code": "UNIVERSAL_DUPLICATE_NODE_NAME",
+              "disposition": "warn",
+              "dimension": "requirementReadiness",
+              "profile": "universal",
+              "message": "3 scene nodes share the name \"Mesh_LeftPost\".",
+              "affected": {
+                "node": "Mesh_LeftPost",
+                "nodePath": "PortalFrames/Joint_Near/Mesh_LeftPost | PortalFrames/Joint_Middle/Mesh_LeftPost | PortalFrames/Joint_Far/Mesh_LeftPost"
+              },
+              "measurement": {
+                "name": "duplicateCount",
+                "actual": 3,
+                "expected": 1
+              },
+              "repairText": "Use unique names when nodes must be addressed independently."
+            },
+            {
+              "code": "UNIVERSAL_DUPLICATE_NODE_NAME",
+              "disposition": "warn",
+              "dimension": "requirementReadiness",
+              "profile": "universal",
+              "message": "3 scene nodes share the name \"Mesh_RightPost\".",
+              "affected": {
+                "node": "Mesh_RightPost",
+                "nodePath": "PortalFrames/Joint_Near/Mesh_RightPost | PortalFrames/Joint_Middle/Mesh_RightPost | PortalFrames/Joint_Far/Mesh_RightPost"
+              },
+              "measurement": {
+                "name": "duplicateCount",
+                "actual": 3,
+                "expected": 1
+              },
+              "repairText": "Use unique names when nodes must be addressed independently."
+            },
+            {
+              "code": "UNIVERSAL_DUPLICATE_NODE_NAME",
+              "disposition": "warn",
+              "dimension": "requirementReadiness",
+              "profile": "universal",
+              "message": "3 scene nodes share the name \"Mesh_Header\".",
+              "affected": {
+                "node": "Mesh_Header",
+                "nodePath": "PortalFrames/Joint_Near/Mesh_Header | PortalFrames/Joint_Middle/Mesh_Header | PortalFrames/Joint_Far/Mesh_Header"
+              },
+              "measurement": {
+                "name": "duplicateCount",
+                "actual": 3,
+                "expected": 1
+              },
+              "repairText": "Use unique names when nodes must be addressed independently."
+            },
+            {
+              "code": "UNIVERSAL_DUPLICATE_NODE_NAME",
+              "disposition": "warn",
+              "dimension": "requirementReadiness",
+              "profile": "universal",
+              "message": "3 scene nodes share the name \"Joint_TopAttachment\".",
+              "affected": {
+                "node": "Joint_TopAttachment",
+                "nodePath": "PortalFrames/Joint_Near/Joint_TopAttachment | PortalFrames/Joint_Middle/Joint_TopAttachment | PortalFrames/Joint_Far/Joint_TopAttachment"
+              },
+              "measurement": {
+                "name": "duplicateCount",
+                "actual": 3,
+                "expected": 1
+              },
+              "repairText": "Use unique names when nodes must be addressed independently."
+            },
+            {
+              "code": "UNIVERSAL_DUPLICATE_NODE_NAME",
+              "disposition": "warn",
+              "dimension": "requirementReadiness",
+              "profile": "universal",
+              "message": "3 scene nodes share the name \"Joint_BaseAttachment\".",
+              "affected": {
+                "node": "Joint_BaseAttachment",
+                "nodePath": "PortalFrames/Joint_Near/Joint_BaseAttachment | PortalFrames/Joint_Middle/Joint_BaseAttachment | PortalFrames/Joint_Far/Joint_BaseAttachment"
+              },
+              "measurement": {
+                "name": "duplicateCount",
+                "actual": 3,
+                "expected": 1
+              },
+              "repairText": "Use unique names when nodes must be addressed independently."
+            }
+          ]
+        },
+        "promptAlignment": {
+          "status": "notEvaluated",
+          "findings": []
+        },
+        "visualQuality": {
+          "status": "pass",
+          "findings": [
+            {
+              "code": "GEO_PART_CONNECTIVITY",
+              "disposition": "observe",
+              "dimension": "visualQuality",
+              "profile": "geometry.partConnectivity",
+              "message": "A group of 3 parts (\"Mesh_LeftPost\", \"Mesh_RightPost\", \"Mesh_Header\") is separate from the largest component in the rest-pose bounding boxes of visible parts; the nearest box gap is 1.320 m. This may be intentional. Box adjacency is not physical attachment evidence.",
+              "affected": {
+                "node": "Mesh_LeftPost"
+              },
+              "measurement": {
+                "name": "gapToMainComponent",
+                "actual": 1.32,
+                "expected": 0.02
+              },
+              "repairText": "Check whether the separation is intentional. If the brief requires attachment, inspect the named group and its intended interface before moving it. snapTo aligns bounding boxes; verify actual surfaces and required clearances afterward."
+            },
+            {
+              "code": "GEO_PART_CONNECTIVITY",
+              "disposition": "observe",
+              "dimension": "visualQuality",
+              "profile": "geometry.partConnectivity",
+              "message": "A group of 3 parts (\"Mesh_LeftPost\", \"Mesh_RightPost\", \"Mesh_Header\") is separate from the largest component in the rest-pose bounding boxes of visible parts; the nearest box gap is 1.320 m. This may be intentional. Box adjacency is not physical attachment evidence.",
+              "affected": {
+                "node": "Mesh_LeftPost"
+              },
+              "measurement": {
+                "name": "gapToMainComponent",
+                "actual": 1.32,
+                "expected": 0.02
+              },
+              "repairText": "Check whether the separation is intentional. If the brief requires attachment, inspect the named group and its intended interface before moving it. snapTo aligns bounding boxes; verify actual surfaces and required clearances afterward."
+            }
+          ],
+          "metrics": {
+            "partVolumeCoverage": "complete-static-pairs",
+            "partVolumeScope": "Visible static closed mesh pairs, except alternates on different LOD levels; excludes intra-mesh intersections, motion, open surfaces and usable passage space. Positive overlap may be intentional.",
+            "partVolumeEligibleParts": 10,
+            "partVolumeCandidatePairs": 1,
+            "partVolumeCandidatesLowerBound": false,
+            "partVolumePairsTested": 1,
+            "partVolumeUnmeasurablePairs": 0,
+            "partVolumePairsNotReached": 0,
+            "partVolumeLodAlternatePairs": 0,
+            "partVolumeSkipped": 0
+          }
+        },
+        "runtimeCost": {
+          "status": "pass",
+          "findings": [],
+          "metrics": {
+            "instanceabilityGrade": "B",
+            "instanceabilitySummary": "B (informational, not a QA verdict), set by 2 distinct materials (B at 2-3). Also: 5 geometries; 10 draw calls.",
+            "uniqueGeometries": 5,
+            "uniqueMaterials": 2,
+            "meshNodes": 10,
+            "meshInstances": 10,
+            "drawCalls": 10,
+            "textureCount": 0,
+            "skinned": false,
+            "transparentMaterials": 0,
+            "triangles": 276,
+            "materialCount": 2,
+            "opaqueMaterials": 2,
+            "maskedMaterials": 0,
+            "blendedMaterials": 0,
+            "singleSidedMaterials": 2,
+            "doubleSidedMaterials": 0,
+            "texturedMaterials": 0,
+            "materialExtensionCount": 0,
+            "materialExtensionsUsed": "",
+            "imageCount": 0,
+            "maxImageDimension": 0,
+            "decodedImageBytesRgba8": 0,
+            "estimatedGpuBytesWithMipmaps": 0,
+            "blendedSurfaceAreaRatio": 0
+          }
+        }
+      },
+      "rules": [
+        {
+          "id": "UNIVERSAL_SCENE_CONTENT_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "UNIVERSAL_FINITE_DATA_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "UNIVERSAL_INDEX_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "UNIVERSAL_ZERO_SCALE_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "UNIVERSAL_NODE_NAME_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "UNIVERSAL_ANIMATION_TARGET_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "MATERIAL_PORTABLE_PBR_RULE",
+          "mode": "enforce",
+          "status": "evaluated"
+        },
+        {
+          "id": "ARCHITECTURE_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "ARCHITECTURE_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "CHARACTER_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "CHARACTER_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "VEHICLE_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "VEHICLE_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "VEHICLE_W6_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "VEGETATION_CONTACT_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "VEGETATION_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "PROP_CAPABILITY_EXACT_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "PROP_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "ENVIRONMENT_EXACT_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "ENVIRONMENT_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "VFX_EXACT_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "VFX_ADVISORY_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "MODULAR_JOIN_PROFILE",
+          "mode": "enforce",
+          "status": "notRequested"
+        },
+        {
+          "id": "ASSET_SCOPE_PROFILE",
+          "mode": "observe",
+          "status": "notRequested"
+        },
+        {
+          "id": "GEO_PART_SELF_INTERSECTION",
+          "mode": "observe",
+          "status": "evaluated"
+        },
+        {
+          "id": "GEO_PART_CONNECTIVITY",
+          "mode": "observe",
+          "status": "evaluated"
+        },
+        {
+          "id": "REF_COMPARISON",
+          "mode": "observe",
+          "status": "notEvaluated",
+          "reason": "Neutral measurement adapter remains to be qualified; no category fallback is used."
+        },
+        {
+          "id": "SWEEP_SELF_INTERSECTION",
+          "mode": "observe",
+          "status": "evaluated"
+        }
+      ],
+      "unevaluatedRequirements": []
+    }
+  },
+  "warnings": [],
+  "materialMetrics": {
+    "schemaVersion": 1,
+    "materialCount": 2,
+    "opaqueMaterials": 2,
+    "maskedMaterials": 0,
+    "blendedMaterials": 0,
+    "singleSidedMaterials": 2,
+    "doubleSidedMaterials": 0,
+    "texturedMaterials": 0,
+    "untexturedMaterials": 2,
+    "extensionCount": 0,
+    "extensionsUsed": [],
+    "materialExtensionCount": 0,
+    "materialExtensionsUsed": [],
+    "imageCount": 0,
+    "images": [],
+    "maxImageDimension": 0,
+    "totalImagePixels": 0,
+    "decodedImageBytesRgba8": 0,
+    "estimatedGpuBytesWithMipmaps": 0,
+    "totalSurfaceArea": 15.501566870031757,
+    "blendedSurfaceArea": 0,
+    "blendedSurfaceAreaRatio": 0,
+    "blendedMaterialAreas": []
+  },
+  "integrationManifest": {
+    "schemaVersion": "kiln.integration-manifest.v1",
+    "analyzerVersion": 1,
+    "artifactSha256": "95c88d7a554f6de63bc5acee4e6c498fd68b6804bc148d3940c2f359b5967a79",
+    "units": "m",
+    "axes": {
+      "forward": "+X",
+      "up": "+Y",
+      "right": "+Z"
+    },
+    "bounds": {
+      "min": [
+        -1.5900000035762787,
+        2.3841857821338408e-8,
+        -1.2000000002980231
+      ],
+      "max": [
+        1.5900000035762787,
+        3.2800000035762786,
+        1.2000000002980231
+      ],
+      "size": [
+        3.1800000071525574,
+        3.279999979734421,
+        2.4000000005960462
+      ],
+      "center": [
+        0,
+        1.6400000137090682,
+        0
+      ]
+    },
+    "pivot": {
+      "convention": "author-origin",
+      "position": [
+        0,
+        0,
+        0
+      ]
+    },
+    "ground": {
+      "groundY": 0,
+      "contactTolerance": 0.02,
+      "minY": 2.3841857821338408e-8,
+      "offsetToGround": -2.3841857821338408e-8,
+      "grounded": true
+    },
+    "defaultScene": {
+      "index": 0,
+      "name": "Three portal frames"
+    },
+    "renderMetrics": {
+      "triangles": 276,
+      "drawCalls": 10,
+      "uniqueGeometries": 5,
+      "uniqueMaterials": 2,
+      "textureCount": 0,
+      "transparentMaterials": 0,
+      "skinned": false
+    },
+    "structuralQa": {
+      "hasDefaultScene": true,
+      "finiteBounds": true,
+      "validatorErrors": 0,
+      "validatorWarnings": 0
+    },
+    "visualQa": "not_assessed"
+  },
+  "buildCache": {
+    "key": "sha256:a2c9cd761eee612b22a842152e59a5bccf9e8185f87a7d28ea39d2e081adf4a9",
+    "hit": false
+  }
+}

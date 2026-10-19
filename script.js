@@ -13,6 +13,48 @@ document.addEventListener("DOMContentLoaded", () => {
     const motionEnabled = !prefersReducedMotion;
 
     /* ========================================================
+       0. LENIS SMOOTH SCROLL INTEGRATION (GSAP ScrollTrigger Sync)
+       ======================================================== */
+    let lenis = null;
+    if (typeof Lenis !== "undefined" && motionEnabled) {
+        lenis = new Lenis({
+            duration: 1.15,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: "vertical",
+            gestureOrientation: "vertical",
+            smoothWheel: true,
+            wheelMultiplier: 1.0,
+            touchMultiplier: 1.5,
+            infinite: false
+        });
+
+        // Synchronize Lenis scroll with GSAP ScrollTrigger
+        lenis.on("scroll", ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0);
+
+        // Intercept native anchor clicks for smooth Lenis scrolling
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+                const targetId = this.getAttribute("href");
+                if (targetId && targetId !== "#" && targetId.length > 1) {
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        e.preventDefault();
+                        lenis.scrollTo(targetEl, { offset: -70 });
+                    }
+                }
+            });
+        });
+
+        window.lenis = lenis;
+    }
+
+    /* ========================================================
        1. SYNTHESIZED WEB AUDIO FX (Subtle & Tactile)
        ======================================================== */
     class SoundEngine {
@@ -331,6 +373,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const modelNameEl = document.getElementById("hero3DModelName");
         const btnHero = document.getElementById("switchModelHeroBtn");
         const btnMascot = document.getElementById("switchModelMascotBtn");
+        const btnKiln = document.getElementById("switchModelKilnBtn");
 
         if (!canvas || !container || typeof THREE === "undefined") {
             return;
@@ -429,6 +472,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 subtitle: "MAGNETIC REPULSOR CHASSIS & OPTIC VISOR",
                 scale: 0.95,
                 yOffset: -0.2
+            },
+            kiln: {
+                url: "portfolio-3d/public/models/neural-artifact.glb",
+                name: "NEURAL ARTIFACT // KILN 1.3",
+                subtitle: "PROCEDURAL COMPUTATIONAL NODE & ORBITAL SATELLITES",
+                scale: 1.15,
+                yOffset: 0
             }
         };
 
@@ -471,28 +521,35 @@ document.addEventListener("DOMContentLoaded", () => {
         // Initial Load
         loadModel("hero");
 
-        // Switcher Buttons
-        if (btnHero && btnMascot) {
-            btnHero.addEventListener("click", () => {
-                sound.playClick();
-                btnHero.classList.add("bg-a1", "text-black");
-                btnHero.classList.remove("bg-black/80", "text-white");
-                btnMascot.classList.remove("bg-a1", "text-black");
-                btnMascot.classList.add("bg-black/80", "text-white");
-                isMascot = false;
-                loadModel("hero");
-            });
+        // 3-Way Switcher Buttons (Core, Mascot, Kiln Artifact)
+        const buttons = [
+            { el: btnHero, type: "hero" },
+            { el: btnMascot, type: "mascot" },
+            { el: btnKiln, type: "kiln" }
+        ];
 
-            btnMascot.addEventListener("click", () => {
-                sound.playClick();
-                btnMascot.classList.add("bg-a1", "text-black");
-                btnMascot.classList.remove("bg-black/80", "text-white");
-                btnHero.classList.remove("bg-a1", "text-black");
-                btnHero.classList.add("bg-black/80", "text-white");
-                isMascot = true;
-                loadModel("mascot");
+        function setActiveButton(activeType) {
+            buttons.forEach(({ el, type }) => {
+                if (!el) return;
+                if (type === activeType) {
+                    el.classList.add("bg-a1", "text-black");
+                    el.classList.remove("bg-black/80", "text-white");
+                } else {
+                    el.classList.remove("bg-a1", "text-black");
+                    el.classList.add("bg-black/80", "text-white");
+                }
             });
         }
+
+        buttons.forEach(({ el, type }) => {
+            if (el) {
+                el.addEventListener("click", () => {
+                    sound.playClick();
+                    setActiveButton(type);
+                    loadModel(type);
+                });
+            }
+        });
 
         // 5. Interaction: Mouse Tilt & Orbit Drag
         let targetRotationX = 0;
@@ -606,6 +663,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         animate();
+
+        // 8. Cinematic Scroll Spatial Hand-off (Hero to Content transition)
+        if (typeof ScrollTrigger !== "undefined" && motionEnabled) {
+            ScrollTrigger.create({
+                trigger: "#hero",
+                start: "top top",
+                end: "bottom top",
+                scrub: 1.2,
+                onUpdate: (self) => {
+                    if (modelGroup) {
+                        modelGroup.rotation.z = self.progress * 0.35;
+                        modelGroup.position.z = -self.progress * 1.1;
+                    }
+                }
+            });
+        }
     }
 
     initHero3DStage();
@@ -1183,43 +1256,110 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* ========================================================
-       9. GSAP REVEALS & ENTRANCE ANIMATIONS
+       9. GSAP CINEMATIC CHAPTER STORYTELLING (Chapters A - G)
        ======================================================== */
     if (motionEnabled) {
-        gsap.from(".hero-anim", {
-            y: 60,
-            opacity: 0,
-            duration: 0.9,
-            stagger: 0.12,
-            ease: "power3.out",
-            delay: 0.1
-        });
+        // Chapter A: Opening Hero Entrance
+        const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        heroTl
+            .from(".hero-badge", { y: 24, opacity: 0, duration: 0.6, delay: 0.15 })
+            .from(".hero-title-main", { y: 40, opacity: 0, duration: 0.8 }, "-=0.35")
+            .from(".hero-status-pill", { scale: 0.9, opacity: 0, duration: 0.5 }, "-=0.4")
+            .from(".hero-desc", { y: 24, opacity: 0, duration: 0.6 }, "-=0.3")
+            .from(".hero-ctas", { y: 20, opacity: 0, duration: 0.5 }, "-=0.3")
+            .from(".stage-container", { scale: 0.96, y: 30, opacity: 0, duration: 0.9 }, "-=0.6");
 
+        // Section Headers (Unified Editorial Title Reveal)
         gsap.utils.toArray(".gs-section-header").forEach(header => {
             gsap.from(header, {
                 scrollTrigger: {
                     trigger: header,
-                    start: "top 85%"
+                    start: "top 86%"
                 },
-                y: 40,
+                y: 35,
                 opacity: 0,
-                duration: 0.7,
+                duration: 0.75,
                 ease: "power3.out"
             });
         });
 
-        gsap.utils.toArray(".project-card-wrap").forEach(card => {
+        // Chapter C: About & Identity Reveal
+        const aboutCards = document.querySelectorAll("#about .hover-target");
+        if (aboutCards.length > 0) {
+            gsap.from(aboutCards, {
+                scrollTrigger: {
+                    trigger: "#about",
+                    start: "top 78%"
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.7,
+                stagger: 0.14,
+                ease: "power3.out"
+            });
+        }
+
+        // Chapter D: Curated Projects Showcase (Staggered Cards)
+        gsap.utils.toArray(".project-card-wrap").forEach((card, idx) => {
             gsap.from(card, {
                 scrollTrigger: {
                     trigger: card,
                     start: "top 88%"
                 },
-                y: 50,
+                y: 45,
                 opacity: 0,
                 duration: 0.65,
+                delay: (idx % 2) * 0.1,
                 ease: "power3.out"
             });
         });
+
+        // Chapter E: AI Automations Terminal Reveal
+        const simTerminal = document.querySelector(".sim-terminal");
+        if (simTerminal) {
+            gsap.from(simTerminal, {
+                scrollTrigger: {
+                    trigger: "#automations",
+                    start: "top 75%"
+                },
+                scale: 0.97,
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        }
+
+        // Chapter F: Journey & Milestones (Timeline Node Stagger)
+        const journeyNodes = document.querySelectorAll("#journey .relative.pl-8");
+        if (journeyNodes.length > 0) {
+            gsap.from(journeyNodes, {
+                scrollTrigger: {
+                    trigger: "#journey",
+                    start: "top 80%"
+                },
+                x: -30,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.15,
+                ease: "power2.out"
+            });
+        }
+
+        // Chapter G: Contact Finale Transition
+        const contactBox = document.querySelector("#contact .brutal-shadow-lg");
+        if (contactBox) {
+            gsap.from(contactBox, {
+                scrollTrigger: {
+                    trigger: "#contact",
+                    start: "top 82%"
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        }
     }
 
 

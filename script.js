@@ -322,36 +322,293 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* ========================================================
-       5. HERO STAGE TOGGLE (Spline 3D Robot vs Ambient Video)
+       5. NATIVE INTERACTIVE 3D HERO STAGE (Blender MCP Assets)
        ======================================================== */
-    const stageVideoBtn = document.getElementById("stageVideoBtn");
-    const stage3DBtn = document.getElementById("stage3DBtn");
-    const heroVideoWrapper = document.getElementById("heroVideoWrapper");
-    const heroSplineWrapper = document.getElementById("heroSplineWrapper");
+    function initHero3DStage() {
+        const canvas = document.getElementById("hero3DCanvas");
+        const container = document.getElementById("hero3DWrapper");
+        const loadingEl = document.getElementById("hero3DLoading");
+        const modelNameEl = document.getElementById("hero3DModelName");
+        const btnHero = document.getElementById("switchModelHeroBtn");
+        const btnMascot = document.getElementById("switchModelMascotBtn");
 
-    if (stageVideoBtn && stage3DBtn && heroVideoWrapper && heroSplineWrapper) {
-        stageVideoBtn.addEventListener("click", () => {
-            sound.playClick();
-            stageVideoBtn.classList.add("bg-a1", "text-black");
-            stageVideoBtn.classList.remove("bg-card", "text-text");
-            stage3DBtn.classList.remove("bg-a1", "text-black");
-            stage3DBtn.classList.add("bg-card", "text-text");
+        if (!canvas || !container || typeof THREE === "undefined") {
+            return;
+        }
 
-            heroVideoWrapper.style.display = "block";
-            heroSplineWrapper.style.display = "none";
+        // 1. Scene, Camera, Renderer
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x07090e);
+
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+        camera.position.set(0, 0, 5.2);
+
+        const renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            antialias: true,
+            alpha: true,
+            powerPreference: "high-performance"
+        });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.25;
+
+        // 2. Cinematic Studio Lighting (Calibrated for Black Ceramic & Titanium)
+        const ambientLight = new THREE.AmbientLight(0x0a0c10, 1.2);
+        scene.add(ambientLight);
+
+        // Key Light: Crisp neutral white studio softbox
+        const keyLight = new THREE.DirectionalLight(0xffffff, 3.8);
+        keyLight.position.set(4, 5, 5);
+        scene.add(keyLight);
+
+        // Rim Light: Cool titanium specular rim carving the silhouette
+        const rimLight = new THREE.DirectionalLight(0x94a3b8, 4.2);
+        rimLight.position.set(-5, 4, -4);
+        scene.add(rimLight);
+
+        // Acid / Neon-Lime Accent Point Light (#e4ff00)
+        const neonPointLight = new THREE.PointLight(0xe4ff00, 2.2, 8);
+        neonPointLight.position.set(0, 0, 1.2);
+        scene.add(neonPointLight);
+
+        // 3. Floating Cyber Particle Field (Restrained Acid-Lime & Titanium Stardust)
+        const particleCount = 90;
+        const particleGeometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+
+        const colorLime = new THREE.Color(0xe4ff00);
+        const colorTitanium = new THREE.Color(0x94a3b8);
+
+        for (let i = 0; i < particleCount; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 8;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 6;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 6;
+
+            const c = (i % 3 === 0) ? colorLime : colorTitanium;
+            colors[i * 3] = c.r;
+            colors[i * 3 + 1] = c.g;
+            colors[i * 3 + 2] = c.b;
+        }
+
+        particleGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+        particleGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
+        const particleMaterial = new THREE.PointsMaterial({
+            size: 0.04,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.65,
+            blending: THREE.AdditiveBlending
         });
 
-        stage3DBtn.addEventListener("click", () => {
-            sound.playClick();
-            stage3DBtn.classList.add("bg-a1", "text-black");
-            stage3DBtn.classList.remove("bg-card", "text-text");
-            stageVideoBtn.classList.remove("bg-a1", "text-black");
-            stageVideoBtn.classList.add("bg-card", "text-text");
+        const particles = new THREE.Points(particleGeometry, particleMaterial);
+        scene.add(particles);
 
-            heroVideoWrapper.style.display = "none";
-            heroSplineWrapper.style.display = "block";
+        // 4. Model Group & Loader
+        const modelGroup = new THREE.Group();
+        scene.add(modelGroup);
+
+        const loader = new THREE.GLTFLoader();
+        let activeModel = null;
+        let isMascot = false;
+
+        const modelConfigs = {
+            hero: {
+                url: "portfolio-3d/public/models/hero-sculpture.glb",
+                name: "MECHANICAL SCULPTURE // ASSET A",
+                subtitle: "BLACK CERAMIC, TITANIUM & NEON-LIME CORE",
+                scale: 0.88,
+                yOffset: 0
+            },
+            mascot: {
+                url: "portfolio-3d/public/models/hero-mascot.glb",
+                name: "AUTONOMOUS MASCOT // ASSET B",
+                subtitle: "MAGNETIC REPULSOR CHASSIS & OPTIC VISOR",
+                scale: 0.95,
+                yOffset: -0.2
+            }
+        };
+
+        const subtitleEl = container.querySelector(".text-\\[9px\\]");
+
+        function loadModel(type) {
+            if (loadingEl) loadingEl.style.opacity = "1";
+            const config = modelConfigs[type];
+
+            loader.load(
+                config.url,
+                (gltf) => {
+                    if (activeModel) {
+                        modelGroup.remove(activeModel);
+                    }
+
+                    activeModel = gltf.scene;
+                    activeModel.scale.setScalar(config.scale);
+
+                    // Center mesh geometry
+                    const box = new THREE.Box3().setFromObject(activeModel);
+                    const center = box.getCenter(new THREE.Vector3());
+                    activeModel.position.sub(center);
+                    activeModel.position.y += config.yOffset;
+
+                    modelGroup.add(activeModel);
+
+                    if (modelNameEl) modelNameEl.innerText = config.name;
+                    if (subtitleEl && config.subtitle) subtitleEl.innerText = config.subtitle;
+                    if (loadingEl) loadingEl.style.opacity = "0";
+                },
+                undefined,
+                (err) => {
+                    console.warn("Could not load model:", config.url, err);
+                    if (loadingEl) loadingEl.style.opacity = "0";
+                }
+            );
+        }
+
+        // Initial Load
+        loadModel("hero");
+
+        // Switcher Buttons
+        if (btnHero && btnMascot) {
+            btnHero.addEventListener("click", () => {
+                sound.playClick();
+                btnHero.classList.add("bg-a1", "text-black");
+                btnHero.classList.remove("bg-black/80", "text-white");
+                btnMascot.classList.remove("bg-a1", "text-black");
+                btnMascot.classList.add("bg-black/80", "text-white");
+                isMascot = false;
+                loadModel("hero");
+            });
+
+            btnMascot.addEventListener("click", () => {
+                sound.playClick();
+                btnMascot.classList.add("bg-a1", "text-black");
+                btnMascot.classList.remove("bg-black/80", "text-white");
+                btnHero.classList.remove("bg-a1", "text-black");
+                btnHero.classList.add("bg-black/80", "text-white");
+                isMascot = true;
+                loadModel("mascot");
+            });
+        }
+
+        // 5. Interaction: Mouse Tilt & Orbit Drag
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+        let currentRotationX = 0;
+        let currentRotationY = 0;
+
+        let isDragging = false;
+        let previousMouseX = 0;
+        let previousMouseY = 0;
+        let dragVelocityX = 0;
+        let dragVelocityY = 0;
+
+        // Mouse Parallax across viewport
+        window.addEventListener("mousemove", (e) => {
+            if (!isDragging && motionEnabled) {
+                const nx = (e.clientX / window.innerWidth) * 2 - 1;
+                const ny = (e.clientY / window.innerHeight) * 2 - 1;
+                targetRotationY = nx * 0.45;
+                targetRotationX = -ny * 0.35;
+            }
         });
+
+        // Direct Drag on 3D Container
+        container.addEventListener("pointerdown", (e) => {
+            isDragging = true;
+            previousMouseX = e.clientX;
+            previousMouseY = e.clientY;
+            dragVelocityX = 0;
+            dragVelocityY = 0;
+        });
+
+        window.addEventListener("pointermove", (e) => {
+            if (isDragging) {
+                const deltaX = e.clientX - previousMouseX;
+                const deltaY = e.clientY - previousMouseY;
+
+                dragVelocityX = deltaX * 0.006;
+                dragVelocityY = deltaY * 0.006;
+
+                targetRotationY += dragVelocityX;
+                targetRotationX += dragVelocityY;
+
+                previousMouseX = e.clientX;
+                previousMouseY = e.clientY;
+            }
+        });
+
+        window.addEventListener("pointerup", () => {
+            isDragging = false;
+        });
+
+        // 6. Resize Handling
+        window.addEventListener("resize", () => {
+            if (!container) return;
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+        });
+
+        // 7. Render Loop with Viewport Visibility Observer
+        let clock = new THREE.Clock();
+        let isVisible = true;
+        let animationFrameId = null;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isVisible = entry.isIntersecting;
+                if (isVisible && !animationFrameId) {
+                    animate();
+                }
+            });
+        }, { threshold: 0.05 });
+        observer.observe(container);
+
+        function animate() {
+            if (!isVisible) {
+                animationFrameId = null;
+                return;
+            }
+            animationFrameId = requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+
+            if (motionEnabled) {
+                // Organic breathing float
+                modelGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.06;
+
+                // Auto-yaw drift when not dragging
+                if (!isDragging) {
+                    targetRotationY += 0.0025;
+                }
+
+                // Smooth interpolation (lerp)
+                currentRotationX += (targetRotationX - currentRotationX) * 0.06;
+                currentRotationY += (targetRotationY - currentRotationY) * 0.06;
+
+                modelGroup.rotation.x = currentRotationX;
+                modelGroup.rotation.y = currentRotationY;
+
+                // Subtle particle drift
+                particles.rotation.y = elapsedTime * 0.02;
+                particles.rotation.x = Math.sin(elapsedTime * 0.01) * 0.05;
+            } else {
+                modelGroup.rotation.y = targetRotationY;
+                modelGroup.rotation.x = targetRotationX;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
     }
+
+    initHero3DStage();
 
 
     /* ========================================================

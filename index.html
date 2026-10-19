@@ -243,143 +243,118 @@
         <!-- ========================================================
          HERO SECTION: High-Octane Statement & Interactive Stage
          ======================================================== -->
+        <!-- ========================================================
+         HERO SECTION: Interactive Generative Tech Canvas & Editorial Stage
+         ======================================================== -->
         <section id="hero"
-            class="relative min-h-screen pt-28 pb-16 flex flex-col justify-center grid-bg px-4 md:px-8 border-b-4 border-border">
+            class="relative min-h-screen pt-28 pb-16 flex flex-col justify-center px-4 md:px-8 border-b-4 border-border overflow-hidden bg-[#06080e]">
 
-            <div class="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <!-- Full-Bleed Interactive Generative Tech Canvas Layer -->
+            <div class="hero-canvas-wrapper" aria-hidden="true">
+                <canvas id="heroGenerativeCanvas"></canvas>
+                <div id="heroSpotlight" class="hero-cursor-spotlight"></div>
+            </div>
 
-                <!-- Left Column: Bio & Core Pitch -->
-                <div class="lg:col-span-6 flex flex-col items-start hero-anim">
+            <!-- Foreground Content: Bold Editorial Typography & Command Bar -->
+            <div class="hero-foreground max-w-[1500px] mx-auto w-full flex flex-col justify-center my-auto">
 
-                    <!-- Availability & Role Status -->
-                    <div
-                        class="hero-status-pill inline-flex items-center gap-2.5 px-4 py-1.5 bg-card brutal-border brutal-shadow-sm mb-6">
-                        <span class="w-3 h-3 bg-a4 rounded-full animate-pulse border border-border"></span>
-                        <span class="font-mono-label text-xs md:text-sm font-bold uppercase tracking-wider">
-                            STATUS: READY TO SHIP • MCA FIRST YEAR ('27)
-                        </span>
-                    </div>
-
-                    <h1
-                        class="hero-title-main text-6xl sm:text-7xl md:text-8xl lg:text-[7.2rem] font-black leading-[0.92] tracking-tighter mb-6 text-shadow-solid">
-                        K. SRIYUTH.
-                    </h1>
-
-                    <!-- Crisp Multi-Role Badges -->
-                    <div class="hero-badge flex flex-wrap gap-2.5 mb-8">
-                        <span class="brutal-badge badge-lime text-xs md:text-sm px-3.5 py-1.5">INTUITIVE & PASSIONATE
-                            DEV</span>
-                        <span class="brutal-badge badge-coral text-xs md:text-sm px-3.5 py-1.5">AI AUTOMATIONS
-                            ARCHITECT</span>
-                        <span class="brutal-badge badge-cobalt text-xs md:text-sm px-3.5 py-1.5">FRONT-END
-                            ENGINEER</span>
-                    </div>
-
-                    <p
-                        class="hero-desc font-mono-label text-base md:text-lg text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed mb-10">
-                        I don't assemble generic templates. I build tactile, ultra-fast web experiences and autonomous
-                        AI workflows. By reverse-engineering production architectures and wiring real LLM pipelines, I
-                        create software that feels physical, reliable, and unmistakable.
-                    </p>
-
-                    <!-- Call to Action Buttons -->
-                    <div class="hero-ctas flex flex-wrap items-center gap-4 mb-10">
-                        <a href="#projects" class="brutal-btn brutal-btn-primary hover-target">
-                            <i class="ph-bold ph-diamonds-four text-lg"></i> EXPLORE WORK (12+)
-                        </a>
-                        <a href="#automations" class="brutal-btn brutal-btn-coral hover-target">
-                            <i class="ph-bold ph-lightning text-lg"></i> TEST AI AUTOMATIONS
-                        </a>
-                        <a href="K_Sriyuth_Resume.pdf" target="_blank" rel="noopener noreferrer"
-                            class="brutal-btn hover-target">
-                            <i class="ph-bold ph-download-simple text-lg"></i> RESUME (.PDF)
-                        </a>
-                    </div>
-
-                    <!-- Live Meta Bar -->
-                    <div
-                        class="w-full flex flex-wrap items-center justify-between gap-4 pt-6 border-t-2 border-border font-mono-label text-xs font-bold text-slate-600 dark:text-slate-400">
-                        <div class="flex items-center gap-2">
-                            <i class="ph-bold ph-map-pin text-a2 text-base"></i>
-                            <span>HYDERABAD, INDIA</span>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+                    <!-- Left: Grand Title & Bio -->
+                    <div class="lg:col-span-8 flex flex-col items-start hero-anim">
+                        <!-- Availability & System Status -->
+                        <div class="hero-status-pill inline-flex items-center gap-2.5 px-4 py-1.5 bg-card/90 backdrop-blur-md brutal-border brutal-shadow-sm mb-6">
+                            <span class="w-3 h-3 bg-a4 rounded-full animate-pulse border border-border"></span>
+                            <span class="font-mono-label text-xs md:text-sm font-bold uppercase tracking-wider text-slate-200">
+                                STATUS: ONLINE & READY TO SHIP • MCA FIRST YEAR ('27)
+                            </span>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <i class="ph-bold ph-clock text-a3 text-base"></i>
-                            <span>IST: <strong id="currentTime" class="text-text">00:00:00</strong></span>
+
+                        <!-- Massive High-Impact Editorial Typography -->
+                        <h1 class="hero-title-main text-6xl sm:text-7xl md:text-8xl lg:text-[7.6rem] font-black leading-[0.92] tracking-tighter mb-6 text-white select-none">
+                            K. SRIYUTH.
+                        </h1>
+
+                        <!-- Multi-Role Discipline Badges -->
+                        <div class="hero-badge flex flex-wrap gap-2.5 mb-8">
+                            <span class="brutal-badge badge-lime text-xs md:text-sm px-3.5 py-1.5 font-black">FULL-STACK ENGINEER</span>
+                            <span class="brutal-badge badge-coral text-xs md:text-sm px-3.5 py-1.5 font-black">AUTONOMOUS AI AGENTS</span>
+                            <span class="brutal-badge badge-cobalt text-xs md:text-sm px-3.5 py-1.5 font-black">CREATIVE FRONT-END</span>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <i class="ph-bold ph-git-branch text-a4 text-base"></i>
-                            <span>32 PUBLIC REPOSITORIES</span>
+
+                        <!-- Editorial Manifesto -->
+                        <p class="hero-desc font-mono-label text-base md:text-xl text-slate-300 max-w-3xl leading-relaxed mb-10">
+                            Engineering tactile, ultra-fast web architectures and autonomous AI pipelines. Reverse-engineering production systems, optimizing code ASTs, and eliminating AI slop with deterministic precision.
+                        </p>
+
+                        <!-- Action Buttons with Magnetic Feel -->
+                        <div class="hero-ctas flex flex-wrap items-center gap-4 mb-10">
+                            <a href="#projects" class="brutal-btn brutal-btn-primary hover-target magnetic-btn">
+                                <i class="ph-bold ph-diamonds-four text-lg"></i> EXPLORE FEATURED WORK (12+)
+                            </a>
+                            <a href="#automations" class="brutal-btn brutal-btn-coral hover-target magnetic-btn">
+                                <i class="ph-bold ph-git-merge text-lg"></i> ARCHITECTURE NODE GRAPH ↓
+                            </a>
+                            <a href="K_Sriyuth_Resume.pdf" target="_blank" rel="noopener noreferrer" class="brutal-btn hover-target magnetic-btn bg-white/10 text-white hover:bg-white hover:text-black">
+                                <i class="ph-bold ph-download-simple text-lg"></i> RESUME (.PDF)
+                            </a>
                         </div>
                     </div>
 
-                </div>
+                    <!-- Right: Live Telemetry Glass Bento Chip -->
+                    <div class="lg:col-span-4 hero-anim flex flex-col gap-4">
+                        <div class="p-6 bg-[#0e121a]/90 backdrop-blur-xl border-2 border-white/20 brutal-shadow-sm flex flex-col gap-4 text-slate-200">
+                            <div class="flex items-center justify-between pb-3 border-b border-white/10 font-mono text-xs">
+                                <span class="text-[#e4ff00] font-black flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-[#e4ff00] animate-ping"></span>
+                                    GENERATIVE TECH CANVAS
+                                </span>
+                                <span class="text-slate-400 font-bold" id="heroFpsMeter">60 FPS</span>
+                            </div>
 
-                <!-- Right Column: Seamless Cyberpunk Developer Visual & Holographic HUD -->
-                <div class="lg:col-span-6 hero-anim relative flex items-center justify-center mt-8 lg:mt-0">
-                    <div id="heroVisualStage" class="hero-seamless-container select-none">
-                        
-                        <!-- Ambient Neon Glow Core -->
-                        <div class="hero-backdrop-glow"></div>
-                        
-                        <!-- 3D Gyro Parallax Wrapper -->
-                        <div id="heroParallaxWrapper" class="hero-seamless-img-wrapper">
-                            
-                            <!-- Seamless Developer Artwork with Radial Feather Mask -->
-                            <img src="images/hero-developer.png" 
-                                 alt="K. Sriyuth — Developer Battlestation & AI Environment"
-                                 class="hero-seamless-img"
-                                 id="heroArtworkImg">
-                            
-                            <!-- Floating Holographic Badge 1 (Top Left): Live Architecture Telemetry -->
-                            <div class="hero-holo-card -top-3 -left-2 sm:top-2 sm:left-2 flex items-center gap-3">
-                                <span class="w-2.5 h-2.5 rounded-full bg-a1 animate-ping"></span>
-                                <div class="font-mono-label text-[11px] leading-tight">
-                                    <div class="text-a1 font-black uppercase tracking-wider">DEV BATTLESTATION</div>
-                                    <div class="text-[9px] text-slate-300">REACT 18 • NODE 24 • AI WORKFLOWS</div>
+                            <div class="grid grid-cols-2 gap-3 font-mono text-xs">
+                                <div class="p-3 bg-[#07090e] border border-white/10">
+                                    <div class="text-[10px] text-slate-400 uppercase">REPOSITORIES</div>
+                                    <div class="text-lg font-black text-white">32+ ACTIVE</div>
+                                </div>
+                                <div class="p-3 bg-[#07090e] border border-white/10">
+                                    <div class="text-[10px] text-slate-400 uppercase">COMMITS</div>
+                                    <div class="text-lg font-black text-green-400">1,400+</div>
+                                </div>
+                                <div class="p-3 bg-[#07090e] border border-white/10">
+                                    <div class="text-[10px] text-slate-400 uppercase">LOCATION</div>
+                                    <div class="text-sm font-bold text-white">HYDERABAD</div>
+                                </div>
+                                <div class="p-3 bg-[#07090e] border border-white/10">
+                                    <div class="text-[10px] text-slate-400 uppercase">AI RELIABILITY</div>
+                                    <div class="text-sm font-bold text-[#e4ff00]">ZERO SLOP</div>
                                 </div>
                             </div>
 
-                            <!-- Floating Holographic Badge 2 (Top Right): System Status -->
-                            <div class="hero-holo-card -top-3 -right-2 sm:top-4 sm:right-4 hidden sm:flex items-center gap-2.5">
-                                <i class="ph-bold ph-shield-check text-a4 text-base"></i>
-                                <div class="font-mono-label text-[10px] leading-tight text-right">
-                                    <div class="text-white font-bold">ZERO AI SLOP</div>
-                                    <div class="text-[9px] text-a4 font-bold">100% PRODUCTION CODE</div>
-                                </div>
+                            <div class="pt-2 flex items-center justify-between font-mono text-[11px] text-slate-400">
+                                <span>POINTER INTERACTION:</span>
+                                <span class="text-white font-bold">PHYSICS GRAVITY ACTIVE</span>
                             </div>
-
-                            <!-- Floating Glass Code Terminal Card (Bottom Left) -->
-                            <div class="hero-holo-card -bottom-4 -left-2 sm:bottom-4 sm:left-4 max-w-[280px] sm:max-w-[320px]">
-                                <div class="flex items-center justify-between pb-2 mb-2 border-b border-white/10 font-mono-label text-[10px]">
-                                    <span class="text-slate-400 flex items-center gap-1.5">
-                                        <span class="w-2 h-2 rounded-full bg-a2"></span>
-                                        <span>sriyuth.runtime.ts</span>
-                                    </span>
-                                    <span class="text-a1 font-bold">60 FPS</span>
-                                </div>
-                                <pre class="font-mono text-[10px] text-slate-300 leading-relaxed overflow-hidden"><code><span class="text-a5">const</span> dev = {
-  name: <span class="text-a1">"K. Sriyuth"</span>,
-  mindset: <span class="text-a4">"Intuitive & Passionate"</span>,
-  mission: <span class="text-a2">"Automate Everything"</span>
-};</code></pre>
-                            </div>
-
-                            <!-- Floating Stat Chip (Bottom Right) -->
-                            <div class="hero-holo-card -bottom-3 -right-2 sm:bottom-6 sm:right-4 flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded bg-a1/10 border border-a1/30 flex items-center justify-center text-a1 font-black text-sm">
-                                    <i class="ph-bold ph-git-commit"></i>
-                                </div>
-                                <div class="font-mono-label text-[10px] leading-tight">
-                                    <div class="text-white font-bold text-xs">32+ REPOSITORIES</div>
-                                    <div class="text-[9px] text-slate-400">HYDERABAD, INDIA</div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
 
+                <!-- Live Meta Bar at Bottom -->
+                <div class="w-full flex flex-wrap items-center justify-between gap-4 pt-6 border-t-2 border-white/10 font-mono-label text-xs font-bold text-slate-400 mt-8">
+                    <div class="flex items-center gap-2">
+                        <i class="ph-bold ph-map-pin text-[#e4ff00] text-base"></i>
+                        <span class="text-slate-300">HYDERABAD, INDIA</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="ph-bold ph-clock text-[#2e5bff] text-base"></i>
+                        <span>IST: <strong id="currentTime" class="text-white">00:00:00</strong></span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="ph-bold ph-cpu text-[#4ade80] text-base"></i>
+                        <span class="text-slate-300">CLIENT-SIDE GENERATIVE PARTICLES</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="ph-bold ph-git-branch text-purple-400 text-base"></i>
+                        <span class="text-slate-300">REACT 18 • FASTAPI • PYTHON • GSAP</span>
                     </div>
                 </div>
 
@@ -484,10 +459,7 @@
 
 
         <!-- ========================================================
-         INTERACTIVE AI AUTOMATIONS SIMULATOR (The Experience!)
-         ======================================================== -->
-        <!-- ========================================================
-         INTERACTIVE AI AUTOMATIONS & DEV WORKBENCH (Real Functional Engine!)
+         INTERACTIVE AI AUTOMATIONS: Visual Architecture Node Graph
          ======================================================== -->
         <section id="automations" class="py-24 px-4 md:px-8 border-t-4 border-b-4 border-border bg-bg-alt">
             <div class="max-w-[1500px] mx-auto">
@@ -495,283 +467,243 @@
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gs-section-header">
                     <div>
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="brutal-badge badge-mint">LIVE WORKBENCH</span>
-                            <span class="font-mono-label text-xs font-bold text-slate-500">[ 100% CLIENT-SIDE EXECUTION ]</span>
+                            <span class="brutal-badge badge-mint">PIPELINE ARCHITECTURE</span>
+                            <span class="font-mono-label text-xs font-bold text-slate-500">[ REAL-TIME NODE GRAPH ]</span>
                         </div>
-                        <h2 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight">AI AUTOMATIONS & TOOLS.</h2>
+                        <h2 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight">AI AGENT NODE GRAPH.</h2>
                     </div>
                     <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 max-w-lg mt-4 md:mt-0">
-                        Production developer utilities and agent pipelines running in real-time. Clean code ASTs, query live GitHub telemetry from my profile, generate agent boilerplates, or transform JSON schemas to TypeScript.
+                        Visual canvas of production autonomous pipelines. Click any node to open the live telemetry drawer, or hit trigger to pulse animated data packets across the graph.
                     </p>
                 </div>
 
-                <!-- Workbench Main Card -->
-                <div class="workbench-container rounded-none overflow-hidden">
-                    <!-- Top Tab Navigation -->
-                    <div class="flex flex-wrap border-b-2 border-border bg-card">
-                        <button class="workbench-tab active px-5 py-4 font-mono-label text-xs md:text-sm font-black flex items-center gap-2 border-r-2 border-border hover-target" data-panel="refactor">
-                            <i class="ph-bold ph-lightning text-amber-400 text-base"></i>
-                            <span>CODE REFACTOR & CLEANER</span>
+                <!-- Node Graph Controls Header -->
+                <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-[#0a0d14] border-t-4 border-l-4 border-r-4 border-border font-mono text-xs">
+                    <!-- Workflow Presets -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-slate-400 font-bold uppercase tracking-wider hidden sm:inline">WORKFLOW:</span>
+                        <button class="node-workflow-btn px-3 py-1.5 bg-[#e4ff00] text-black font-black border border-white/20 transition-all" data-preset="whatsapp">
+                            <i class="ph-bold ph-whatsapp-logo mr-1"></i> WhatsApp AI Bot
                         </button>
-                        <button class="workbench-tab px-5 py-4 font-mono-label text-xs md:text-sm font-black flex items-center gap-2 border-r-2 border-border hover-target" data-panel="github">
-                            <i class="ph-bold ph-git-branch text-purple-400 text-base"></i>
-                            <span>LIVE GITHUB TELEMETRY</span>
+                        <button class="node-workflow-btn px-3 py-1.5 bg-[#141923] text-slate-300 hover:text-white font-bold border border-white/20 transition-all" data-preset="simpleide">
+                            <i class="ph-bold ph-code mr-1"></i> SimpleIDE AST Agent
                         </button>
-                        <button class="workbench-tab px-5 py-4 font-mono-label text-xs md:text-sm font-black flex items-center gap-2 border-r-2 border-border hover-target" data-panel="workflows">
-                            <i class="ph-bold ph-robot text-emerald-400 text-base"></i>
-                            <span>PROMPT-TO-PIPELINE</span>
-                        </button>
-                        <button class="workbench-tab px-5 py-4 font-mono-label text-xs md:text-sm font-black flex items-center gap-2 hover-target" data-panel="schema">
-                            <i class="ph-bold ph-brackets-curly text-blue-400 text-base"></i>
-                            <span>JSON TO TYPESCRIPT</span>
+                        <button class="node-workflow-btn px-3 py-1.5 bg-[#141923] text-slate-300 hover:text-white font-bold border border-white/20 transition-all" data-preset="ema">
+                            <i class="ph-bold ph-envelope-simple mr-1"></i> EMA Outreach Drip
                         </button>
                     </div>
 
-                    <!-- Panel Subheader -->
-                    <div class="px-6 py-3 bg-[#0d0f17] border-b border-[#232734] flex flex-wrap justify-between items-center gap-4 text-xs font-mono text-slate-400">
-                        <div class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
-                            <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
-                            <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
-                            <span class="ml-2 font-bold text-slate-300" id="wbStatusTitle">MODULE: AST Code Optimizer & Token Reducer</span>
+                    <!-- Trigger Execution Action -->
+                    <div class="flex items-center gap-3">
+                        <button id="triggerPulseBtn" class="brutal-btn brutal-btn-primary px-5 py-2 text-xs font-black flex items-center gap-2">
+                            <i class="ph-bold ph-play text-sm"></i>
+                            <span id="triggerPulseText">TRIGGER PIPELINE PULSE</span>
+                        </button>
+                        <button id="inspectToggleBtn" class="px-3 py-2 bg-[#1b2230] hover:bg-[#252f42] text-slate-200 border border-white/20 font-bold text-xs flex items-center gap-1.5">
+                            <i class="ph-bold ph-sliders text-sm"></i>
+                            <span>INSPECT</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Visual Node Canvas Stage -->
+                <div id="nodeGraphStage" class="node-graph-wrapper relative">
+                    <!-- Subtle Dot Matrix Background -->
+                    <div class="node-graph-bg-grid"></div>
+
+                    <!-- Interactive Dynamic SVG Cable Layer -->
+                    <svg id="graphSvgLayer" class="node-graph-svg-layer">
+                        <defs>
+                            <linearGradient id="cableGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#2e5bff" stop-opacity="0.8" />
+                                <stop offset="100%" stop-color="#e4ff00" stop-opacity="0.8" />
+                            </linearGradient>
+                            <filter id="packetGlow">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                    </svg>
+
+                    <!-- Interactive Graph Nodes Container -->
+                    <div id="graphNodesContainer" class="relative w-full h-[620px] p-6 overflow-x-auto">
+                        
+                        <!-- Col 1: Inbound Webhook -->
+                        <div id="node-webhook" class="node-element selected" style="top: 80px; left: 30px;" data-node="webhook">
+                            <div class="node-port node-port-out"></div>
+                            <div class="flex items-center justify-between mb-2 pb-1 border-b border-white/10 font-mono text-[10px]">
+                                <span class="text-emerald-400 font-bold flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    TRIGGER
+                                </span>
+                                <span class="text-slate-400 node-latency">0.4ms</span>
+                            </div>
+                            <h4 class="font-black text-white text-sm mb-1 node-title">Inbound Webhook</h4>
+                            <p class="font-mono text-[10px] text-slate-400 leading-tight node-detail">POST /api/v1/inbound (HTTP 200)</p>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <span class="text-green-400 flex items-center gap-1.5 font-bold">
-                                <span class="w-2 h-2 rounded-full bg-green-400 animate-ping"></span>
-                                V8 JIT ENGINE READY
-                            </span>
-                            <span class="text-slate-500 hidden sm:inline">|</span>
-                            <span class="text-slate-400 hidden sm:inline">ZERO AI SLOP • DETERMINISTIC</span>
+
+                        <!-- Col 2: HMAC Auth & Security Guard -->
+                        <div id="node-auth" class="node-element" style="top: 80px; left: 260px;" data-node="auth">
+                            <div class="node-port node-port-in"></div>
+                            <div class="node-port node-port-out"></div>
+                            <div class="flex items-center justify-between mb-2 pb-1 border-b border-white/10 font-mono text-[10px]">
+                                <span class="text-blue-400 font-bold">SECURITY</span>
+                                <span class="text-slate-400 node-latency">1.2ms</span>
+                            </div>
+                            <h4 class="font-black text-white text-sm mb-1 node-title">HMAC Auth Guard</h4>
+                            <p class="font-mono text-[10px] text-slate-400 leading-tight node-detail">SHA-256 Digest Signature Verified</p>
+                        </div>
+
+                        <!-- Col 2B: Semantic Intent Router -->
+                        <div id="node-router" class="node-element" style="top: 340px; left: 260px;" data-node="router">
+                            <div class="node-port node-port-in"></div>
+                            <div class="node-port node-port-out"></div>
+                            <div class="flex items-center justify-between mb-2 pb-1 border-b border-white/10 font-mono text-[10px]">
+                                <span class="text-purple-400 font-bold">CLASSIFIER</span>
+                                <span class="text-slate-400 node-latency">18ms</span>
+                            </div>
+                            <h4 class="font-black text-white text-sm mb-1 node-title">Intent Router</h4>
+                            <p class="font-mono text-[10px] text-slate-400 leading-tight node-detail">Embedding Distance & Confidence (99.2%)</p>
+                        </div>
+
+                        <!-- Col 3: Autonomous AI Agent -->
+                        <div id="node-agent" class="node-element" style="top: 80px; left: 520px;" data-node="agent">
+                            <div class="node-port node-port-in"></div>
+                            <div class="node-port node-port-out"></div>
+                            <div class="flex items-center justify-between mb-2 pb-1 border-b border-white/10 font-mono text-[10px]">
+                                <span class="text-[#e4ff00] font-bold">AI REASONING</span>
+                                <span class="text-slate-400 node-latency">420ms</span>
+                            </div>
+                            <h4 class="font-black text-white text-sm mb-1 node-title">Autonomous Agent</h4>
+                            <p class="font-mono text-[10px] text-slate-400 leading-tight node-detail">Claude 3.5 / GPT-4o Tool Triage</p>
+                        </div>
+
+                        <!-- Col 3B: AST Diff Parser -->
+                        <div id="node-ast" class="node-element" style="top: 340px; left: 520px;" data-node="ast">
+                            <div class="node-port node-port-in"></div>
+                            <div class="node-port node-port-out"></div>
+                            <div class="flex items-center justify-between mb-2 pb-1 border-b border-white/10 font-mono text-[10px]">
+                                <span class="text-amber-400 font-bold">EXECUTION</span>
+                                <span class="text-slate-400 node-latency">14ms</span>
+                            </div>
+                            <h4 class="font-black text-white text-sm mb-1 node-title">AST Diff Validator</h4>
+                            <p class="font-mono text-[10px] text-slate-400 leading-tight node-detail">Babel Tree Parser & Lint Check</p>
+                        </div>
+
+                        <!-- Col 4: State Persistence (DB) -->
+                        <div id="node-db" class="node-element" style="top: 80px; left: 780px;" data-node="db">
+                            <div class="node-port node-port-in"></div>
+                            <div class="node-port node-port-out"></div>
+                            <div class="flex items-center justify-between mb-2 pb-1 border-b border-white/10 font-mono text-[10px]">
+                                <span class="text-cyan-400 font-bold">PERSISTENCE</span>
+                                <span class="text-slate-400 node-latency">3.5ms</span>
+                            </div>
+                            <h4 class="font-black text-white text-sm mb-1 node-title">Postgres / Redis</h4>
+                            <p class="font-mono text-[10px] text-slate-400 leading-tight node-detail">ACID Lead Record & Rate-Limit Token</p>
+                        </div>
+
+                        <!-- Col 5: Dispatch Cloud Egress -->
+                        <div id="node-dispatch" class="node-element" style="top: 210px; left: 1040px;" data-node="dispatch">
+                            <div class="node-port node-port-in"></div>
+                            <div class="flex items-center justify-between mb-2 pb-1 border-b border-white/10 font-mono text-[10px]">
+                                <span class="text-green-400 font-bold">EGRESS SINK</span>
+                                <span class="text-slate-400 node-latency">28ms</span>
+                            </div>
+                            <h4 class="font-black text-white text-sm mb-1 node-title">Cloud Dispatch</h4>
+                            <p class="font-mono text-[10px] text-slate-400 leading-tight node-detail">Meta Cloud API HTTP 200 Output</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Slide-in Interactive Node Inspector Drawer -->
+                    <div id="nodeInspectDrawer" class="inspect-drawer open">
+                        <!-- Drawer Header -->
+                        <div class="p-4 border-b border-white/15 flex items-center justify-between bg-[#111622]">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#e4ff00]"></span>
+                                <h3 id="drawerNodeName" class="font-black text-sm text-white">Inbound Webhook</h3>
+                                <span id="drawerNodeType" class="font-mono text-[10px] px-2 py-0.5 bg-white/10 text-slate-300 border border-white/20">TRIGGER</span>
+                            </div>
+                            <button id="closeDrawerBtn" class="w-7 h-7 rounded bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center font-bold text-sm">
+                                ✕
+                            </button>
+                        </div>
+
+                        <!-- Drawer Body -->
+                        <div class="p-5 flex-1 overflow-y-auto flex flex-col gap-5 text-slate-200 font-mono text-xs">
+                            <!-- Telemetry Strip -->
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="p-2.5 bg-[#07090e] border border-white/10">
+                                    <div class="text-[9px] text-slate-400 uppercase">EXECUTION LATENCY</div>
+                                    <div id="drawerLatency" class="text-sm font-bold text-green-400">0.4ms</div>
+                                </div>
+                                <div class="p-2.5 bg-[#07090e] border border-white/10">
+                                    <div class="text-[9px] text-slate-400 uppercase">HEALTH STATUS</div>
+                                    <div id="drawerStatus" class="text-sm font-bold text-white">OPERATIONAL (200)</div>
+                                </div>
+                            </div>
+
+                            <!-- Inbound Payload -->
+                            <div>
+                                <label class="text-[10px] text-slate-400 font-bold uppercase block mb-1.5 flex items-center justify-between">
+                                    <span>INBOUND PAYLOAD</span>
+                                    <span class="text-[9px] text-slate-500">JSON</span>
+                                </label>
+                                <pre id="drawerInboundJson" class="p-3 bg-[#05060a] border border-white/10 text-[11px] text-slate-300 overflow-x-auto whitespace-pre leading-relaxed max-h-40">{
+  "sender": "+91-9876543210",
+  "eventType": "messages.received",
+  "text": "Need pricing for enterprise deployment."
+}</pre>
+                            </div>
+
+                            <!-- Transformation Logic -->
+                            <div>
+                                <label class="text-[10px] text-slate-400 font-bold uppercase block mb-1.5 flex items-center justify-between">
+                                    <span>INTERNAL LOGIC / CODE</span>
+                                    <span class="text-[9px] text-slate-500">TYPESCRIPT</span>
+                                </label>
+                                <pre id="drawerLogicCode" class="p-3 bg-[#05060a] border border-white/10 text-[11px] text-[#e4ff00] overflow-x-auto whitespace-pre leading-relaxed max-h-44">// Ingest payload & pass to HMAC verifier
+export async function handler(req: Request) {
+  const body = await req.json();
+  return next(body);
+}</pre>
+                            </div>
+
+                            <!-- Outbound Payload -->
+                            <div>
+                                <label class="text-[10px] text-slate-400 font-bold uppercase block mb-1.5 flex items-center justify-between">
+                                    <span>OUTBOUND STATE</span>
+                                    <span class="text-[9px] text-slate-500">FORMATTED</span>
+                                </label>
+                                <pre id="drawerOutboundJson" class="p-3 bg-[#05060a] border border-white/10 text-[11px] text-slate-300 overflow-x-auto whitespace-pre leading-relaxed max-h-36">{
+  "status": "FORWARDED_TO_SECURITY",
+  "correlationId": "cor_99812a"
+}</pre>
+                            </div>
+
+                            <!-- Action button inside drawer -->
+                            <button id="testNodeBtn" class="brutal-btn brutal-btn-primary w-full py-2.5 text-xs font-black flex items-center justify-center gap-2 mt-auto">
+                                <i class="ph-bold ph-lightning text-sm"></i>
+                                <span>TEST EXECUTE NODE</span>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Workbench Panels Container -->
-                    <div class="p-4 md:p-6 bg-[#090b10] text-slate-100 min-h-[500px]">
+                </div>
 
-                        <!-- PANEL 1: Code Refactor & Cleaner -->
-                        <div id="wbPanelRefactor" class="wb-panel block">
-                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                                <!-- Left: Input -->
-                                <div class="lg:col-span-6 flex flex-col gap-3">
-                                    <div class="flex items-center justify-between">
-                                        <label class="font-mono-label text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                                            <i class="ph-bold ph-code"></i> Source Code Input (JS / TS)
-                                        </label>
-                                        <div class="flex gap-2 font-mono text-xs">
-                                            <button id="wbLoadSampleBtn" class="px-2.5 py-1 bg-card hover:bg-slate-700 text-slate-200 border border-border text-[11px] font-bold transition-colors">
-                                                LOAD DIRTY SAMPLE
-                                            </button>
-                                            <button id="wbClearCodeBtn" class="px-2 py-1 text-slate-400 hover:text-white text-[11px] font-bold">
-                                                CLEAR
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <textarea id="wbCodeInput" class="workbench-editor w-full h-[280px] p-4 text-xs leading-relaxed rounded-none font-mono" placeholder="// Paste dirty JavaScript / TypeScript here..."></textarea>
-                                    
-                                    <!-- Options & Trigger -->
-                                    <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
-                                        <div class="flex flex-wrap items-center gap-3 text-xs font-mono text-slate-300">
-                                            <label class="flex items-center gap-1.5 cursor-pointer">
-                                                <input type="checkbox" id="wbOptLogs" checked class="accent-[#e4ff00]">
-                                                <span>Strip console.log</span>
-                                            </label>
-                                            <label class="flex items-center gap-1.5 cursor-pointer">
-                                                <input type="checkbox" id="wbOptComments" checked class="accent-[#e4ff00]">
-                                                <span>Remove dead comments</span>
-                                            </label>
-                                            <label class="flex items-center gap-1.5 cursor-pointer">
-                                                <input type="checkbox" id="wbOptWhitespace" checked class="accent-[#e4ff00]">
-                                                <span>Compress space</span>
-                                            </label>
-                                        </div>
-                                        <button id="wbRunRefactorBtn" class="brutal-btn brutal-btn-primary px-6 py-2.5 text-xs font-black flex items-center gap-2">
-                                            <i class="ph-bold ph-magic-wand text-base"></i>
-                                            <span>REFACTOR & OPTIMIZE</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Right: Clean Output & Metrics -->
-                                <div class="lg:col-span-6 flex flex-col gap-3">
-                                    <div class="flex items-center justify-between">
-                                        <label class="font-mono-label text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                                            <i class="ph-bold ph-check-circle text-green-400"></i> Clean AST Output
-                                        </label>
-                                        <button id="wbCopyCodeBtn" class="px-3 py-1 bg-[#232734] hover:bg-slate-700 text-green-400 font-mono text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition-colors">
-                                            <i class="ph-bold ph-copy"></i>
-                                            <span id="wbCopyText">COPY CODE</span>
-                                        </button>
-                                    </div>
-                                    <div id="wbCodeOutput" class="workbench-editor w-full h-[280px] p-4 text-xs leading-relaxed overflow-auto font-mono whitespace-pre bg-[#050608]">
-// Press "REFACTOR & OPTIMIZE" or "LOAD DIRTY SAMPLE" to test the live optimizer.
-                                    </div>
-                                    <!-- Telemetry Strip -->
-                                    <div class="p-3 bg-[#13151b] border border-[#232734] font-mono text-xs flex flex-wrap items-center justify-between gap-2 text-slate-300">
-                                        <div class="flex items-center gap-4">
-                                            <span>INPUT: <strong id="wbInBytes" class="text-white">0 B</strong></span>
-                                            <span>OUTPUT: <strong id="wbOutBytes" class="text-green-400">0 B</strong></span>
-                                            <span>REDUCTION: <strong id="wbReductionPct" class="text-[#e4ff00]">0%</strong></span>
-                                        </div>
-                                        <span class="text-slate-400 text-[11px]" id="wbExecTime">EXEC: &lt;1ms</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- PANEL 2: Live GitHub Telemetry -->
-                        <div id="wbPanelGithub" class="wb-panel hidden">
-                            <div class="flex flex-col gap-6">
-                                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-[#232734]">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-full bg-[#181d28] border border-slate-700 flex items-center justify-center text-xl text-white font-black">
-                                            <i class="ph-bold ph-github-logo"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-black text-white text-base">@lucky4-git1 Repositories</h4>
-                                            <p class="font-mono text-xs text-slate-400">Live synchronization via GitHub REST API v3</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
-                                        <input type="text" id="wbRepoSearch" placeholder="Filter repositories..." class="bg-[#13151b] border border-[#232734] px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-[#e4ff00] w-full md:w-48">
-                                        <select id="wbRepoLangFilter" class="bg-[#13151b] border border-[#232734] px-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-[#e4ff00]">
-                                            <option value="ALL">All Languages</option>
-                                            <option value="TypeScript">TypeScript</option>
-                                            <option value="JavaScript">JavaScript</option>
-                                            <option value="Python">Python</option>
-                                            <option value="HTML">HTML / CSS</option>
-                                        </select>
-                                        <button id="wbRefreshGithubBtn" class="brutal-btn brutal-btn-primary px-3 py-1.5 text-xs font-black flex items-center gap-1.5">
-                                            <i class="ph-bold ph-arrows-clockwise text-sm"></i>
-                                            <span>SYNC LIVE</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Repos Grid -->
-                                <div id="wbRepoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[460px] overflow-y-auto pr-2">
-                                    <!-- Dynamic cards injected via JS -->
-                                    <div class="p-6 bg-[#13151b] border border-[#232734] col-span-full text-center font-mono text-xs text-slate-400">
-                                        <i class="ph-bold ph-spinner animate-spin text-2xl text-[#e4ff00] mb-2 block"></i>
-                                        Connecting to api.github.com/users/lucky4-git1/repos...
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- PANEL 3: Prompt to Agent Pipeline -->
-                        <div id="wbPanelWorkflows" class="wb-panel hidden">
-                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                                <div class="lg:col-span-5 flex flex-col gap-4">
-                                    <div>
-                                        <label class="font-mono-label text-xs font-bold text-slate-300 uppercase tracking-wider block mb-2">
-                                            Select Automation Architecture
-                                        </label>
-                                        <select id="wbWorkflowPreset" class="w-full bg-[#13151b] border-2 border-border p-3 font-mono text-xs text-white focus:outline-none focus:border-[#e4ff00]">
-                                            <option value="whatsapp">WhatsApp Business AI Webhook (FastAPI + Meta Cloud API)</option>
-                                            <option value="simpleide">SimpleIDE Desktop Agent (Electron + AST Diff Parser)</option>
-                                            <option value="ema">EMA Engine (Email Drip Automation + Event Ingestion)</option>
-                                            <option value="rewritebot">RewriteBot Edge Worker (Vercel Edge Functions + Streaming)</option>
-                                            <option value="scraping">Autonomous Web Research Scraper (Playwright + Schema Extraction)</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="grid grid-cols-2 gap-3">
-                                        <div>
-                                            <label class="font-mono-label text-xs font-bold text-slate-300 uppercase tracking-wider block mb-1">
-                                                Runtime Target
-                                            </label>
-                                            <select id="wbWorkflowRuntime" class="w-full bg-[#13151b] border border-[#232734] p-2.5 font-mono text-xs text-white focus:outline-none focus:border-[#e4ff00]">
-                                                <option value="typescript">Node.js (TypeScript)</option>
-                                                <option value="python">Python 3.11+ (AsyncIO)</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label class="font-mono-label text-xs font-bold text-slate-300 uppercase tracking-wider block mb-1">
-                                                AI Inference Model
-                                            </label>
-                                            <select id="wbWorkflowModel" class="w-full bg-[#13151b] border border-[#232734] p-2.5 font-mono text-xs text-white focus:outline-none focus:border-[#e4ff00]">
-                                                <option value="claude">Claude 3.5 Sonnet</option>
-                                                <option value="gpt4o">OpenAI GPT-4o</option>
-                                                <option value="deepseek">DeepSeek V3 / R1</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label class="font-mono-label text-xs font-bold text-slate-300 uppercase tracking-wider block mb-1">
-                                            Prompt Customization / Context
-                                        </label>
-                                        <textarea id="wbWorkflowCustomPrompt" class="w-full h-24 p-3 bg-[#13151b] border border-[#232734] font-mono text-xs text-slate-200 focus:outline-none focus:border-[#e4ff00]" placeholder="Add custom constraints, e.g.: 'Add HMAC signature validation, redis rate-limiting and structured JSON output.'"></textarea>
-                                    </div>
-
-                                    <button id="wbGenerateWorkflowBtn" class="brutal-btn brutal-btn-primary py-3 font-black text-xs flex items-center justify-center gap-2">
-                                        <i class="ph-bold ph-cpu text-base"></i>
-                                        <span>COMPILE PRODUCTION PIPELINE</span>
-                                    </button>
-                                </div>
-
-                                <div class="lg:col-span-7 flex flex-col gap-3">
-                                    <div class="flex items-center justify-between">
-                                        <label class="font-mono-label text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                                            <i class="ph-bold ph-terminal-window text-[#e4ff00]"></i> Generated Pipeline Script
-                                        </label>
-                                        <button id="wbCopyWorkflowBtn" class="px-3 py-1 bg-[#232734] hover:bg-slate-700 text-green-400 font-mono text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition-colors">
-                                            <i class="ph-bold ph-copy"></i>
-                                            <span id="wbCopyWorkflowText">COPY PIPELINE</span>
-                                        </button>
-                                    </div>
-                                    <pre id="wbWorkflowCode" class="workbench-editor w-full h-[360px] p-4 text-xs leading-relaxed overflow-auto font-mono whitespace-pre bg-[#050608] text-slate-200"></pre>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- PANEL 4: JSON & Schema to TypeScript -->
-                        <div id="wbPanelSchema" class="wb-panel hidden">
-                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                                <div class="lg:col-span-6 flex flex-col gap-3">
-                                    <div class="flex items-center justify-between">
-                                        <label class="font-mono-label text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                                            <i class="ph-bold ph-file-json"></i> Raw JSON Payload
-                                        </label>
-                                        <div class="flex gap-2 font-mono text-xs">
-                                            <button id="wbSampleJsonBtn" class="px-2.5 py-1 bg-card hover:bg-slate-700 text-slate-200 border border-border text-[11px] font-bold">
-                                                LOAD SAMPLE JSON
-                                            </button>
-                                            <button id="wbMinifyJsonBtn" class="px-2 py-1 text-slate-300 hover:text-white text-[11px] font-bold">
-                                                MINIFY
-                                            </button>
-                                            <button id="wbPrettifyJsonBtn" class="px-2 py-1 text-slate-300 hover:text-white text-[11px] font-bold">
-                                                BEAUTIFY
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <textarea id="wbJsonInput" class="workbench-editor w-full h-[320px] p-4 text-xs leading-relaxed font-mono" placeholder="Paste your raw JSON payload here..."></textarea>
-                                    <button id="wbGenTsBtn" class="brutal-btn brutal-btn-primary py-2.5 text-xs font-black flex items-center justify-center gap-2">
-                                        <i class="ph-bold ph-code-block text-base"></i>
-                                        <span>GENERATE STRICT TYPESCRIPT TYPES</span>
-                                    </button>
-                                </div>
-
-                                <div class="lg:col-span-6 flex flex-col gap-3">
-                                    <div class="flex items-center justify-between">
-                                        <label class="font-mono-label text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                                            <i class="ph-bold ph-shield-check text-blue-400"></i> Generated TypeScript Interfaces
-                                        </label>
-                                        <button id="wbCopyTsBtn" class="px-3 py-1 bg-[#232734] hover:bg-slate-700 text-blue-400 font-mono text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition-colors">
-                                            <i class="ph-bold ph-copy"></i>
-                                            <span id="wbCopyTsText">COPY TYPESCRIPT</span>
-                                        </button>
-                                    </div>
-                                    <pre id="wbTsOutput" class="workbench-editor w-full h-[320px] p-4 text-xs leading-relaxed overflow-auto font-mono whitespace-pre bg-[#050608] text-blue-200">
-// Generated TypeScript interfaces will appear here in real-time.
-                                    </pre>
-                                    <div id="wbJsonValidationStatus" class="p-2.5 bg-[#13151b] border border-[#232734] font-mono text-xs text-slate-400">
-                                        Status: Awaiting JSON payload.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                <!-- Node Graph Footer Telemetry -->
+                <div class="p-4 bg-[#0a0d14] border-b-4 border-l-4 border-r-4 border-border flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-slate-400">
+                    <div class="flex items-center gap-4">
+                        <span>PIPELINE HEALTH: <strong class="text-green-400">100% OPERATIONAL</strong></span>
+                        <span class="hidden sm:inline">|</span>
+                        <span class="hidden sm:inline">TOTAL NODES: <strong class="text-white">7 CONNECTED</strong></span>
+                    </div>
+                    <div class="flex items-center gap-2 text-[#e4ff00]">
+                        <span class="w-2 h-2 rounded-full bg-[#e4ff00] animate-ping"></span>
+                        <span>INTERACTIVE NODE CANVAS READY</span>
                     </div>
                 </div>
 

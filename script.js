@@ -357,1293 +357,486 @@ document.addEventListener("DOMContentLoaded", () => {
             } else if (action === "simulator") {
                 const el = document.querySelector("#automations");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
-                const refactorTab = document.querySelector('[data-panel="refactor"]');
-                if (refactorTab) refactorTab.click();
+            } else if (action === "simulator") {
+                const el = document.querySelector("#automations");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                const triggerBtn = document.getElementById("triggerPulseBtn");
+                if (triggerBtn) triggerBtn.click();
             }
         });
     });
 
     /* ========================================================
-       5. SEAMLESS HERO 3D GYRO-PARALLAX & TILT
+       5. INTERACTIVE GENERATIVE TECH CANVAS & SPOTLIGHT
        ======================================================== */
-    function initHeroParallax() {
-        const stage = document.getElementById("heroVisualStage");
-        const wrapper = document.getElementById("heroParallaxWrapper");
-        const cards = document.querySelectorAll(".hero-holo-card");
-        if (!stage || !wrapper) return;
+    function initHeroGenerativeCanvas() {
+        const canvas = document.getElementById("heroGenerativeCanvas");
+        const spotlight = document.getElementById("heroSpotlight");
+        const fpsMeter = document.getElementById("heroFpsMeter");
+        if (!canvas) return;
 
-        let mouseX = 0, mouseY = 0;
-        let currentX = 0, currentY = 0;
+        const ctx = canvas.getContext("2d");
+        let width = 0, height = 0;
+        let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        function resize() {
+            const rect = canvas.getBoundingClientRect();
+            width = rect.width;
+            height = rect.height;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        let mouseX = width / 2;
+        let mouseY = height / 2;
+        let targetMouseX = width / 2;
+        let targetMouseY = height / 2;
+        let spotX = width / 2;
+        let spotY = height / 2;
+        let isPointerActive = false;
 
         window.addEventListener("mousemove", (e) => {
-            const rect = stage.getBoundingClientRect();
-            // Calculate relative to stage center
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            // Normalized -1 to +1
-            mouseX = (e.clientX - centerX) / (window.innerWidth * 0.5);
-            mouseY = (e.clientY - centerY) / (window.innerHeight * 0.5);
-            mouseX = Math.max(-1, Math.min(1, mouseX));
-            mouseY = Math.max(-1, Math.min(1, mouseY));
+            const rect = canvas.getBoundingClientRect();
+            targetMouseX = e.clientX - rect.left;
+            targetMouseY = e.clientY - rect.top;
+            isPointerActive = true;
         });
 
-        function renderParallax() {
-            // Smooth lerp for buttery smooth motion
-            currentX += (mouseX - currentX) * 0.08;
-            currentY += (mouseY - currentY) * 0.08;
+        window.addEventListener("mouseleave", () => {
+            isPointerActive = false;
+        });
 
-            const rotX = -currentY * 10;
-            const rotY = currentX * 12;
+        const NODE_COUNT = Math.max(50, Math.min(100, Math.floor((width * height) / 12000)));
+        const nodes = [];
 
-            wrapper.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
-
-            cards.forEach((card, idx) => {
-                const depth = (idx + 1) * 7;
-                const transX = currentX * depth;
-                const transY = currentY * depth;
-                card.style.transform = `translate3d(${transX.toFixed(1)}px, ${transY.toFixed(1)}px, ${depth * 2}px)`;
+        for (let i = 0; i < NODE_COUNT; i++) {
+            nodes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.7,
+                vy: (Math.random() - 0.5) * 0.7,
+                radius: Math.random() * 2.2 + 1.2,
+                baseAlpha: Math.random() * 0.45 + 0.35,
+                hue: Math.random() > 0.8 ? "lime" : "slate"
             });
-
-            requestAnimationFrame(renderParallax);
         }
 
-        requestAnimationFrame(renderParallax);
-    }
-    initHeroParallax();
+        let frameCount = 0;
+        let lastFpsUpdate = performance.now();
 
-    /* ========================================================
-       5B. NATIVE INTERACTIVE 3D HERO STAGE (Fallback check)
-       ======================================================== */
-    function initHero3DStage() {
-        const canvas = document.getElementById("hero3DCanvas");
-        const container = document.getElementById("hero3DWrapper");
-        if (!canvas || !container || typeof THREE === "undefined") {
-            return;
-        }
+        function animateCanvas(now) {
+            mouseX += (targetMouseX - mouseX) * 0.1;
+            mouseY += (targetMouseY - mouseY) * 0.1;
 
-        // 1. Scene, Camera, Renderer
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x07090e);
-
-        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-        camera.position.set(0, 0, 5.2);
-
-        const renderer = new THREE.WebGLRenderer({
-            canvas: canvas,
-            antialias: true,
-            alpha: true,
-            powerPreference: "high-performance"
-        });
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.25;
-
-        // 2. Cinematic Studio Lighting (Calibrated for Black Ceramic & Titanium)
-        const ambientLight = new THREE.AmbientLight(0x0a0c10, 1.2);
-        scene.add(ambientLight);
-
-        // Key Light: Crisp neutral white studio softbox
-        const keyLight = new THREE.DirectionalLight(0xffffff, 3.8);
-        keyLight.position.set(4, 5, 5);
-        scene.add(keyLight);
-
-        // Rim Light: Cool titanium specular rim carving the silhouette
-        const rimLight = new THREE.DirectionalLight(0x94a3b8, 4.2);
-        rimLight.position.set(-5, 4, -4);
-        scene.add(rimLight);
-
-        // Acid / Neon-Lime Accent Point Light (#e4ff00)
-        const neonPointLight = new THREE.PointLight(0xe4ff00, 2.2, 8);
-        neonPointLight.position.set(0, 0, 1.2);
-        scene.add(neonPointLight);
-
-        // 3. Floating Cyber Particle Field (Restrained Acid-Lime & Titanium Stardust)
-        const particleCount = 90;
-        const particleGeometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(particleCount * 3);
-        const colors = new Float32Array(particleCount * 3);
-
-        const colorLime = new THREE.Color(0xe4ff00);
-        const colorTitanium = new THREE.Color(0x94a3b8);
-
-        for (let i = 0; i < particleCount; i++) {
-            positions[i * 3] = (Math.random() - 0.5) * 8;
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 6;
-            positions[i * 3 + 2] = (Math.random() - 0.5) * 6;
-
-            const c = (i % 3 === 0) ? colorLime : colorTitanium;
-            colors[i * 3] = c.r;
-            colors[i * 3 + 1] = c.g;
-            colors[i * 3 + 2] = c.b;
-        }
-
-        particleGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-        particleGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-
-        const particleMaterial = new THREE.PointsMaterial({
-            size: 0.04,
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.65,
-            blending: THREE.AdditiveBlending
-        });
-
-        const particles = new THREE.Points(particleGeometry, particleMaterial);
-        scene.add(particles);
-
-        // 4. Model Group & Loader
-        const modelGroup = new THREE.Group();
-        scene.add(modelGroup);
-
-        const loader = new THREE.GLTFLoader();
-        let activeModel = null;
-        let isMascot = false;
-
-        const modelConfigs = {
-            hero: {
-                url: "portfolio-3d/public/models/hero-sculpture.glb",
-                name: "MECHANICAL SCULPTURE // ASSET A",
-                subtitle: "BLACK CERAMIC, TITANIUM & NEON-LIME CORE",
-                scale: 0.88,
-                yOffset: 0
-            },
-            mascot: {
-                url: "portfolio-3d/public/models/hero-mascot.glb",
-                name: "AUTONOMOUS MASCOT // ASSET B",
-                subtitle: "MAGNETIC REPULSOR CHASSIS & OPTIC VISOR",
-                scale: 0.95,
-                yOffset: -0.2
-            },
-            kiln: {
-                url: "portfolio-3d/public/models/neural-artifact.glb",
-                name: "NEURAL ARTIFACT // KILN 1.3",
-                subtitle: "PROCEDURAL COMPUTATIONAL NODE & ORBITAL SATELLITES",
-                scale: 1.15,
-                yOffset: 0
+            if (spotlight) {
+                spotX += (targetMouseX - spotX) * 0.08;
+                spotY += (targetMouseY - spotY) * 0.08;
+                spotlight.style.left = `${spotX}px`;
+                spotlight.style.top = `${spotY}px`;
+                spotlight.style.opacity = isPointerActive ? "0.9" : "0.5";
             }
-        };
 
-        const subtitleEl = container.querySelector(".text-\\[9px\\]");
+            frameCount++;
+            if (now - lastFpsUpdate >= 1000) {
+                const fps = Math.round((frameCount * 1000) / (now - lastFpsUpdate));
+                if (fpsMeter) fpsMeter.textContent = `${fps} FPS`;
+                frameCount = 0;
+                lastFpsUpdate = now;
+            }
 
-        function loadModel(type) {
-            if (loadingEl) loadingEl.style.opacity = "1";
-            const config = modelConfigs[type];
+            ctx.clearRect(0, 0, width, height);
 
-            loader.load(
-                config.url,
-                (gltf) => {
-                    if (activeModel) {
-                        modelGroup.remove(activeModel);
-                    }
+            for (let i = 0; i < nodes.length; i++) {
+                const n = nodes[i];
 
-                    activeModel = gltf.scene;
-                    activeModel.scale.setScalar(config.scale);
+                n.x += n.vx;
+                n.y += n.vy;
 
-                    // Center mesh geometry
-                    const box = new THREE.Box3().setFromObject(activeModel);
-                    const center = box.getCenter(new THREE.Vector3());
-                    activeModel.position.sub(center);
-                    activeModel.position.y += config.yOffset;
+                if (n.x < 0 || n.x > width) n.vx *= -1;
+                if (n.y < 0 || n.y > height) n.vy *= -1;
 
-                    modelGroup.add(activeModel);
+                const dx = n.x - mouseX;
+                const dy = n.y - mouseY;
+                const dist = Math.hypot(dx, dy);
 
-                    if (modelNameEl) modelNameEl.innerText = config.name;
-                    if (subtitleEl && config.subtitle) subtitleEl.innerText = config.subtitle;
-                    if (loadingEl) loadingEl.style.opacity = "0";
-                },
-                undefined,
-                (err) => {
-                    console.warn("Could not load model:", config.url, err);
-                    if (loadingEl) loadingEl.style.opacity = "0";
+                if (dist < 180 && dist > 0) {
+                    const force = (180 - dist) / 180;
+                    n.x += (dx / dist) * force * 2.5;
+                    n.y += (dy / dist) * force * 2.5;
                 }
-            );
-        }
 
-        // Initial Load
-        loadModel("hero");
-
-        // 3-Way Switcher Buttons (Core, Mascot, Kiln Artifact)
-        const buttons = [
-            { el: btnHero, type: "hero" },
-            { el: btnMascot, type: "mascot" },
-            { el: btnKiln, type: "kiln" }
-        ];
-
-        function setActiveButton(activeType) {
-            buttons.forEach(({ el, type }) => {
-                if (!el) return;
-                if (type === activeType) {
-                    el.classList.add("bg-a1", "text-black");
-                    el.classList.remove("bg-black/80", "text-white");
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+                if (n.hue === "lime") {
+                    ctx.fillStyle = `rgba(228, 255, 0, ${n.baseAlpha + (dist < 180 ? 0.4 : 0)})`;
+                    ctx.shadowColor = "#e4ff00";
+                    ctx.shadowBlur = 8;
                 } else {
-                    el.classList.remove("bg-a1", "text-black");
-                    el.classList.add("bg-black/80", "text-white");
+                    ctx.fillStyle = `rgba(148, 163, 184, ${n.baseAlpha})`;
+                    ctx.shadowBlur = 0;
                 }
-            });
-        }
+                ctx.fill();
 
-        buttons.forEach(({ el, type }) => {
-            if (el) {
-                el.addEventListener("click", () => {
-                    sound.playClick();
-                    setActiveButton(type);
-                    loadModel(type);
-                });
-            }
-        });
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const n2 = nodes[j];
+                    const dist2 = Math.hypot(n.x - n2.x, n.y - n2.y);
+                    const maxDist = 125;
 
-        // 5. Interaction: Mouse Tilt & Orbit Drag
-        let targetRotationX = 0;
-        let targetRotationY = 0;
-        let currentRotationX = 0;
-        let currentRotationY = 0;
-
-        let isDragging = false;
-        let previousMouseX = 0;
-        let previousMouseY = 0;
-        let dragVelocityX = 0;
-        let dragVelocityY = 0;
-
-        // Mouse Parallax across viewport
-        window.addEventListener("mousemove", (e) => {
-            if (!isDragging && motionEnabled) {
-                const nx = (e.clientX / window.innerWidth) * 2 - 1;
-                const ny = (e.clientY / window.innerHeight) * 2 - 1;
-                targetRotationY = nx * 0.45;
-                targetRotationX = -ny * 0.35;
-            }
-        });
-
-        // Direct Drag on 3D Container
-        container.addEventListener("pointerdown", (e) => {
-            isDragging = true;
-            previousMouseX = e.clientX;
-            previousMouseY = e.clientY;
-            dragVelocityX = 0;
-            dragVelocityY = 0;
-        });
-
-        window.addEventListener("pointermove", (e) => {
-            if (isDragging) {
-                const deltaX = e.clientX - previousMouseX;
-                const deltaY = e.clientY - previousMouseY;
-
-                dragVelocityX = deltaX * 0.006;
-                dragVelocityY = deltaY * 0.006;
-
-                targetRotationY += dragVelocityX;
-                targetRotationX += dragVelocityY;
-
-                previousMouseX = e.clientX;
-                previousMouseY = e.clientY;
-            }
-        });
-
-        window.addEventListener("pointerup", () => {
-            isDragging = false;
-        });
-
-        // 6. Resize Handling
-        window.addEventListener("resize", () => {
-            if (!container) return;
-            const w = container.clientWidth;
-            const h = container.clientHeight;
-            camera.aspect = w / h;
-            camera.updateProjectionMatrix();
-            renderer.setSize(w, h);
-        });
-
-        // 7. Render Loop with Viewport Visibility Observer
-        let clock = new THREE.Clock();
-        let isVisible = true;
-        let animationFrameId = null;
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                isVisible = entry.isIntersecting;
-                if (isVisible && !animationFrameId) {
-                    animate();
-                }
-            });
-        }, { threshold: 0.05 });
-        observer.observe(container);
-
-        function animate() {
-            if (!isVisible) {
-                animationFrameId = null;
-                return;
-            }
-            animationFrameId = requestAnimationFrame(animate);
-            const elapsedTime = clock.getElapsedTime();
-
-            if (motionEnabled) {
-                // Organic breathing float
-                modelGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.06;
-
-                // Auto-yaw drift when not dragging
-                if (!isDragging) {
-                    targetRotationY += 0.0025;
-                }
-
-                // Smooth interpolation (lerp)
-                currentRotationX += (targetRotationX - currentRotationX) * 0.06;
-                currentRotationY += (targetRotationY - currentRotationY) * 0.06;
-
-                modelGroup.rotation.x = currentRotationX;
-                modelGroup.rotation.y = currentRotationY;
-
-                // Subtle particle drift
-                particles.rotation.y = elapsedTime * 0.02;
-                particles.rotation.x = Math.sin(elapsedTime * 0.01) * 0.05;
-            } else {
-                modelGroup.rotation.y = targetRotationY;
-                modelGroup.rotation.x = targetRotationX;
-            }
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-
-        // 8. Cinematic Scroll Spatial Hand-off (Hero to Content transition)
-        if (typeof ScrollTrigger !== "undefined" && motionEnabled) {
-            ScrollTrigger.create({
-                trigger: "#hero",
-                start: "top top",
-                end: "bottom top",
-                scrub: 1.2,
-                onUpdate: (self) => {
-                    if (modelGroup) {
-                        modelGroup.rotation.z = self.progress * 0.35;
-                        modelGroup.position.z = -self.progress * 1.1;
-                    }
-                }
-            });
-        }
-    }
-
-    initHero3DStage();
-
-
-    /* ========================================================
-       6. INTERACTIVE AI AUTOMATIONS & DEV WORKBENCH (Real Functional Engine)
-       ======================================================== */
-    (function initAutomationsWorkbench() {
-        const tabs = document.querySelectorAll(".workbench-tab");
-        const panels = {
-            refactor: document.getElementById("wbPanelRefactor"),
-            github: document.getElementById("wbPanelGithub"),
-            workflows: document.getElementById("wbPanelWorkflows"),
-            schema: document.getElementById("wbPanelSchema")
-        };
-        const statusTitle = document.getElementById("wbStatusTitle");
-
-        const titles = {
-            refactor: "MODULE: AST Code Optimizer & Token Reducer",
-            github: "MODULE: GitHub API v3 Telemetry & Live Repositories",
-            workflows: "MODULE: Production AI Agent Pipeline Compiler",
-            schema: "MODULE: Deterministic JSON to TypeScript Interface Generator"
-        };
-
-        // 1. Tab Switching
-        tabs.forEach(tab => {
-            tab.addEventListener("click", () => {
-                const targetKey = tab.getAttribute("data-panel");
-                tabs.forEach(t => t.classList.remove("active"));
-                tab.classList.add("active");
-
-                Object.keys(panels).forEach(key => {
-                    if (panels[key]) {
-                        if (key === targetKey) {
-                            panels[key].classList.remove("hidden");
-                            panels[key].classList.add("block");
+                    if (dist2 < maxDist) {
+                        const alpha = (1 - dist2 / maxDist) * 0.28;
+                        ctx.beginPath();
+                        ctx.moveTo(n.x, n.y);
+                        ctx.lineTo(n2.x, n2.y);
+                        if (n.hue === "lime" || n2.hue === "lime") {
+                            ctx.strokeStyle = `rgba(228, 255, 0, ${alpha * 1.5})`;
                         } else {
-                            panels[key].classList.add("hidden");
-                            panels[key].classList.remove("block");
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
                         }
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
                     }
-                });
+                }
+            }
 
-                if (statusTitle && titles[targetKey]) {
-                    statusTitle.textContent = titles[targetKey];
+            requestAnimationFrame(animateCanvas);
+        }
+
+        requestAnimationFrame(animateCanvas);
+
+        // Magnetic Button Pull Effect
+        const magneticBtns = document.querySelectorAll(".magnetic-btn");
+        magneticBtns.forEach(btn => {
+            btn.addEventListener("mousemove", (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.22}px, ${y * 0.22}px)`;
+            });
+            btn.addEventListener("mouseleave", () => {
+                btn.style.transform = "translate(0px, 0px)";
+            });
+        });
+    }
+    initHeroGenerativeCanvas();
+
+    /* ========================================================
+       6. INTERACTIVE AI AGENT ARCHITECTURE NODE GRAPH
+       ======================================================== */
+    function initInteractiveNodeGraph() {
+        const stage = document.getElementById("nodeGraphStage");
+        const svgLayer = document.getElementById("graphSvgLayer");
+        const triggerPulseBtn = document.getElementById("triggerPulseBtn");
+        const triggerPulseText = document.getElementById("triggerPulseText");
+        const inspectToggleBtn = document.getElementById("inspectToggleBtn");
+        const closeDrawerBtn = document.getElementById("closeDrawerBtn");
+        const drawer = document.getElementById("nodeInspectDrawer");
+        const testNodeBtn = document.getElementById("testNodeBtn");
+        const presetBtns = document.querySelectorAll(".node-workflow-btn");
+
+        const drawerNodeName = document.getElementById("drawerNodeName");
+        const drawerNodeType = document.getElementById("drawerNodeType");
+        const drawerLatency = document.getElementById("drawerLatency");
+        const drawerStatus = document.getElementById("drawerStatus");
+        const drawerInboundJson = document.getElementById("drawerInboundJson");
+        const drawerLogicCode = document.getElementById("drawerLogicCode");
+        const drawerOutboundJson = document.getElementById("drawerOutboundJson");
+
+        if (!stage || !svgLayer) return;
+
+        const workflowConfigs = {
+            whatsapp: {
+                name: "WhatsApp AI Bot",
+                sequence: ["webhook", "auth", "router", "agent", "db", "dispatch"],
+                connections: [
+                    { from: "webhook", to: "auth" },
+                    { from: "auth", to: "router" },
+                    { from: "router", to: "agent" },
+                    { from: "agent", to: "db" },
+                    { from: "db", to: "dispatch" }
+                ]
+            },
+            simpleide: {
+                name: "SimpleIDE AST Agent",
+                sequence: ["webhook", "auth", "ast", "agent", "db", "dispatch"],
+                connections: [
+                    { from: "webhook", to: "auth" },
+                    { from: "auth", to: "ast" },
+                    { from: "ast", to: "agent" },
+                    { from: "agent", to: "db" },
+                    { from: "db", to: "dispatch" }
+                ]
+            },
+            ema: {
+                name: "EMA Outreach Drip",
+                sequence: ["webhook", "router", "agent", "db", "dispatch"],
+                connections: [
+                    { from: "webhook", to: "router" },
+                    { from: "router", to: "agent" },
+                    { from: "agent", to: "db" },
+                    { from: "db", to: "dispatch" }
+                ]
+            }
+        };
+
+        const nodeTelemetry = {
+            webhook: {
+                name: "Inbound Webhook",
+                type: "TRIGGER",
+                latency: "0.4ms",
+                status: "OPERATIONAL (HTTP 200)",
+                inbound: `{\n  "source": "Meta Cloud API",\n  "event": "messages.received",\n  "sender": "+91-9876543210",\n  "text": "Enterprise license & AI automation setup inquiry"\n}`,
+                code: `// Express / FastAPI Inbound Ingestion\napp.post("/webhook", async (req, res) => {\n  const payload = req.body;\n  return dispatchToSecurityGuard(payload);\n});`,
+                outbound: `{\n  "status": "QUEUED_FOR_AUTH",\n  "rawBytes": 412,\n  "requestId": "req_881a94f"\n}`
+            },
+            auth: {
+                name: "HMAC Auth Guard",
+                type: "SECURITY",
+                latency: "1.2ms",
+                status: "VERIFIED (SHA-256)",
+                inbound: `{\n  "header": "x-hub-signature-256: sha256=9a8b...",\n  "secretEnv": "VERIFIED_PRESENT"\n}`,
+                code: `// HMAC-SHA256 Cryptographic Verification\nfunction verify(body, signature, secret) {\n  const hash = crypto.createHmac("sha256", secret)\n    .update(body).digest("hex");\n  return signature === \`sha256=\${hash}\`;\n}`,
+                outbound: `{\n  "authenticated": true,\n  "identity": "verified_client",\n  "securityPassTime": "1.2ms"\n}`
+            },
+            router: {
+                name: "Intent Router",
+                type: "CLASSIFIER",
+                latency: "18.4ms",
+                status: "CONFIDENCE: 99.2%",
+                inbound: `{\n  "userText": "Enterprise license & AI automation setup inquiry",\n  "language": "en-US"\n}`,
+                code: `// Embedding Distance & Semantic Routing\nconst intent = await classifySemanticIntent(userText, [\n  "LEAD_ENTERPRISE", "SUPPORT_BUG", "BILLING_TIER"\n]);`,
+                outbound: `{\n  "selectedIntent": "LEAD_ENTERPRISE_HIGH_PRIORITY",\n  "routedTarget": "agent_enterprise_closer",\n  "confidence": 0.992\n}`
+            },
+            agent: {
+                name: "Autonomous Agent Engine",
+                type: "AI REASONING",
+                latency: "420ms",
+                status: "ZERO SLOP (DETERMINISTIC)",
+                inbound: `{\n  "model": "Claude 3.5 Sonnet",\n  "system": "Deterministic Enterprise Triage Agent",\n  "temperature": 0.1\n}`,
+                code: `// Claude 3.5 Structured Tool Calling\nconst completion = await anthropic.messages.create({\n  model: "claude-3-5-sonnet-20241022",\n  max_tokens: 1024,\n  tools: [crmSyncTool, quoteGeneratorTool]\n});`,
+                outbound: `{\n  "decision": "GENERATE_ENTERPRISE_PROPOSAL",\n  "arguments": { "tier": "scale", "seats": 25 },\n  "tokensSaved": "+34.2%"\n}`
+            },
+            ast: {
+                name: "AST Diff Validator",
+                type: "EXECUTION",
+                latency: "14.1ms",
+                status: "SYNTAX VALIDATED (AST OK)",
+                inbound: `{\n  "file": "packages/core/src/state.ts",\n  "engine": "Babel / Tree-Sitter"\n}`,
+                code: `// AST Code Transformation & Diff Checker\nconst ast = babelParser.parse(codeContent, { sourceType: "module" });\nconst diffPatch = diff.createPatch("state.ts", original, refactored);`,
+                outbound: `{\n  "astValid": true,\n  "mutationsApplied": 12,\n  "lintErrors": 0,\n  "tokenCompression": "28%"\n}`
+            },
+            db: {
+                name: "PostgreSQL & Redis Sync",
+                type: "PERSISTENCE",
+                latency: "3.5ms",
+                status: "ACID COMMITTED",
+                inbound: `{\n  "leadRecord": { "id": "lead_9941", "tier": "scale" },\n  "rateLimitBucket": "ok"\n}`,
+                code: `// Redis Rate-Limiter + Postgres Mutation\nawait redis.decr(userRateLimitKey);\nawait db.insert(leadsTable).values(newLeadRecord);`,
+                outbound: `{\n  "dbSyncStatus": "COMMITTED",\n  "transactionId": "tx_772183",\n  "latency": "3.5ms"\n}`
+            },
+            dispatch: {
+                name: "Cloud Egress Dispatch",
+                type: "EGRESS SINK",
+                latency: "28.0ms",
+                status: "HTTP 200 DELIVERED",
+                inbound: `{\n  "target": "WhatsApp Cloud API / Graph v20.0",\n  "status": "DELIVERED_TO_RECIPIENT"\n}`,
+                code: `// Meta Cloud API / Email Egress Dispatch\nawait fetch(\`https://graph.facebook.com/v20.0/\${PHONE_ID}/messages\`, {\n  method: "POST",\n  headers: { Authorization: \`Bearer \${TOKEN}\` },\n  body: JSON.stringify(outboundMessage)\n});`,
+                outbound: `{\n  "statusCode": 200,\n  "messageId": "wamid.HBgL...",\n  "pipelineExecution": "COMPLETED_IN_485ms"\n}`
+            }
+        };
+
+        let currentPreset = "whatsapp";
+        let isPulsing = false;
+
+        function drawCables() {
+            const config = workflowConfigs[currentPreset];
+            if (!config) return;
+
+            const existingPaths = svgLayer.querySelectorAll("path.graph-cable");
+            existingPaths.forEach(p => p.remove());
+
+            const stageRect = stage.getBoundingClientRect();
+
+            config.connections.forEach((conn) => {
+                const fromEl = document.getElementById(`node-${conn.from}`);
+                const toEl = document.getElementById(`node-${conn.to}`);
+                if (!fromEl || !toEl) return;
+
+                const fromPort = fromEl.querySelector(".node-port-out");
+                const toPort = toEl.querySelector(".node-port-in");
+
+                const fromRect = fromPort ? fromPort.getBoundingClientRect() : fromEl.getBoundingClientRect();
+                const toRect = toPort ? toPort.getBoundingClientRect() : toEl.getBoundingClientRect();
+
+                const x1 = fromRect.left - stageRect.left + fromRect.width / 2;
+                const y1 = fromRect.top - stageRect.top + fromRect.height / 2;
+                const x2 = toRect.left - stageRect.left + toRect.width / 2;
+                const y2 = toRect.top - stageRect.top + toRect.height / 2;
+
+                const dx = Math.abs(x2 - x1) * 0.5;
+                const pathD = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                path.setAttribute("d", pathD);
+                path.setAttribute("class", "graph-cable");
+                path.setAttribute("id", `cable-${conn.from}-${conn.to}`);
+                svgLayer.appendChild(path);
+            });
+        }
+
+        function triggerPulse() {
+            if (isPulsing) return;
+            isPulsing = true;
+            sound.playClick();
+
+            if (triggerPulseBtn) {
+                triggerPulseBtn.classList.add("opacity-60");
+                if (triggerPulseText) triggerPulseText.textContent = "EXECUTING PIPELINE...";
+            }
+
+            const config = workflowConfigs[currentPreset];
+            const seq = config.sequence;
+
+            document.querySelectorAll(".node-element").forEach(n => {
+                n.classList.remove("pulsing");
+            });
+
+            document.querySelectorAll(".graph-cable").forEach(c => c.classList.remove("active"));
+
+            let step = 0;
+
+            function runStep() {
+                if (step >= seq.length) {
+                    isPulsing = false;
+                    if (triggerPulseBtn) {
+                        triggerPulseBtn.classList.remove("opacity-60");
+                        if (triggerPulseText) triggerPulseText.textContent = "TRIGGER PIPELINE PULSE";
+                    }
+                    sound.playSuccess();
+                    return;
                 }
 
+                const currentNodeKey = seq[step];
+                const nodeEl = document.getElementById(`node-${currentNodeKey}`);
+
+                if (nodeEl) {
+                    nodeEl.classList.add("pulsing");
+                    sound.playBlip();
+
+                    selectNode(currentNodeKey);
+
+                    if (step < seq.length - 1) {
+                        const nextNodeKey = seq[step + 1];
+                        const cable = document.getElementById(`cable-${currentNodeKey}-${nextNodeKey}`);
+                        if (cable) cable.classList.add("active");
+                    }
+
+                    setTimeout(() => {
+                        nodeEl.classList.remove("pulsing");
+                        step++;
+                        runStep();
+                    }, 420);
+                } else {
+                    step++;
+                    runStep();
+                }
+            }
+
+            runStep();
+        }
+
+        function selectNode(nodeKey) {
+            const data = nodeTelemetry[nodeKey];
+            if (!data) return;
+
+            document.querySelectorAll(".node-element").forEach(el => el.classList.remove("selected"));
+            const currentEl = document.getElementById(`node-${nodeKey}`);
+            if (currentEl) currentEl.classList.add("selected");
+
+            if (drawerNodeName) drawerNodeName.textContent = data.name;
+            if (drawerNodeType) drawerNodeType.textContent = data.type;
+            if (drawerLatency) drawerLatency.textContent = data.latency;
+            if (drawerStatus) drawerStatus.textContent = data.status;
+            if (drawerInboundJson) drawerInboundJson.textContent = data.inbound;
+            if (drawerLogicCode) drawerLogicCode.textContent = data.code;
+            if (drawerOutboundJson) drawerOutboundJson.textContent = data.outbound;
+
+            if (drawer) drawer.classList.add("open");
+        }
+
+        document.querySelectorAll(".node-element").forEach(node => {
+            node.addEventListener("click", () => {
+                const key = node.getAttribute("data-node");
                 sound.playClick();
-
-                if (targetKey === "github" && !hasLoadedGithub) {
-                    fetchGithubTelemetry();
-                }
+                selectNode(key);
             });
         });
 
-        // 2. PANEL 1: Code Refactor & Optimizer
-        const codeInput = document.getElementById("wbCodeInput");
-        const codeOutput = document.getElementById("wbCodeOutput");
-        const loadSampleBtn = document.getElementById("wbLoadSampleBtn");
-        const clearCodeBtn = document.getElementById("wbClearCodeBtn");
-        const runRefactorBtn = document.getElementById("wbRunRefactorBtn");
-        const copyCodeBtn = document.getElementById("wbCopyCodeBtn");
-        const copyText = document.getElementById("wbCopyText");
-        const optLogs = document.getElementById("wbOptLogs");
-        const optComments = document.getElementById("wbOptComments");
-        const optWhitespace = document.getElementById("wbOptWhitespace");
-        const inBytesEl = document.getElementById("wbInBytes");
-        const outBytesEl = document.getElementById("wbOutBytes");
-        const reductionPctEl = document.getElementById("wbReductionPct");
-        const execTimeEl = document.getElementById("wbExecTime");
-
-        const sampleDirtyCode = `// Production API Handler - User Verification & Profile Enrichment
-// NOTE: Legacy debugging logs must be pruned before deploying to edge cluster.
-console.log("[DEBUG] Ingesting request headers...", request.headers);
-
-async function handleUserProfileSync(userId, rawPayload, options) {
-    console.time("syncTimer");
-    console.log("Processing userId: ", userId);
-    
-    // Check user presence
-    if (!userId || typeof userId !== "string") {
-        console.error("Critical error: Invalid userId received!");
-        throw new Error("ERR_INVALID_USER_IDENTIFIER");
-    }
-    
-    
-    // Normalize metadata
-    const sanitizedEmail = rawPayload.email ? rawPayload.email.trim().toLowerCase() : "";
-    console.log("Sanitized email address:", sanitizedEmail);
-    
-    /* 
-       Construct normalized enterprise profile object
-       Enforces zero AI slop and deterministic schemas
-    */
-    const cleanProfile = {
-        id: userId.trim(),
-        email: sanitizedEmail,
-        tier: options?.isEnterprise ? "enterprise" : "developer",
-        active: Boolean(rawPayload.isActive),
-        timestamp: new Date().toISOString()
-    };
-    
-    console.log("Profile mapped cleanly:", JSON.stringify(cleanProfile));
-    console.timeEnd("syncTimer");
-    return cleanProfile;
-}`;
-
-        if (codeInput && !codeInput.value) {
-            codeInput.value = sampleDirtyCode;
-        }
-
-        if (loadSampleBtn) {
-            loadSampleBtn.addEventListener("click", () => {
-                if (codeInput) codeInput.value = sampleDirtyCode;
-                sound.playBlip();
-                runRefactoring();
-            });
-        }
-
-        if (clearCodeBtn) {
-            clearCodeBtn.addEventListener("click", () => {
-                if (codeInput) codeInput.value = "";
-                if (codeOutput) codeOutput.textContent = "// Cleared. Paste source code or click 'LOAD DIRTY SAMPLE'.";
-                if (inBytesEl) inBytesEl.textContent = "0 B";
-                if (outBytesEl) outBytesEl.textContent = "0 B";
-                if (reductionPctEl) reductionPctEl.textContent = "0%";
-                sound.playBlip();
-            });
-        }
-
-        function runRefactoring() {
-            if (!codeInput || !codeOutput) return;
-            const src = codeInput.value || "";
-            if (!src.trim()) {
-                codeOutput.textContent = "// Error: Please enter or load source code to optimize.";
-                return;
-            }
-
-            const t0 = performance.now();
-            let clean = src;
-
-            // Remove console.log, info, warn, error, time, timeEnd
-            if (optLogs && optLogs.checked) {
-                clean = clean.replace(/console\.(log|info|warn|error|debug|time|timeEnd)\s*\([^;]*\);?\n?/g, "");
-            }
-
-            // Remove single and multi-line comments
-            if (optComments && optComments.checked) {
-                clean = clean.replace(/\/\*[\s\S]*?\*\//g, "");
-                clean = clean.replace(/\/\/[^\n]*\n?/g, "");
-            }
-
-            // Clean excessive whitespace and empty lines
-            if (optWhitespace && optWhitespace.checked) {
-                clean = clean.replace(/\r\n/g, "\n");
-                clean = clean.replace(/[ \t]+$/gm, "");
-                clean = clean.replace(/\n{3,}/g, "\n\n");
-                clean = clean.trim();
-            }
-
-            const t1 = performance.now();
-            const elapsed = Math.max(0.1, t1 - t0).toFixed(1);
-
-            const inBytes = new Blob([src]).size;
-            const outBytes = new Blob([clean]).size;
-            const diffBytes = inBytes - outBytes;
-            const pct = inBytes > 0 ? Math.max(0, (diffBytes / inBytes) * 100).toFixed(1) : 0;
-
-            codeOutput.textContent = clean;
-            if (inBytesEl) inBytesEl.textContent = `${inBytes} B`;
-            if (outBytesEl) outBytesEl.textContent = `${outBytes} B`;
-            if (reductionPctEl) reductionPctEl.textContent = `${pct}%`;
-            if (execTimeEl) execTimeEl.textContent = `EXEC: ${elapsed}ms`;
-
-            sound.playSuccess();
-        }
-
-        if (runRefactorBtn) {
-            runRefactorBtn.addEventListener("click", runRefactoring);
-        }
-
-        if (copyCodeBtn) {
-            copyCodeBtn.addEventListener("click", () => {
-                if (!codeOutput) return;
-                navigator.clipboard.writeText(codeOutput.textContent).then(() => {
-                    sound.playSuccess();
-                    if (copyText) {
-                        const original = copyText.textContent;
-                        copyText.textContent = "COPIED!";
-                        setTimeout(() => { copyText.textContent = original; }, 1800);
-                    }
-                });
-            });
-        }
-
-        // Run refactor once on startup so clean preview is immediately visible
-        setTimeout(runRefactoring, 400);
-
-        // 3. PANEL 2: Live GitHub Telemetry
-        let hasLoadedGithub = false;
-        let cachedRepos = [];
-        const repoGrid = document.getElementById("wbRepoGrid");
-        const repoSearch = document.getElementById("wbRepoSearch");
-        const repoLangFilter = document.getElementById("wbRepoLangFilter");
-        const refreshGithubBtn = document.getElementById("wbRefreshGithubBtn");
-
-        const fallbackRepos = [
-            {
-                name: "SimpleIDE",
-                description: "Lightweight, high-performance desktop IDE integrated with autonomous local agent AST diff reasoning.",
-                html_url: "https://github.com/lucky4-git1/SimpleIDE",
-                language: "TypeScript",
-                stargazers_count: 5,
-                forks_count: 2,
-                updated_at: new Date().toISOString()
-            },
-            {
-                name: "whatsapp-ai-bot",
-                description: "High-throughput WhatsApp Cloud API webhook service with automated lead qualification and NLP triage.",
-                html_url: "https://github.com/lucky4-git1/whatsapp-ai-bot",
-                language: "Python",
-                stargazers_count: 4,
-                forks_count: 1,
-                updated_at: new Date(Date.now() - 86400000 * 2).toISOString()
-            },
-            {
-                name: "EMA-Email-Marketing-Automation",
-                description: "Enterprise email automation framework with dynamic personalization, anti-spam validation and drip workers.",
-                html_url: "https://github.com/lucky4-git1/EMA-Email-Marketing-Automation",
-                language: "TypeScript",
-                stargazers_count: 3,
-                forks_count: 0,
-                updated_at: new Date(Date.now() - 86400000 * 5).toISOString()
-            },
-            {
-                name: "rewritebot",
-                description: "Edge AI application rewriting verbose product copy into high-impact, crisp developer communications.",
-                html_url: "https://github.com/lucky4-git1/rewritebot",
-                language: "JavaScript",
-                stargazers_count: 3,
-                forks_count: 0,
-                updated_at: new Date(Date.now() - 86400000 * 7).toISOString()
-            },
-            {
-                name: "mycv",
-                description: "Cinematic, award-level developer portfolio engineered with Neo-brutalist aesthetics, GSAP and fullstack tools.",
-                html_url: "https://github.com/lucky4-git1/mycv",
-                language: "JavaScript",
-                stargazers_count: 8,
-                forks_count: 2,
-                updated_at: new Date().toISOString()
-            },
-            {
-                name: "hyperpure-clone",
-                description: "High-fidelity e-commerce clone featuring interactive cart mechanics, checkout workflows and brutalist styling.",
-                html_url: "https://github.com/lucky4-git1/hyperpure-clone",
-                language: "HTML",
-                stargazers_count: 2,
-                forks_count: 0,
-                updated_at: new Date(Date.now() - 86400000 * 12).toISOString()
-            }
-        ];
-
-        function renderRepos(repos) {
-            if (!repoGrid) return;
-            const query = (repoSearch ? repoSearch.value.toLowerCase().trim() : "");
-            const lang = (repoLangFilter ? repoLangFilter.value : "ALL");
-
-            const filtered = repos.filter(r => {
-                const matchesQuery = !query || r.name.toLowerCase().includes(query) || (r.description && r.description.toLowerCase().includes(query));
-                const matchesLang = lang === "ALL" || (r.language && r.language.toLowerCase() === lang.toLowerCase());
-                return matchesQuery && matchesLang;
-            });
-
-            if (filtered.length === 0) {
-                repoGrid.innerHTML = `
-                    <div class="col-span-full p-8 text-center font-mono text-xs text-slate-400 bg-[#13151b] border border-[#232734]">
-                        No repositories match "${query || lang}". Try clearing your filter.
-                    </div>
-                `;
-                return;
-            }
-
-            repoGrid.innerHTML = filtered.map(repo => {
-                const updated = new Date(repo.updated_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
-                const langColor = repo.language === "TypeScript" ? "text-blue-400 bg-blue-500/10 border-blue-500/30"
-                                : repo.language === "Python" ? "text-emerald-400 bg-emerald-500/10 border-emerald-500/30"
-                                : repo.language === "JavaScript" ? "text-yellow-400 bg-yellow-500/10 border-yellow-500/30"
-                                : "text-purple-400 bg-purple-500/10 border-purple-500/30";
-
-                return `
-                    <div class="p-4 bg-[#13151b] border border-[#232734] hover:border-[#e4ff00] transition-colors flex flex-col justify-between group">
-                        <div>
-                            <div class="flex items-center justify-between gap-2 mb-2">
-                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="font-mono text-sm font-bold text-white group-hover:text-[#e4ff00] flex items-center gap-1.5 transition-colors truncate">
-                                    <i class="ph-bold ph-git-branch text-xs text-slate-400"></i>
-                                    <span>${repo.name}</span>
-                                </a>
-                                <span class="font-mono text-[10px] px-2 py-0.5 border ${langColor}">
-                                    ${repo.language || "Config"}
-                                </span>
-                            </div>
-                            <p class="font-mono text-xs text-slate-400 leading-relaxed line-clamp-3 mb-4">
-                                ${repo.description || "Production repository by Sriyuth. Inspect code and commits on GitHub."}
-                            </p>
-                        </div>
-                        <div class="pt-3 border-t border-[#232734] flex items-center justify-between font-mono text-xs text-slate-400">
-                            <div class="flex items-center gap-3">
-                                <span class="flex items-center gap-1 hover:text-white"><i class="ph-bold ph-star text-amber-400"></i> ${repo.stargazers_count}</span>
-                                <span class="flex items-center gap-1 hover:text-white"><i class="ph-bold ph-git-fork text-slate-400"></i> ${repo.forks_count}</span>
-                            </div>
-                            <span class="text-[10px] text-slate-500">${updated}</span>
-                        </div>
-                    </div>
-                `;
-            }).join("");
-        }
-
-        async function fetchGithubTelemetry() {
-            hasLoadedGithub = true;
-            try {
-                const res = await fetch("https://api.github.com/users/lucky4-git1/repos?sort=updated&per_page=30");
-                if (res.ok) {
-                    const data = await res.json();
-                    if (Array.isArray(data) && data.length > 0) {
-                        cachedRepos = data;
-                        renderRepos(cachedRepos);
-                        return;
-                    }
-                }
-                cachedRepos = fallbackRepos;
-                renderRepos(cachedRepos);
-            } catch (err) {
-                console.warn("GitHub API rate limit or offline fallback activated:", err);
-                cachedRepos = fallbackRepos;
-                renderRepos(cachedRepos);
-            }
-        }
-
-        if (repoSearch) repoSearch.addEventListener("input", () => renderRepos(cachedRepos.length ? cachedRepos : fallbackRepos));
-        if (repoLangFilter) repoLangFilter.addEventListener("change", () => renderRepos(cachedRepos.length ? cachedRepos : fallbackRepos));
-        if (refreshGithubBtn) {
-            refreshGithubBtn.addEventListener("click", () => {
+        presetBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const preset = btn.getAttribute("data-preset");
+                if (preset === currentPreset) return;
                 sound.playClick();
-                fetchGithubTelemetry();
-            });
-        }
 
-        // 4. PANEL 3: Prompt-to-Pipeline Compiler
-        const workflowPreset = document.getElementById("wbWorkflowPreset");
-        const workflowRuntime = document.getElementById("wbWorkflowRuntime");
-        const workflowModel = document.getElementById("wbWorkflowModel");
-        const workflowCustomPrompt = document.getElementById("wbWorkflowCustomPrompt");
-        const generateWorkflowBtn = document.getElementById("wbGenerateWorkflowBtn");
-        const workflowCode = document.getElementById("wbWorkflowCode");
-        const copyWorkflowBtn = document.getElementById("wbCopyWorkflowBtn");
-        const copyWorkflowText = document.getElementById("wbCopyWorkflowText");
-
-        const pipelineTemplates = {
-            whatsapp: {
-                typescript: (model, prompt) => `// ========================================================
-// PRODUCTION PIPELINE: WhatsApp Business AI Webhook
-// Runtime: Node.js 20+ (TypeScript / Express)
-// LLM Engine: \${model.toUpperCase()}
-// Constraints: \${prompt || "HMAC verification + automated CRM lead ingestion"}
-// ========================================================
-
-import express, { Request, Response } from "express";
-import crypto from "crypto";
-
-const app = express();
-app.use(express.json());
-
-const META_APP_SECRET = process.env.META_APP_SECRET!;
-const WHATSAPP_ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN!;
-const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID!;
-
-// 1. Verify HMAC SHA-256 Meta Webhook Signature
-function verifySignature(req: Request): boolean {
-  const signature = req.headers["x-hub-signature-256"] as string;
-  if (!signature) return false;
-  const hash = crypto.createHmac("sha256", META_APP_SECRET)
-    .update(JSON.stringify(req.body))
-    .digest("hex");
-  return signature === \`sha256=\${hash}\`;
-}
-
-// 2. Autonomous Inbound Message Handler
-app.post("/webhook", async (req: Request, res: Response) => {
-  if (!verifySignature(req)) {
-    return res.status(401).send("UNAUTHORIZED_SIGNATURE");
-  }
-
-  const message = req.body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
-  if (!message || message.type !== "text") {
-    return res.status(200).send("EVENT_RECEIVED");
-  }
-
-  const senderId = message.from;
-  const userText = message.text.body;
-
-  // 3. Dispatch to \${model} for zero-hallucination structured routing
-  console.log(\`Received message from \${senderId}: \${userText}\`);
-
-  // 4. Send response via WhatsApp Cloud API
-  await fetch(\`https://graph.facebook.com/v20.0/\${PHONE_NUMBER_ID}/messages\`, {
-    method: "POST",
-    headers: {
-      "Authorization": \`Bearer \${WHATSAPP_ACCESS_TOKEN}\`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      messaging_product: "whatsapp",
-      to: senderId,
-      text: { body: "Your request has been routed to Sriyuth's autonomous pipeline." }
-    })
-  });
-
-  return res.status(200).json({ status: "DISPATCHED", recipient: senderId });
-});
-
-app.listen(3000, () => console.log("WhatsApp Agent webhook listening on :3000"));`,
-
-                python: (model, prompt) => `# ========================================================
-# PRODUCTION PIPELINE: WhatsApp Business AI Webhook
-# Runtime: Python 3.11+ (FastAPI / AsyncIO)
-# LLM Engine: \${model.toUpperCase()}
-# Constraints: \${prompt || "HMAC verification + automated CRM lead ingestion"}
-# ========================================================
-
-import os
-import hmac
-import hashlib
-import httpx
-from fastapi import FastAPI, Request, HTTPException, Header
-
-app = FastAPI(title="WhatsApp AI Autonomous Agent")
-
-META_APP_SECRET = os.getenv("META_APP_SECRET", "").encode()
-WHATSAPP_ACCESS_TOKEN = os.getenv("WHATSAPP_ACCESS_TOKEN")
-PHONE_NUMBER_ID = os.getenv("WHATSAPP_PHONE_NUMBER_ID")
-
-@app.post("/api/whatsapp/webhook")
-async def handle_whatsapp_inbound(
-    request: Request,
-    x_hub_signature_256: str = Header(None)
-):
-    raw_body = await request.body()
-    
-    # 1. Verify HMAC SHA-256 Meta Webhook Signature
-    if not x_hub_signature_256:
-        raise HTTPException(status_code=401, detail="MISSING_SIGNATURE")
-        
-    expected_hash = "sha256=" + hmac.new(META_APP_SECRET, raw_body, hashlib.sha256).hexdigest()
-    if not hmac.compare_digest(expected_hash, x_hub_signature_256):
-        raise HTTPException(status_code=401, detail="INVALID_SIGNATURE")
-        
-    payload = await request.json()
-    try:
-        msg = payload["entry"][0]["changes"][0]["value"]["messages"][0]
-        sender = msg["from"]
-        content = msg["text"]["body"]
-    except (KeyError, IndexError):
-        return {"status": "NO_TEXT_PAYLOAD"}
-
-    # 2. Asynchronous LLM Inference Call
-    async with httpx.AsyncClient(timeout=10.0) as client:
-        send_url = f"https://graph.facebook.com/v20.0/{PHONE_NUMBER_ID}/messages"
-        await client.post(
-            send_url,
-            headers={"Authorization": f"Bearer {WHATSAPP_ACCESS_TOKEN}"},
-            json={
-                "messaging_product": "whatsapp",
-                "to": sender,
-                "text": {"body": f"Acknowledged. Routing through {model} pipeline: {content[:30]}..."}
-            }
-        )
-        
-    return {"status": "SUCCESS", "sender": sender}`
-            },
-
-            simpleide: {
-                typescript: (model, prompt) => `// ========================================================
-// PRODUCTION PIPELINE: SimpleIDE Desktop Agent IPC Bridge
-// Runtime: Electron + Node.js (TypeScript)
-// Model: \${model.toUpperCase()}
-// Spec: \${prompt || "AST Parsing, Unified Git Diff, Local Zero-Latency IPC"}
-// ========================================================
-
-import { ipcMain } from "electron";
-import * as babelParser from "@babel/parser";
-import * as diff from "diff";
-
-export interface RefactorRequest {
-  filePath: string;
-  instruction: string;
-  codeContent: string;
-}
-
-ipcMain.handle("agent:execute-ast-diff", async (event, req: RefactorRequest) => {
-  console.log(\`[SimpleIDE] Parsing AST for file: \${req.filePath}\`);
-
-  // 1. Validate AST syntax before proposing mutations
-  try {
-    babelParser.parse(req.codeContent, {
-      sourceType: "module",
-      plugins: ["typescript", "jsx"]
-    });
-  } catch (err: any) {
-    return { success: false, error: \`SYNTAX_ERROR: \${err.message}\` };
-  }
-
-  // 2. Compute deterministic Unified Diff
-  return {
-    success: true,
-    file: req.filePath,
-    tokenEfficiency: "+28.4%",
-    timestamp: Date.now()
-  };
-});`,
-
-                python: (model, prompt) => `# ========================================================
-# PRODUCTION PIPELINE: SimpleIDE Core AST Diff Engine
-# Runtime: Python 3.11+
-# Model: \${model.toUpperCase()}
-# Spec: \${prompt || "AST Parsing, Unified Git Diff, Local Zero-Latency IPC"}
-# ========================================================
-
-import ast
-import difflib
-from typing import Dict, Any
-
-class AstRefactorEngine:
-    def __init__(self, model_name: str = "${model}"):
-        self.model_name = model_name
-
-    def validate_and_diff(self, file_path: str, original_code: str, proposed_code: str) -> Dict[str, Any]:
-        try:
-            ast.parse(original_code)
-            ast.parse(proposed_code)
-        except SyntaxError as e:
-            return {"valid": False, "error": f"AST Syntax Error: {e.msg}"}
-
-        orig_lines = original_code.splitlines(keepends=True)
-        prop_lines = proposed_code.splitlines(keepends=True)
-        diff_output = "".join(difflib.unified_diff(orig_lines, prop_lines, fromfile=f"a/{file_path}", tofile=f"b/{file_path}"))
-
-        return {
-            "valid": True,
-            "engine": self.model_name,
-            "diff": diff_output
-        }`
-            },
-
-            ema: {
-                typescript: (model, prompt) => `// ========================================================
-// PRODUCTION PIPELINE: EMA Engine (Email Marketing Automation)
-// Runtime: TypeScript / BullMQ / Redis
-// Engine: \${model.toUpperCase()}
-// Features: \${prompt || "DKIM / SPF score verification, Dynamic Personalization"}
-// ========================================================
-
-import { Queue, Worker } from "bullmq";
-import nodemailer from "nodemailer";
-
-const emailQueue = new Queue("outreach-pipeline", {
-  connection: { host: "127.0.0.1", port: 6379 }
-});
-
-export const outreachWorker = new Worker("outreach-pipeline", async (job) => {
-  const { recipient, companyName, techStack } = job.data;
-  console.log(\`[EMA Engine] Generating personalized body for \${recipient}...\`);
-
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: 587,
-    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
-  });
-
-  return await transporter.sendMail({
-    from: '"Sriyuth K" <sriyuth@dev.local>',
-    to: recipient.email,
-    subject: \`Scaling \${techStack} at \${companyName}\`,
-    text: \`Hi \${recipient.firstName}, noticed \${companyName} is scaling \${techStack}.\`
-  });
-});`,
-
-                python: (model, prompt) => `# ========================================================
-# PRODUCTION PIPELINE: EMA Engine (Email Marketing Automation)
-# Runtime: Python 3.11+ / Celery / Redis
-# Engine: \${model.toUpperCase()}
-# ========================================================
-
-from celery import Celery
-import smtplib
-from email.mime.text import MIMEText
-
-app = Celery('ema_tasks', broker='redis://localhost:6379/0')
-
-@app.task(rate_limit='20/m')
-def dispatch_personalized_email(recipient_email: str, recipient_name: str, tech_context: str):
-    msg = MIMEText(f"Hi {recipient_name},\\n\\nSaw your work on {tech_context}. Engineered an AI AST pipeline reducing compute load.\\n\\nBest,\\nSriyuth")
-    msg['Subject'] = f"Modern AI infrastructure for {tech_context}"
-    msg['From'] = "sriyuth@portfolio.local"
-    msg['To'] = recipient_email
-
-    with smtplib.SMTP("smtp.relay.local", 587) as server:
-        server.starttls()
-        server.send_message(msg)
-        
-    return {"status": "DELIVERED", "to": recipient_email}`
-            },
-
-            rewritebot: {
-                typescript: (model, prompt) => `// ========================================================
-// PRODUCTION PIPELINE: RewriteBot Edge Worker
-// Runtime: Next.js Edge Runtime / Vercel Edge Functions
-// Model: \${model.toUpperCase()}
-// ========================================================
-
-import { OpenAIStream, StreamingTextResponse } from "ai";
-
-export const runtime = "edge";
-
-export async function POST(req: Request) {
-  const { sourceCopy, toneStyle } = await req.json();
-
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Authorization": \`Bearer \${process.env.OPENAI_API_KEY}\`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      model: "gpt-4o",
-      stream: true,
-      messages: [
-        {
-          role: "system",
-          content: "You are a brutalist copy editor. Transform verbose text into punchy, developer-first communication. Zero AI slop."
-        },
-        { role: "user", content: \`Rewrite in \${toneStyle || "neo-brutalist"} voice: \${sourceCopy}\` }
-      ]
-    })
-  });
-
-  const stream = OpenAIStream(response);
-  return new StreamingTextResponse(stream);
-}`,
-
-                python: (model, prompt) => `# ========================================================
-# PRODUCTION PIPELINE: RewriteBot Semantic Processor
-# Runtime: Python 3.11+
-# Model: \${model.toUpperCase()}
-# ========================================================
-
-import os
-from openai import AsyncOpenAI
-
-client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-async def stream_rewrite_copy(raw_text: str, tone: str = "crisp-technical"):
-    stream = await client.chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {"role": "system", "content": "Prune corporate fluff. Output punchy, active voice copy."},
-            {"role": "user", "content": f"Tone: {tone}\\n\\nInput: {raw_text}"}
-        ],
-        stream=True
-    )
-    async for chunk in stream:
-        content = chunk.choices[0].delta.content or ""
-        yield content`
-            },
-
-            scraping: {
-                typescript: (model, prompt) => `// ========================================================
-// PRODUCTION PIPELINE: Autonomous Web Scraper & Schema Extractor
-// Runtime: Node.js (TypeScript) + Playwright
-// Engine: \${model.toUpperCase()}
-// ========================================================
-
-import { chromium } from "playwright";
-
-export async function extractVerifiedSchema(targetUrl: string) {
-  const browser = await chromium.launch({ headless: true });
-  const page = await browser.newPage();
-  
-  await page.goto(targetUrl, { waitUntil: "networkidle" });
-  const pageText = await page.evaluate(() => document.body.innerText.slice(0, 8000));
-  await browser.close();
-
-  return { url: targetUrl, extractedLength: pageText.length, status: "READY" };
-}`,
-
-                python: (model, prompt) => `# ========================================================
-# PRODUCTION PIPELINE: Autonomous Web Scraper & Schema Extractor
-# Runtime: Python 3.11+ + Playwright + Pydantic
-# Engine: \${model.toUpperCase()}
-# ========================================================
-
-import asyncio
-from playwright.async_api import async_playwright
-from pydantic import BaseModel
-
-class ExtractedDataset(BaseModel):
-    page_title: str
-    headings: list[str]
-    clean_text_snippet: str
-
-async def scrape_and_extract(url: str) -> ExtractedDataset:
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
-        page = await browser.new_page()
-        await page.goto(url, wait_until="domcontentloaded")
-        
-        title = await page.title()
-        headings = await page.eval_on_selector_all("h1, h2, h3", "elements => elements.map(e => e.innerText)")
-        snippet = (await page.inner_text("body"))[:2000]
-        
-        await browser.close()
-        return ExtractedDataset(page_title=title, headings=headings, clean_text_snippet=snippet)`
-            }
-        };
-
-        function generatePipelineCode() {
-            const preset = workflowPreset ? workflowPreset.value : "whatsapp";
-            const runtime = workflowRuntime ? workflowRuntime.value : "typescript";
-            const model = workflowModel ? workflowModel.value : "claude";
-            const customPrompt = workflowCustomPrompt ? workflowCustomPrompt.value.trim() : "";
-
-            const generator = pipelineTemplates[preset]?.[runtime];
-            if (generator && workflowCode) {
-                workflowCode.textContent = generator(model, customPrompt);
-                sound.playSuccess();
-            }
-        }
-
-        if (generateWorkflowBtn) generateWorkflowBtn.addEventListener("click", generatePipelineCode);
-        if (workflowPreset) workflowPreset.addEventListener("change", generatePipelineCode);
-        if (workflowRuntime) workflowRuntime.addEventListener("change", generatePipelineCode);
-        if (workflowModel) workflowModel.addEventListener("change", generatePipelineCode);
-
-        if (copyWorkflowBtn) {
-            copyWorkflowBtn.addEventListener("click", () => {
-                if (!workflowCode) return;
-                navigator.clipboard.writeText(workflowCode.textContent).then(() => {
-                    sound.playSuccess();
-                    if (copyWorkflowText) {
-                        const original = copyWorkflowText.textContent;
-                        copyWorkflowText.textContent = "COPIED!";
-                        setTimeout(() => { copyWorkflowText.textContent = original; }, 1800);
-                    }
+                presetBtns.forEach(b => {
+                    b.classList.remove("bg-[#e4ff00]", "text-black", "font-black");
+                    b.classList.add("bg-[#141923]", "text-slate-300", "font-bold");
                 });
+                btn.classList.add("bg-[#e4ff00]", "text-black", "font-black");
+                btn.classList.remove("bg-[#141923]", "text-slate-300", "font-bold");
+
+                currentPreset = preset;
+                drawCables();
+
+                const firstNode = workflowConfigs[preset]?.sequence[0] || "webhook";
+                selectNode(firstNode);
+            });
+        });
+
+        if (triggerPulseBtn) {
+            triggerPulseBtn.addEventListener("click", triggerPulse);
+        }
+
+        if (closeDrawerBtn) {
+            closeDrawerBtn.addEventListener("click", () => {
+                sound.playClick();
+                if (drawer) drawer.classList.remove("open");
             });
         }
 
-        generatePipelineCode();
-
-        // 5. PANEL 4: JSON & Schema to TypeScript Engine
-        const jsonInput = document.getElementById("wbJsonInput");
-        const tsOutput = document.getElementById("wbTsOutput");
-        const sampleJsonBtn = document.getElementById("wbSampleJsonBtn");
-        const minifyJsonBtn = document.getElementById("wbMinifyJsonBtn");
-        const prettifyJsonBtn = document.getElementById("wbPrettifyJsonBtn");
-        const genTsBtn = document.getElementById("wbGenTsBtn");
-        const copyTsBtn = document.getElementById("wbCopyTsBtn");
-        const copyTsText = document.getElementById("wbCopyTsText");
-        const validationStatus = document.getElementById("wbJsonValidationStatus");
-
-        const sampleJsonData = {
-            id: "usr_99a8b1c4",
-            username: "sriyuth_k",
-            profile: {
-                role: "Fullstack AI Engineer",
-                location: "Hyderabad, India",
-                isAvailableForHire: true,
-                rating: 4.95,
-                skills: ["TypeScript", "Python", "React", "Next.js", "Docker", "FastAPI"]
-            },
-            repositoriesCount: 32,
-            stats: {
-                totalCommits: 1420,
-                starsReceived: 88,
-                contributionsThisYear: 312
-            },
-            metadata: {
-                verified: true,
-                createdAt: "2024-01-15T08:30:00Z",
-                tags: ["featured", "maintainer"]
-            }
-        };
-
-        if (jsonInput && !jsonInput.value) {
-            jsonInput.value = JSON.stringify(sampleJsonData, null, 2);
+        if (inspectToggleBtn) {
+            inspectToggleBtn.addEventListener("click", () => {
+                sound.playClick();
+                if (drawer) drawer.classList.toggle("open");
+            });
         }
 
-        if (sampleJsonBtn) {
-            sampleJsonBtn.addEventListener("click", () => {
-                if (jsonInput) jsonInput.value = JSON.stringify(sampleJsonData, null, 2);
+        if (testNodeBtn) {
+            testNodeBtn.addEventListener("click", () => {
                 sound.playBlip();
-                generateTypeScriptTypes();
-            });
-        }
-
-        if (minifyJsonBtn) {
-            minifyJsonBtn.addEventListener("click", () => {
-                if (!jsonInput) return;
-                try {
-                    const parsed = JSON.parse(jsonInput.value);
-                    jsonInput.value = JSON.stringify(parsed);
-                    if (validationStatus) validationStatus.textContent = "Status: JSON minified successfully.";
-                    sound.playBlip();
-                } catch (e) {
-                    if (validationStatus) validationStatus.textContent = `Error: ${e.message}`;
-                    sound.playError();
+                const selected = document.querySelector(".node-element.selected");
+                if (selected) {
+                    selected.classList.add("pulsing");
+                    setTimeout(() => {
+                        selected.classList.remove("pulsing");
+                        sound.playSuccess();
+                    }, 500);
                 }
             });
         }
 
-        if (prettifyJsonBtn) {
-            prettifyJsonBtn.addEventListener("click", () => {
-                if (!jsonInput) return;
-                try {
-                    const parsed = JSON.parse(jsonInput.value);
-                    jsonInput.value = JSON.stringify(parsed, null, 2);
-                    if (validationStatus) validationStatus.textContent = "Status: JSON formatted cleanly.";
-                    sound.playBlip();
-                } catch (e) {
-                    if (validationStatus) validationStatus.textContent = `Error: ${e.message}`;
-                    sound.playError();
-                }
-            });
-        }
+        setTimeout(() => {
+            drawCables();
+            selectNode("webhook");
+        }, 300);
 
-        function generateTypeScriptTypes() {
-            if (!jsonInput || !tsOutput) return;
-            const raw = jsonInput.value.trim();
-            if (!raw) {
-                tsOutput.textContent = "// Error: Empty JSON payload.";
-                if (validationStatus) validationStatus.textContent = "Status: Empty input.";
-                return;
-            }
-
-            try {
-                const parsed = JSON.parse(raw);
-                const generatedInterfaces = [];
-
-                function capitalize(str) {
-                    return str.charAt(0).toUpperCase() + str.slice(1);
-                }
-
-                function getType(val, keyName = "") {
-                    if (val === null) return "null | any";
-                    if (Array.isArray(val)) {
-                        if (val.length === 0) return "any[]";
-                        const elemType = getType(val[0], keyName.replace(/s$/, ""));
-                        return `${elemType}[]`;
-                    }
-                    if (typeof val === "object") {
-                        const interfaceName = capitalize(keyName || "Child");
-                        generateInterface(val, interfaceName);
-                        return interfaceName;
-                    }
-                    return typeof val;
-                }
-
-                function generateInterface(obj, name = "RootObject") {
-                    const lines = [`export interface ${name} {`];
-                    for (const [k, v] of Object.entries(obj)) {
-                        const typeStr = getType(v, k);
-                        const safeKey = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(k) ? k : `"${k}"`;
-                        lines.push(`  ${safeKey}: ${typeStr};`);
-                    }
-                    lines.push("}");
-                    generatedInterfaces.push(lines.join("\n"));
-                }
-
-                if (typeof parsed === "object" && !Array.isArray(parsed) && parsed !== null) {
-                    generateInterface(parsed, "RootObject");
-                } else if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === "object") {
-                    generateInterface(parsed[0], "RootItem");
-                    generatedInterfaces.push("export type RootList = RootItem[];");
-                } else {
-                    generatedInterfaces.push(`export type RootValue = ${typeof parsed};`);
-                }
-
-                const finalOutput = `// Auto-generated TypeScript Interface Definition
-// Deterministic • Zero AI Hallucinations
-
-${generatedInterfaces.reverse().join("\n\n")}`;
-
-                tsOutput.textContent = finalOutput;
-                if (validationStatus) validationStatus.textContent = `Status: Valid JSON parsed (${Object.keys(parsed).length} top-level fields).`;
-                sound.playSuccess();
-            } catch (err) {
-                tsOutput.textContent = `// JSON SYNTAX ERROR:\n// ${err.message}`;
-                if (validationStatus) validationStatus.textContent = `Syntax Error: ${err.message}`;
-                sound.playError();
-            }
-        }
-
-        if (genTsBtn) genTsBtn.addEventListener("click", generateTypeScriptTypes);
-
-        if (copyTsBtn) {
-            copyTsBtn.addEventListener("click", () => {
-                if (!tsOutput) return;
-                navigator.clipboard.writeText(tsOutput.textContent).then(() => {
-                    sound.playSuccess();
-                    if (copyTsText) {
-                        const original = copyTsText.textContent;
-                        copyTsText.textContent = "COPIED!";
-                        setTimeout(() => { copyTsText.textContent = original; }, 1800);
-                    }
-                });
-            });
-        }
-
-        setTimeout(generateTypeScriptTypes, 500);
-
-    })();
+        window.addEventListener("resize", () => {
+            drawCables();
+        });
+    }
+    initInteractiveNodeGraph();
 
 
     /* ========================================================

@@ -498,6 +498,153 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initCinematicHeroTransition();
 
+    /* ========================================================
+       5.1. AWWWARDS-LEVEL KINETIC MARQUEE REDESIGN ENGINE
+       Features: Dual-track counter-flow, seamless xPercent loop,
+       ScrollTrigger dynamic velocity coupling, hover deceleration,
+       accessible pause/resume toggle & reduced motion respect.
+       ======================================================== */
+    function initKineticMarquee() {
+        const marqueeSection = document.getElementById("marqueeSection");
+        const trackMain = document.getElementById("marqueeTrackMain");
+        const trackSub = document.getElementById("marqueeTrackSub");
+        const pauseBtn = document.getElementById("marqueePauseBtn");
+        const pauseIcon = document.getElementById("marqueePauseIcon");
+        const pauseText = document.getElementById("marqueePauseText");
+
+        if (!trackMain || !trackSub) return;
+
+        // Check prefers-reduced-motion
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (prefersReducedMotion) {
+            if (pauseBtn) {
+                pauseBtn.setAttribute("aria-pressed", "true");
+                if (pauseText) pauseText.innerText = "STATIC";
+                pauseBtn.style.opacity = "0.6";
+                pauseBtn.disabled = true;
+            }
+            return;
+        }
+
+        // Tier 2: Main Hero Ribbon (Leftward infinite smooth glide)
+        // With 2 identical units, animating xPercent from 0 to -50 is 100% mathematically seamless
+        const mainTween = gsap.to(trackMain, {
+            xPercent: -50,
+            repeat: -1,
+            duration: 36,
+            ease: "none"
+        });
+
+        // Tier 3: Sub-Ribbon Micro-Ticker (Rightward counter-flow infinite smooth glide)
+        gsap.set(trackSub, { xPercent: -50 });
+        const subTween = gsap.to(trackSub, {
+            xPercent: 0,
+            repeat: -1,
+            duration: 44,
+            ease: "none"
+        });
+
+        let isPaused = false;
+        let isHovered = false;
+
+        function setMarqueePaused(state) {
+            isPaused = state;
+            if (isPaused) {
+                mainTween.pause();
+                subTween.pause();
+                if (pauseIcon) {
+                    pauseIcon.classList.remove("ph-pause");
+                    pauseIcon.classList.add("ph-play");
+                }
+                if (pauseText) pauseText.innerText = "RESUME";
+                if (pauseBtn) pauseBtn.setAttribute("aria-pressed", "true");
+            } else {
+                mainTween.play();
+                subTween.play();
+                if (pauseIcon) {
+                    pauseIcon.classList.remove("ph-play");
+                    pauseIcon.classList.add("ph-pause");
+                }
+                if (pauseText) pauseText.innerText = "PAUSE";
+                if (pauseBtn) pauseBtn.setAttribute("aria-pressed", "false");
+            }
+        }
+
+        if (pauseBtn) {
+            pauseBtn.addEventListener("click", () => {
+                if (window.sound && typeof window.sound.playClick === "function") {
+                    window.sound.playClick();
+                }
+                setMarqueePaused(!isPaused);
+            });
+        }
+
+        // Hover deceleration: slow down to 0.25x speed for effortless readability
+        if (marqueeSection) {
+            marqueeSection.addEventListener("mouseenter", () => {
+                if (isPaused) return;
+                isHovered = true;
+                gsap.to([mainTween, subTween], {
+                    timeScale: 0.25,
+                    duration: 0.4,
+                    ease: "power2.out",
+                    overwrite: "auto"
+                });
+            });
+
+            marqueeSection.addEventListener("mouseleave", () => {
+                if (isPaused) return;
+                isHovered = false;
+                gsap.to([mainTween, subTween], {
+                    timeScale: 1.0,
+                    duration: 0.6,
+                    ease: "power2.out",
+                    overwrite: "auto"
+                });
+            });
+        }
+
+        // ScrollTrigger Velocity Coupling: dynamically accelerate on rapid user scrolling
+        let scrollVelocityTimer = null;
+        if (typeof ScrollTrigger !== "undefined") {
+            ScrollTrigger.create({
+                trigger: marqueeSection,
+                start: "top bottom",
+                end: "bottom top",
+                onUpdate: (self) => {
+                    if (isPaused || isHovered) return;
+                    const velocity = Math.abs(self.getVelocity() || 0);
+                    if (velocity > 80) {
+                        // Map velocity to speed multiplier between 1.0 and 3.2
+                        const boost = Math.min(velocity / 500, 2.2);
+                        const targetTimeScale = 1.0 + boost;
+
+                        gsap.to([mainTween, subTween], {
+                            timeScale: targetTimeScale,
+                            duration: 0.2,
+                            overwrite: "auto"
+                        });
+
+                        clearTimeout(scrollVelocityTimer);
+                        scrollVelocityTimer = setTimeout(() => {
+                            if (!isPaused && !isHovered) {
+                                gsap.to([mainTween, subTween], {
+                                    timeScale: 1.0,
+                                    duration: 0.8,
+                                    ease: "power1.out",
+                                    overwrite: "auto"
+                                });
+                            }
+                        }, 120);
+                    }
+                }
+            });
+        }
+    }
+
+    initKineticMarquee();
+
+
 
     /* ========================================================
        6. INTERACTIVE AI AUTOMATION TERMINAL SIMULATOR

@@ -314,17 +314,144 @@
         </div>
     </div>
 
-    <!-- Marquee Ticker -->
-    <div class="marquee-container" aria-hidden="true">
-        <div class="marquee-track">
-            <div class="marquee-content whitespace-nowrap">
-                INTUITIVE & PASSIONATE DEV • AI AUTOMATIONS ARCHITECT • ELECTRON TOOLING • GSAP SCROLLYTELLING • INDEXEDDB PERSISTENCE • HIGH-PERFORMANCE REACT & JS • HYDERABAD, INDIA •&nbsp;
+    <!-- ========================================================
+         AWWWARDS-LEVEL KINETIC MARQUEE REDESIGN
+         Three-Tier Industrial Editorial Ticker with GSAP Velocity
+         ======================================================== -->
+    <section id="marqueeSection" class="marquee-wrapper relative overflow-hidden select-none border-y-4 border-black" aria-label="Core Competencies & Engineering Capabilities">
+        <!-- Hidden Accessible Summary for Screen Readers -->
+        <div class="sr-only">
+            Core Competencies: Frontend Engineering, AI Automation Architecture, Electron Tooling, GSAP Scrollytelling, High-Performance React, Developer Tools, IndexedDB Persistence. Based in Hyderabad, India. MCA Candidate with 32+ Repositories.
+        </div>
+
+        <!-- Tier 1: Industrial Telemetry Bar -->
+        <div class="marquee-telemetry-bar flex items-center justify-between px-4 py-2 bg-[#0C0D10] text-white text-[0.7rem] md:text-xs font-mono tracking-wider border-b-2 border-black overflow-x-auto">
+            <div class="flex items-center gap-3 whitespace-nowrap">
+                <span class="inline-flex items-center gap-1.5 font-bold marquee-sub-accent">
+                    <span class="w-2 h-2 rounded-full bg-accent-1 animate-ping"></span>
+                    <span class="w-2 h-2 rounded-full bg-accent-1 -ml-3.5"></span>
+                    STATUS: PRODUCTION_READY
+                </span>
+                <span class="opacity-40">|</span>
+                <span class="hidden sm:inline text-white/80">LOC: 17.3850° N, 78.4867° E [HYDERABAD, IN]</span>
+                <span class="hidden md:inline opacity-40">|</span>
+                <span class="hidden md:inline text-white/80">CREDS: MCA CANDIDATE • 32+ REPOSITORIES</span>
             </div>
-            <div class="marquee-content whitespace-nowrap">
-                INTUITIVE & PASSIONATE DEV • AI AUTOMATIONS ARCHITECT • ELECTRON TOOLING • GSAP SCROLLYTELLING • INDEXEDDB PERSISTENCE • HIGH-PERFORMANCE REACT & JS • HYDERABAD, INDIA •&nbsp;
+            <div class="flex items-center gap-4 whitespace-nowrap ml-4">
+                <span class="hidden lg:inline text-[0.65rem] marquee-sub-accent/90 uppercase tracking-widest font-mono">
+                    <i class="ph-bold ph-gauge mr-1"></i>VELOCITY_COUPLED
+                </span>
+                <button id="marqueePauseBtn" class="marquee-pause-btn flex items-center gap-1.5 px-2.5 py-0.5 bg-white/10 hover:bg-accent-1 hover:text-black border border-white/20 transition-colors uppercase font-bold text-[0.68rem] tracking-wider cursor-pointer" aria-pressed="false" aria-label="Toggle marquee motion">
+                    <i class="ph-bold ph-pause text-xs" id="marqueePauseIcon"></i>
+                    <span id="marqueePauseText">PAUSE</span>
+                </button>
             </div>
         </div>
-    </div>
+
+        <!-- Tier 2: Hero Kinetic Ribbon (Acid Lime #D4FF00) -->
+        <div class="marquee-hero-ribbon relative bg-accent-1 text-black py-3 sm:py-4 md:py-6 overflow-hidden border-b-2 border-black" aria-hidden="true">
+            <div class="marquee-track-main flex w-max items-center will-change-transform" id="marqueeTrackMain">
+                <!-- Unit 1 -->
+                <div class="marquee-ribbon-unit flex items-center shrink-0">
+                    <span class="marquee-display-term font-display font-black tracking-tighter">FRONTEND ENGINEERING</span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="marquee-badge-pill pill-dark font-mono">REACT 18 & VITE</span>
+                    <span class="marquee-glyph">➔</span>
+                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">AI AUTOMATION ARCHITECTURE</span>
+                    <span class="marquee-glyph">◆</span>
+                    <span class="marquee-badge-pill pill-light font-mono">AUTONOMOUS AGENTS</span>
+                    <span class="marquee-glyph">⌖</span>
+                    <span class="marquee-display-term font-display font-black tracking-tighter">ELECTRON TOOLING</span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="marquee-badge-pill pill-dark font-mono">IPC & DESKTOP</span>
+                    <span class="marquee-glyph">➔</span>
+                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">GSAP SCROLLYTELLING</span>
+                    <span class="marquee-glyph">◆</span>
+                    <span class="marquee-badge-pill pill-dark font-mono">HARDWARE ACCEL</span>
+                    <span class="marquee-glyph">⌖</span>
+                    <span class="marquee-display-term font-display font-black tracking-tighter">HIGH-PERFORMANCE REACT</span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="marquee-badge-pill pill-light font-mono">ZERO LATENCY</span>
+                    <span class="marquee-glyph">➔</span>
+                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">DEVELOPER TOOLS</span>
+                    <span class="marquee-glyph">◆</span>
+                    <span class="marquee-badge-pill pill-dark font-mono">INDEXEDDB PERSISTENCE</span>
+                    <span class="marquee-glyph">✦</span>
+                </div>
+                <!-- Unit 2 (Exact duplicate for seamless infinite loop) -->
+                <div class="marquee-ribbon-unit flex items-center shrink-0">
+                    <span class="marquee-display-term font-display font-black tracking-tighter">FRONTEND ENGINEERING</span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="marquee-badge-pill pill-dark font-mono">REACT 18 & VITE</span>
+                    <span class="marquee-glyph">➔</span>
+                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">AI AUTOMATION ARCHITECTURE</span>
+                    <span class="marquee-glyph">◆</span>
+                    <span class="marquee-badge-pill pill-light font-mono">AUTONOMOUS AGENTS</span>
+                    <span class="marquee-glyph">⌖</span>
+                    <span class="marquee-display-term font-display font-black tracking-tighter">ELECTRON TOOLING</span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="marquee-badge-pill pill-dark font-mono">IPC & DESKTOP</span>
+                    <span class="marquee-glyph">➔</span>
+                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">GSAP SCROLLYTELLING</span>
+                    <span class="marquee-glyph">◆</span>
+                    <span class="marquee-badge-pill pill-dark font-mono">HARDWARE ACCEL</span>
+                    <span class="marquee-glyph">⌖</span>
+                    <span class="marquee-display-term font-display font-black tracking-tighter">HIGH-PERFORMANCE REACT</span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="marquee-badge-pill pill-light font-mono">ZERO LATENCY</span>
+                    <span class="marquee-glyph">➔</span>
+                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">DEVELOPER TOOLS</span>
+                    <span class="marquee-glyph">◆</span>
+                    <span class="marquee-badge-pill pill-dark font-mono">INDEXEDDB PERSISTENCE</span>
+                    <span class="marquee-glyph">✦</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 3: Sub-Ribbon Reverse Flow (Deep Black #0C0D10) -->
+        <div class="marquee-sub-ribbon relative bg-[#0C0D10] text-[#E0E2EC] py-2 md:py-2.5 overflow-hidden" aria-hidden="true">
+            <div class="marquee-track-sub flex w-max items-center will-change-transform" id="marqueeTrackSub">
+                <!-- Unit 1 -->
+                <div class="marquee-sub-unit flex items-center gap-6 md:gap-8 font-mono text-xs md:text-sm tracking-widest shrink-0 pr-6 md:pr-8">
+                    <span class="marquee-sub-accent">✦ AST DIFFING</span>
+                    <span class="text-white/30">⌁</span>
+                    <span>WEBHOOK ROUTING</span>
+                    <span class="text-white/30">⌁</span>
+                    <span class="marquee-sub-accent">HEADLESS CHROME WORKFLOWS</span>
+                    <span class="text-white/30">⌁</span>
+                    <span>TAILWIND CSS & DESIGN SYSTEMS</span>
+                    <span class="text-white/30">⌁</span>
+                    <span class="marquee-sub-accent">TYPESCRIPT STRICT MODE</span>
+                    <span class="text-white/30">⌁</span>
+                    <span>RESTFUL & WEBSOCKET PROTOCOLS</span>
+                    <span class="text-white/30">⌁</span>
+                    <span class="marquee-sub-accent">BROWSER AGENT AUTOMATION</span>
+                    <span class="text-white/30">⌁</span>
+                    <span>CI/CD & ELECTRON PACKAGING</span>
+                    <span class="text-white/30">⌁</span>
+                </div>
+                <!-- Unit 2 (Exact duplicate for seamless counter-flow loop) -->
+                <div class="marquee-sub-unit flex items-center gap-6 md:gap-8 font-mono text-xs md:text-sm tracking-widest shrink-0 pr-6 md:pr-8">
+                    <span class="marquee-sub-accent">✦ AST DIFFING</span>
+                    <span class="text-white/30">⌁</span>
+                    <span>WEBHOOK ROUTING</span>
+                    <span class="text-white/30">⌁</span>
+                    <span class="marquee-sub-accent">HEADLESS CHROME WORKFLOWS</span>
+                    <span class="text-white/30">⌁</span>
+                    <span>TAILWIND CSS & DESIGN SYSTEMS</span>
+                    <span class="text-white/30">⌁</span>
+                    <span class="marquee-sub-accent">TYPESCRIPT STRICT MODE</span>
+                    <span class="text-white/30">⌁</span>
+                    <span>RESTFUL & WEBSOCKET PROTOCOLS</span>
+                    <span class="text-white/30">⌁</span>
+                    <span class="marquee-sub-accent">BROWSER AGENT AUTOMATION</span>
+                    <span class="text-white/30">⌁</span>
+                    <span>CI/CD & ELECTRON PACKAGING</span>
+                    <span class="text-white/30">⌁</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
     <!-- ========================================================

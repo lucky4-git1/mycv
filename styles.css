@@ -447,38 +447,157 @@ html.dark .grid-bg {
 .modal-close-btn:hover {
   transform: translate(-2px, -2px);
 }
-
-/* ─── Marquee Ticker ─── */
-.marquee-container {
+/* ─── Awwwards-Level Kinetic Marquee Redesign ─── */
+.marquee-wrapper {
+  position: relative;
+  width: 100%;
   overflow: hidden;
   user-select: none;
-  display: flex;
-  border-top: 3px solid var(--color-border);
-  border-bottom: 3px solid var(--color-border);
+  background-color: #0C0D10;
+}
+
+.marquee-telemetry-bar {
+  background-color: #0C0D10;
+  border-bottom: 2px solid #000;
+  scrollbar-width: none;
+}
+.marquee-telemetry-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.marquee-pause-btn {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.marquee-pause-btn:active {
+  transform: scale(0.96);
+}
+
+.marquee-hero-ribbon {
   background-color: var(--color-accent-1);
-  color: #121316;
-  padding: 0.75rem 0;
+  color: #0C0D10;
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+}
+.marquee-hero-ribbon:active {
+  cursor: grabbing;
 }
 
-.marquee-track {
+.marquee-track-main {
   display: flex;
-  width: fit-content;
-  animation: marquee 26s linear infinite;
+  width: max-content;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
-.marquee-content {
+.marquee-ribbon-unit {
   display: flex;
   align-items: center;
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.25rem;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+.marquee-display-term {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2rem, 4.8vw, 4.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: #0C0D10;
+  display: inline-block;
+  padding: 0 0.25rem;
+}
+
+.marquee-outline-text {
+  color: transparent;
+  -webkit-text-stroke: clamp(1.5px, 0.25vw, 2.5px) #0C0D10;
+  transition: color 0.3s ease, -webkit-text-stroke-color 0.3s ease;
+}
+
+.marquee-hero-ribbon:hover .marquee-outline-text {
+  -webkit-text-stroke-color: #000;
+}
+
+.marquee-glyph {
+  font-family: var(--font-mono);
+  font-size: clamp(1.2rem, 2.2vw, 2.2rem);
+  font-weight: 700;
+  margin: 0 clamp(0.75rem, 1.6vw, 2.2rem);
+  color: #0C0D10;
+  opacity: 0.85;
+  user-select: none;
+}
+
+.marquee-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 1vw, 0.95rem);
+  font-weight: 800;
+  padding: clamp(0.25rem, 0.4vw, 0.45rem) clamp(0.75rem, 1.2vw, 1.25rem);
+  border: 2.5px solid #0C0D10;
+  box-shadow: 3px 3px 0 0 #0C0D10;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  margin: 0 clamp(0.45rem, 0.9vw, 1.2rem);
+  white-space: nowrap;
+  transform: translateY(-2px);
+}
+
+.marquee-badge-pill.pill-dark {
+  background-color: #0C0D10 !important;
+  color: var(--color-accent-1) !important;
+}
+
+.marquee-badge-pill.pill-light {
+  background-color: #FFFFFF !important;
+  color: #0C0D10 !important;
+}
+
+.marquee-telemetry-accent,
+.marquee-sub-accent {
+  color: var(--color-accent-1) !important;
+}
+
+.marquee-sub-ribbon {
+  background-color: #0C0D10;
+  color: #E0E2EC;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.marquee-track-sub {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.marquee-sub-unit {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track-main,
+  .marquee-track-sub {
+    transform: none !important;
+    animation: none !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+  }
 }
 
 /* ─── Interactive AI Automations Terminal ─── */

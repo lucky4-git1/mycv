@@ -324,20 +324,15 @@ document.addEventListener("DOMContentLoaded", () => {
     /* ========================================================
        5. CINEMATIC FULLSCREEN VIDEO-TO-HERO TRANSITION
        ======================================================== */
-    function initCinematicHeroTransition() {
+        function initCinematicHeroTransition() {
         const stageContainer = document.getElementById("hero-cinematic-stage");
         const pinnedViewport = document.getElementById("hero-pinned-viewport");
         const videoShell = document.getElementById("cinematicVideoShell");
         const destWrapper = document.getElementById("heroVideoWrapper");
-        const hudTop = document.getElementById("cinematicHudTop");
-        const hudBottom = document.getElementById("cinematicHudBottom");
         const dockedLabel = document.getElementById("cinematicDockedLabel");
         const stageToolbar = document.getElementById("stageToolbar");
         const stageCaption = document.getElementById("stageCaption");
         const heroLeftCol = document.getElementById("heroLeftCol");
-        const stageVideoBtn = document.getElementById("stageVideoBtn");
-        const stage3DBtn = document.getElementById("stage3DBtn");
-        const heroSplineWrapper = document.getElementById("heroSplineWrapper");
         const nav = document.querySelector("nav");
 
         if (!stageContainer || !pinnedViewport || !videoShell || !destWrapper) return;
@@ -365,32 +360,6 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-        function setupStageButtons() {
-            if (!stageVideoBtn || !stage3DBtn || !heroSplineWrapper) return;
-
-            stageVideoBtn.addEventListener("click", () => {
-                sound.playClick();
-                stageVideoBtn.classList.add("bg-a1", "text-black");
-                stageVideoBtn.classList.remove("bg-card", "text-text");
-                stage3DBtn.classList.remove("bg-a1", "text-black");
-                stage3DBtn.classList.add("bg-card", "text-text");
-
-                videoShell.style.display = "block";
-                heroSplineWrapper.style.display = "none";
-            });
-
-            stage3DBtn.addEventListener("click", () => {
-                sound.playClick();
-                stage3DBtn.classList.add("bg-a1", "text-black");
-                stage3DBtn.classList.remove("bg-card", "text-text");
-                stageVideoBtn.classList.remove("bg-a1", "text-black");
-                stageVideoBtn.classList.add("bg-card", "text-text");
-
-                videoShell.style.display = "none";
-                heroSplineWrapper.style.display = "block";
-            });
-        }
-
         if (!motionEnabled) {
             const metrics = getDestMetrics();
             gsap.set(videoShell, {
@@ -402,15 +371,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 borderColor: "var(--color-border)",
                 boxShadow: "8px 8px 0 0 var(--shadow-color)"
             });
-            if (hudTop) hudTop.style.display = "none";
-            if (hudBottom) hudBottom.style.display = "none";
             if (dockedLabel) dockedLabel.style.opacity = "1";
             if (nav) gsap.set(nav, { opacity: 1, y: 0 });
             if (heroLeftCol) gsap.set(heroLeftCol, { opacity: 1, x: 0 });
             if (stageToolbar) gsap.set(stageToolbar, { opacity: 1, y: 0 });
             if (stageCaption) gsap.set(stageCaption, { opacity: 1, y: 0 });
-
-            setupStageButtons();
             return;
         }
 
@@ -428,8 +393,6 @@ document.addEventListener("DOMContentLoaded", () => {
             borderColor: "transparent",
             boxShadow: "0px 0px 0px transparent"
         });
-        if (hudTop) gsap.set(hudTop, { opacity: 1 });
-        if (hudBottom) gsap.set(hudBottom, { opacity: 1 });
         if (dockedLabel) gsap.set(dockedLabel, { opacity: 0 });
         if (nav) gsap.set(nav, { opacity: 0, y: -40 });
         if (stageToolbar) gsap.set(stageToolbar, { opacity: 0, y: -12 });
@@ -449,20 +412,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 start: "top top",
                 end: () => `+=${pinScrollDistance}`,
                 scrub: isMobile ? 0.4 : 0.8,
-                invalidateOnRefresh: true,
-                onUpdate: (self) => {
-                    if (hudBottom) {
-                        hudBottom.style.pointerEvents = self.progress > 0.08 ? "none" : "auto";
-                    }
-                }
+                invalidateOnRefresh: true
             }
         });
-
-        heroTl.to([hudTop, hudBottom], {
-            opacity: 0,
-            duration: 0.15,
-            ease: "power1.out"
-        }, 0);
 
         heroTl.to(videoShell, {
             x: () => getDestMetrics().x,
@@ -508,25 +460,6 @@ document.addEventListener("DOMContentLoaded", () => {
         heroTl.to("#heroBio", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.55);
         heroTl.to("#heroCtas", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.65);
         heroTl.to("#heroMetaBar", { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 0.75);
-
-        if (hudBottom) {
-            const triggerScroll = () => {
-                sound.playClick();
-                window.scrollTo({
-                    top: stageContainer.offsetTop + pinScrollDistance,
-                    behavior: "smooth"
-                });
-            };
-            hudBottom.addEventListener("click", triggerScroll);
-            hudBottom.addEventListener("keydown", (e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    triggerScroll();
-                }
-            });
-        }
-
-        setupStageButtons();
     }
 
     initCinematicHeroTransition();

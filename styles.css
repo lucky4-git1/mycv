@@ -265,7 +265,7 @@ html.dark .grid-bg {
   line-height: 1.2;
 }
 
-.brutal-badge.badge-lime { background-color: var(--color-accent-1); color: #111; }
+.brutal-badge.badge-lime { background-color: var(--color-card); color: var(--color-text); }
 .brutal-badge.badge-coral { background-color: var(--color-accent-2); color: #fff; }
 .brutal-badge.badge-cobalt { background-color: var(--color-accent-3); color: #fff; }
 .brutal-badge.badge-mint { background-color: var(--color-accent-4); color: #111; }

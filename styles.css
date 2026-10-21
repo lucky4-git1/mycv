@@ -741,18 +741,11 @@ html.dark .grid-bg {
 #hero-pinned-viewport {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  overflow: hidden;
+  min-height: auto;
 }
 
 .cinematic-video-shell {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 40;
-  overflow: hidden;
+  display: none;
   background-color: #000;
   transform-origin: top left;
   will-change: transform, width, height;
@@ -889,3 +882,51 @@ html.dark .grid-bg {
 }
 
 
+
+/* ─── Awwwards-Level Editorial Motion & Interactions ─── */
+#scrollProgressIndicator {
+  background-color: var(--color-accent-1);
+  box-shadow: 0 0 10px rgba(228, 255, 0, 0.7);
+  pointer-events: none;
+}
+
+.reveal-from-left,
+.reveal-from-right {
+  will-change: transform, opacity;
+}
+
+#timelineSpine {
+  overflow: hidden;
+}
+
+#timelineProgressLine {
+  background-color: var(--color-accent-1);
+  transform-origin: top center;
+  transform: scaleY(0);
+  will-change: transform;
+}
+
+/* Curated Project Spotlight Card Effects */
+.project-card-wrap {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.project-card-wrap:hover {
+  transform: translateY(-4px);
+}
+
+.project-card-wrap:hover .brutal-shadow {
+  box-shadow: 10px 10px 0 0 var(--shadow-color);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  #timelineProgressLine {
+    transform: scaleY(1) !important;
+  }
+  .reveal-from-left,
+  .reveal-from-right {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}

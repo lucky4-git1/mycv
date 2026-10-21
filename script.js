@@ -368,31 +368,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* ========================================================
-       5. CINEMATIC FULLSCREEN VIDEO-TO-HERO TRANSITION
+       5. AWWWARDS HERO ENTRANCE & VIDEO INITIALIZATION
        ======================================================== */
-        function initCinematicHeroTransition() {
-        const stageContainer = document.getElementById("hero-cinematic-stage");
-        const pinnedViewport = document.getElementById("hero-pinned-viewport");
-        const videoShell = document.getElementById("cinematicVideoShell");
-        const destWrapper = document.getElementById("heroVideoWrapper");
-                const stageToolbar = document.getElementById("stageToolbar");
-        const stageCaption = document.getElementById("stageCaption");
-        const heroLeftCol = document.getElementById("heroLeftCol");
-        const nav = document.querySelector("nav");
-
-        if (!stageContainer || !pinnedViewport || !videoShell || !destWrapper) return;
-
-        function getDestMetrics() {
-            const dRect = destWrapper.getBoundingClientRect();
-            const pRect = pinnedViewport.getBoundingClientRect();
-            return {
-                x: dRect.left - pRect.left,
-                y: dRect.top - pRect.top,
-                width: dRect.width,
-                height: dRect.height
-            };
-        }
-
+    function initCinematicHeroTransition() {
         const videoEl = document.getElementById("heroVideo");
         if (videoEl) {
             videoEl.play().catch(e => {
@@ -405,95 +383,50 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
+        const nav = document.querySelector("nav");
+        if (nav) gsap.set(nav, { opacity: 1, y: 0 });
+
         if (!motionEnabled) {
-            const metrics = getDestMetrics();
-            gsap.set(videoShell, {
-                x: metrics.x,
-                y: metrics.y,
-                width: metrics.width,
-                height: metrics.height,
-                borderWidth: "3px",
-                borderColor: "var(--color-border)",
-                boxShadow: "8px 8px 0 0 var(--shadow-color)"
+            gsap.set(["#heroHeadline", ".hero-role-badge", "#heroBio", "#heroCtas", "#heroMetaBar", "#heroRightCol", "#stageToolbar", "#stageCaption"], {
+                opacity: 1,
+                y: 0,
+                x: 0,
+                scale: 1
             });
-                        if (nav) gsap.set(nav, { opacity: 1, y: 0 });
-            if (heroLeftCol) gsap.set(heroLeftCol, { opacity: 1, x: 0 });
-            if (stageToolbar) gsap.set(stageToolbar, { opacity: 1, y: 0 });
-            if (stageCaption) gsap.set(stageCaption, { opacity: 1, y: 0 });
             return;
         }
 
-        const isMobile = window.innerWidth < 768;
-        const pinScrollDistance = isMobile ? 450 : 1000;
-
-        gsap.set(videoShell, {
-            top: 0,
-            left: 0,
-            x: 0,
-            y: 0,
-            width: "100vw",
-            height: "100vh",
-            borderWidth: "0px",
-            borderColor: "transparent",
-            boxShadow: "0px 0px 0px transparent"
-        });
-                if (nav) gsap.set(nav, { opacity: 0, y: -40 });
-        if (stageToolbar) gsap.set(stageToolbar, { opacity: 0, y: -12 });
-        if (stageCaption) gsap.set(stageCaption, { opacity: 0, y: 12 });
-
-                gsap.set("#heroHeadline", { opacity: 0, x: -30 });
-        gsap.set(".hero-role-badge", { opacity: 0, y: 16, scale: 0.95 });
-        gsap.set("#heroBio", { opacity: 0, y: 20 });
-        gsap.set("#heroCtas", { opacity: 0, y: 20 });
-        gsap.set("#heroMetaBar", { opacity: 0, y: 15 });
-
-        const heroTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: stageContainer,
-                pin: pinnedViewport,
-                start: "top top",
-                end: () => `+=${pinScrollDistance}`,
-                scrub: isMobile ? 0.4 : 0.8,
-                invalidateOnRefresh: true
-            }
-        });
-
-        heroTl.to(videoShell, {
-            x: () => getDestMetrics().x,
-            y: () => getDestMetrics().y,
-            width: () => getDestMetrics().width,
-            height: () => getDestMetrics().height,
-            borderWidth: "3px",
-            borderColor: "var(--color-border)",
-            boxShadow: "8px 8px 0 0 var(--shadow-color)",
-            ease: "power2.inOut",
-            duration: 0.95
-        }, 0);
-
-        if (stageToolbar && stageCaption) {
-            heroTl.to([stageToolbar, stageCaption], {
-                opacity: 1,
-                y: 0,
-                duration: 0.4,
-                ease: "power2.out"
-            }, 0.35);
-        }
-
-
-        if (nav) {
-            heroTl.to(nav, {
-                opacity: 1,
-                y: 0,
-                duration: 0.35,
-                ease: "power2.out"
-            }, 0.25);
-        }
-
-                heroTl.to("#heroHeadline", { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 0.30);
-        heroTl.to(".hero-role-badge", { opacity: 1, y: 0, scale: 1, stagger: 0.05, duration: 0.25, ease: "power2.out" }, 0.45);
-        heroTl.to("#heroBio", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.55);
-        heroTl.to("#heroCtas", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.65);
-        heroTl.to("#heroMetaBar", { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 0.75);
+        // Crisp editorial entrance timeline
+        const heroEntranceTl = gsap.timeline({ delay: 0.1 });
+        heroEntranceTl.fromTo("#heroHeadline", 
+            { opacity: 0, y: 35 },
+            { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" }
+        )
+        .fromTo(".hero-role-badge",
+            { opacity: 0, y: 15, scale: 0.95 },
+            { opacity: 1, y: 0, scale: 1, stagger: 0.08, duration: 0.45, ease: "back.out(1.4)" },
+            "-=0.4"
+        )
+        .fromTo("#heroBio",
+            { opacity: 0, y: 18 },
+            { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+            "-=0.3"
+        )
+        .fromTo("#heroCtas",
+            { opacity: 0, y: 15 },
+            { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+            "-=0.3"
+        )
+        .fromTo("#heroMetaBar",
+            { opacity: 0, y: 15 },
+            { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+            "-=0.3"
+        )
+        .fromTo("#heroRightCol",
+            { opacity: 0, scale: 0.96, y: 20 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "power3.out" },
+            "-=0.6"
+        );
     }
 
     initCinematicHeroTransition();
@@ -2018,38 +1951,93 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ========================================================
-       9. GSAP REVEALS & ENTRANCE ANIMATIONS
+       9. AWWWARDS-LEVEL REUSABLE MOTION & SCROLL SYSTEM
+       Features: Side-entry reveals, reading progress tracking,
+       timeline line-draw conduit & cards stagger reveals.
        ======================================================== */
-    if (motionEnabled) {
-        // .hero-anim reveal is handled by initCinematicHeroTransition scroll timeline
+    const progressIndicator = document.getElementById("scrollProgressIndicator");
+    if (progressIndicator) {
+        window.addEventListener("scroll", () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            progressIndicator.style.width = scrolled + "%";
+        }, { passive: true });
+    }
 
+    if (motionEnabled) {
+        // Section Headers Entrance
         gsap.utils.toArray(".gs-section-header").forEach(header => {
             gsap.from(header, {
                 scrollTrigger: {
                     trigger: header,
                     start: "top 85%"
                 },
-                y: 40,
+                y: 35,
                 opacity: 0,
                 duration: 0.7,
                 ease: "power3.out"
             });
         });
 
+        // Side-Entry Left Reveals
+        gsap.utils.toArray(".reveal-from-left").forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%"
+                },
+                x: -50,
+                opacity: 0,
+                duration: 0.75,
+                ease: "power2.out"
+            });
+        });
+
+        // Side-Entry Right Reveals
+        gsap.utils.toArray(".reveal-from-right").forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%"
+                },
+                x: 50,
+                opacity: 0,
+                duration: 0.75,
+                ease: "power2.out"
+            });
+        });
+
+        // Curated Project Cards Stagger
         gsap.utils.toArray(".project-card-wrap").forEach(card => {
             gsap.from(card, {
                 scrollTrigger: {
                     trigger: card,
                     start: "top 88%"
                 },
-                y: 50,
+                y: 40,
                 opacity: 0,
-                duration: 0.65,
-                ease: "power3.out"
+                duration: 0.6,
+                ease: "power2.out"
             });
         });
-    }
 
+        // Journey Timeline Animated Line Draw
+        const timelineProgress = document.getElementById("timelineProgressLine");
+        const timelineSpine = document.getElementById("timelineSpine");
+        if (timelineProgress && timelineSpine) {
+            gsap.to(timelineProgress, {
+                scrollTrigger: {
+                    trigger: timelineSpine,
+                    start: "top 70%",
+                    end: "bottom 80%",
+                    scrub: 0.6
+                },
+                scaleY: 1,
+                ease: "none"
+            });
+        }
+    }
 
     /* ========================================================
        10. LIVE HYDERABAD CLOCK & TIMEZONE

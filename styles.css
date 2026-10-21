@@ -668,17 +668,4 @@ html.dark .grid-bg {
   will-change: width;
 }
 
-/* ─── Seamless Model Embed & Instant Fallback Styling ─── */
-model-embed {
-  background: transparent !important;
-  color: inherit !important;
-  display: block;
-  position: relative;
-  z-index: 10;
-}
 
-model-embed::part(canvas),
-model-embed canvas,
-model-embed iframe {
-  background: transparent !important;
-}

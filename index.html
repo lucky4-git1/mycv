@@ -38,6 +38,41 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <!-- Thrine 3D Embed Engine -->
+        <!-- Thrine Custom Element Resilience Patch for GSAP / ScrollTrigger Pinning -->
+    <script>
+        (function() {
+            const origDefine = customElements.define.bind(customElements);
+            customElements.define = function(name, constructor, options) {
+                if (name === 'model-embed') {
+                    const origDisconnected = constructor.prototype.disconnectedCallback;
+                    constructor.prototype.disconnectedCallback = function() {
+                        this._disconnectTimer = setTimeout(() => {
+                            if (!this.isConnected && origDisconnected) {
+                                origDisconnected.call(this);
+                            }
+                        }, 300);
+                    };
+
+                    const origConnected = constructor.prototype.connectedCallback;
+                    constructor.prototype.connectedCallback = function() {
+                        if (this._disconnectTimer) {
+                            clearTimeout(this._disconnectTimer);
+                            this._disconnectTimer = null;
+                        }
+                        if (this.disposed) {
+                            this.disposed = false;
+                            this.started = false;
+                        }
+                        if (origConnected) origConnected.call(this);
+                        if (!this.started && typeof this.start === 'function') {
+                            this.start();
+                        }
+                    };
+                }
+                return origDefine(name, constructor, options);
+            };
+        })();
+    </script>
     <script type="module" src="https://thrine.app/embed/v1.js"></script>
 </head>
 <body class="selection:bg-a1 selection:text-black">
@@ -155,7 +190,7 @@
                 <!-- Instant Fallback (zero latency, zero blank space) -->
                 <span class="absolute inset-0 flex items-center justify-center font-black text-black text-lg select-none">KS</span>
                 <!-- Progressive 3D Monogram -->
-                <model-embed project="e_1b774033a3e45d5c219f" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:357/314;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'"></model-embed>
+                <model-embed project="e_1b774033a3e45d5c219f" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:357/314"></model-embed>
             </div>
             <div class="flex flex-col">
                 <span class="text-xl font-black uppercase tracking-tighter leading-none">SRIYUTH.</span>
@@ -246,7 +281,7 @@
                                 <span>EXPLORE WORK (10+)</span>
                                 <span class="relative w-5 h-5 inline-flex items-center justify-center">
                                     <i class="ph-bold ph-arrow-up-right absolute inset-0 flex items-center justify-center text-sm"></i>
-                                    <model-embed project="e_b872cbb8f3b91b1c46c7" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:481/348;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'"></model-embed>
+                                    <model-embed project="e_b872cbb8f3b91b1c46c7" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:481/348"></model-embed>
                                 </span>
                             </a>
                             <a href="#automations" class="brutal-btn brutal-btn-coral hover-target flex items-center gap-2">
@@ -425,7 +460,7 @@
                         <span class="font-mono-label text-xs font-bold text-slate-500">[ REAL WORKFLOWS ]</span>
                         <span class="relative inline-flex items-center justify-center w-6 h-6 align-middle">
                             <i class="ph-bold ph-cpu absolute inset-0 flex items-center justify-center text-a2 text-base"></i>
-                            <model-embed project="e_daae6702fe48b5b1fd68" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:458/338;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'"></model-embed>
+                            <model-embed project="e_daae6702fe48b5b1fd68" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:458/338"></model-embed>
                         </span>
                     </div>
                     <h2 class="text-5xl md:text-7xl font-black">AI AUTOMATIONS CONSOLE.</h2>
@@ -547,7 +582,7 @@
                     <span class="font-mono-label text-xs font-bold text-slate-500">[ REAL PROJECTS ]</span>
                     <span class="relative inline-flex items-center justify-center w-6 h-6 align-middle">
                         <i class="ph-bold ph-sparkle absolute inset-0 flex items-center justify-center text-a3 text-base"></i>
-                        <model-embed project="e_0d05a4664e5daf4208a8" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:423/435;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'"></model-embed>
+                        <model-embed project="e_0d05a4664e5daf4208a8" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:423/435"></model-embed>
                     </span>
                 </div>
                 <h2 class="text-5xl md:text-7xl font-black">FEATURED WORK.</h2>
@@ -1071,7 +1106,7 @@
                         <span class="font-mono-label text-xs font-bold text-slate-400">[ STACK & TOOLS ]</span>
                         <span class="relative inline-flex items-center justify-center w-7 h-7 align-middle">
                             <i class="ph-bold ph-crosshair absolute inset-0 flex items-center justify-center text-a1 text-base"></i>
-                            <model-embed project="e_32adbf05a69672f29bcf" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:454/439;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'"></model-embed>
+                            <model-embed project="e_32adbf05a69672f29bcf" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:454/439"></model-embed>
                         </span>
                     </div>
                     <h2 class="text-5xl md:text-7xl font-black">WHAT I ENGINEER.</h2>
@@ -1430,7 +1465,7 @@
                     <div class="absolute inset-0 flex items-center justify-center text-slate-700 dark:text-slate-200 group-hover:text-[#DE1A45] transition-colors">
                         <i class="ph-bold ph-github-logo text-4xl"></i>
                     </div>
-                    <model-embed project="e_b60cee07d0928b34b5a5" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:431/403;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'" loading="lazy"></model-embed>
+                    <model-embed project="e_b60cee07d0928b34b5a5" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:431/403" loading="lazy"></model-embed>
                 </div>
                 <h4 class="font-black text-lg mb-1 group-hover:text-[#DE1A45]">GitHub</h4>
                 <span class="font-mono-label text-xs font-bold">lucky4-git1</span>
@@ -1443,7 +1478,7 @@
                     <div class="absolute inset-0 flex items-center justify-center text-slate-700 dark:text-slate-200 group-hover:text-[#DE1A45] transition-colors">
                         <i class="ph-bold ph-linkedin-logo text-4xl"></i>
                     </div>
-                    <model-embed project="e_84ace33a7602626d6e8c" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:432/418;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'" loading="lazy"></model-embed>
+                    <model-embed project="e_84ace33a7602626d6e8c" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:432/418" loading="lazy"></model-embed>
                 </div>
                 <h4 class="font-black text-lg mb-1 group-hover:text-[#DE1A45]">LinkedIn</h4>
                 <span class="font-mono-label text-xs font-bold">sriyuth-lucky</span>
@@ -1456,7 +1491,7 @@
                     <div class="absolute inset-0 flex items-center justify-center text-slate-700 dark:text-slate-200 group-hover:text-[#DE1A45] transition-colors">
                         <i class="ph-bold ph-x-logo text-4xl"></i>
                     </div>
-                    <model-embed project="e_668e6a106fa41fc17393" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:375/306;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'" loading="lazy"></model-embed>
+                    <model-embed project="e_668e6a106fa41fc17393" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:375/306" loading="lazy"></model-embed>
                 </div>
                 <h4 class="font-black text-lg mb-1 group-hover:text-[#DE1A45]">X (Twitter)</h4>
                 <span class="font-mono-label text-xs font-bold">@sriyuth</span>
@@ -1469,7 +1504,7 @@
                     <div class="absolute inset-0 flex items-center justify-center text-slate-700 dark:text-slate-200 group-hover:text-[#DE1A45] transition-colors">
                         <i class="ph-bold ph-envelope-simple text-4xl"></i>
                     </div>
-                    <model-embed project="e_bc0cfa3419e6543e2f2e" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:459/275;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'" loading="lazy"></model-embed>
+                    <model-embed project="e_bc0cfa3419e6543e2f2e" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:459/275" loading="lazy"></model-embed>
                 </div>
                 <h4 class="font-black text-lg mb-1 group-hover:text-[#DE1A45]">Email</h4>
                 <span class="font-mono-label text-[11px] font-bold break-all">sriyuthk122@gmail.com</span>
@@ -1484,7 +1519,7 @@
                     <div class="absolute inset-0 flex items-center justify-center text-slate-700 dark:text-slate-200 group-hover:text-[#DE1A45] transition-colors">
                         <i class="ph-bold ph-discord-logo text-4xl"></i>
                     </div>
-                    <model-embed project="e_837648d62a0347de0a92" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:396/327;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'" loading="lazy"></model-embed>
+                    <model-embed project="e_837648d62a0347de0a92" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:396/327" loading="lazy"></model-embed>
                 </div>
                 <h4 class="font-black text-lg mb-1 group-hover:text-[#DE1A45]">Discord</h4>
                 <span class="font-mono-label text-xs font-bold">sriyuth#0001</span>

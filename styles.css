@@ -672,9 +672,13 @@ html.dark .grid-bg {
 model-embed {
   background: transparent !important;
   color: inherit !important;
+  display: block;
+  position: relative;
+  z-index: 10;
 }
 
 model-embed::part(canvas),
+model-embed canvas,
 model-embed iframe {
   background: transparent !important;
 }

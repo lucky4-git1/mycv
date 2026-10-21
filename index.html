@@ -151,8 +151,11 @@
     <!-- Navigation Header -->
     <nav class="fixed top-0 left-0 w-full z-50 bg-bg brutal-border-b px-4 md:px-8 py-3.5 flex justify-between items-center transition-colors">
         <a href="#hero" class="flex items-center gap-3 hover-target group">
-            <div class="w-10 h-10 bg-card brutal-border overflow-hidden flex items-center justify-center transition-transform group-hover:scale-105">
-                <model-embed project="e_1b774033a3e45d5c219f" style="display:block;width:100%;aspect-ratio:357/314"></model-embed>
+            <div class="relative w-10 h-10 bg-a1 brutal-border flex items-center justify-center font-black text-black text-lg group-hover:rotate-6 transition-transform overflow-hidden shadow-sm">
+                <!-- Instant Fallback (zero latency, zero blank space) -->
+                <span class="absolute inset-0 flex items-center justify-center font-black text-black text-lg select-none">KS</span>
+                <!-- Progressive 3D Monogram -->
+                <model-embed project="e_1b774033a3e45d5c219f" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:357/314;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'"></model-embed>
             </div>
             <div class="flex flex-col">
                 <span class="text-xl font-black uppercase tracking-tighter leading-none">SRIYUTH.</span>
@@ -165,7 +168,6 @@
             <a href="#about" class="hover-target hover:text-a2 transition-colors">/ABOUT</a>
             <a href="#automations" class="hover-target hover:text-a3 transition-colors">/AUTOMATIONS</a>
             <a href="#projects" class="hover-target hover:text-a4 transition-colors">/PROJECTS</a>
-            <a href="#artifacts" class="hover-target hover:text-[#DE1A45] transition-colors">/3D LAB</a>
             <a href="#skills" class="hover-target hover:text-[#DE1A45] transition-colors">/SKILLS</a>
             <a href="#journey" class="hover-target hover:text-a2 transition-colors">/JOURNEY</a>
             <a href="#contact" class="hover-target hover:text-a3 transition-colors">/CONTACT</a>
@@ -203,7 +205,6 @@
         <a href="#about" class="mobile-nav-link hover:text-a2">/ABOUT</a>
         <a href="#automations" class="mobile-nav-link hover:text-a3">/AI AUTOMATIONS</a>
         <a href="#projects" class="mobile-nav-link hover:text-a4">/PROJECTS</a>
-        <a href="#artifacts" class="mobile-nav-link hover:text-[#DE1A45]">/3D LAB</a>
         <a href="#skills" class="mobile-nav-link hover:text-[#DE1A45]">/SKILLS</a>
         <a href="#journey" class="mobile-nav-link hover:text-a2">/JOURNEY</a>
         <a href="#contact" class="mobile-nav-link hover:text-a3">/CONTACT</a>
@@ -222,21 +223,13 @@
                 
                 <div class="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     
-                    <!-- Left Column: Bio & Core Pitch -->
+                                        <!-- Left Column: Bio & Core Pitch -->
                     <div id="heroLeftCol" class="lg:col-span-7 flex flex-col items-start hero-anim">
-                        
-
-
-                        <!-- 3D Interactive Signature Wordmark (Thrine WebGL) -->
-                        <div class="w-full max-w-[420px] mb-3 brutal-border bg-card/80 backdrop-blur p-2 brutal-shadow-sm hover:border-[#DE1A45] transition-colors">
-                            <model-embed project="e_721c4d29983590340654" style="display:block;width:100%;aspect-ratio:501/149"></model-embed>
-                        </div>
-
                         <h1 id="heroHeadline" class="text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-black leading-[0.92] tracking-tighter mb-6 text-shadow-solid">
                             K. SRIYUTH.
                         </h1>
 
-                        <!-- Crisp Multi-Role Badges (Strict alignment, no awkward misaligned pills) -->
+                        <!-- Crisp Multi-Role Badges -->
                         <div id="heroRoleBadges" class="flex flex-wrap gap-2.5 mb-8">
                             <span class="hero-role-badge brutal-badge badge-coral text-xs md:text-sm px-3.5 py-1.5">AI AUTOMATIONS ARCHITECT</span>
                             <span class="hero-role-badge brutal-badge badge-cobalt text-xs md:text-sm px-3.5 py-1.5">FRONT-END ENGINEER</span>
@@ -246,21 +239,23 @@
                             I don't assemble generic templates. I build tactile, ultra-fast web experiences and autonomous AI workflows. By reverse-engineering production architectures and wiring real LLM pipelines, I create software that feels physical, reliable, and unmistakable.
                         </p>
 
-                        <!-- Call to Action Buttons -->
+                        <!-- Call to Action Buttons with Instant Fallback -->
                         <div id="heroCtas" class="flex flex-wrap items-center gap-4 mb-10">
                             <a href="#projects" class="brutal-btn brutal-btn-primary hover-target flex items-center gap-2">
-                                <i class="ph-bold ph-diamonds-four text-lg"></i> EXPLORE WORK (10+)
-                                <span class="w-6 h-6 inline-block"><model-embed project="e_b872cbb8f3b91b1c46c7" style="display:block;width:100%;aspect-ratio:481/348"></model-embed></span>
+                                <i class="ph-bold ph-diamonds-four text-lg"></i>
+                                <span>EXPLORE WORK (10+)</span>
+                                <span class="relative w-5 h-5 inline-flex items-center justify-center">
+                                    <i class="ph-bold ph-arrow-up-right absolute inset-0 flex items-center justify-center text-sm"></i>
+                                    <model-embed project="e_b872cbb8f3b91b1c46c7" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:481/348;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'"></model-embed>
+                                </span>
                             </a>
-                            <a href="#automations" class="brutal-btn brutal-btn-coral hover-target">
-                                <i class="ph-bold ph-lightning text-lg"></i> TEST AI AUTOMATIONS
+                            <a href="#automations" class="brutal-btn brutal-btn-coral hover-target flex items-center gap-2">
+                                <i class="ph-bold ph-lightning text-lg"></i>
+                                <span>TEST AI AUTOMATIONS</span>
                             </a>
-                            <a href="#artifacts" class="brutal-btn hover-target flex items-center gap-2">
-                                <span class="w-5 h-5 inline-block"><model-embed project="e_105bb282ec78f2271b46" style="display:block;width:100%;aspect-ratio:469/386"></model-embed></span>
-                                3D ARTIFACTS
-                            </a>
-                            <a href="K_Sriyuth_Resume.pdf" target="_blank" rel="noopener noreferrer" class="brutal-btn hover-target">
-                                <i class="ph-bold ph-download-simple text-lg"></i> RESUME (.PDF)
+                            <a href="K_Sriyuth_Resume.pdf" target="_blank" rel="noopener noreferrer" class="brutal-btn hover-target flex items-center gap-2">
+                                <i class="ph-bold ph-download-simple text-lg"></i>
+                                <span>RESUME (.PDF)</span>
                             </a>
                         </div>
 
@@ -275,11 +270,10 @@
                                 <span>IST: <strong id="currentTime" class="text-text">00:00:00</strong></span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <i class="ph-bold ph-git-branch text-a4 text-base"></i>
-                                <span>32 PUBLIC REPOSITORIES</span>
+                                <i class="ph-bold ph-code text-a4 text-base"></i>
+                                <span>FULL-STACK & AI TOOLS</span>
                             </div>
                         </div>
-
                     </div>
 
                     <!-- Right Column: Interactive Dual-Mode Showcase Stage (Robot Video & Spline 3D) -->
@@ -429,6 +423,10 @@
                     <div class="flex items-center gap-2 mb-3">
                         <span class="brutal-badge badge-coral">INTELLIGENT PIPELINES</span>
                         <span class="font-mono-label text-xs font-bold text-slate-500">[ REAL WORKFLOWS ]</span>
+                        <span class="relative inline-flex items-center justify-center w-6 h-6 align-middle">
+                            <i class="ph-bold ph-cpu absolute inset-0 flex items-center justify-center text-a2 text-base"></i>
+                            <model-embed project="e_daae6702fe48b5b1fd68" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:458/338;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'"></model-embed>
+                        </span>
                     </div>
                     <h2 class="text-5xl md:text-7xl font-black">AI AUTOMATIONS CONSOLE.</h2>
                 </div>
@@ -547,6 +545,10 @@
                 <div class="flex items-center gap-2 mb-3">
                     <span class="brutal-badge badge-mint">CURATED REPOSITORIES</span>
                     <span class="font-mono-label text-xs font-bold text-slate-500">[ REAL PROJECTS ]</span>
+                    <span class="relative inline-flex items-center justify-center w-6 h-6 align-middle">
+                        <i class="ph-bold ph-sparkle absolute inset-0 flex items-center justify-center text-a3 text-base"></i>
+                        <model-embed project="e_0d05a4664e5daf4208a8" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:423/435;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'"></model-embed>
+                    </span>
                 </div>
                 <h2 class="text-5xl md:text-7xl font-black">FEATURED WORK.</h2>
             </div>
@@ -1067,7 +1069,10 @@
                     <div class="flex items-center gap-3 mb-3">
                         <span class="brutal-badge badge-cobalt">TECHNICAL ARSENAL</span>
                         <span class="font-mono-label text-xs font-bold text-slate-400">[ STACK & TOOLS ]</span>
-                        <div class="w-8 h-8 inline-block"><model-embed project="e_32adbf05a69672f29bcf" style="display:block;width:100%;aspect-ratio:454/439"></model-embed></div>
+                        <span class="relative inline-flex items-center justify-center w-7 h-7 align-middle">
+                            <i class="ph-bold ph-crosshair absolute inset-0 flex items-center justify-center text-a1 text-base"></i>
+                            <model-embed project="e_32adbf05a69672f29bcf" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:454/439;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'"></model-embed>
+                        </span>
                     </div>
                     <h2 class="text-5xl md:text-7xl font-black">WHAT I ENGINEER.</h2>
                 </div>
@@ -1404,232 +1409,6 @@
 
         </div>
     </section>
-
-
-    <!-- ========================================================
-         INTERACTIVE 3D DIGITAL ARTIFACTS LAB (Thrine WebGL)
-         All 14 Interactive 3D Models Configured by K. Sriyuth
-         ======================================================== -->
-    <section id="artifacts" class="py-24 px-4 md:px-8 border-t-4 border-border bg-bg-alt">
-        <div class="max-w-[1500px] mx-auto">
-            
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gs-section-header">
-                <div>
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="brutal-badge badge-coral text-white">PHYSICAL 3D DIGITAL LAB</span>
-                        <span class="font-mono-label text-xs font-bold text-slate-500">[ 14 THRINE ASSETS ]</span>
-                    </div>
-                    <h2 class="text-5xl md:text-7xl font-black">3D ARTIFACTS.</h2>
-                </div>
-                <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 max-w-md mt-4 md:mt-0 text-left md:text-right">
-                    Original vector shapes extruded, shaded, and rendered in interactive real-time WebGL. Click and drag any model to rotate in 3D space.
-                </p>
-            </div>
-
-            <!-- Bento Grid of All 14 Thrine 3D Models -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                
-                <!-- 1. KS Monogram -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_1b774033a3e45d5c219f" style="display:block;width:100%;aspect-ratio:357/314" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">KS Monogram</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">01 // BRAND</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Signature brutalist emblem with metallic green K and white S.</p>
-                    </div>
-                </div>
-
-                <!-- 2. KS Logo Extrude -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_105bb282ec78f2271b46" style="display:block;width:100%;aspect-ratio:469/386" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">KS Solid Extrude</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">02 // BRAND</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Single-manifold solid vector extrusion with sharp bevels.</p>
-                    </div>
-                </div>
-
-                <!-- 3. Sriyuth Wordmark -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_721c4d29983590340654" style="display:block;width:100%;aspect-ratio:501/149" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">Sriyuth Wordmark</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">03 // TYPO</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Bold 3D typographic brand nameplate with acid edge lining.</p>
-                    </div>
-                </div>
-
-                <!-- 4. GitHub Octocat -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_b60cee07d0928b34b5a5" style="display:block;width:100%;aspect-ratio:431/403" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">GitHub Octocat</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">04 // SOCIAL</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Tactile 3D developer medallion connecting to 32 repositories.</p>
-                    </div>
-                </div>
-
-                <!-- 5. LinkedIn 3D -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_84ace33a7602626d6e8c" style="display:block;width:100%;aspect-ratio:432/418" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">LinkedIn Badge</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">05 // SOCIAL</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Beveled gloss ceramic professional networking icon.</p>
-                    </div>
-                </div>
-
-                <!-- 6. X (Twitter) 3D -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_668e6a106fa41fc17393" style="display:block;width:100%;aspect-ratio:375/306" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">X (Twitter) Glyph</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">06 // SOCIAL</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Matte black brushed metallic cross vector.</p>
-                    </div>
-                </div>
-
-                <!-- 7. Email 3D Envelope -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_bc0cfa3419e6543e2f2e" style="display:block;width:100%;aspect-ratio:459/275" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">Direct Mail Envoy</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">07 // SOCIAL</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Dimensional postal message carrier for rapid inquiry copy.</p>
-                    </div>
-                </div>
-
-                <!-- 8. Discord Controller -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_837648d62a0347de0a92" style="display:block;width:100%;aspect-ratio:396/327" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">Discord Gamepad</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">08 // SOCIAL</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Community controller geometry rendered in blurple finish.</p>
-                    </div>
-                </div>
-
-                <!-- 9. Terminal & Code -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_daae6702fe48b5b1fd68" style="display:block;width:100%;aspect-ratio:458/338" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">CLI Terminal Node</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">09 // CODE</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Developer command line shell prompt with prompt caret.</p>
-                    </div>
-                </div>
-
-                <!-- 10. 8-Point Starburst -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_0d05a4664e5daf4208a8" style="display:block;width:100%;aspect-ratio:423/435" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">8-Point Starburst</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">10 // GEOMETRIC</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Awwwards-grade faceted brutalist rotating star emblem.</p>
-                    </div>
-                </div>
-
-                <!-- 11. 4-Point Spark Diamond -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_59982a2cc98d83432eef" style="display:block;width:100%;aspect-ratio:451/429" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">Spark Diamond</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">11 // GEOMETRIC</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Curved star spark modeled with reflective curvature highlights.</p>
-                    </div>
-                </div>
-
-                <!-- 12. Target Crosshair -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_32adbf05a69672f29bcf" style="display:block;width:100%;aspect-ratio:454/439" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">Target Crosshair</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">12 // HUD</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Precision reticle HUD element for telemetry and aiming.</p>
-                    </div>
-                </div>
-
-                <!-- 13. Heavy Asterisk -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_9c8a0cd518439710c663" style="display:block;width:100%;aspect-ratio:366/386" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">Heavy Asterisk</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">13 // GEOMETRIC</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Multi-arm brutalist flower token with high-contrast surfaces.</p>
-                    </div>
-                </div>
-
-                <!-- 14. Launch Arrow -->
-                <div class="p-5 bg-card brutal-border brutal-shadow hover:border-[#DE1A45] transition-all flex flex-col justify-between group">
-                    <div class="aspect-square bg-black/5 dark:bg-black/40 brutal-border-b p-4 flex items-center justify-center overflow-hidden mb-4">
-                        <model-embed project="e_b872cbb8f3b91b1c46c7" style="display:block;width:100%;aspect-ratio:481/348" loading="lazy"></model-embed>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <h4 class="font-black text-lg group-hover:text-[#DE1A45] transition-colors">Launch Arrow</h4>
-                            <span class="font-mono text-[10px] font-bold text-slate-400">14 // ACTION</span>
-                        </div>
-                        <p class="font-mono-label text-xs text-slate-500">Dynamic 45-degree isometric launch beacon for call-to-actions.</p>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
     <!-- ========================================================
          CONTACT & COLLABORATION HUB: Direct Links & Instant Copy
          ======================================================== -->
@@ -1642,43 +1421,55 @@
             </p>
         </div>
 
-        <!-- 5 Interactive 3D Contact & Social Channels (Thrine WebGL) -->
+        <!-- 5 Interactive 3D Contact & Social Channels with Instant Fallbacks -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-12">
             
-            <!-- 3D GitHub Card -->
+            <!-- 3D GitHub Card with Instant Fallback -->
             <a href="https://github.com/lucky4-git1" target="_blank" rel="noopener noreferrer" class="p-5 bg-card brutal-border brutal-shadow flex flex-col items-center text-center group hover-target hover:border-[#DE1A45] transition-all">
-                <div class="w-20 h-20 mb-2">
-                    <model-embed project="e_b60cee07d0928b34b5a5" style="display:block;width:100%;aspect-ratio:431/403" loading="lazy"></model-embed>
+                <div class="relative w-20 h-20 mb-2 flex items-center justify-center">
+                    <div class="absolute inset-0 flex items-center justify-center text-slate-700 dark:text-slate-200 group-hover:text-[#DE1A45] transition-colors">
+                        <i class="ph-bold ph-github-logo text-4xl"></i>
+                    </div>
+                    <model-embed project="e_b60cee07d0928b34b5a5" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:431/403;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'" loading="lazy"></model-embed>
                 </div>
                 <h4 class="font-black text-lg mb-1 group-hover:text-[#DE1A45]">GitHub</h4>
                 <span class="font-mono-label text-xs font-bold">lucky4-git1</span>
                 <span class="font-mono-label text-[10px] opacity-70 mt-1 uppercase text-slate-500">View Repos ➔</span>
             </a>
 
-            <!-- 3D LinkedIn Card -->
+            <!-- 3D LinkedIn Card with Instant Fallback -->
             <a href="https://www.linkedin.com/in/sriyuth-lucky-88b40a244" target="_blank" rel="noopener noreferrer" class="p-5 bg-card brutal-border brutal-shadow flex flex-col items-center text-center group hover-target hover:border-[#DE1A45] transition-all">
-                <div class="w-20 h-20 mb-2">
-                    <model-embed project="e_84ace33a7602626d6e8c" style="display:block;width:100%;aspect-ratio:432/418" loading="lazy"></model-embed>
+                <div class="relative w-20 h-20 mb-2 flex items-center justify-center">
+                    <div class="absolute inset-0 flex items-center justify-center text-slate-700 dark:text-slate-200 group-hover:text-[#DE1A45] transition-colors">
+                        <i class="ph-bold ph-linkedin-logo text-4xl"></i>
+                    </div>
+                    <model-embed project="e_84ace33a7602626d6e8c" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:432/418;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'" loading="lazy"></model-embed>
                 </div>
                 <h4 class="font-black text-lg mb-1 group-hover:text-[#DE1A45]">LinkedIn</h4>
                 <span class="font-mono-label text-xs font-bold">sriyuth-lucky</span>
                 <span class="font-mono-label text-[10px] opacity-70 mt-1 uppercase text-slate-500">Connect ➔</span>
             </a>
 
-            <!-- 3D X / Twitter Card -->
+            <!-- 3D X / Twitter Card with Instant Fallback -->
             <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="p-5 bg-card brutal-border brutal-shadow flex flex-col items-center text-center group hover-target hover:border-[#DE1A45] transition-all">
-                <div class="w-20 h-20 mb-2">
-                    <model-embed project="e_668e6a106fa41fc17393" style="display:block;width:100%;aspect-ratio:375/306" loading="lazy"></model-embed>
+                <div class="relative w-20 h-20 mb-2 flex items-center justify-center">
+                    <div class="absolute inset-0 flex items-center justify-center text-slate-700 dark:text-slate-200 group-hover:text-[#DE1A45] transition-colors">
+                        <i class="ph-bold ph-x-logo text-4xl"></i>
+                    </div>
+                    <model-embed project="e_668e6a106fa41fc17393" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:375/306;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'" loading="lazy"></model-embed>
                 </div>
                 <h4 class="font-black text-lg mb-1 group-hover:text-[#DE1A45]">X (Twitter)</h4>
                 <span class="font-mono-label text-xs font-bold">@sriyuth</span>
                 <span class="font-mono-label text-[10px] opacity-70 mt-1 uppercase text-slate-500">Follow ➔</span>
             </a>
 
-            <!-- 3D Email Card -->
+            <!-- 3D Email Card with Instant Fallback -->
             <div class="p-5 bg-card brutal-border brutal-shadow flex flex-col items-center text-center group hover-target hover:border-[#DE1A45] transition-all">
-                <div class="w-20 h-20 mb-2">
-                    <model-embed project="e_bc0cfa3419e6543e2f2e" style="display:block;width:100%;aspect-ratio:459/275" loading="lazy"></model-embed>
+                <div class="relative w-20 h-20 mb-2 flex items-center justify-center">
+                    <div class="absolute inset-0 flex items-center justify-center text-slate-700 dark:text-slate-200 group-hover:text-[#DE1A45] transition-colors">
+                        <i class="ph-bold ph-envelope-simple text-4xl"></i>
+                    </div>
+                    <model-embed project="e_bc0cfa3419e6543e2f2e" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:459/275;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'" loading="lazy"></model-embed>
                 </div>
                 <h4 class="font-black text-lg mb-1 group-hover:text-[#DE1A45]">Email</h4>
                 <span class="font-mono-label text-[11px] font-bold break-all">sriyuthk122@gmail.com</span>
@@ -1687,10 +1478,13 @@
                 </button>
             </div>
 
-            <!-- 3D Discord Card -->
+            <!-- 3D Discord Card with Instant Fallback -->
             <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="p-5 bg-card brutal-border brutal-shadow flex flex-col items-center text-center group hover-target hover:border-[#DE1A45] transition-all">
-                <div class="w-20 h-20 mb-2">
-                    <model-embed project="e_837648d62a0347de0a92" style="display:block;width:100%;aspect-ratio:396/327" loading="lazy"></model-embed>
+                <div class="relative w-20 h-20 mb-2 flex items-center justify-center">
+                    <div class="absolute inset-0 flex items-center justify-center text-slate-700 dark:text-slate-200 group-hover:text-[#DE1A45] transition-colors">
+                        <i class="ph-bold ph-discord-logo text-4xl"></i>
+                    </div>
+                    <model-embed project="e_837648d62a0347de0a92" class="relative z-10 w-full h-full pointer-events-none" style="display:block;width:100%;aspect-ratio:396/327;opacity:0;transition:opacity 0.4s ease;" onload="this.style.opacity='1'" loading="lazy"></model-embed>
                 </div>
                 <h4 class="font-black text-lg mb-1 group-hover:text-[#DE1A45]">Discord</h4>
                 <span class="font-mono-label text-xs font-bold">sriyuth#0001</span>

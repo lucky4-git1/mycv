@@ -667,3 +667,14 @@ html.dark .grid-bg {
 .skill-bar-fill {
   will-change: width;
 }
+
+/* ─── Seamless Model Embed & Instant Fallback Styling ─── */
+model-embed {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+model-embed::part(canvas),
+model-embed iframe {
+  background: transparent !important;
+}

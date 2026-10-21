@@ -965,3 +965,30 @@ html.dark .grid-bg {
 .timeline-node {
   will-change: transform, opacity;
 }
+
+/* 3D Tilt Wrapper for About Photo Card */
+.about-card-tilt-wrap {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* CMatrix canvas rendering optimization */
+#aboutMatrixCanvas {
+  image-rendering: pixelated;
+  will-change: opacity;
+  pointer-events: none;
+}
+
+/* Timeline Step Level-by-Level entrance */
+.timeline-step {
+  contain: layout style;
+}
+
+.timeline-node {
+  box-shadow: 0 0 20px rgba(228, 255, 0, 0.7);
+}
+
+html.dark .timeline-node {
+  box-shadow: 0 0 24px rgba(228, 255, 0, 0.85);
+}

@@ -20,6 +20,17 @@
                         text: 'var(--color-text)',
                         border: 'var(--color-border)',
                         a1: 'var(--color-accent-1)',
+                        'accent-1': 'var(--color-accent-1)',
+                        a2: 'var(--color-accent-2)',
+                        'accent-2': 'var(--color-accent-2)',
+                        a3: 'var(--color-accent-3)',
+                        'accent-3': 'var(--color-accent-3)',
+                        a4: 'var(--color-accent-4)',
+                        'accent-4': 'var(--color-accent-4)',
+                        a5: 'var(--color-accent-5)',
+                        'accent-5': 'var(--color-accent-5)',
+                        a6: 'var(--color-accent-6)',
+                        'accent-6': 'var(--color-accent-6)',
                         a2: 'var(--color-accent-2)',
                         a3: 'var(--color-accent-3)',
                         a4: 'var(--color-accent-4)',
@@ -522,12 +533,26 @@
     <!-- ========================================================
          ABOUT & PHILOSOPHY: Real Identity & High Metrics
          ======================================================== -->
-    <section id="about" class="py-24 px-4 md:px-8 max-w-[1500px] mx-auto overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <section id="about" class="py-24 px-4 md:px-8 max-w-[1500px] mx-auto overflow-hidden relative">
+        <!-- CMatrix Digital Rain Canvas Background -->
+        <canvas id="aboutMatrixCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-25 dark:opacity-40" aria-hidden="true"></canvas>
+
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             <!-- Left: Real Photo Card -->
             <div id="aboutPhotoCard" class="lg:col-span-5 flex flex-col items-center">
-                <div class="w-full max-w-[440px] bg-card brutal-border brutal-shadow p-4 relative group hover-target">
+                <!-- System Status Radar Pill -->
+                <div class="mb-3 flex items-center justify-between w-full max-w-[440px] px-1 font-mono-label text-[11px] font-bold text-slate-500">
+                    <span class="inline-flex items-center gap-2 text-text">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-a4 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-a4"></span>
+                        </span>
+                        SYSTEM: ONLINE // MCA @ HYD
+                    </span>
+                    <span class="text-a1 font-mono bg-black px-1.5 py-0.5 text-[10px] brutal-border">ACTIVE DEV</span>
+                </div>
+                <div class="about-card-tilt-wrap w-full max-w-[440px] bg-card brutal-border brutal-shadow p-4 relative group hover-target transition-all duration-300">
                     <div class="aspect-[4/5] overflow-hidden brutal-border relative bg-gray">
                         <img src="images/profile.jpeg" alt="K. Sriyuth Portrait" class="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-500">
                         <!-- Neo-Brutalist Corner Stamp -->
@@ -567,23 +592,25 @@
 
                 <!-- 4 Metrics Grid -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t-4 border-border">
-                    <div class="p-4 bg-card brutal-border">
-                        <div class="text-4xl md:text-5xl font-black number-counter text-a3" data-target="32">32+</div>
+                    <div class="about-metric-card p-4 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
+                        <div class="text-4xl md:text-5xl font-black number-counter text-a3" data-target="32" data-suffix="+">32+</div>
                         <div class="font-mono-label text-xs font-bold uppercase mt-1">Public Repos</div>
                     </div>
-                    <div class="p-4 bg-card brutal-border">
-                        <div class="text-4xl md:text-5xl font-black number-counter text-a2" data-target="161">161</div>
+                    <div class="about-metric-card p-4 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
+                        <div class="text-4xl md:text-5xl font-black number-counter text-a2" data-target="161" data-suffix="">161</div>
                         <div class="font-mono-label text-xs font-bold uppercase mt-1">Unit Tests (IDE)</div>
                     </div>
-                    <div class="p-4 bg-card brutal-border">
-                        <div class="text-4xl md:text-5xl font-black text-a4">100%</div>
+                    <div class="about-metric-card p-4 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
+                        <div class="text-4xl md:text-5xl font-black number-counter text-a4" data-target="100" data-suffix="%">100%</div>
                         <div class="font-mono-label text-xs font-bold uppercase mt-1">Offline First</div>
                     </div>
-                    <div class="p-4 bg-card brutal-border">
-                        <div class="text-4xl md:text-5xl font-black text-a1">2026</div>
+                    <div class="about-metric-card p-4 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
+                        <div class="text-4xl md:text-5xl font-black number-counter text-a1" data-target="2026" data-suffix="">2026</div>
                         <div class="font-mono-label text-xs font-bold uppercase mt-1">MCA Candidate</div>
                     </div>
                 </div>
+            </div>
+        </div>
 
             </div>
 
@@ -726,7 +753,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="hyperpure">
                             VIEW DETAILS ➔
                         </button>
@@ -764,7 +791,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="mutube">
                             VIEW DETAILS ➔
                         </button>
@@ -802,7 +829,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="atherone">
                             VIEW DETAILS ➔
                         </button>
@@ -840,7 +867,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="district">
                             VIEW DETAILS ➔
                         </button>
@@ -878,7 +905,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="youtube">
                             VIEW DETAILS ➔
                         </button>
@@ -916,7 +943,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="blinkit">
                             VIEW DETAILS ➔
                         </button>
@@ -953,7 +980,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="tspsc">
                             VIEW DETAILS ➔
                         </button>
@@ -989,7 +1016,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="amazon">
                             VIEW DETAILS ➔
                         </button>
@@ -1027,7 +1054,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="cricket">
                             VIEW DETAILS ➔
                         </button>
@@ -1076,7 +1103,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="simpleide">
                             VIEW DETAILS ➔
                         </button>
@@ -1120,7 +1147,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="rewritebot">
                             VIEW DETAILS ➔
                         </button>
@@ -1169,7 +1196,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="whatsappai">
                             VIEW DETAILS ➔
                         </button>
@@ -1460,7 +1487,7 @@
                 
                 <!-- Stage 1: The Frontier (Present - MCA) -->
                 <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group">
-                    <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-9 h-9 bg-accent-1 text-black brutal-border rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center font-black text-xs shadow-[0_0_18px_rgba(228,255,0,0.7)] transition-transform duration-300 group-hover:scale-125">
+                    <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-9 h-9 bg-a1 text-black brutal-border rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center font-black text-xs shadow-[0_0_22px_rgba(228,255,0,0.85)] transition-transform duration-300 group-hover:scale-125" style="background-color: var(--color-accent-1); color: #0C0D10;">
                         01
                     </div>
                     

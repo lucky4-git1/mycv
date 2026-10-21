@@ -1970,7 +1970,10 @@ document.addEventListener("DOMContentLoaded", () => {
        ======================================================== */
     const counters = document.querySelectorAll(".number-counter");
     counters.forEach(counter => {
-        const target = +counter.getAttribute("data-target");
+        const target = +counter.getAttribute("data-target") || 0;
+        const suffix = counter.getAttribute("data-suffix") !== null 
+            ? counter.getAttribute("data-suffix") 
+            : (counter.innerText.includes("+") ? "+" : (counter.innerText.includes("%") ? "%" : ""));
 
         ScrollTrigger.create({
             trigger: counter,
@@ -1978,7 +1981,7 @@ document.addEventListener("DOMContentLoaded", () => {
             once: true,
             onEnter: () => {
                 if (!motionEnabled) {
-                    counter.innerText = target + "+";
+                    counter.innerText = target + suffix;
                     return;
                 }
                 const obj = { val: 0 };
@@ -1987,7 +1990,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     duration: 1.8,
                     ease: "power2.out",
                     onUpdate: () => {
-                        counter.innerText = Math.floor(obj.val) + "+";
+                        counter.innerText = Math.floor(obj.val) + suffix;
                     }
                 });
             }
@@ -2039,9 +2042,161 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ========================================================
-       9. AWWWARDS-LEVEL REUSABLE MOTION & SCROLL SYSTEM
-       Features: Side-entry reveals, reading progress tracking,
-       timeline line-draw conduit & cards stagger reveals.
+       7b. CMATRIX DIGITAL RAIN (High-Performance Canvas)
+       Authentic falling terminal matrix code in #about background.
+       Throttled to 28fps and paused when offscreen for 0% CPU footprint.
+       ======================================================== */
+    function initAboutMatrixCanvas() {
+        const canvas = document.getElementById("aboutMatrixCanvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        let animationFrameId = null;
+        let isVisible = false;
+        let lastTime = 0;
+        const fps = 28;
+        const interval = 1000 / fps;
+
+        const glyphs = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ0123456789ABCDEF{}[]<>$~#!*+=/AI.TS.AST.MCA.DEV.DOM.GIT";
+        const glyphArray = glyphs.split("");
+
+        let fontSize = 14;
+        let columns = 0;
+        let drops = [];
+        let mouseX = -9999;
+        let mouseY = -9999;
+
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            columns = Math.max(10, Math.floor(canvas.width / fontSize));
+            drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.floor(Math.random() * -50);
+            }
+        }
+
+        window.addEventListener("resize", resizeCanvas, { passive: true });
+        resizeCanvas();
+
+        const aboutSec = document.getElementById("about");
+        if (aboutSec) {
+            aboutSec.addEventListener("mousemove", (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouseX = e.clientX - rect.left;
+                mouseY = e.clientY - rect.top;
+            }, { passive: true });
+            aboutSec.addEventListener("mouseleave", () => {
+                mouseX = -9999;
+                mouseY = -9999;
+            });
+        }
+
+        function draw(timestamp) {
+            if (!isVisible) return;
+            animationFrameId = requestAnimationFrame(draw);
+
+            if (timestamp - lastTime < interval) return;
+            lastTime = timestamp;
+
+            const isDark = document.documentElement.classList.contains("dark");
+            
+            ctx.fillStyle = isDark ? "rgba(10, 11, 14, 0.16)" : "rgba(244, 240, 230, 0.22)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = glyphArray[Math.floor(Math.random() * glyphArray.length)];
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+
+                const distToMouse = Math.hypot(x - mouseX, y - mouseY);
+                const nearMouse = distToMouse < 80;
+
+                if (nearMouse) {
+                    ctx.fillStyle = "#E4FF00"; // Electric acid lime near mouse
+                } else if (Math.random() > 0.88) {
+                    ctx.fillStyle = isDark ? "#FFFFFF" : "#0f172a"; // Glowing white/black head
+                } else {
+                    ctx.fillStyle = isDark ? "#00FF66" : "#059669"; // Emerald matrix body
+                }
+
+                ctx.fillText(text, x, y);
+
+                if (y > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isVisible = entry.isIntersecting;
+                if (isVisible) {
+                    lastTime = performance.now();
+                    animationFrameId = requestAnimationFrame(draw);
+                } else {
+                    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                }
+            });
+        }, { threshold: 0.05 });
+
+        observer.observe(canvas.parentElement);
+    }
+    initAboutMatrixCanvas();
+
+    /* ========================================================
+       7c. ABOUT 3D PHOTO CARD TILT INTERACTION
+       Tactile neo-brutalist 3D tilt tracking with smooth damping
+       ======================================================== */
+    function initAboutCardTilt() {
+        const tiltWrap = document.querySelector(".about-card-tilt-wrap");
+        if (!tiltWrap) return;
+        let bounds;
+
+        function rotateToMouse(e) {
+            bounds = tiltWrap.getBoundingClientRect();
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            const leftX = mouseX - bounds.x;
+            const topY = mouseY - bounds.y;
+            const center = {
+                x: leftX - bounds.width / 2,
+                y: topY - bounds.height / 2
+            };
+            const distance = Math.sqrt(center.x ** 2 + center.y ** 2);
+
+            tiltWrap.style.transform = `
+                perspective(1000px)
+                rotateX(${-(center.y / 15).toFixed(2)}deg)
+                rotateY(${(center.x / 15).toFixed(2)}deg)
+                scale3d(1.02, 1.02, 1.02)
+            `;
+        }
+
+        tiltWrap.addEventListener("mouseenter", () => {
+            bounds = tiltWrap.getBoundingClientRect();
+            tiltWrap.style.transition = "transform 0.1s ease-out";
+        });
+
+        tiltWrap.addEventListener("mousemove", rotateToMouse);
+
+        tiltWrap.addEventListener("mouseleave", () => {
+            tiltWrap.style.transition = "transform 0.45s ease-out";
+            tiltWrap.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+        });
+    }
+    initAboutCardTilt();
+
+    /* ========================================================
+       9. AWWWARDS-LEVEL REUSABLE MOTION & SCROLL REVEALS
+       Comprehensive on-scroll reveal system across ALL page sections:
+       Hero, Marquee, About, Automations, Projects, Skills, Journey,
+       GitHub Repositories, and Contact Channels.
        ======================================================== */
     const progressIndicator = document.getElementById("scrollProgressIndicator");
     if (progressIndicator) {
@@ -2056,17 +2211,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (motionEnabled) {
         // Section Headers Entrance
         gsap.utils.toArray(".gs-section-header").forEach(header => {
-            gsap.from(header, {
-                scrollTrigger: {
-                    trigger: header,
-                    start: "top 85%"
-                },
-                y: 35,
-                opacity: 0,
-                duration: 0.7,
-                ease: "power3.out"
-            });
+            gsap.fromTo(header, 
+                { y: 35, opacity: 0 },
+                {
+                    scrollTrigger: {
+                        trigger: header,
+                        start: "top 85%",
+                        once: true
+                    },
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.7,
+                    ease: "power3.out"
+                }
+            );
         });
+
         // About Section Reveals (Smooth picture from left, narrative from right)
         const aboutPhoto = document.getElementById("aboutPhotoCard");
         const aboutText = document.getElementById("aboutTextCol");
@@ -2102,21 +2262,93 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-        // Curated Project Cards Stagger
-        gsap.utils.toArray(".project-card-wrap").forEach(card => {
-            gsap.from(card, {
+        // About Section 4 Metrics Cards Stagger
+        gsap.fromTo(".about-metric-card",
+            { opacity: 0, y: 35, scale: 0.95 },
+            {
                 scrollTrigger: {
-                    trigger: card,
-                    start: "top 88%"
+                    trigger: "#about",
+                    start: "top 72%",
+                    once: true
                 },
-                y: 40,
-                opacity: 0,
-                duration: 0.6,
-                ease: "power2.out"
-            });
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.75,
+                stagger: 0.1,
+                ease: "back.out(1.4)"
+            }
+        );
+
+        // AI Automations Console Exhibit Reveal
+        const autoTabs = document.querySelector("#automations .overflow-x-auto");
+        const autoCard = document.querySelector("#automations .bg-card.brutal-border");
+        if (autoTabs) {
+            gsap.fromTo(autoTabs,
+                { opacity: 0, y: 25 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.7,
+                    ease: "power2.out",
+                    scrollTrigger: { trigger: "#automations", start: "top 78%", once: true }
+                }
+            );
+        }
+        if (autoCard) {
+            gsap.fromTo(autoCard,
+                { opacity: 0, y: 40 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.85,
+                    delay: 0.1,
+                    ease: "power3.out",
+                    scrollTrigger: { trigger: "#automations", start: "top 72%", once: true }
+                }
+            );
+        }
+
+        // Curated Project Cards Stagger
+        gsap.utils.toArray(".project-card-wrap").forEach((card, idx) => {
+            gsap.fromTo(card,
+                { opacity: 0, y: 45, scale: 0.97 },
+                {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 88%",
+                        once: true
+                    },
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.7,
+                    ease: "power3.out"
+                }
+            );
         });
 
-        // Journey Timeline Animated Line Draw & Step Animations
+        // Skills Bento Grid Cards Reveal
+        gsap.utils.toArray("#skills .grid > div").forEach((bentoCard, idx) => {
+            gsap.fromTo(bentoCard,
+                { opacity: 0, y: 35, scale: 0.98 },
+                {
+                    scrollTrigger: {
+                        trigger: bentoCard,
+                        start: "top 85%",
+                        once: true
+                    },
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.65,
+                    delay: (idx % 3) * 0.08,
+                    ease: "power2.out"
+                }
+            );
+        });
+
+        // Journey Timeline Animated Line Draw & Step-by-Step Level Reveal
         const timelineProgress = document.getElementById("timelineProgressLine");
         const timelineSpine = document.getElementById("timelineSpine");
         if (timelineProgress && timelineSpine) {
@@ -2128,72 +2360,109 @@ document.addEventListener("DOMContentLoaded", () => {
                     scrollTrigger: {
                         trigger: timelineSpine,
                         start: "top 75%",
-                        end: "bottom 85%",
-                        scrub: 0.4
+                        end: "bottom 80%",
+                        scrub: 0.3
                     }
                 }
             );
         }
 
-        // Animate each Journey milestone step smoothly
+        // Animate each Journey milestone level individually on scroll
         gsap.utils.toArray(".timeline-step").forEach((step, idx) => {
             const leftCol = step.querySelector(".timeline-left-col");
             const rightCol = step.querySelector(".timeline-right-col");
             const node = step.querySelector(".timeline-node");
 
+            const stepTL = gsap.timeline({
+                scrollTrigger: {
+                    trigger: step,
+                    start: "top 72%",
+                    once: true
+                }
+            });
+
             if (leftCol) {
-                gsap.fromTo(leftCol,
-                    { opacity: 0, x: -50 },
-                    {
-                        scrollTrigger: {
-                            trigger: step,
-                            start: "top 80%",
-                            once: true
-                        },
-                        opacity: 1,
-                        x: 0,
-                        duration: 0.85,
-                        ease: "power2.out"
-                    }
+                stepTL.fromTo(leftCol,
+                    { opacity: 0, x: -70, y: 20 },
+                    { opacity: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
+                    0
                 );
             }
 
             if (rightCol) {
-                gsap.fromTo(rightCol,
-                    { opacity: 0, x: 50 },
-                    {
-                        scrollTrigger: {
-                            trigger: step,
-                            start: "top 80%",
-                            once: true
-                        },
-                        opacity: 1,
-                        x: 0,
-                        duration: 0.85,
-                        delay: 0.1,
-                        ease: "power2.out"
-                    }
+                stepTL.fromTo(rightCol,
+                    { opacity: 0, x: 70, y: 20 },
+                    { opacity: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
+                    0.08
                 );
             }
 
             if (node) {
-                gsap.fromTo(node,
-                    { opacity: 0, scale: 0 },
-                    {
-                        scrollTrigger: {
-                            trigger: step,
-                            start: "top 80%",
-                            once: true
-                        },
-                        opacity: 1,
-                        scale: 1,
-                        duration: 0.6,
-                        delay: 0.15,
-                        ease: "back.out(2)"
-                    }
+                stepTL.fromTo(node,
+                    { opacity: 0, scale: 0, rotation: -90 },
+                    { opacity: 1, scale: 1, rotation: 0, duration: 0.7, ease: "back.out(2.2)" },
+                    0.12
                 );
             }
         });
+
+        // GitHub Verification Activity & Repos Reveal
+        gsap.utils.toArray("#github .grid > div").forEach((ghCard, idx) => {
+            gsap.fromTo(ghCard,
+                { opacity: 0, y: 35 },
+                {
+                    scrollTrigger: {
+                        trigger: ghCard,
+                        start: "top 88%",
+                        once: true
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.65,
+                    delay: (idx % 3) * 0.08,
+                    ease: "power2.out"
+                }
+            );
+        });
+
+        // Contact Section Channels & Transmission Card Reveal
+        gsap.utils.toArray("#contact .grid > div, #contact .grid > a").forEach((contactCard, idx) => {
+            gsap.fromTo(contactCard,
+                { opacity: 0, y: 30, scale: 0.95 },
+                {
+                    scrollTrigger: {
+                        trigger: "#contact",
+                        start: "top 78%",
+                        once: true
+                    },
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.65,
+                    delay: idx * 0.06,
+                    ease: "back.out(1.4)"
+                }
+            );
+        });
+
+        const contactMsgForm = document.querySelector("#contact .bg-card.brutal-border.brutal-shadow.p-8");
+        if (contactMsgForm) {
+            gsap.fromTo(contactMsgForm,
+                { opacity: 0, y: 40 },
+                {
+                    scrollTrigger: {
+                        trigger: contactMsgForm,
+                        start: "top 85%",
+                        once: true
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: 0.15,
+                    ease: "power3.out"
+                }
+            );
+        }
     }
 
     /* ========================================================

@@ -160,7 +160,7 @@
     </div>
 
     <!-- Navigation Header -->
-    <nav class="fixed top-0 left-0 w-full z-50 bg-bg brutal-border-b px-4 md:px-8 py-3.5 flex justify-between items-center transition-colors">
+    <nav class="fixed top-0 left-0 w-full z-50 bg-bg brutal-border-b px-3 sm:px-6 md:px-8 py-2.5 sm:py-3.5 flex justify-between items-center transition-colors">
         <a href="#hero" class="flex items-center gap-3 hover-target group">
             <span class="w-9 h-9 bg-a1 brutal-border flex items-center justify-center font-black text-black text-lg group-hover:rotate-6 transition-transform">KS</span>
             <div class="flex flex-col">
@@ -208,14 +208,17 @@
     
 
     <!-- Mobile Drawer Menu -->
-    <div id="mobileMenu" class="fixed inset-0 bg-bg z-40 brutal-border-b flex flex-col items-center justify-center gap-6 text-3xl font-black uppercase tracking-tighter transform -translate-y-full transition-transform duration-300 ease-in-out lg:hidden" aria-hidden="true">
-        <a href="#about" class="mobile-nav-link hover:text-a2">/ABOUT</a>
-        <a href="#automations" class="mobile-nav-link hover:text-a3">/AI AUTOMATIONS</a>
-        <a href="#projects" class="mobile-nav-link hover:text-a4">/PROJECTS</a>
-        <a href="#skills" class="mobile-nav-link hover:text-[#DE1A45]">/SKILLS</a>
-        <a href="#journey" class="mobile-nav-link hover:text-a2">/JOURNEY</a>
-        <a href="#contact" class="mobile-nav-link hover:text-a3">/CONTACT</a>
-        <a href="K_Sriyuth_Resume.pdf" target="_blank" class="mobile-nav-link brutal-btn brutal-btn-primary text-base mt-4">DOWNLOAD RESUME (PDF)</a>
+    <div id="mobileMenu" class="fixed inset-0 bg-bg z-50 brutal-border-b flex flex-col items-center justify-center gap-5 text-2xl sm:text-3xl font-black uppercase tracking-tighter transform -translate-y-full transition-transform duration-300 ease-in-out lg:hidden p-6" aria-hidden="true">
+        <button id="mobileMenuCloseBtn" class="absolute top-4 right-4 icon-btn w-10 h-10 bg-text text-bg brutal-border flex items-center justify-center hover-target" aria-label="Close menu">
+            <i class="ph-bold ph-x text-xl"></i>
+        </button>
+        <a href="#about" class="mobile-nav-link hover:text-a2 py-1">/ABOUT</a>
+        <a href="#automations" class="mobile-nav-link hover:text-a3 py-1">/AI AUTOMATIONS</a>
+        <a href="#projects" class="mobile-nav-link hover:text-a4 py-1">/PROJECTS</a>
+        <a href="#skills" class="mobile-nav-link hover:text-[#DE1A45] py-1">/SKILLS</a>
+        <a href="#journey" class="mobile-nav-link hover:text-a2 py-1">/JOURNEY</a>
+        <a href="#contact" class="mobile-nav-link hover:text-a3 py-1">/CONTACT</a>
+        <a href="K_Sriyuth_Resume.pdf" target="_blank" class="mobile-nav-link brutal-btn brutal-btn-primary text-sm sm:text-base mt-2 py-3 px-6">DOWNLOAD RESUME (PDF)</a>
     </div>
 
     <main id="main-content">
@@ -226,13 +229,13 @@
     <div id="hero-cinematic-stage" class="relative">
         <div id="hero-pinned-viewport" class="relative w-full min-h-screen overflow-hidden">
             
-            <section id="hero" class="relative min-h-screen pt-28 pb-16 flex flex-col justify-center grid-bg px-4 md:px-8 border-b-4 border-border">
+            <section id="hero" class="relative min-h-[100svh] pt-24 sm:pt-28 pb-12 sm:pb-16 flex flex-col justify-center grid-bg px-4 sm:px-6 md:px-8 border-b-4 border-border">
                 
                 <div class="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     
                                         <!-- Left Column: Bio & Core Pitch -->
                     <div id="heroLeftCol" class="lg:col-span-7 flex flex-col items-start hero-anim">
-                        <h1 id="heroHeadline" class="text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-black leading-[0.92] tracking-tighter mb-6 text-shadow-solid">
+                        <h1 id="heroHeadline" class="text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-black leading-[0.95] sm:leading-[0.92] tracking-tight sm:tracking-tighter mb-4 sm:mb-6 text-shadow-solid">
                             K. SRIYUTH.
                         </h1>
 
@@ -242,12 +245,12 @@
                             <span class="hero-role-badge brutal-badge badge-cobalt text-xs md:text-sm px-3.5 py-1.5">FRONT-END ENGINEER</span>
                         </div>
 
-                        <p id="heroBio" class="font-mono-label text-base md:text-lg text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed mb-10">
+                        <p id="heroBio" class="font-mono-label text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed mb-6 sm:mb-10">
                             I don't assemble generic templates. I build tactile, ultra-fast web experiences and autonomous AI workflows. By reverse-engineering production architectures and wiring real LLM pipelines, I create software that feels physical, reliable, and unmistakable.
                         </p>
 
                         <!-- Call to Action Buttons with Instant Fallback -->
-                        <div id="heroCtas" class="flex flex-wrap items-center gap-4 mb-10">
+                        <div id="heroCtas" class="w-full flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-10">
                             <a href="#projects" class="brutal-btn brutal-btn-primary hover-target flex items-center gap-2">
                                 <i class="ph-bold ph-diamonds-four text-lg"></i> EXPLORE WORK (10+)
                             </a>
@@ -260,7 +263,7 @@
                         </div>
 
                         <!-- Live Meta Bar -->
-                        <div id="heroMetaBar" class="w-full flex flex-wrap items-center justify-between gap-4 pt-6 border-t-2 border-border font-mono-label text-xs font-bold text-slate-600 dark:text-slate-400">
+                        <div id="heroMetaBar" class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-4 pt-4 sm:pt-6 border-t-2 border-border font-mono-label text-xs font-bold text-slate-600 dark:text-slate-400">
                             <div class="flex items-center gap-2">
                                 <i class="ph-bold ph-map-pin text-a2 text-base"></i>
                                 <span>HYDERABAD, INDIA</span>
@@ -295,7 +298,7 @@
                             </div>
 
                             <!-- Mode 1: Authentic Video Loop Destination Aperture -->
-                            <div id="heroVideoWrapper" class="relative aspect-square md:aspect-[4/3] bg-black overflow-hidden z-10">
+                            <div id="heroVideoWrapper" class="relative aspect-[16/10] sm:aspect-square md:aspect-[4/3] bg-black overflow-hidden z-10">
                                 <!-- The morphing video shell docks directly into this bounding box -->
                             </div>
 
@@ -532,7 +535,7 @@
     <!-- ========================================================
          ABOUT & PHILOSOPHY: Real Identity & High Metrics
          ======================================================== -->
-    <section id="about" class="py-24 px-4 md:px-8 max-w-[1500px] mx-auto overflow-hidden relative">
+    <section id="about" class="py-16 sm:py-24 px-4 sm:px-6 md:px-8 max-w-[1500px] mx-auto overflow-hidden relative">
         <!-- CMatrix Digital Rain Canvas Background -->
         <canvas id="aboutMatrixCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-90 dark:opacity-95" aria-hidden="true"></canvas>
 
@@ -562,9 +565,7 @@
                     <span class="font-mono-label text-xs font-bold text-slate-500">[ IDENTITY ]</span>
                 </div>
 
-                <h2 class="text-5xl md:text-7xl font-black mb-6 leading-none">
-                    CRAFTING PHYSICAL UIs & AI SYSTEMS.
-                </h2>
+                <h2 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 sm:mb-6 leading-tight">CRAFTING PHYSICAL UIs & AI SYSTEMS.</h2>
 
                 <p class="text-xl md:text-2xl font-bold leading-tight mb-6 text-text">
                     "I believe code should feel alive. Whether engineering an offline media vault with IndexedDB or wiring autonomous AI triggers, every detail must be intuitive and intentional."
@@ -612,7 +613,7 @@
          Workflow Explorer, Live Bounded AST Refactoring Sandbox,
          Unified Diff Inspector & Progressive Project Switching.
          ======================================================== -->
-    <section id="automations" class="py-20 md:py-28 px-4 md:px-8 border-t-4 border-b-4 border-border bg-bg-alt relative overflow-hidden" aria-label="AI Systems Architecture & Engineering Exhibit">
+    <section id="automations" class="py-16 sm:py-24 px-4 sm:px-6 md:px-8 border-t-4 border-b-4 border-border bg-bg-alt relative overflow-hidden" aria-label="AI Systems Architecture & Engineering Exhibit">
         <div class="max-w-[1500px] mx-auto">
             
             <!-- Section Header: Brutalist Editorial -->
@@ -696,7 +697,7 @@
          FEATURED WORK: Awwwards-Level Curated Digital Exhibition
          Asymmetric Grid Spans, High-Contrast Badges & Visual Depth
          ======================================================== -->
-    <section id="projects" class="py-24 px-4 md:px-8 max-w-[1500px] mx-auto">
+    <section id="projects" class="py-16 sm:py-24 px-4 sm:px-6 md:px-8 max-w-[1500px] mx-auto">
         
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gs-section-header">
             <div>
@@ -1456,7 +1457,7 @@
          THE JOURNEY: Awwwards-Level Editorial Timeline
          Central Animated Spine, Milestone Radiance & Responsive Stagger
          ======================================================== -->
-    <section id="journey" class="py-24 px-4 md:px-8 max-w-[1300px] mx-auto overflow-hidden">
+    <section id="journey" class="py-16 sm:py-24 px-4 sm:px-6 md:px-8 max-w-[1300px] mx-auto overflow-hidden">
         <div class="text-center max-w-xl mx-auto mb-20 gs-section-header">
             <span class="brutal-badge badge-violet mb-3">ACADEMIC & CODE CHRONOLOGY</span>
             <h2 class="text-5xl md:text-7xl font-black mb-4 text-text">THE JOURNEY.</h2>
@@ -1481,6 +1482,7 @@
                     
                     <div class="timeline-left-col md:text-right md:pr-12">
                         <div class="inline-flex items-center gap-2 mb-2">
+                            <span class="md:hidden font-mono text-[10px] font-black bg-a1 text-black px-2 py-0.5 brutal-border">01</span>
                             <span class="brutal-badge badge-coral text-[11px] font-bold">CURRENT FRONTIER</span>
                             <span class="font-mono text-xs text-accent-1 font-bold bg-black px-2 py-0.5">2025 ➔ 2027</span>
                         </div>
@@ -1524,6 +1526,7 @@
 
                     <div class="timeline-right-col md:pl-12 md:order-2 order-1">
                         <div class="inline-flex items-center gap-2 mb-2">
+                            <span class="md:hidden font-mono text-[10px] font-black bg-a4 text-black px-2 py-0.5 brutal-border">02</span>
                             <span class="brutal-badge badge-mint text-[11px] font-bold">CORE FOUNDATION</span>
                             <span class="font-mono text-xs text-slate-500 font-bold">2022 ➔ 2025</span>
                         </div>
@@ -1543,6 +1546,7 @@
                     
                     <div class="timeline-left-col md:text-right md:pr-12">
                         <div class="inline-flex items-center gap-2 mb-2">
+                            <span class="md:hidden font-mono text-[10px] font-black bg-a2 text-white px-2 py-0.5 brutal-border">03</span>
                             <span class="brutal-badge badge-coral text-[11px] font-bold">THE SPARK</span>
                             <span class="font-mono text-xs text-slate-500 font-bold">2020 ➔ 2022</span>
                         </div>
@@ -1683,7 +1687,7 @@
         </div>
     </section>
 
-    <section id="contact" class="py-24 px-4 md:px-8 max-w-[1200px] mx-auto">
+    <section id="contact" class="py-16 sm:py-24 px-4 sm:px-6 md:px-8 max-w-[1200px] mx-auto">
         <div class="text-center max-w-xl mx-auto mb-16 gs-section-header">
             <span class="brutal-badge badge-cobalt mb-3">OPEN TO OPPORTUNITIES</span>
             <h2 class="text-5xl md:text-7xl font-black mb-4">LET'S CONNECT.</h2>
@@ -1720,7 +1724,7 @@
             </a>
 
             <!-- Direct Email -->
-            <div class="p-6 bg-card brutal-border brutal-shadow flex flex-col items-center text-center group hover-target">
+            <div class="col-span-1 sm:col-span-2 lg:col-span-1 p-6 bg-card brutal-border brutal-shadow flex flex-col items-center text-center group hover-target">
                 <i class="ph-bold ph-envelope-simple text-4xl mb-3 text-text"></i>
                 <h4 class="font-black text-xl mb-1">Direct Email</h4>
                 <span class="font-mono-label text-xs font-bold break-all">sriyuthk122@gmail.com</span>

@@ -2064,7 +2064,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const glyphs = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ0123456789ABCDEF{}[]<>$~#!*+=/AI.TS.AST.MCA.DEV.DOM.GIT";
         const glyphArray = glyphs.split("");
 
-        let fontSize = 15;
+        let fontSize = window.innerWidth < 640 ? 12 : 15;
         let columns = 0;
         let drops = [];
         let speeds = [];
@@ -2493,6 +2493,7 @@ document.addEventListener("DOMContentLoaded", () => {
        11. MOBILE MENU TOGGLE
        ======================================================== */
     const mobileBtn = document.getElementById("mobileMenuBtn");
+    const mobileCloseBtn = document.getElementById("mobileMenuCloseBtn");
     const mobileMenu = document.getElementById("mobileMenu");
     const mobileLinks = document.querySelectorAll(".mobile-nav-link");
 
@@ -2501,13 +2502,20 @@ document.addEventListener("DOMContentLoaded", () => {
         menuOpen = open;
         mobileMenu.style.transform = open ? "translateY(0)" : "translateY(-100%)";
         mobileBtn.setAttribute("aria-expanded", String(open));
+        mobileMenu.setAttribute("aria-hidden", String(!open));
         document.body.style.overflow = open ? "hidden" : "";
-        sound.playClick();
+        if (sound && typeof sound.playClick === "function") sound.playClick();
     }
 
     if (mobileBtn && mobileMenu) {
         mobileBtn.addEventListener("click", () => setMobileMenu(!menuOpen));
+        if (mobileCloseBtn) {
+            mobileCloseBtn.addEventListener("click", () => setMobileMenu(false));
+        }
         mobileLinks.forEach(l => l.addEventListener("click", () => setMobileMenu(false)));
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && menuOpen) setMobileMenu(false);
+        });
     }
 
 

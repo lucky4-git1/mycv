@@ -353,8 +353,7 @@ html.dark .grid-bg {
 .cmd-palette {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(6px);
+  background-color: rgba(10, 11, 14, 0.88);
   z-index: 1000;
   display: flex;
   align-items: flex-start;
@@ -362,7 +361,9 @@ html.dark .grid-bg {
   padding-top: 12vh;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s var(--ease-premium);
+  transition: opacity 0.15s ease-out;
+  contain: strict;
+  transform: translateZ(0);
 }
 
 .cmd-palette.active {
@@ -371,6 +372,9 @@ html.dark .grid-bg {
 }
 
 .cmd-box {
+  transform: translateY(-8px) translateZ(0);
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
   width: 90%;
   max-width: 620px;
   background-color: var(--color-bg);
@@ -394,8 +398,7 @@ html.dark .grid-bg {
 .project-modal {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
+  background-color: rgba(10, 11, 14, 0.88);
   z-index: 1050;
   display: flex;
   align-items: center;
@@ -403,7 +406,9 @@ html.dark .grid-bg {
   padding: 1.5rem;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s var(--ease-premium);
+  transition: opacity 0.18s ease-out;
+  contain: strict;
+  transform: translateZ(0);
 }
 
 .project-modal.active {
@@ -412,6 +417,9 @@ html.dark .grid-bg {
 }
 
 .modal-box {
+  transform: scale(0.97) translateZ(0);
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
   position: relative;
   width: 100%;
   max-width: 980px;
@@ -936,4 +944,24 @@ html.dark .grid-bg {
     transform: none !important;
     opacity: 1 !important;
   }
+}
+
+
+.project-modal.active .modal-box {
+  transform: scale(1) translateZ(0);
+}
+
+.cmd-palette.active .cmd-box {
+  transform: translateY(0) translateZ(0);
+}
+
+/* Timeline step hardware acceleration */
+.timeline-step {
+  will-change: transform, opacity;
+}
+
+.timeline-left-col,
+.timeline-right-col,
+.timeline-node {
+  will-change: transform, opacity;
 }

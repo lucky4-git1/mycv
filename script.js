@@ -291,8 +291,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const cmdItems = document.querySelectorAll(".cmd-item");
     const cmdTrigger = document.getElementById("cmdTrigger");
 
+    
+    // Background media optimization during modal/overlay open (zero GPU lag)
+    function pauseBackgroundMedia() {
+        const video = document.getElementById("heroVideo");
+        if (video && !video.paused) {
+            video.pause();
+            video.dataset.pausedByModal = "true";
+        }
+    }
+
+    function resumeBackgroundMedia() {
+        const video = document.getElementById("heroVideo");
+        if (video && video.dataset.pausedByModal === "true") {
+            video.play().catch(() => {});
+            video.dataset.pausedByModal = "false";
+        }
+    }
+
     function openCmdPalette() {
         sound.playClick();
+        pauseBackgroundMedia();
         cmdPalette.classList.add("active");
         cmdPalette.setAttribute("aria-hidden", "false");
         setTimeout(() => {
@@ -305,6 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function closeCmdPalette() {
+        resumeBackgroundMedia();
         cmdPalette.classList.remove("active");
         cmdPalette.setAttribute("aria-hidden", "true");
     }
@@ -1850,6 +1870,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updateModalImage();
 
+        pauseBackgroundMedia();
         projectModal.classList.add("active");
         projectModal.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
@@ -1913,6 +1934,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function closeProjectModal() {
         sound.playClick();
+        resumeBackgroundMedia();
         projectModal.classList.remove("active");
         projectModal.setAttribute("aria-hidden", "true");
         document.body.style.overflow = "";
@@ -2045,36 +2067,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 ease: "power3.out"
             });
         });
-        // About Section Reveals (bulletproof fromTo with once: true)
+        // About Section Reveals (Smooth picture from left, narrative from right)
         const aboutPhoto = document.getElementById("aboutPhotoCard");
         const aboutText = document.getElementById("aboutTextCol");
         if (aboutPhoto && aboutText) {
             gsap.fromTo(aboutPhoto,
-                { opacity: 0, x: -40 },
+                { opacity: 0, x: -80 },
                 {
                     scrollTrigger: {
                         trigger: "#about",
-                        start: "top 85%",
+                        start: "top 78%",
                         once: true
                     },
                     opacity: 1,
                     x: 0,
-                    duration: 0.8,
-                    ease: "power2.out"
+                    duration: 1.0,
+                    ease: "power3.out"
                 }
             );
             gsap.fromTo(aboutText,
-                { opacity: 0, x: 40 },
+                { opacity: 0, x: 80 },
                 {
                     scrollTrigger: {
                         trigger: "#about",
-                        start: "top 85%",
+                        start: "top 78%",
                         once: true
                     },
                     opacity: 1,
                     x: 0,
-                    duration: 0.8,
-                    ease: "power2.out"
+                    duration: 1.0,
+                    delay: 0.1,
+                    ease: "power3.out"
                 }
             );
         }
@@ -2093,21 +2116,84 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        // Journey Timeline Animated Line Draw
+        // Journey Timeline Animated Line Draw & Step Animations
         const timelineProgress = document.getElementById("timelineProgressLine");
         const timelineSpine = document.getElementById("timelineSpine");
         if (timelineProgress && timelineSpine) {
-            gsap.to(timelineProgress, {
-                scrollTrigger: {
-                    trigger: timelineSpine,
-                    start: "top 70%",
-                    end: "bottom 80%",
-                    scrub: 0.6
-                },
-                scaleY: 1,
-                ease: "none"
-            });
+            gsap.fromTo(timelineProgress, 
+                { scaleY: 0 },
+                {
+                    scaleY: 1,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: timelineSpine,
+                        start: "top 75%",
+                        end: "bottom 85%",
+                        scrub: 0.4
+                    }
+                }
+            );
         }
+
+        // Animate each Journey milestone step smoothly
+        gsap.utils.toArray(".timeline-step").forEach((step, idx) => {
+            const leftCol = step.querySelector(".timeline-left-col");
+            const rightCol = step.querySelector(".timeline-right-col");
+            const node = step.querySelector(".timeline-node");
+
+            if (leftCol) {
+                gsap.fromTo(leftCol,
+                    { opacity: 0, x: -50 },
+                    {
+                        scrollTrigger: {
+                            trigger: step,
+                            start: "top 80%",
+                            once: true
+                        },
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.85,
+                        ease: "power2.out"
+                    }
+                );
+            }
+
+            if (rightCol) {
+                gsap.fromTo(rightCol,
+                    { opacity: 0, x: 50 },
+                    {
+                        scrollTrigger: {
+                            trigger: step,
+                            start: "top 80%",
+                            once: true
+                        },
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.85,
+                        delay: 0.1,
+                        ease: "power2.out"
+                    }
+                );
+            }
+
+            if (node) {
+                gsap.fromTo(node,
+                    { opacity: 0, scale: 0 },
+                    {
+                        scrollTrigger: {
+                            trigger: step,
+                            start: "top 80%",
+                            once: true
+                        },
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.6,
+                        delay: 0.15,
+                        ease: "back.out(2)"
+                    }
+                );
+            }
+        });
     }
 
     /* ========================================================

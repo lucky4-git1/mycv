@@ -35,6 +35,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
@@ -328,22 +329,35 @@
         </div>
 
         <!-- Tier 1: Industrial Telemetry Bar -->
-        <div class="marquee-telemetry-bar flex items-center justify-between px-4 py-2 bg-[#0C0D10] text-white text-[0.7rem] md:text-xs font-mono tracking-wider border-b-2 border-black overflow-x-auto">
-            <div class="flex items-center gap-3 whitespace-nowrap">
-                <span class="inline-flex items-center gap-1.5 font-bold marquee-sub-accent">
-                    <span class="w-2 h-2 rounded-full bg-accent-1 animate-ping"></span>
-                    <span class="w-2 h-2 rounded-full bg-accent-1 -ml-3.5"></span>
-                    STATUS: PRODUCTION_READY
-                </span>
-                <span class="opacity-40">|</span>
-                <span class="hidden sm:inline text-white/80">LOC: 17.3850° N, 78.4867° E [HYDERABAD, IN]</span>
-                <span class="hidden md:inline opacity-40">|</span>
-                <span class="hidden md:inline text-white/80">CREDS: MCA CANDIDATE • 32+ REPOSITORIES</span>
+        <div class="marquee-telemetry-bar flex items-center justify-between px-4 py-2 bg-[#0C0D10] text-white text-[0.72rem] md:text-xs font-mono tracking-wider border-b-2 border-black overflow-hidden relative">
+            <div class="hidden sm:flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-accent-1 animate-ping"></span>
+                <span class="w-2 h-2 rounded-full bg-accent-1 -ml-3.5"></span>
+                <span class="font-bold text-accent-1 text-[11px] uppercase tracking-wider">TECH STACK</span>
             </div>
-            <div class="flex items-center gap-4 whitespace-nowrap ml-4">
-                <span class="hidden lg:inline text-[0.65rem] marquee-sub-accent/90 uppercase tracking-widest font-mono">
-                    <i class="ph-bold ph-gauge mr-1"></i>VELOCITY_COUPLED
-                </span>
+            
+            <!-- Centered Curated Tech Stack & Capabilities -->
+            <div class="flex-1 flex items-center justify-center gap-3 md:gap-5 text-center font-mono font-bold text-xs md:text-sm tracking-widest text-[#E0E2EC] whitespace-nowrap overflow-x-auto py-0.5 px-2">
+                <span class="text-accent-1">✦</span>
+                <span>TYPESCRIPT</span>
+                <span class="text-white/30">•</span>
+                <span>REACT 19</span>
+                <span class="text-white/30">•</span>
+                <span>ELECTRON 28</span>
+                <span class="text-white/30">•</span>
+                <span>VITE</span>
+                <span class="text-white/30">•</span>
+                <span>NODE.JS</span>
+                <span class="text-white/30">•</span>
+                <span>FASTIFY 4.X</span>
+                <span class="text-white/30">•</span>
+                <span>INDEXEDDB</span>
+                <span class="text-white/30">•</span>
+                <span>GSAP 3</span>
+                <span class="text-accent-1">✦</span>
+            </div>
+
+            <div class="flex items-center gap-2">
                 <button id="marqueePauseBtn" class="marquee-pause-btn flex items-center gap-1.5 px-2.5 py-0.5 bg-white/10 hover:bg-accent-1 hover:text-black border border-white/20 transition-colors uppercase font-bold text-[0.68rem] tracking-wider cursor-pointer" aria-pressed="false" aria-label="Toggle marquee motion">
                     <i class="ph-bold ph-pause text-xs" id="marqueePauseIcon"></i>
                     <span id="marqueePauseText">PAUSE</span>
@@ -351,61 +365,109 @@
             </div>
         </div>
 
-        <!-- Tier 2: Hero Kinetic Ribbon (Acid Lime #D4FF00) -->
-        <div class="marquee-hero-ribbon relative bg-accent-1 text-black py-3 sm:py-4 md:py-6 overflow-hidden border-b-2 border-black" aria-hidden="true">
+        <!-- Tier 2: Hero Kinetic Ribbon (Acid Lime #E4FF00) with Languages & Frameworks Logos -->
+        <div class="marquee-hero-ribbon relative bg-accent-1 text-black py-4 md:py-6 overflow-hidden border-b-2 border-black" aria-hidden="true">
             <div class="marquee-track-main flex w-max items-center will-change-transform" id="marqueeTrackMain">
                 <!-- Unit 1 -->
                 <div class="marquee-ribbon-unit flex items-center shrink-0">
-                    <span class="marquee-display-term font-display font-black tracking-tighter">FRONTEND ENGINEERING</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-javascript-plain text-3xl md:text-4xl"></i> JAVASCRIPT
+                    </span>
                     <span class="marquee-glyph">✦</span>
-                    <span class="marquee-badge-pill pill-dark font-mono">REACT 18 & VITE</span>
-                    <span class="marquee-glyph">➔</span>
-                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">AI AUTOMATION ARCHITECTURE</span>
-                    <span class="marquee-glyph">◆</span>
-                    <span class="marquee-badge-pill pill-light font-mono">AUTONOMOUS AGENTS</span>
-                    <span class="marquee-glyph">⌖</span>
-                    <span class="marquee-display-term font-display font-black tracking-tighter">ELECTRON TOOLING</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-typescript-plain text-3xl md:text-4xl"></i> TYPESCRIPT
+                    </span>
                     <span class="marquee-glyph">✦</span>
-                    <span class="marquee-badge-pill pill-dark font-mono">IPC & DESKTOP</span>
-                    <span class="marquee-glyph">➔</span>
-                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">GSAP SCROLLYTELLING</span>
-                    <span class="marquee-glyph">◆</span>
-                    <span class="marquee-badge-pill pill-dark font-mono">HARDWARE ACCEL</span>
-                    <span class="marquee-glyph">⌖</span>
-                    <span class="marquee-display-term font-display font-black tracking-tighter">HIGH-PERFORMANCE REACT</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-react-original text-3xl md:text-4xl"></i> REACT 19
+                    </span>
                     <span class="marquee-glyph">✦</span>
-                    <span class="marquee-badge-pill pill-light font-mono">ZERO LATENCY</span>
-                    <span class="marquee-glyph">➔</span>
-                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">DEVELOPER TOOLS</span>
-                    <span class="marquee-glyph">◆</span>
-                    <span class="marquee-badge-pill pill-dark font-mono">INDEXEDDB PERSISTENCE</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-electron-original text-3xl md:text-4xl"></i> ELECTRON 28
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-nodejs-plain text-3xl md:text-4xl"></i> NODE.JS
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-vitejs-plain text-3xl md:text-4xl"></i> VITE
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-python-plain text-3xl md:text-4xl"></i> PYTHON
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-tailwindcss-original text-3xl md:text-4xl"></i> TAILWIND CSS
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-fastify-plain text-3xl md:text-4xl"></i> FASTIFY
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-html5-plain text-3xl md:text-4xl"></i> HTML5
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-css3-plain text-3xl md:text-4xl"></i> CSS3
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-git-plain text-3xl md:text-4xl"></i> GIT
+                    </span>
                     <span class="marquee-glyph">✦</span>
                 </div>
                 <!-- Unit 2 (Exact duplicate for seamless infinite loop) -->
                 <div class="marquee-ribbon-unit flex items-center shrink-0">
-                    <span class="marquee-display-term font-display font-black tracking-tighter">FRONTEND ENGINEERING</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-javascript-plain text-3xl md:text-4xl"></i> JAVASCRIPT
+                    </span>
                     <span class="marquee-glyph">✦</span>
-                    <span class="marquee-badge-pill pill-dark font-mono">REACT 18 & VITE</span>
-                    <span class="marquee-glyph">➔</span>
-                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">AI AUTOMATION ARCHITECTURE</span>
-                    <span class="marquee-glyph">◆</span>
-                    <span class="marquee-badge-pill pill-light font-mono">AUTONOMOUS AGENTS</span>
-                    <span class="marquee-glyph">⌖</span>
-                    <span class="marquee-display-term font-display font-black tracking-tighter">ELECTRON TOOLING</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-typescript-plain text-3xl md:text-4xl"></i> TYPESCRIPT
+                    </span>
                     <span class="marquee-glyph">✦</span>
-                    <span class="marquee-badge-pill pill-dark font-mono">IPC & DESKTOP</span>
-                    <span class="marquee-glyph">➔</span>
-                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">GSAP SCROLLYTELLING</span>
-                    <span class="marquee-glyph">◆</span>
-                    <span class="marquee-badge-pill pill-dark font-mono">HARDWARE ACCEL</span>
-                    <span class="marquee-glyph">⌖</span>
-                    <span class="marquee-display-term font-display font-black tracking-tighter">HIGH-PERFORMANCE REACT</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-react-original text-3xl md:text-4xl"></i> REACT 19
+                    </span>
                     <span class="marquee-glyph">✦</span>
-                    <span class="marquee-badge-pill pill-light font-mono">ZERO LATENCY</span>
-                    <span class="marquee-glyph">➔</span>
-                    <span class="marquee-display-term marquee-outline-text font-display font-black tracking-tighter">DEVELOPER TOOLS</span>
-                    <span class="marquee-glyph">◆</span>
-                    <span class="marquee-badge-pill pill-dark font-mono">INDEXEDDB PERSISTENCE</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-electron-original text-3xl md:text-4xl"></i> ELECTRON 28
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-nodejs-plain text-3xl md:text-4xl"></i> NODE.JS
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-vitejs-plain text-3xl md:text-4xl"></i> VITE
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-python-plain text-3xl md:text-4xl"></i> PYTHON
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-tailwindcss-original text-3xl md:text-4xl"></i> TAILWIND CSS
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-fastify-plain text-3xl md:text-4xl"></i> FASTIFY
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-html5-plain text-3xl md:text-4xl"></i> HTML5
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-css3-plain text-3xl md:text-4xl"></i> CSS3
+                    </span>
+                    <span class="marquee-glyph">✦</span>
+                    <span class="flex items-center gap-3 font-display font-black text-2xl sm:text-3xl md:text-4xl tracking-tighter mx-3">
+                        <i class="devicon-git-plain text-3xl md:text-4xl"></i> GIT
+                    </span>
                     <span class="marquee-glyph">✦</span>
                 </div>
             </div>
@@ -1394,15 +1456,15 @@
                 <div class="w-full bg-accent-1 h-full origin-top" id="timelineProgressLine"></div>
             </div>
             
-            <div class="space-y-16 sm:space-y-20">
+            <div class="space-y-16 sm:space-y-24">
                 
                 <!-- Stage 1: The Frontier (Present - MCA) -->
-                <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group">
-                    <div class="hidden md:flex absolute left-1/2 top-1/2 w-8 h-8 bg-accent-1 text-black brutal-border rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center font-black text-xs shadow-[0_0_15px_rgba(228,255,0,0.6)]">
+                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group">
+                    <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-9 h-9 bg-accent-1 text-black brutal-border rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center font-black text-xs shadow-[0_0_18px_rgba(228,255,0,0.7)] transition-transform duration-300 group-hover:scale-125">
                         01
                     </div>
                     
-                    <div class="md:text-right md:pr-12">
+                    <div class="timeline-left-col md:text-right md:pr-12">
                         <div class="inline-flex items-center gap-2 mb-2">
                             <span class="brutal-badge badge-coral text-[11px] font-bold">CURRENT FRONTIER</span>
                             <span class="font-mono text-xs text-accent-1 font-bold bg-black px-2 py-0.5">2025 ➔ 2027</span>
@@ -1414,7 +1476,7 @@
                         </p>
                     </div>
 
-                    <div class="md:pl-12">
+                    <div class="timeline-right-col md:pl-12">
                         <div class="p-6 bg-card brutal-border brutal-shadow hover-target">
                             <div class="font-mono text-xs font-bold uppercase text-slate-500 mb-2">KEY FOCUS AREAS:</div>
                             <div class="flex flex-wrap gap-1.5">
@@ -1428,12 +1490,12 @@
                 </div>
 
                 <!-- Stage 2: The Foundation (BCA) -->
-                <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group">
-                    <div class="hidden md:flex absolute left-1/2 top-1/2 w-8 h-8 bg-a4 text-black brutal-border rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center font-black text-xs">
+                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group">
+                    <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-9 h-9 bg-a4 text-black brutal-border rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center font-black text-xs shadow-[0_0_18px_rgba(0,229,117,0.5)] transition-transform duration-300 group-hover:scale-125">
                         02
                     </div>
                     
-                    <div class="md:text-right md:pr-12 md:order-1 order-2">
+                    <div class="timeline-left-col md:text-right md:pr-12 md:order-1 order-2">
                         <div class="p-6 bg-card brutal-border brutal-shadow hover-target md:text-left">
                             <div class="font-mono text-xs font-bold uppercase text-slate-500 mb-2">PORTFOLIO PRODUCTION:</div>
                             <div class="flex flex-wrap gap-1.5">
@@ -1445,7 +1507,7 @@
                         </div>
                     </div>
 
-                    <div class="md:pl-12 md:order-2 order-1">
+                    <div class="timeline-right-col md:pl-12 md:order-2 order-1">
                         <div class="inline-flex items-center gap-2 mb-2">
                             <span class="brutal-badge badge-mint text-[11px] font-bold">CORE FOUNDATION</span>
                             <span class="font-mono text-xs text-slate-500 font-bold">2022 ➔ 2025</span>
@@ -1459,12 +1521,12 @@
                 </div>
 
                 <!-- Stage 3: The Spark (Intermediate) -->
-                <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group">
-                    <div class="hidden md:flex absolute left-1/2 top-1/2 w-8 h-8 bg-a2 text-white brutal-border rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center font-black text-xs">
+                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group">
+                    <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-9 h-9 bg-a2 text-white brutal-border rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center font-black text-xs shadow-[0_0_18px_rgba(255,71,87,0.5)] transition-transform duration-300 group-hover:scale-125">
                         03
                     </div>
                     
-                    <div class="md:text-right md:pr-12">
+                    <div class="timeline-left-col md:text-right md:pr-12">
                         <div class="inline-flex items-center gap-2 mb-2">
                             <span class="brutal-badge badge-coral text-[11px] font-bold">THE SPARK</span>
                             <span class="font-mono text-xs text-slate-500 font-bold">2020 ➔ 2022</span>
@@ -1476,7 +1538,7 @@
                         </p>
                     </div>
 
-                    <div class="md:pl-12">
+                    <div class="timeline-right-col md:pl-12">
                         <div class="p-6 bg-card brutal-border brutal-shadow hover-target">
                             <div class="font-mono text-xs font-bold uppercase text-slate-500 mb-2">EARLY FOUNDATIONS:</div>
                             <div class="flex flex-wrap gap-1.5">

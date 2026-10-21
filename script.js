@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* ========================================================
-       2. FLUID DUAL-LAYER CUSTOM CURSOR
+       2. HIGH-PERFORMANCE DUAL-LAYER CUSTOM CURSOR (ZERO-LAG)
        ======================================================== */
     class CustomCursor {
         constructor() {
@@ -143,60 +143,106 @@ document.addEventListener("DOMContentLoaded", () => {
             this.dot = this.el.querySelector(".custom-cursor__dot");
             this.ring = this.el.querySelector(".custom-cursor__ring");
 
-            this.x = window.innerWidth / 2;
-            this.y = window.innerHeight / 2;
-            this.targetX = this.x;
-            this.targetY = this.y;
+            this.targetX = window.innerWidth / 2;
+            this.targetY = window.innerHeight / 2;
+            this.ringX = this.targetX;
+            this.ringY = this.targetY;
             this.visible = false;
-            this.lerp = 0.24;
+            this.isHovering = false;
+            this.isClicking = false;
+            this.ticking = false;
+            this.lerp = 0.22; // Responsive damping
 
-            this.INTERACTIVE = "a, button, input, textarea, select, [role='button'], .hover-target, .cmd-item, .project-card, .filter-tab, .sim-tab";
+            this.INTERACTIVE_SELECTOR = "a, button, input, textarea, select, [role='button'], .hover-target, .cmd-item, .project-card, .filter-tab, .sim-tab, .skill-row, .brutal-btn";
+
+            // Bind tick once to prevent garbage-collection stutter
+            this.tick = this.tick.bind(this);
 
             this.bindEvents();
-            this.tick();
         }
 
         bindEvents() {
-            document.addEventListener("mousemove", (e) => {
+            let lastTarget = null;
+            const onMove = (e) => {
                 this.targetX = e.clientX;
                 this.targetY = e.clientY;
+
                 if (!this.visible) {
-                    this.x = this.targetX;
-                    this.y = this.targetY;
+                    this.ringX = this.targetX;
+                    this.ringY = this.targetY;
                     this.visible = true;
                     this.el.classList.add("is-visible");
                 }
-            }, { passive: true });
 
-            document.addEventListener("mousedown", () => this.el.classList.add("is-clicking"));
-            document.addEventListener("mouseup", () => this.el.classList.remove("is-clicking"));
+                // ZERO-LATENCY: Dot updates immediately on hardware pointer input
+                this.dot.style.transform = `translate3d(${this.targetX}px, ${this.targetY}px, 0)`;
 
-            document.addEventListener("mouseover", (e) => {
-                if (e.target.closest(this.INTERACTIVE)) {
-                    this.el.classList.add("is-hover");
-                }
-            });
-
-            document.addEventListener("mouseout", (e) => {
-                if (e.target.closest(this.INTERACTIVE)) {
-                    const to = e.relatedTarget;
-                    if (!to || !to.closest || !to.closest(this.INTERACTIVE)) {
+                // Hover detection right from pointer event target
+                const target = e.target;
+                if (target && target !== lastTarget) {
+                    lastTarget = target;
+                    const isHit = target.closest && target.closest(this.INTERACTIVE_SELECTOR);
+                    if (isHit && !this.isHovering) {
+                        this.isHovering = true;
+                        this.el.classList.add("is-hover");
+                    } else if (!isHit && this.isHovering) {
+                        this.isHovering = false;
                         this.el.classList.remove("is-hover");
                     }
                 }
+
+                // Wake RAF loop for smooth trailing ring
+                if (!this.ticking) {
+                    this.ticking = true;
+                    requestAnimationFrame(this.tick);
+                }
+            };
+
+            window.addEventListener("pointermove", onMove, { passive: true });
+            window.addEventListener("mousemove", onMove, { passive: true });
+
+            window.addEventListener("pointerdown", () => {
+                this.isClicking = true;
+                this.el.classList.add("is-clicking");
+            }, { passive: true });
+
+            window.addEventListener("pointerup", () => {
+                this.isClicking = false;
+                this.el.classList.remove("is-clicking");
+            }, { passive: true });
+
+            document.addEventListener("mouseleave", () => {
+                this.visible = false;
+                this.el.classList.remove("is-visible");
+                lastTarget = null;
             });
 
-            document.addEventListener("mouseleave", () => this.el.classList.remove("is-visible"));
-            document.addEventListener("mouseenter", () => {
-                if (this.visible) this.el.classList.add("is-visible");
+            document.addEventListener("mouseenter", (e) => {
+                onMove(e);
+                this.ringX = e.clientX;
+                this.ringY = e.clientY;
             });
         }
 
         tick() {
-            this.x += (this.targetX - this.x) * this.lerp;
-            this.y += (this.targetY - this.y) * this.lerp;
-            this.el.style.transform = `translate3d(${this.x}px, ${this.y}px, 0)`;
-            requestAnimationFrame(this.tick.bind(this));
+            const dx = this.targetX - this.ringX;
+            const dy = this.targetY - this.ringY;
+
+            // Spring-damped smooth interpolation
+            this.ringX += dx * this.lerp;
+            this.ringY += dy * this.lerp;
+
+            this.ring.style.transform = `translate3d(${this.ringX}px, ${this.ringY}px, 0)`;
+
+            // Sleep when resting to preserve 0% idle CPU and prevent frame drops
+            if (Math.abs(dx) > 0.08 || Math.abs(dy) > 0.08) {
+                requestAnimationFrame(this.tick);
+            } else {
+                this.ringX = this.targetX;
+                this.ringY = this.targetY;
+                this.ring.style.transform = `translate3d(${this.ringX}px, ${this.ringY}px, 0)`;
+                this.ticking = false;
+            }
         }
     }
 

@@ -329,8 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const pinnedViewport = document.getElementById("hero-pinned-viewport");
         const videoShell = document.getElementById("cinematicVideoShell");
         const destWrapper = document.getElementById("heroVideoWrapper");
-        const dockedLabel = document.getElementById("cinematicDockedLabel");
-        const stageToolbar = document.getElementById("stageToolbar");
+                const stageToolbar = document.getElementById("stageToolbar");
         const stageCaption = document.getElementById("stageCaption");
         const heroLeftCol = document.getElementById("heroLeftCol");
         const nav = document.querySelector("nav");
@@ -371,8 +370,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 borderColor: "var(--color-border)",
                 boxShadow: "8px 8px 0 0 var(--shadow-color)"
             });
-            if (dockedLabel) dockedLabel.style.opacity = "1";
-            if (nav) gsap.set(nav, { opacity: 1, y: 0 });
+                        if (nav) gsap.set(nav, { opacity: 1, y: 0 });
             if (heroLeftCol) gsap.set(heroLeftCol, { opacity: 1, x: 0 });
             if (stageToolbar) gsap.set(stageToolbar, { opacity: 1, y: 0 });
             if (stageCaption) gsap.set(stageCaption, { opacity: 1, y: 0 });
@@ -393,13 +391,11 @@ document.addEventListener("DOMContentLoaded", () => {
             borderColor: "transparent",
             boxShadow: "0px 0px 0px transparent"
         });
-        if (dockedLabel) gsap.set(dockedLabel, { opacity: 0 });
-        if (nav) gsap.set(nav, { opacity: 0, y: -40 });
+                if (nav) gsap.set(nav, { opacity: 0, y: -40 });
         if (stageToolbar) gsap.set(stageToolbar, { opacity: 0, y: -12 });
         if (stageCaption) gsap.set(stageCaption, { opacity: 0, y: 12 });
 
-        gsap.set("#heroStatusBadge", { opacity: 0, y: 24 });
-        gsap.set("#heroHeadline", { opacity: 0, x: -30 });
+                gsap.set("#heroHeadline", { opacity: 0, x: -30 });
         gsap.set(".hero-role-badge", { opacity: 0, y: 16, scale: 0.95 });
         gsap.set("#heroBio", { opacity: 0, y: 20 });
         gsap.set("#heroCtas", { opacity: 0, y: 20 });
@@ -437,13 +433,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 0.35);
         }
 
-        if (dockedLabel) {
-            heroTl.to(dockedLabel, {
-                opacity: 1,
-                duration: 0.2,
-                ease: "power1.out"
-            }, 0.75);
-        }
 
         if (nav) {
             heroTl.to(nav, {
@@ -454,8 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 0.25);
         }
 
-        heroTl.to("#heroStatusBadge", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.20);
-        heroTl.to("#heroHeadline", { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 0.30);
+                heroTl.to("#heroHeadline", { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 0.30);
         heroTl.to(".hero-role-badge", { opacity: 1, y: 0, scale: 1, stagger: 0.05, duration: 0.25, ease: "power2.out" }, 0.45);
         heroTl.to("#heroBio", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.55);
         heroTl.to("#heroCtas", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.65);
@@ -1035,6 +1023,49 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+
+    
+    /* ========================================================
+       8b. ANIMATED SKILL BARS (ScrollTrigger)
+       ======================================================== */
+    const skillBars = document.querySelectorAll(".skill-bar-fill");
+    if (skillBars.length) {
+        ScrollTrigger.create({
+            trigger: "#skills",
+            start: "top 80%",
+            once: true,
+            onEnter: () => {
+                skillBars.forEach((bar, idx) => {
+                    const targetWidth = bar.getAttribute("data-width") || "80%";
+                    const targetNum = parseInt(targetWidth, 10) || 80;
+                    const row = bar.closest(".skill-row");
+                    const pctEl = row ? row.querySelector(".skill-pct") : null;
+
+                    // Animate the bar width with smooth spring-like ease
+                    gsap.to(bar, {
+                        width: targetWidth,
+                        duration: 1.2,
+                        delay: (idx % 4) * 0.1 + Math.floor(idx / 4) * 0.15,
+                        ease: "power2.out"
+                    });
+
+                    // Animate the percentage number counting up
+                    if (pctEl && motionEnabled) {
+                        const counterObj = { val: 0 };
+                        gsap.to(counterObj, {
+                            val: targetNum,
+                            duration: 1.2,
+                            delay: (idx % 4) * 0.1 + Math.floor(idx / 4) * 0.15,
+                            ease: "power2.out",
+                            onUpdate: () => {
+                                pctEl.innerText = `${Math.round(counterObj.val)}%`;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
 
     /* ========================================================
        9. GSAP REVEALS & ENTRANCE ANIMATIONS

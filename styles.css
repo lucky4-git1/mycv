@@ -633,3 +633,37 @@ html.dark .grid-bg {
     font-size: 0.82rem;
   }
 }
+
+/* ─── Cherry Theme & Skills Interactions ─── */
+:root {
+  --color-cherry: #DE1A45;
+}
+
+.text-cherry,
+.hover\:text-cherry:hover {
+  color: #DE1A45 !important;
+}
+
+.bg-cherry,
+.hover\:bg-cherry:hover {
+  background-color: #DE1A45 !important;
+}
+
+.skill-row:hover .skill-label,
+.skill-row:hover .skill-pct {
+  color: #DE1A45 !important;
+  text-shadow: 0 0 10px rgba(222, 26, 69, 0.2);
+}
+
+.skill-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 6px 6px 0 0 #DE1A45;
+}
+
+.skill-card:hover h3 {
+  color: #DE1A45;
+}
+
+.skill-bar-fill {
+  will-change: width;
+}

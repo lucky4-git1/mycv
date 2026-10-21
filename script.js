@@ -367,477 +367,566 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* ========================================================
-       5. INTERACTIVE GENERATIVE TECH CANVAS & SPOTLIGHT
+       5. THRINE 3D ASSET ENGINE (thrine.app WebGL Stage)
        ======================================================== */
-    function initHeroGenerativeCanvas() {
-        const canvas = document.getElementById("heroGenerativeCanvas");
-        const spotlight = document.getElementById("heroSpotlight");
-        const fpsMeter = document.getElementById("heroFpsMeter");
-        if (!canvas) return;
+    function initHeroThrine3DStage() {
+        const canvas = document.getElementById("heroThrineCanvas");
+        const fpsMeter = document.getElementById("thrineFpsMeter");
+        const modelLabel = document.getElementById("thrineModelLabel");
+        const modelBtns = document.querySelectorAll(".thrine-model-btn");
+        if (!canvas || typeof THREE === "undefined") return;
 
-        const ctx = canvas.getContext("2d");
-        let width = 0, height = 0;
-        let dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const container = canvas.parentElement;
+        let width = container.clientWidth || 400;
+        let height = container.clientHeight || 540;
 
-        function resize() {
-            const rect = canvas.getBoundingClientRect();
-            width = rect.width;
-            height = rect.height;
-            canvas.width = width * dpr;
-            canvas.height = height * dpr;
-            ctx.scale(dpr, dpr);
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+        camera.position.set(0, 0, 4.2);
+
+        const renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            antialias: true,
+            alpha: true,
+            powerPreference: "high-performance"
+        });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.25;
+        if (renderer.outputEncoding) {
+            renderer.outputEncoding = THREE.sRGBEncoding;
         }
-        resize();
-        window.addEventListener("resize", resize);
 
-        let mouseX = width / 2;
-        let mouseY = height / 2;
-        let targetMouseX = width / 2;
-        let targetMouseY = height / 2;
-        let spotX = width / 2;
-        let spotY = height / 2;
-        let isPointerActive = false;
+        // Cinematic Lighting
+        const ambientLight = new THREE.AmbientLight(0x1e293b, 1.4);
+        scene.add(ambientLight);
 
+        // Key light (Cool white)
+        const keyLight = new THREE.DirectionalLight(0xffffff, 2.8);
+        keyLight.position.set(4, 6, 4);
+        scene.add(keyLight);
+
+        // Rim light (Neon lime accent)
+        const rimLight = new THREE.DirectionalLight(0xe4ff00, 3.4);
+        rimLight.position.set(-5, -2, -3);
+        scene.add(rimLight);
+
+        // Fill light (Cobalt blue)
+        const fillLight = new THREE.PointLight(0x2e5bff, 2.2, 20);
+        fillLight.position.set(2, -3, 3);
+        scene.add(fillLight);
+
+        // Models configuration from Thrine
+        const modelsConfig = {
+            "robotic-hand": {
+                name: "THRINE // ROBOTIC HAND",
+                path: "models/thrine-robotic-hand.glb",
+                scale: 1.85,
+                rotY: 0.2,
+                rotX: 0.1,
+                offsetY: -0.2
+            },
+            "obsidian-walker": {
+                name: "THRINE // OBSIDIAN WALKER",
+                path: "models/obsidian-walker.glb",
+                scale: 1.5,
+                rotY: -0.4,
+                rotX: 0.15,
+                offsetY: -0.3
+            },
+            "data-sphere": {
+                name: "THRINE // DATA SPHERE",
+                path: "models/data-sphere.glb",
+                scale: 1.6,
+                rotY: 0,
+                rotX: 0,
+                offsetY: 0
+            }
+        };
+
+        const loader = new THREE.GLTFLoader();
+        let currentModel = null;
+        let currentModelKey = "robotic-hand";
+        let targetRotationY = 0;
+        let targetRotationX = 0;
+        let mouseX = 0;
+        let mouseY = 0;
+        let isDragging = false;
+        let previousMouseX = 0;
+        let previousMouseY = 0;
+
+        function loadModel(key) {
+            const config = modelsConfig[key];
+            if (!config) return;
+
+            if (modelLabel) modelLabel.textContent = config.name;
+
+            // Remove previous model
+            if (currentModel) {
+                scene.remove(currentModel);
+                currentModel.traverse((child) => {
+                    if (child.isMesh) {
+                        child.geometry.dispose();
+                        if (child.material) {
+                            if (Array.isArray(child.material)) child.material.forEach(m => m.dispose());
+                            else child.material.dispose();
+                        }
+                    }
+                });
+                currentModel = null;
+            }
+
+            loader.load(
+                config.path,
+                (gltf) => {
+                    currentModel = gltf.scene;
+
+                    // Center & normalize
+                    const box = new THREE.Box3().setFromObject(currentModel);
+                    const center = box.getCenter(new THREE.Vector3());
+                    currentModel.position.sub(center);
+                    currentModel.position.y += config.offsetY || 0;
+
+                    const size = box.getSize(new THREE.Vector3());
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const normScale = (config.scale || 1.5) / (maxDim || 1);
+                    currentModel.scale.set(normScale, normScale, normScale);
+
+                    // Material enhancements
+                    currentModel.traverse((child) => {
+                        if (child.isMesh) {
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            if (child.material) {
+                                child.material.roughness = Math.min(child.material.roughness || 0.35, 0.5);
+                                child.material.metalness = Math.max(child.material.metalness || 0.65, 0.4);
+                                if (child.material.isMeshStandardMaterial) {
+                                    child.material.envMapIntensity = 1.2;
+                                }
+                            }
+                        }
+                    });
+
+                    currentModel.rotation.y = config.rotY || 0;
+                    currentModel.rotation.x = config.rotX || 0;
+                    targetRotationY = currentModel.rotation.y;
+                    targetRotationX = currentModel.rotation.x;
+
+                    scene.add(currentModel);
+
+                    // Smooth entrance scale
+                    currentModel.scale.set(0.01, 0.01, 0.01);
+                    gsap.to(currentModel.scale, {
+                        x: normScale,
+                        y: normScale,
+                        z: normScale,
+                        duration: 1.0,
+                        ease: "power3.out"
+                    });
+                },
+                undefined,
+                (error) => {
+                    console.warn("Could not load GLB model, using procedural fallback sculpture", error);
+                    createFallbackMesh(config);
+                }
+            );
+        }
+
+        function createFallbackMesh(config) {
+            const group = new THREE.Group();
+            const geom = new THREE.IcosahedronGeometry(1.2, 3);
+            const mat = new THREE.MeshStandardMaterial({
+                color: 0x111624,
+                roughness: 0.25,
+                metalness: 0.85,
+                wireframe: true
+            });
+            const core = new THREE.Mesh(geom, mat);
+            group.add(core);
+
+            const innerGeom = new THREE.SphereGeometry(0.8, 32, 32);
+            const innerMat = new THREE.MeshStandardMaterial({
+                color: 0xe4ff00,
+                emissive: 0xe4ff00,
+                emissiveIntensity: 0.6,
+                roughness: 0.2
+            });
+            const innerSphere = new THREE.Mesh(innerGeom, innerMat);
+            group.add(innerSphere);
+
+            currentModel = group;
+            scene.add(currentModel);
+        }
+
+        // Initial model load
+        loadModel("robotic-hand");
+
+        // Model Switcher button events
+        modelBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const key = btn.getAttribute("data-model");
+                if (key === currentModelKey) return;
+                sound.playClick();
+                modelBtns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentModelKey = key;
+                loadModel(key);
+            });
+        });
+
+        // Mouse Parallax & Drag interaction
         window.addEventListener("mousemove", (e) => {
             const rect = canvas.getBoundingClientRect();
-            targetMouseX = e.clientX - rect.left;
-            targetMouseY = e.clientY - rect.top;
-            isPointerActive = true;
+            if (rect.width > 0 && rect.height > 0) {
+                const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+                mouseX = x;
+                mouseY = y;
+            }
         });
 
-        window.addEventListener("mouseleave", () => {
-            isPointerActive = false;
+        canvas.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            previousMouseX = e.clientX;
+            previousMouseY = e.clientY;
         });
 
-        const NODE_COUNT = Math.max(50, Math.min(100, Math.floor((width * height) / 12000)));
-        const nodes = [];
+        window.addEventListener("mouseup", () => {
+            isDragging = false;
+        });
 
-        for (let i = 0; i < NODE_COUNT; i++) {
-            nodes.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.7,
-                vy: (Math.random() - 0.5) * 0.7,
-                radius: Math.random() * 2.2 + 1.2,
-                baseAlpha: Math.random() * 0.45 + 0.35,
-                hue: Math.random() > 0.8 ? "lime" : "slate"
-            });
+        window.addEventListener("mousemove", (e) => {
+            if (isDragging && currentModel) {
+                const deltaX = e.clientX - previousMouseX;
+                const deltaY = e.clientY - previousMouseY;
+                targetRotationY += deltaX * 0.012;
+                targetRotationX += deltaY * 0.012;
+                previousMouseX = e.clientX;
+                previousMouseY = e.clientY;
+            }
+        });
+
+        // Resize handler
+        function resize() {
+            width = container.clientWidth || 400;
+            height = container.clientHeight || 540;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
         }
+        window.addEventListener("resize", resize);
 
+        // Animation Loop
         let frameCount = 0;
-        let lastFpsUpdate = performance.now();
+        let lastFpsTime = performance.now();
+        let clock = new THREE.Clock();
 
-        function animateCanvas(now) {
-            mouseX += (targetMouseX - mouseX) * 0.1;
-            mouseY += (targetMouseY - mouseY) * 0.1;
+        function animate() {
+            requestAnimationFrame(animate);
 
-            if (spotlight) {
-                spotX += (targetMouseX - spotX) * 0.08;
-                spotY += (targetMouseY - spotY) * 0.08;
-                spotlight.style.left = `${spotX}px`;
-                spotlight.style.top = `${spotY}px`;
-                spotlight.style.opacity = isPointerActive ? "0.9" : "0.5";
+            const elapsedTime = clock.getElapsedTime();
+
+            if (currentModel) {
+                if (!isDragging) {
+                    // Gentle idle oscillation & mouse parallax
+                    currentModel.rotation.y += (targetRotationY + mouseX * 0.45 - currentModel.rotation.y) * 0.06;
+                    currentModel.rotation.x += (targetRotationX - mouseY * 0.3 - currentModel.rotation.x) * 0.06;
+                    currentModel.position.y += (Math.sin(elapsedTime * 1.5) * 0.08 - currentModel.position.y) * 0.05;
+                } else {
+                    currentModel.rotation.y += (targetRotationY - currentModel.rotation.y) * 0.15;
+                    currentModel.rotation.x += (targetRotationX - currentModel.rotation.x) * 0.15;
+                }
             }
 
+            // Update FPS
             frameCount++;
-            if (now - lastFpsUpdate >= 1000) {
-                const fps = Math.round((frameCount * 1000) / (now - lastFpsUpdate));
+            const now = performance.now();
+            if (now - lastFpsTime >= 1000) {
+                const fps = Math.round((frameCount * 1000) / (now - lastFpsTime));
                 if (fpsMeter) fpsMeter.textContent = `${fps} FPS`;
                 frameCount = 0;
-                lastFpsUpdate = now;
+                lastFpsTime = now;
             }
 
-            ctx.clearRect(0, 0, width, height);
-
-            for (let i = 0; i < nodes.length; i++) {
-                const n = nodes[i];
-
-                n.x += n.vx;
-                n.y += n.vy;
-
-                if (n.x < 0 || n.x > width) n.vx *= -1;
-                if (n.y < 0 || n.y > height) n.vy *= -1;
-
-                const dx = n.x - mouseX;
-                const dy = n.y - mouseY;
-                const dist = Math.hypot(dx, dy);
-
-                if (dist < 180 && dist > 0) {
-                    const force = (180 - dist) / 180;
-                    n.x += (dx / dist) * force * 2.5;
-                    n.y += (dy / dist) * force * 2.5;
-                }
-
-                ctx.beginPath();
-                ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-                if (n.hue === "lime") {
-                    ctx.fillStyle = `rgba(228, 255, 0, ${n.baseAlpha + (dist < 180 ? 0.4 : 0)})`;
-                    ctx.shadowColor = "#e4ff00";
-                    ctx.shadowBlur = 8;
-                } else {
-                    ctx.fillStyle = `rgba(148, 163, 184, ${n.baseAlpha})`;
-                    ctx.shadowBlur = 0;
-                }
-                ctx.fill();
-
-                for (let j = i + 1; j < nodes.length; j++) {
-                    const n2 = nodes[j];
-                    const dist2 = Math.hypot(n.x - n2.x, n.y - n2.y);
-                    const maxDist = 125;
-
-                    if (dist2 < maxDist) {
-                        const alpha = (1 - dist2 / maxDist) * 0.28;
-                        ctx.beginPath();
-                        ctx.moveTo(n.x, n.y);
-                        ctx.lineTo(n2.x, n2.y);
-                        if (n.hue === "lime" || n2.hue === "lime") {
-                            ctx.strokeStyle = `rgba(228, 255, 0, ${alpha * 1.5})`;
-                        } else {
-                            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-                        }
-                        ctx.lineWidth = 0.8;
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            requestAnimationFrame(animateCanvas);
+            renderer.render(scene, camera);
         }
 
-        requestAnimationFrame(animateCanvas);
-
-        // Magnetic Button Pull Effect
-        const magneticBtns = document.querySelectorAll(".magnetic-btn");
-        magneticBtns.forEach(btn => {
-            btn.addEventListener("mousemove", (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                btn.style.transform = `translate(${x * 0.22}px, ${y * 0.22}px)`;
-            });
-            btn.addEventListener("mouseleave", () => {
-                btn.style.transform = "translate(0px, 0px)";
-            });
-        });
+        animate();
     }
-    initHeroGenerativeCanvas();
+    initHeroThrine3DStage();
+
 
     /* ========================================================
-       6. INTERACTIVE AI AGENT ARCHITECTURE NODE GRAPH
+       6. KOKONUT UI AI ACTION CONSOLE & LIVE DIFF SUITE
        ======================================================== */
-    function initInteractiveNodeGraph() {
-        const stage = document.getElementById("nodeGraphStage");
-        const svgLayer = document.getElementById("graphSvgLayer");
-        const triggerPulseBtn = document.getElementById("triggerPulseBtn");
-        const triggerPulseText = document.getElementById("triggerPulseText");
-        const inspectToggleBtn = document.getElementById("inspectToggleBtn");
-        const closeDrawerBtn = document.getElementById("closeDrawerBtn");
-        const drawer = document.getElementById("nodeInspectDrawer");
-        const testNodeBtn = document.getElementById("testNodeBtn");
-        const presetBtns = document.querySelectorAll(".node-workflow-btn");
+    function initKokonutAIConsole() {
+        const modelBtns = document.querySelectorAll(".kokonut-model-pill");
+        const presetBtns = document.querySelectorAll(".kokonut-prompt-preset");
+        const promptInput = document.getElementById("kokonutPromptInput");
+        const runBtn = document.getElementById("kokonutRunBtn");
+        const runText = document.getElementById("kokonutRunText");
+        const diffCardTitle = document.getElementById("diffCardTitle");
+        const diffRemovedStat = document.getElementById("diffRemovedStat");
+        const diffAddedStat = document.getElementById("diffAddedStat");
+        const diffContainer = document.getElementById("diffContainer");
+        const telemetryLogStream = document.getElementById("telemetryLogStream");
 
-        const drawerNodeName = document.getElementById("drawerNodeName");
-        const drawerNodeType = document.getElementById("drawerNodeType");
-        const drawerLatency = document.getElementById("drawerLatency");
-        const drawerStatus = document.getElementById("drawerStatus");
-        const drawerInboundJson = document.getElementById("drawerInboundJson");
-        const drawerLogicCode = document.getElementById("drawerLogicCode");
-        const drawerOutboundJson = document.getElementById("drawerOutboundJson");
+        const statBundle = document.getElementById("statBundle");
+        const statLatency = document.getElementById("statLatency");
+        const statDeterminism = document.getElementById("statDeterminism");
 
-        if (!stage || !svgLayer) return;
+        if (!diffContainer) return;
 
-        const workflowConfigs = {
-            whatsapp: {
-                name: "WhatsApp AI Bot",
-                sequence: ["webhook", "auth", "router", "agent", "db", "dispatch"],
-                connections: [
-                    { from: "webhook", to: "auth" },
-                    { from: "auth", to: "router" },
-                    { from: "router", to: "agent" },
-                    { from: "agent", to: "db" },
-                    { from: "db", to: "dispatch" }
+        let activeModel = "claude";
+        let activePipeline = "ast";
+
+        const pipelineDatasets = {
+            ast: {
+                title: "AST DIFF // SLOP ELIMINATION & TYPE SAFETY",
+                prompt: "Refactor AST: Strip redundant AI boilerplate and enforce strict type safety in SimpleIDE.",
+                removedText: "-18 lines (bloat)",
+                addedText: "+7 lines (deterministic)",
+                bundle: "-46.2%",
+                latency: "18.4ms",
+                determinism: "99.8%",
+                logs: [
+                    { time: "0.00ms", text: "Inbound payload received: AST refactor request.", color: "text-slate-400" },
+                    { time: "1.20ms", text: "Babel AST parser generated lexical token tree.", color: "text-blue-400" },
+                    { time: "4.80ms", text: "Detected 4 redundant async locks & 2 memory-leaking closures.", color: "text-purple-400" },
+                    { time: "12.4ms", text: "Pruning unused synthetic polyfills & memoizing event listeners.", color: "text-[#e4ff00]" },
+                    { time: "18.4ms", text: "Deterministic AST compiled. Zero slop verified. Status: OK.", color: "text-emerald-400" }
+                ],
+                diff: [
+                    { type: "removed", num: 1, code: "// [AI SLOP]: Redundant unmemoized state lock" },
+                    { type: "removed", num: 2, code: "export async function handleFileStream(file: any) {" },
+                    { type: "removed", num: 3, code: "    let buffer = new Array();" },
+                    { type: "removed", num: 4, code: "    await new Promise(r => setTimeout(r, 100)); // synthetic delay" },
+                    { type: "removed", num: 5, code: "    return JSON.parse(JSON.stringify(buffer));" },
+                    { type: "context", num: 6, code: "}" },
+                    { type: "added", num: 1, code: "// [SRIYUTH DETERMINISTIC AST]: Zero-copy Typed Array" },
+                    { type: "added", num: 2, code: "export function handleFileStream(file: FileDescriptor): Readonly<Uint8Array> {" },
+                    { type: "added", num: 3, code: "    const buffer = new Uint8Array(file.size);" },
+                    { type: "added", num: 4, code: "    file.readSync(buffer);" },
+                    { type: "added", num: 5, code: "    return Object.freeze(buffer);" },
+                    { type: "added", num: 6, code: "}" }
                 ]
             },
-            simpleide: {
-                name: "SimpleIDE AST Agent",
-                sequence: ["webhook", "auth", "ast", "agent", "db", "dispatch"],
-                connections: [
-                    { from: "webhook", to: "auth" },
-                    { from: "auth", to: "ast" },
-                    { from: "ast", to: "agent" },
-                    { from: "agent", to: "db" },
-                    { from: "db", to: "dispatch" }
+            whatsapp: {
+                title: "SECURITY // HMAC SHA-256 SIGNATURE VERIFICATION",
+                prompt: "Verify WhatsApp webhook signature & parse inbound inquiry into intent action.",
+                removedText: "-12 lines (insecure)",
+                addedText: "+8 lines (crypto-safe)",
+                bundle: "-38.0%",
+                latency: "4.2ms",
+                determinism: "100.0%",
+                logs: [
+                    { time: "0.00ms", text: "Meta Cloud API POST /api/webhook/whatsapp (Payload: 512B)", color: "text-slate-400" },
+                    { time: "0.80ms", text: "Header extracted: x-hub-signature-256: sha256=9f2c...88a", color: "text-blue-400" },
+                    { time: "2.10ms", text: "Computing HMAC-SHA256 digest with process.env.WHATSAPP_SECRET", color: "text-purple-400" },
+                    { time: "3.40ms", text: "Cryptographic constant-time comparison matched. No timing attacks.", color: "text-[#e4ff00]" },
+                    { time: "4.20ms", text: "Inbound payload verified. Enqueued for semantic triage.", color: "text-emerald-400" }
+                ],
+                diff: [
+                    { type: "removed", num: 1, code: "// [INSECURE]: Direct string equality leaks timing" },
+                    { type: "removed", num: 2, code: "if (req.headers['x-hub-signature-256'] == mySecret) {" },
+                    { type: "removed", num: 3, code: "    processIncomingMessage(req.body);" },
+                    { type: "removed", num: 4, code: "}" },
+                    { type: "added", num: 1, code: "// [CRYPTOGRAPHICALLY SECURE]: Timing-safe HMAC verification" },
+                    { type: "added", num: 2, code: "const computed = crypto.createHmac('sha256', env.SECRET).update(rawBody).digest('hex');" },
+                    { type: "added", num: 3, code: "const isValid = crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(computed));" },
+                    { type: "added", num: 4, code: "if (!isValid) return res.status(403).json({ error: 'UNAUTHORIZED_DIGEST' });" },
+                    { type: "added", num: 5, code: "await enqueueDeterministicTask(req.body);" }
                 ]
             },
             ema: {
-                name: "EMA Outreach Drip",
-                sequence: ["webhook", "router", "agent", "db", "dispatch"],
-                connections: [
-                    { from: "webhook", to: "router" },
-                    { from: "router", to: "agent" },
-                    { from: "agent", to: "db" },
-                    { from: "db", to: "dispatch" }
+                title: "QUEUE WORKER // EMA EMAIL OUTREACH PIPELINE",
+                prompt: "Trigger EMA outreach drip queue with rate-limited exponential backoff.",
+                removedText: "-15 lines (unbounded)",
+                addedText: "+9 lines (rate-throttled)",
+                bundle: "-29.5%",
+                latency: "12.8ms",
+                determinism: "99.9%",
+                logs: [
+                    { time: "0.00ms", text: "EMA Queue Manager activated. Batch size: 50 prospects.", color: "text-slate-400" },
+                    { time: "1.50ms", text: "Validating MX DNS records & deliverability scores...", color: "text-blue-400" },
+                    { time: "4.80ms", text: "Throttling dispatch: 1 message per 1,200ms per IP pool.", color: "text-purple-400" },
+                    { time: "9.10ms", text: "Injecting personalized AST macro variables into email body.", color: "text-[#e4ff00]" },
+                    { time: "12.8ms", text: "50/50 queued successfully. Delivery rate: 99.4%.", color: "text-emerald-400" }
+                ],
+                diff: [
+                    { type: "removed", num: 1, code: "// [UNBOUNDED BURST]: Blacklists domain immediately" },
+                    { type: "removed", num: 2, code: "prospects.forEach(p => {" },
+                    { type: "removed", num: 3, code: "    sendgrid.send({ to: p.email, html: template });" },
+                    { type: "removed", num: 4, code: "});" },
+                    { type: "added", num: 1, code: "// [EMA LEAK-PROOF QUEUE]: Rate-limited Token Bucket" },
+                    { type: "added", num: 2, code: "const bucket = new TokenBucket({ rate: 10, capacity: 50 });" },
+                    { type: "added", num: 3, code: "for (const prospect of prospects) {" },
+                    { type: "added", num: 4, code: "    await bucket.take(1);" },
+                    { type: "added", num: 5, code: "    await mailQueue.push({ to: prospect.email, retry: 3 });" },
+                    { type: "added", num: 6, code: "}" }
+                ]
+            },
+            simpleide: {
+                title: "AGENT COPILOT // SIMPLEIDE LOCAL AST TRIAGE",
+                prompt: "Dispatch SimpleIDE local agent copilot to lint active workspace code without remote telemetry.",
+                removedText: "-22 lines (telemetry bloat)",
+                addedText: "+11 lines (local IndexedDB)",
+                bundle: "-52.1%",
+                latency: "8.6ms",
+                determinism: "100.0%",
+                logs: [
+                    { time: "0.00ms", text: "SimpleIDE Editor keystroke hook invoked in renderer thread.", color: "text-slate-400" },
+                    { time: "0.90ms", text: "Inter-Process Communication (IPC) bridge: main <-> renderer.", color: "text-blue-400" },
+                    { time: "3.20ms", text: "Local tree-sitter syntax validation executed in memory.", color: "text-purple-400" },
+                    { time: "6.50ms", text: "No cloud telemetry leaked. Local IndexedDB cache updated.", color: "text-[#e4ff00]" },
+                    { time: "8.60ms", text: "Copilot suggestions ready in 8.6ms. Zero latency lag.", color: "text-emerald-400" }
+                ],
+                diff: [
+                    { type: "removed", num: 1, code: "// [AI TELEMETRY BLOAT]: Sends developer code to remote server" },
+                    { type: "removed", num: 2, code: "fetch('https://remote-ai-logger.com/telemetry', {" },
+                    { type: "removed", num: 3, code: "    method: 'POST', body: JSON.stringify(window.editorCode)" },
+                    { type: "removed", num: 4, code: "});" },
+                    { type: "added", num: 1, code: "// [SIMPLEIDE PRIVATE]: Local IndexedDB Cache & Offline AST" },
+                    { type: "added", num: 2, code: "const astTree = localTreeSitter.parse(activeBuffer);" },
+                    { type: "added", num: 3, code: "await offlineVault.save('ast_snapshot', astTree);" },
+                    { type: "added", num: 4, code: "return astTree.getDiagnostics();" }
                 ]
             }
         };
 
-        const nodeTelemetry = {
-            webhook: {
-                name: "Inbound Webhook",
-                type: "TRIGGER",
-                latency: "0.4ms",
-                status: "OPERATIONAL (HTTP 200)",
-                inbound: `{\n  "source": "Meta Cloud API",\n  "event": "messages.received",\n  "sender": "+91-9876543210",\n  "text": "Enterprise license & AI automation setup inquiry"\n}`,
-                code: `// Express / FastAPI Inbound Ingestion\napp.post("/webhook", async (req, res) => {\n  const payload = req.body;\n  return dispatchToSecurityGuard(payload);\n});`,
-                outbound: `{\n  "status": "QUEUED_FOR_AUTH",\n  "rawBytes": 412,\n  "requestId": "req_881a94f"\n}`
-            },
-            auth: {
-                name: "HMAC Auth Guard",
-                type: "SECURITY",
-                latency: "1.2ms",
-                status: "VERIFIED (SHA-256)",
-                inbound: `{\n  "header": "x-hub-signature-256: sha256=9a8b...",\n  "secretEnv": "VERIFIED_PRESENT"\n}`,
-                code: `// HMAC-SHA256 Cryptographic Verification\nfunction verify(body, signature, secret) {\n  const hash = crypto.createHmac("sha256", secret)\n    .update(body).digest("hex");\n  return signature === \`sha256=\${hash}\`;\n}`,
-                outbound: `{\n  "authenticated": true,\n  "identity": "verified_client",\n  "securityPassTime": "1.2ms"\n}`
-            },
-            router: {
-                name: "Intent Router",
-                type: "CLASSIFIER",
-                latency: "18.4ms",
-                status: "CONFIDENCE: 99.2%",
-                inbound: `{\n  "userText": "Enterprise license & AI automation setup inquiry",\n  "language": "en-US"\n}`,
-                code: `// Embedding Distance & Semantic Routing\nconst intent = await classifySemanticIntent(userText, [\n  "LEAD_ENTERPRISE", "SUPPORT_BUG", "BILLING_TIER"\n]);`,
-                outbound: `{\n  "selectedIntent": "LEAD_ENTERPRISE_HIGH_PRIORITY",\n  "routedTarget": "agent_enterprise_closer",\n  "confidence": 0.992\n}`
-            },
-            agent: {
-                name: "Autonomous Agent Engine",
-                type: "AI REASONING",
-                latency: "420ms",
-                status: "ZERO SLOP (DETERMINISTIC)",
-                inbound: `{\n  "model": "Claude 3.5 Sonnet",\n  "system": "Deterministic Enterprise Triage Agent",\n  "temperature": 0.1\n}`,
-                code: `// Claude 3.5 Structured Tool Calling\nconst completion = await anthropic.messages.create({\n  model: "claude-3-5-sonnet-20241022",\n  max_tokens: 1024,\n  tools: [crmSyncTool, quoteGeneratorTool]\n});`,
-                outbound: `{\n  "decision": "GENERATE_ENTERPRISE_PROPOSAL",\n  "arguments": { "tier": "scale", "seats": 25 },\n  "tokensSaved": "+34.2%"\n}`
-            },
-            ast: {
-                name: "AST Diff Validator",
-                type: "EXECUTION",
-                latency: "14.1ms",
-                status: "SYNTAX VALIDATED (AST OK)",
-                inbound: `{\n  "file": "packages/core/src/state.ts",\n  "engine": "Babel / Tree-Sitter"\n}`,
-                code: `// AST Code Transformation & Diff Checker\nconst ast = babelParser.parse(codeContent, { sourceType: "module" });\nconst diffPatch = diff.createPatch("state.ts", original, refactored);`,
-                outbound: `{\n  "astValid": true,\n  "mutationsApplied": 12,\n  "lintErrors": 0,\n  "tokenCompression": "28%"\n}`
-            },
-            db: {
-                name: "PostgreSQL & Redis Sync",
-                type: "PERSISTENCE",
-                latency: "3.5ms",
-                status: "ACID COMMITTED",
-                inbound: `{\n  "leadRecord": { "id": "lead_9941", "tier": "scale" },\n  "rateLimitBucket": "ok"\n}`,
-                code: `// Redis Rate-Limiter + Postgres Mutation\nawait redis.decr(userRateLimitKey);\nawait db.insert(leadsTable).values(newLeadRecord);`,
-                outbound: `{\n  "dbSyncStatus": "COMMITTED",\n  "transactionId": "tx_772183",\n  "latency": "3.5ms"\n}`
-            },
-            dispatch: {
-                name: "Cloud Egress Dispatch",
-                type: "EGRESS SINK",
-                latency: "28.0ms",
-                status: "HTTP 200 DELIVERED",
-                inbound: `{\n  "target": "WhatsApp Cloud API / Graph v20.0",\n  "status": "DELIVERED_TO_RECIPIENT"\n}`,
-                code: `// Meta Cloud API / Email Egress Dispatch\nawait fetch(\`https://graph.facebook.com/v20.0/\${PHONE_ID}/messages\`, {\n  method: "POST",\n  headers: { Authorization: \`Bearer \${TOKEN}\` },\n  body: JSON.stringify(outboundMessage)\n});`,
-                outbound: `{\n  "statusCode": 200,\n  "messageId": "wamid.HBgL...",\n  "pipelineExecution": "COMPLETED_IN_485ms"\n}`
-            }
-        };
+        function renderDiff(data) {
+            if (!diffContainer) return;
+            diffContainer.innerHTML = "";
 
-        let currentPreset = "whatsapp";
-        let isPulsing = false;
+            data.diff.forEach((item, idx) => {
+                const row = document.createElement("div");
+                row.className = `diff-line ${item.type}`;
+                
+                const numSpan = document.createElement("span");
+                numSpan.className = "diff-num";
+                numSpan.textContent = item.num;
 
-        function drawCables() {
-            const config = workflowConfigs[currentPreset];
-            if (!config) return;
+                const codeSpan = document.createElement("span");
+                codeSpan.className = "diff-code flex-1";
+                codeSpan.textContent = item.code;
 
-            const existingPaths = svgLayer.querySelectorAll("path.graph-cable");
-            existingPaths.forEach(p => p.remove());
-
-            const stageRect = stage.getBoundingClientRect();
-
-            config.connections.forEach((conn) => {
-                const fromEl = document.getElementById(`node-${conn.from}`);
-                const toEl = document.getElementById(`node-${conn.to}`);
-                if (!fromEl || !toEl) return;
-
-                const fromPort = fromEl.querySelector(".node-port-out");
-                const toPort = toEl.querySelector(".node-port-in");
-
-                const fromRect = fromPort ? fromPort.getBoundingClientRect() : fromEl.getBoundingClientRect();
-                const toRect = toPort ? toPort.getBoundingClientRect() : toEl.getBoundingClientRect();
-
-                const x1 = fromRect.left - stageRect.left + fromRect.width / 2;
-                const y1 = fromRect.top - stageRect.top + fromRect.height / 2;
-                const x2 = toRect.left - stageRect.left + toRect.width / 2;
-                const y2 = toRect.top - stageRect.top + toRect.height / 2;
-
-                const dx = Math.abs(x2 - x1) * 0.5;
-                const pathD = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
-
-                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                path.setAttribute("d", pathD);
-                path.setAttribute("class", "graph-cable");
-                path.setAttribute("id", `cable-${conn.from}-${conn.to}`);
-                svgLayer.appendChild(path);
-            });
-        }
-
-        function triggerPulse() {
-            if (isPulsing) return;
-            isPulsing = true;
-            sound.playClick();
-
-            if (triggerPulseBtn) {
-                triggerPulseBtn.classList.add("opacity-60");
-                if (triggerPulseText) triggerPulseText.textContent = "EXECUTING PIPELINE...";
-            }
-
-            const config = workflowConfigs[currentPreset];
-            const seq = config.sequence;
-
-            document.querySelectorAll(".node-element").forEach(n => {
-                n.classList.remove("pulsing");
+                row.appendChild(numSpan);
+                row.appendChild(codeSpan);
+                diffContainer.appendChild(row);
             });
 
-            document.querySelectorAll(".graph-cable").forEach(c => c.classList.remove("active"));
-
-            let step = 0;
-
-            function runStep() {
-                if (step >= seq.length) {
-                    isPulsing = false;
-                    if (triggerPulseBtn) {
-                        triggerPulseBtn.classList.remove("opacity-60");
-                        if (triggerPulseText) triggerPulseText.textContent = "TRIGGER PIPELINE PULSE";
-                    }
-                    sound.playSuccess();
-                    return;
-                }
-
-                const currentNodeKey = seq[step];
-                const nodeEl = document.getElementById(`node-${currentNodeKey}`);
-
-                if (nodeEl) {
-                    nodeEl.classList.add("pulsing");
-                    sound.playBlip();
-
-                    selectNode(currentNodeKey);
-
-                    if (step < seq.length - 1) {
-                        const nextNodeKey = seq[step + 1];
-                        const cable = document.getElementById(`cable-${currentNodeKey}-${nextNodeKey}`);
-                        if (cable) cable.classList.add("active");
-                    }
-
-                    setTimeout(() => {
-                        nodeEl.classList.remove("pulsing");
-                        step++;
-                        runStep();
-                    }, 420);
-                } else {
-                    step++;
-                    runStep();
-                }
-            }
-
-            runStep();
+            if (diffCardTitle) diffCardTitle.textContent = data.title;
+            if (diffRemovedStat) diffRemovedStat.textContent = data.removedText;
+            if (diffAddedStat) diffAddedStat.textContent = data.addedText;
+            if (statBundle) statBundle.textContent = data.bundle;
+            if (statLatency) statLatency.textContent = data.latency;
+            if (statDeterminism) statDeterminism.textContent = data.determinism;
         }
 
-        function selectNode(nodeKey) {
-            const data = nodeTelemetry[nodeKey];
+        function streamLogs(logs) {
+            if (!telemetryLogStream) return;
+            telemetryLogStream.innerHTML = "";
+            let idx = 0;
+
+            function nextLog() {
+                if (idx >= logs.length) return;
+                const log = logs[idx];
+                const div = document.createElement("div");
+                div.className = log.color;
+                div.textContent = `[${log.time}] ${log.text}`;
+                telemetryLogStream.appendChild(div);
+                telemetryLogStream.scrollTop = telemetryLogStream.scrollHeight;
+                sound.playBlip();
+                idx++;
+                setTimeout(nextLog, 120);
+            }
+
+            nextLog();
+        }
+
+        function executePipeline(pipeKey) {
+            const data = pipelineDatasets[pipeKey];
             if (!data) return;
 
-            document.querySelectorAll(".node-element").forEach(el => el.classList.remove("selected"));
-            const currentEl = document.getElementById(`node-${nodeKey}`);
-            if (currentEl) currentEl.classList.add("selected");
+            sound.playClick();
+            if (runBtn) {
+                runBtn.classList.add("opacity-70");
+                if (runText) runText.textContent = "EXECUTING...";
+            }
 
-            if (drawerNodeName) drawerNodeName.textContent = data.name;
-            if (drawerNodeType) drawerNodeType.textContent = data.type;
-            if (drawerLatency) drawerLatency.textContent = data.latency;
-            if (drawerStatus) drawerStatus.textContent = data.status;
-            if (drawerInboundJson) drawerInboundJson.textContent = data.inbound;
-            if (drawerLogicCode) drawerLogicCode.textContent = data.code;
-            if (drawerOutboundJson) drawerOutboundJson.textContent = data.outbound;
+            if (promptInput) promptInput.value = data.prompt;
+            renderDiff(data);
+            streamLogs(data.logs);
 
-            if (drawer) drawer.classList.add("open");
+            setTimeout(() => {
+                if (runBtn) {
+                    runBtn.classList.remove("opacity-70");
+                    if (runText) runText.textContent = "EXECUTE PIPELINE";
+                }
+                sound.playSuccess();
+            }, 800);
         }
 
-        document.querySelectorAll(".node-element").forEach(node => {
-            node.addEventListener("click", () => {
-                const key = node.getAttribute("data-node");
-                sound.playClick();
-                selectNode(key);
-            });
-        });
-
+        // Preset button click
         presetBtns.forEach(btn => {
             btn.addEventListener("click", () => {
-                const preset = btn.getAttribute("data-preset");
-                if (preset === currentPreset) return;
-                sound.playClick();
-
-                presetBtns.forEach(b => {
-                    b.classList.remove("bg-[#e4ff00]", "text-black", "font-black");
-                    b.classList.add("bg-[#141923]", "text-slate-300", "font-bold");
-                });
-                btn.classList.add("bg-[#e4ff00]", "text-black", "font-black");
-                btn.classList.remove("bg-[#141923]", "text-slate-300", "font-bold");
-
-                currentPreset = preset;
-                drawCables();
-
-                const firstNode = workflowConfigs[preset]?.sequence[0] || "webhook";
-                selectNode(firstNode);
+                const pipe = btn.getAttribute("data-pipeline");
+                presetBtns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                activePipeline = pipe;
+                executePipeline(pipe);
             });
         });
 
-        if (triggerPulseBtn) {
-            triggerPulseBtn.addEventListener("click", triggerPulse);
-        }
-
-        if (closeDrawerBtn) {
-            closeDrawerBtn.addEventListener("click", () => {
+        // Model selector click
+        modelBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const model = btn.getAttribute("data-model");
+                modelBtns.forEach(b => {
+                    b.classList.remove("active");
+                    const dot = b.querySelector("span:first-child");
+                    if (dot) dot.className = "w-2 h-2 rounded-full bg-slate-400";
+                });
+                btn.classList.add("active");
+                const activeDot = btn.querySelector("span:first-child");
+                if (activeDot) activeDot.className = "w-2 h-2 rounded-full bg-[#e4ff00]";
                 sound.playClick();
-                if (drawer) drawer.classList.remove("open");
+                activeModel = model;
+
+                // Stream notification log
+                const div = document.createElement("div");
+                div.className = "text-[#e4ff00] font-bold";
+                div.textContent = `[SYS] Switched active LLM provider to: ${btn.querySelector('span:nth-child(2)').textContent}`;
+                if (telemetryLogStream) {
+                    telemetryLogStream.appendChild(div);
+                    telemetryLogStream.scrollTop = telemetryLogStream.scrollHeight;
+                }
+            });
+        });
+
+        // Run button click
+        if (runBtn) {
+            runBtn.addEventListener("click", () => {
+                executePipeline(activePipeline);
             });
         }
 
-        if (inspectToggleBtn) {
-            inspectToggleBtn.addEventListener("click", () => {
-                sound.playClick();
-                if (drawer) drawer.classList.toggle("open");
-            });
-        }
-
-        if (testNodeBtn) {
-            testNodeBtn.addEventListener("click", () => {
-                sound.playBlip();
-                const selected = document.querySelector(".node-element.selected");
-                if (selected) {
-                    selected.classList.add("pulsing");
-                    setTimeout(() => {
-                        selected.classList.remove("pulsing");
-                        sound.playSuccess();
-                    }, 500);
+        // Ctrl + Enter shortcut
+        if (promptInput) {
+            promptInput.addEventListener("keydown", (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+                    e.preventDefault();
+                    executePipeline(activePipeline);
                 }
             });
         }
 
-        setTimeout(() => {
-            drawCables();
-            selectNode("webhook");
-        }, 300);
-
-        window.addEventListener("resize", () => {
-            drawCables();
-        });
+        // Initial render
+        renderDiff(pipelineDatasets.ast);
     }
-    initInteractiveNodeGraph();
-
+    initKokonutAIConsole();
 
     /* ========================================================
        7. PROJECT DATA & DEEP-DIVE MODAL GALLERY

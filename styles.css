@@ -599,59 +599,137 @@ html.dark .grid-bg {
     width: 100% !important;
   }
 }
+/* ─── Signature AI Systems Architecture Exhibit ─── */
+.arch-tab {
+  cursor: pointer;
+  border: 3px solid var(--color-border);
+  box-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 0 var(--shadow-color);
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, background-color 0.2s ease;
+}
 
-/* ─── Interactive AI Automations Terminal ─── */
-.sim-terminal {
-  background-color: #0b0c10;
-  color: #66ff99;
+.arch-tab:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: calc(var(--shadow-offset-sm) + 2px) calc(var(--shadow-offset-sm) + 2px) 0 0 var(--shadow-color);
+}
+
+.arch-tab.active {
+  background-color: var(--color-accent-1) !important;
+  color: #0C0D10 !important;
+  transform: translate(-3px, -3px);
+  box-shadow: calc(var(--shadow-offset-sm) + 3px) calc(var(--shadow-offset-sm) + 3px) 0 0 var(--shadow-color);
+}
+
+.workflow-node {
+  border: 2.5px solid var(--color-border);
+  background-color: var(--color-card);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  position: relative;
+}
+
+.workflow-node:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 0 var(--shadow-color);
+}
+
+.workflow-node.active-stage {
+  background-color: #0C0D10 !important;
+  color: var(--color-accent-1) !important;
+  border-color: #0C0D10 !important;
+  box-shadow: 6px 6px 0 0 var(--color-accent-1) !important;
+  transform: translateY(-4px);
+}
+
+.workflow-node.completed-stage {
+  border-color: #10B981;
+}
+
+.workflow-conduit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-border);
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+.code-workbench {
+  background-color: #0C0D10;
   border: 3px solid var(--color-border);
   box-shadow: 8px 8px 0 0 var(--shadow-color);
+  color: #E2E8F0;
   font-family: var(--font-mono);
 }
 
-.terminal-header {
-  background-color: #191c24;
-  border-bottom: 2px solid #2e3444;
-  padding: 0.6rem 1rem;
+.code-editor-area {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  tab-size: 2;
+  white-space: pre;
+  background-color: #12141A;
+  color: #F8FAFC;
+  resize: vertical;
+  outline: none;
+  border: 1px solid #232734;
+}
+
+.diff-viewer {
+  font-family: var(--font-mono);
+  font-size: 0.80rem;
+  line-height: 1.6;
+  background-color: #0F1117;
+  overflow-x: auto;
+  min-height: 220px;
+  max-height: 380px;
+}
+
+.diff-line {
+  padding: 0.15rem 0.75rem;
   display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.diff-line-add {
+  background-color: rgba(34, 197, 94, 0.14);
+  color: #4ADE80;
+  border-left: 3px solid #22C55E;
+}
+
+.diff-line-del {
+  background-color: rgba(239, 68, 68, 0.14);
+  color: #F87171;
+  border-left: 3px solid #EF4444;
+  text-decoration: line-through;
+  opacity: 0.75;
+}
+
+.diff-line-ctx {
+  color: #94A3B8;
+  border-left: 3px solid transparent;
+}
+
+.diff-line-num {
+  user-select: none;
+  opacity: 0.4;
+  min-width: 2rem;
+  text-align: right;
+  font-size: 0.72rem;
+}
+
+.telemetry-bar-pill {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.terminal-dots span {
-  display: inline-block;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  margin-right: 6px;
-}
-
-.terminal-body {
-  padding: 1.25rem;
-  min-height: 280px;
-  max-height: 360px;
-  overflow-y: auto;
-  font-size: 0.88rem;
-  line-height: 1.55;
-}
-
-.terminal-log-line {
-  margin-bottom: 0.35rem;
-  word-break: break-word;
-}
-
-.terminal-cursor {
-  display: inline-block;
-  width: 9px;
-  height: 16px;
-  background-color: #66ff99;
-  vertical-align: middle;
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  color: #CBD5E1;
 }
 
 /* ─── Cinematic Fullscreen Video-to-Hero Stage ─── */

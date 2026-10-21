@@ -527,123 +527,90 @@
 
 
     <!-- ========================================================
-         INTERACTIVE AI AUTOMATIONS SIMULATOR (The Experience!)
+         SIGNATURE INTERACTIVE ENGINEERING EXHIBIT: AI SYSTEMS ARCHITECTURE
+         Features: SimpleIDE Flagship Desktop Agent, 5-Stage Interactive
+         Workflow Explorer, Live Bounded AST Refactoring Sandbox,
+         Unified Diff Inspector & Progressive Project Switching.
          ======================================================== -->
-    <section id="automations" class="py-24 px-4 md:px-8 border-t-4 border-b-4 border-border bg-bg-alt">
+    <section id="automations" class="py-20 md:py-28 px-4 md:px-8 border-t-4 border-b-4 border-border bg-bg-alt relative overflow-hidden" aria-label="AI Systems Architecture & Engineering Exhibit">
         <div class="max-w-[1500px] mx-auto">
             
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gs-section-header">
+            <!-- Section Header: Brutalist Editorial -->
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 pb-6 border-b-2 border-border gs-section-header">
                 <div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="brutal-badge badge-coral">INTELLIGENT PIPELINES</span>
-                        <span class="font-mono-label text-xs font-bold text-slate-500">[ REAL WORKFLOWS ]</span>
+                    <div class="flex flex-wrap items-center gap-2.5 mb-3">
+                        <span class="brutal-badge badge-coral">SIGNATURE EXHIBIT // 02</span>
+                        <span class="font-mono-label text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider whitespace-nowrap">[ VERIFIED ARCHITECTURE & BOUNDED SANDBOX ]</span>
                     </div>
-                    <h2 class="text-5xl md:text-7xl font-black">AI AUTOMATIONS CONSOLE.</h2>
+                    <h2 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-text">
+                        AI SYSTEMS ARCHITECTURE.
+                    </h2>
                 </div>
-                <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 max-w-md mt-4 md:mt-0">
-                    Interact directly with simulated agent pipelines created across my GitHub repositories. Click any workflow to trigger the execution stream.
-                </p>
+                <div class="max-w-xl mt-4 lg:mt-0 font-mono-label text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                    Interactive engineering demonstrations of my verified software: desktop coding agents with Electron IPC boundaries, Fastify paraphrase suites, and Meta Cloud API webhook routers.
+                </div>
             </div>
 
-            <!-- Terminal Simulator Wrapper -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                
-                <!-- Left: Workflow Selector Tabs -->
-                <div class="lg:col-span-4 flex flex-col gap-3">
-                    <button class="sim-tab text-left p-4 bg-a1 text-black brutal-border brutal-shadow-sm font-mono-label text-sm font-bold flex items-center justify-between hover-target" data-workflow="simpleide">
-                        <div class="flex items-center gap-3">
-                            <i class="ph-bold ph-laptop text-xl"></i>
-                            <div>
-                                <div class="text-base font-black">SimpleIDE Core</div>
-                                <div class="text-xs opacity-80">Desktop AI Agent & AST Diff</div>
-                            </div>
-                        </div>
-                        <i class="ph-bold ph-arrow-right"></i>
-                    </button>
-
-                    <button class="sim-tab text-left p-4 bg-card text-text brutal-border brutal-shadow-sm font-mono-label text-sm font-bold flex items-center justify-between hover-target" data-workflow="whatsapp">
-                        <div class="flex items-center gap-3">
-                            <i class="ph-bold ph-whatsapp-logo text-xl text-green-500"></i>
-                            <div>
-                                <div class="text-base font-black">WhatsApp AI Bot</div>
-                                <div class="text-xs opacity-60">Lead Routing & Cloud Webhook</div>
-                            </div>
-                        </div>
-                        <i class="ph-bold ph-arrow-right"></i>
-                    </button>
-
-                    <button class="sim-tab text-left p-4 bg-card text-text brutal-border brutal-shadow-sm font-mono-label text-sm font-bold flex items-center justify-between hover-target" data-workflow="ema">
-                        <div class="flex items-center gap-3">
-                            <i class="ph-bold ph-envelope text-xl text-blue-500"></i>
-                            <div>
-                                <div class="text-base font-black">EMA Engine</div>
-                                <div class="text-xs opacity-60">Email Marketing Automation</div>
-                            </div>
-                        </div>
-                        <i class="ph-bold ph-arrow-right"></i>
-                    </button>
-
-                    <button class="sim-tab text-left p-4 bg-card text-text brutal-border brutal-shadow-sm font-mono-label text-sm font-bold flex items-center justify-between hover-target" data-workflow="rewritebot">
-                        <div class="flex items-center gap-3">
-                            <i class="ph-bold ph-sparkle text-xl text-amber-500"></i>
-                            <div>
-                                <div class="text-base font-black">RewriteBot AI</div>
-                                <div class="text-xs opacity-60">Deployed at Vercel</div>
-                            </div>
-                        </div>
-                        <i class="ph-bold ph-arrow-right"></i>
-                    </button>
-
-                    <div class="p-4 bg-card brutal-border mt-2">
-                        <h4 class="font-mono-label text-xs font-bold uppercase text-slate-500 mb-2">Selected Pipeline:</h4>
-                        <div id="simMetaTitle" class="font-black text-base text-text mb-1">SimpleIDE - AI Agent Desktop Workflow</div>
-                        <p id="simMetaDesc" class="font-mono-label text-xs text-slate-600 dark:text-slate-400">
-                            Electron & Vite environment dispatching local AI reasoning to parse code, run AST diffs, and generate unit tests.
-                        </p>
-                        <button id="runSimBtn" class="brutal-btn brutal-btn-primary w-full mt-4 text-xs">
-                            <i class="ph-bold ph-play text-sm"></i> RUN SIMULATION AGAIN
-                        </button>
-                    </div>
+            <!-- Project Selector Ribbon: Progressive Disclosure -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-mono text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
+                        <i class="ph-bold ph-stack text-sm text-accent-1"></i> SELECT ARCHITECTURE EXHIBIT:
+                    </span>
+                    <span class="font-mono text-[11px] text-slate-400 hidden sm:inline">
+                        CLICK TO SWITCH SYSTEM CONTEXT
+                    </span>
                 </div>
-
-                <!-- Right: Realistic Brutalist Console Screen -->
-                <div class="lg:col-span-8">
-                    <div class="sim-terminal">
-                        <div class="terminal-header">
-                            <div class="terminal-dots">
-                                <span class="bg-[#ff5f56]"></span>
-                                <span class="bg-[#ffbd2e]"></span>
-                                <span class="bg-[#27c93f]"></span>
-                            </div>
-                            <span class="font-mono text-xs font-bold text-slate-400">sriyuth@automation-engine:~ v2.4 (ACTIVE)</span>
-                            <span class="font-mono text-xs text-green-400 flex items-center gap-1.5">
-                                <span class="w-2 h-2 bg-green-400 rounded-full animate-ping"></span>
-                                CONNECTED
-                            </span>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" role="tablist" aria-label="Engineered Systems">
+                    <!-- Tab 1: SimpleIDE (Default Flagship) -->
+                    <button class="arch-tab active p-3 sm:p-4 bg-a1 text-black brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="simpleide" role="tab" aria-selected="true" id="tab-simpleide">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[10px] font-black uppercase tracking-wider bg-black text-a1 px-1.5 py-0.5 rounded-sm">FLAGSHIP</span>
+                            <i class="ph-bold ph-laptop text-lg"></i>
                         </div>
+                        <div class="text-sm sm:text-base font-black truncate">SimpleIDE (Prime AI)</div>
+                        <div class="text-[11px] opacity-80 truncate">Electron + React Desktop Agent</div>
+                    </button>
 
-                        <div class="terminal-body" id="terminalOutput">
-                            <div class="terminal-log-line text-slate-400 font-mono text-xs">
-                                [SYSTEM INITIALIZED] Awaiting simulated workflow selection...
-                            </div>
+                    <!-- Tab 2: RewriteBot -->
+                    <button class="arch-tab p-3 sm:p-4 bg-card text-text brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="rewritebot" role="tab" aria-selected="false" id="tab-rewritebot">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-text px-1.5 py-0.5 rounded-sm">LIVE VERCEL</span>
+                            <i class="ph-bold ph-sparkle text-lg text-amber-500"></i>
                         </div>
+                        <div class="text-sm sm:text-base font-black truncate">RewriteBot Suite</div>
+                        <div class="text-[11px] opacity-60 truncate">Fastify + React Paraphraser</div>
+                    </button>
 
-                        <div class="p-3 bg-[#13151b] border-t border-[#232734] font-mono text-xs flex justify-between items-center text-slate-400">
-                            <div class="flex items-center gap-2">
-                                <span class="text-green-400">➜</span>
-                                <span>agent-pipe --stream --auto-qualify</span>
-                                <span class="terminal-cursor"></span>
-                            </div>
-                            <span class="text-[11px] opacity-60">CTRL+C TO ABORT</span>
+                    <!-- Tab 3: WhatsApp AI -->
+                    <button class="arch-tab p-3 sm:p-4 bg-card text-text brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="whatsapp" role="tab" aria-selected="false" id="tab-whatsapp">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-text px-1.5 py-0.5 rounded-sm">CLOUD API</span>
+                            <i class="ph-bold ph-whatsapp-logo text-lg text-green-500"></i>
                         </div>
-                    </div>
+                        <div class="text-sm sm:text-base font-black truncate">WhatsApp AI Bot</div>
+                        <div class="text-[11px] opacity-60 truncate">Meta Webhook Router</div>
+                    </button>
+
+                    <!-- Tab 4: EMA Engine -->
+                    <button class="arch-tab p-3 sm:p-4 bg-card text-text brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="ema" role="tab" aria-selected="false" id="tab-ema">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-text px-1.5 py-0.5 rounded-sm">CRON / QUEUE</span>
+                            <i class="ph-bold ph-envelope text-lg text-blue-500"></i>
+                        </div>
+                        <div class="text-sm sm:text-base font-black truncate">EMA Engine</div>
+                        <div class="text-[11px] opacity-60 truncate">TypeScript Campaign Worker</div>
+                    </button>
                 </div>
+            </div>
 
+            <!-- Dynamic System Container (Replaced & Animated via JS) -->
+            <div id="archExhibitContent" class="space-y-8">
+                <!-- Injected & driven dynamically via initSignatureArchitectureExhibit() in script.js -->
             </div>
 
         </div>
     </section>
-
 
     <!-- ========================================================
          FEATURED WORK & PROJECTS: Exact Projects from k.sriyuth & GitHub

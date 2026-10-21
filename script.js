@@ -13,48 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const motionEnabled = !prefersReducedMotion;
 
     /* ========================================================
-       0. LENIS SMOOTH SCROLL INTEGRATION (GSAP ScrollTrigger Sync)
-       ======================================================== */
-    let lenis = null;
-    if (typeof Lenis !== "undefined" && motionEnabled) {
-        lenis = new Lenis({
-            duration: 1.15,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            orientation: "vertical",
-            gestureOrientation: "vertical",
-            smoothWheel: true,
-            wheelMultiplier: 1.0,
-            touchMultiplier: 1.5,
-            infinite: false
-        });
-
-        // Synchronize Lenis scroll with GSAP ScrollTrigger
-        lenis.on("scroll", ScrollTrigger.update);
-
-        gsap.ticker.add((time) => {
-            lenis.raf(time * 1000);
-        });
-
-        gsap.ticker.lagSmoothing(0);
-
-        // Intercept native anchor clicks for smooth Lenis scrolling
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-            anchor.addEventListener("click", function (e) {
-                const targetId = this.getAttribute("href");
-                if (targetId && targetId !== "#" && targetId.length > 1) {
-                    const targetEl = document.querySelector(targetId);
-                    if (targetEl) {
-                        e.preventDefault();
-                        lenis.scrollTo(targetEl, { offset: -70 });
-                    }
-                }
-            });
-        });
-
-        window.lenis = lenis;
-    }
-
-    /* ========================================================
        1. SYNTHESIZED WEB AUDIO FX (Subtle & Tactile)
        ======================================================== */
     class SoundEngine {
@@ -357,576 +315,164 @@ document.addEventListener("DOMContentLoaded", () => {
             } else if (action === "simulator") {
                 const el = document.querySelector("#automations");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
-            } else if (action === "simulator") {
-                const el = document.querySelector("#automations");
-                if (el) el.scrollIntoView({ behavior: "smooth" });
-                const triggerBtn = document.getElementById("triggerPulseBtn");
-                if (triggerBtn) triggerBtn.click();
+                startSimulatedWorkflow("simpleide");
             }
         });
     });
 
-    /* ========================================================
-       5. THRINE 3D ASSET ENGINE (thrine.app WebGL Stage)
-       ======================================================== */
-    function initHeroThrine3DStage() {
-        const canvas = document.getElementById("heroThrineCanvas");
-        const fpsMeter = document.getElementById("thrineFpsMeter");
-        const modelLabel = document.getElementById("thrineModelLabel");
-        const modelBtns = document.querySelectorAll(".thrine-model-btn");
-        if (!canvas || typeof THREE === "undefined") return;
-
-        const container = canvas.parentElement;
-        let width = container.clientWidth || 400;
-        let height = container.clientHeight || 540;
-
-        // Scene setup
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-        camera.position.set(0, 0, 4.2);
-
-        const renderer = new THREE.WebGLRenderer({
-            canvas: canvas,
-            antialias: true,
-            alpha: true,
-            powerPreference: "high-performance"
-        });
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.25;
-        if (renderer.outputEncoding) {
-            renderer.outputEncoding = THREE.sRGBEncoding;
-        }
-
-        // Cinematic Lighting
-        const ambientLight = new THREE.AmbientLight(0x1e293b, 1.4);
-        scene.add(ambientLight);
-
-        // Key light (Cool white)
-        const keyLight = new THREE.DirectionalLight(0xffffff, 2.8);
-        keyLight.position.set(4, 6, 4);
-        scene.add(keyLight);
-
-        // Rim light (Neon lime accent)
-        const rimLight = new THREE.DirectionalLight(0xe4ff00, 3.4);
-        rimLight.position.set(-5, -2, -3);
-        scene.add(rimLight);
-
-        // Fill light (Cobalt blue)
-        const fillLight = new THREE.PointLight(0x2e5bff, 2.2, 20);
-        fillLight.position.set(2, -3, 3);
-        scene.add(fillLight);
-
-        // Models configuration from Thrine
-        const modelsConfig = {
-            "robotic-hand": {
-                name: "THRINE // ROBOTIC HAND",
-                path: "models/thrine-robotic-hand.glb",
-                scale: 1.85,
-                rotY: 0.2,
-                rotX: 0.1,
-                offsetY: -0.2
-            },
-            "obsidian-walker": {
-                name: "THRINE // OBSIDIAN WALKER",
-                path: "models/obsidian-walker.glb",
-                scale: 1.5,
-                rotY: -0.4,
-                rotX: 0.15,
-                offsetY: -0.3
-            },
-            "data-sphere": {
-                name: "THRINE // DATA SPHERE",
-                path: "models/data-sphere.glb",
-                scale: 1.6,
-                rotY: 0,
-                rotX: 0,
-                offsetY: 0
-            }
-        };
-
-        const loader = new THREE.GLTFLoader();
-        let currentModel = null;
-        let currentModelKey = "robotic-hand";
-        let targetRotationY = 0;
-        let targetRotationX = 0;
-        let mouseX = 0;
-        let mouseY = 0;
-        let isDragging = false;
-        let previousMouseX = 0;
-        let previousMouseY = 0;
-
-        function loadModel(key) {
-            const config = modelsConfig[key];
-            if (!config) return;
-
-            if (modelLabel) modelLabel.textContent = config.name;
-
-            // Remove previous model
-            if (currentModel) {
-                scene.remove(currentModel);
-                currentModel.traverse((child) => {
-                    if (child.isMesh) {
-                        child.geometry.dispose();
-                        if (child.material) {
-                            if (Array.isArray(child.material)) child.material.forEach(m => m.dispose());
-                            else child.material.dispose();
-                        }
-                    }
-                });
-                currentModel = null;
-            }
-
-            loader.load(
-                config.path,
-                (gltf) => {
-                    currentModel = gltf.scene;
-
-                    // Center & normalize
-                    const box = new THREE.Box3().setFromObject(currentModel);
-                    const center = box.getCenter(new THREE.Vector3());
-                    currentModel.position.sub(center);
-                    currentModel.position.y += config.offsetY || 0;
-
-                    const size = box.getSize(new THREE.Vector3());
-                    const maxDim = Math.max(size.x, size.y, size.z);
-                    const normScale = (config.scale || 1.5) / (maxDim || 1);
-                    currentModel.scale.set(normScale, normScale, normScale);
-
-                    // Material enhancements
-                    currentModel.traverse((child) => {
-                        if (child.isMesh) {
-                            child.castShadow = true;
-                            child.receiveShadow = true;
-                            if (child.material) {
-                                child.material.roughness = Math.min(child.material.roughness || 0.35, 0.5);
-                                child.material.metalness = Math.max(child.material.metalness || 0.65, 0.4);
-                                if (child.material.isMeshStandardMaterial) {
-                                    child.material.envMapIntensity = 1.2;
-                                }
-                            }
-                        }
-                    });
-
-                    currentModel.rotation.y = config.rotY || 0;
-                    currentModel.rotation.x = config.rotX || 0;
-                    targetRotationY = currentModel.rotation.y;
-                    targetRotationX = currentModel.rotation.x;
-
-                    scene.add(currentModel);
-
-                    // Smooth entrance scale
-                    currentModel.scale.set(0.01, 0.01, 0.01);
-                    gsap.to(currentModel.scale, {
-                        x: normScale,
-                        y: normScale,
-                        z: normScale,
-                        duration: 1.0,
-                        ease: "power3.out"
-                    });
-                },
-                undefined,
-                (error) => {
-                    console.warn("Could not load GLB model, using procedural fallback sculpture", error);
-                    createFallbackMesh(config);
-                }
-            );
-        }
-
-        function createFallbackMesh(config) {
-            const group = new THREE.Group();
-            const geom = new THREE.IcosahedronGeometry(1.2, 3);
-            const mat = new THREE.MeshStandardMaterial({
-                color: 0x111624,
-                roughness: 0.25,
-                metalness: 0.85,
-                wireframe: true
-            });
-            const core = new THREE.Mesh(geom, mat);
-            group.add(core);
-
-            const innerGeom = new THREE.SphereGeometry(0.8, 32, 32);
-            const innerMat = new THREE.MeshStandardMaterial({
-                color: 0xe4ff00,
-                emissive: 0xe4ff00,
-                emissiveIntensity: 0.6,
-                roughness: 0.2
-            });
-            const innerSphere = new THREE.Mesh(innerGeom, innerMat);
-            group.add(innerSphere);
-
-            currentModel = group;
-            scene.add(currentModel);
-        }
-
-        // Initial model load
-        loadModel("robotic-hand");
-
-        // Model Switcher button events
-        modelBtns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const key = btn.getAttribute("data-model");
-                if (key === currentModelKey) return;
-                sound.playClick();
-                modelBtns.forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                currentModelKey = key;
-                loadModel(key);
-            });
-        });
-
-        // Mouse Parallax & Drag interaction
-        window.addEventListener("mousemove", (e) => {
-            const rect = canvas.getBoundingClientRect();
-            if (rect.width > 0 && rect.height > 0) {
-                const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-                const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-                mouseX = x;
-                mouseY = y;
-            }
-        });
-
-        canvas.addEventListener("mousedown", (e) => {
-            isDragging = true;
-            previousMouseX = e.clientX;
-            previousMouseY = e.clientY;
-        });
-
-        window.addEventListener("mouseup", () => {
-            isDragging = false;
-        });
-
-        window.addEventListener("mousemove", (e) => {
-            if (isDragging && currentModel) {
-                const deltaX = e.clientX - previousMouseX;
-                const deltaY = e.clientY - previousMouseY;
-                targetRotationY += deltaX * 0.012;
-                targetRotationX += deltaY * 0.012;
-                previousMouseX = e.clientX;
-                previousMouseY = e.clientY;
-            }
-        });
-
-        // Resize handler
-        function resize() {
-            width = container.clientWidth || 400;
-            height = container.clientHeight || 540;
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-            renderer.setSize(width, height);
-        }
-        window.addEventListener("resize", resize);
-
-        // Animation Loop
-        let frameCount = 0;
-        let lastFpsTime = performance.now();
-        let clock = new THREE.Clock();
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            const elapsedTime = clock.getElapsedTime();
-
-            if (currentModel) {
-                if (!isDragging) {
-                    // Gentle idle oscillation & mouse parallax
-                    currentModel.rotation.y += (targetRotationY + mouseX * 0.45 - currentModel.rotation.y) * 0.06;
-                    currentModel.rotation.x += (targetRotationX - mouseY * 0.3 - currentModel.rotation.x) * 0.06;
-                    currentModel.position.y += (Math.sin(elapsedTime * 1.5) * 0.08 - currentModel.position.y) * 0.05;
-                } else {
-                    currentModel.rotation.y += (targetRotationY - currentModel.rotation.y) * 0.15;
-                    currentModel.rotation.x += (targetRotationX - currentModel.rotation.x) * 0.15;
-                }
-            }
-
-            // Update FPS
-            frameCount++;
-            const now = performance.now();
-            if (now - lastFpsTime >= 1000) {
-                const fps = Math.round((frameCount * 1000) / (now - lastFpsTime));
-                if (fpsMeter) fpsMeter.textContent = `${fps} FPS`;
-                frameCount = 0;
-                lastFpsTime = now;
-            }
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-    }
-    initHeroThrine3DStage();
-
 
     /* ========================================================
-       6. KOKONUT UI AI ACTION CONSOLE & LIVE DIFF SUITE
+       5. HERO STAGE TOGGLE (Spline 3D Robot vs Ambient Video)
        ======================================================== */
-    function initKokonutAIConsole() {
-        const modelBtns = document.querySelectorAll(".kokonut-model-pill");
-        const presetBtns = document.querySelectorAll(".kokonut-prompt-preset");
-        const promptInput = document.getElementById("kokonutPromptInput");
-        const runBtn = document.getElementById("kokonutRunBtn");
-        const runText = document.getElementById("kokonutRunText");
-        const diffCardTitle = document.getElementById("diffCardTitle");
-        const diffRemovedStat = document.getElementById("diffRemovedStat");
-        const diffAddedStat = document.getElementById("diffAddedStat");
-        const diffContainer = document.getElementById("diffContainer");
-        const telemetryLogStream = document.getElementById("telemetryLogStream");
+    const stageVideoBtn = document.getElementById("stageVideoBtn");
+    const stage3DBtn = document.getElementById("stage3DBtn");
+    const heroVideoWrapper = document.getElementById("heroVideoWrapper");
+    const heroSplineWrapper = document.getElementById("heroSplineWrapper");
 
-        const statBundle = document.getElementById("statBundle");
-        const statLatency = document.getElementById("statLatency");
-        const statDeterminism = document.getElementById("statDeterminism");
-
-        if (!diffContainer) return;
-
-        let activeModel = "claude";
-        let activePipeline = "ast";
-
-        const pipelineDatasets = {
-            ast: {
-                title: "AST DIFF // SLOP ELIMINATION & TYPE SAFETY",
-                prompt: "Refactor AST: Strip redundant AI boilerplate and enforce strict type safety in SimpleIDE.",
-                removedText: "-18 lines (bloat)",
-                addedText: "+7 lines (deterministic)",
-                bundle: "-46.2%",
-                latency: "18.4ms",
-                determinism: "99.8%",
-                logs: [
-                    { time: "0.00ms", text: "Inbound payload received: AST refactor request.", color: "text-slate-400" },
-                    { time: "1.20ms", text: "Babel AST parser generated lexical token tree.", color: "text-blue-400" },
-                    { time: "4.80ms", text: "Detected 4 redundant async locks & 2 memory-leaking closures.", color: "text-purple-400" },
-                    { time: "12.4ms", text: "Pruning unused synthetic polyfills & memoizing event listeners.", color: "text-[#e4ff00]" },
-                    { time: "18.4ms", text: "Deterministic AST compiled. Zero slop verified. Status: OK.", color: "text-emerald-400" }
-                ],
-                diff: [
-                    { type: "removed", num: 1, code: "// [AI SLOP]: Redundant unmemoized state lock" },
-                    { type: "removed", num: 2, code: "export async function handleFileStream(file: any) {" },
-                    { type: "removed", num: 3, code: "    let buffer = new Array();" },
-                    { type: "removed", num: 4, code: "    await new Promise(r => setTimeout(r, 100)); // synthetic delay" },
-                    { type: "removed", num: 5, code: "    return JSON.parse(JSON.stringify(buffer));" },
-                    { type: "context", num: 6, code: "}" },
-                    { type: "added", num: 1, code: "// [SRIYUTH DETERMINISTIC AST]: Zero-copy Typed Array" },
-                    { type: "added", num: 2, code: "export function handleFileStream(file: FileDescriptor): Readonly<Uint8Array> {" },
-                    { type: "added", num: 3, code: "    const buffer = new Uint8Array(file.size);" },
-                    { type: "added", num: 4, code: "    file.readSync(buffer);" },
-                    { type: "added", num: 5, code: "    return Object.freeze(buffer);" },
-                    { type: "added", num: 6, code: "}" }
-                ]
-            },
-            whatsapp: {
-                title: "SECURITY // HMAC SHA-256 SIGNATURE VERIFICATION",
-                prompt: "Verify WhatsApp webhook signature & parse inbound inquiry into intent action.",
-                removedText: "-12 lines (insecure)",
-                addedText: "+8 lines (crypto-safe)",
-                bundle: "-38.0%",
-                latency: "4.2ms",
-                determinism: "100.0%",
-                logs: [
-                    { time: "0.00ms", text: "Meta Cloud API POST /api/webhook/whatsapp (Payload: 512B)", color: "text-slate-400" },
-                    { time: "0.80ms", text: "Header extracted: x-hub-signature-256: sha256=9f2c...88a", color: "text-blue-400" },
-                    { time: "2.10ms", text: "Computing HMAC-SHA256 digest with process.env.WHATSAPP_SECRET", color: "text-purple-400" },
-                    { time: "3.40ms", text: "Cryptographic constant-time comparison matched. No timing attacks.", color: "text-[#e4ff00]" },
-                    { time: "4.20ms", text: "Inbound payload verified. Enqueued for semantic triage.", color: "text-emerald-400" }
-                ],
-                diff: [
-                    { type: "removed", num: 1, code: "// [INSECURE]: Direct string equality leaks timing" },
-                    { type: "removed", num: 2, code: "if (req.headers['x-hub-signature-256'] == mySecret) {" },
-                    { type: "removed", num: 3, code: "    processIncomingMessage(req.body);" },
-                    { type: "removed", num: 4, code: "}" },
-                    { type: "added", num: 1, code: "// [CRYPTOGRAPHICALLY SECURE]: Timing-safe HMAC verification" },
-                    { type: "added", num: 2, code: "const computed = crypto.createHmac('sha256', env.SECRET).update(rawBody).digest('hex');" },
-                    { type: "added", num: 3, code: "const isValid = crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(computed));" },
-                    { type: "added", num: 4, code: "if (!isValid) return res.status(403).json({ error: 'UNAUTHORIZED_DIGEST' });" },
-                    { type: "added", num: 5, code: "await enqueueDeterministicTask(req.body);" }
-                ]
-            },
-            ema: {
-                title: "QUEUE WORKER // EMA EMAIL OUTREACH PIPELINE",
-                prompt: "Trigger EMA outreach drip queue with rate-limited exponential backoff.",
-                removedText: "-15 lines (unbounded)",
-                addedText: "+9 lines (rate-throttled)",
-                bundle: "-29.5%",
-                latency: "12.8ms",
-                determinism: "99.9%",
-                logs: [
-                    { time: "0.00ms", text: "EMA Queue Manager activated. Batch size: 50 prospects.", color: "text-slate-400" },
-                    { time: "1.50ms", text: "Validating MX DNS records & deliverability scores...", color: "text-blue-400" },
-                    { time: "4.80ms", text: "Throttling dispatch: 1 message per 1,200ms per IP pool.", color: "text-purple-400" },
-                    { time: "9.10ms", text: "Injecting personalized AST macro variables into email body.", color: "text-[#e4ff00]" },
-                    { time: "12.8ms", text: "50/50 queued successfully. Delivery rate: 99.4%.", color: "text-emerald-400" }
-                ],
-                diff: [
-                    { type: "removed", num: 1, code: "// [UNBOUNDED BURST]: Blacklists domain immediately" },
-                    { type: "removed", num: 2, code: "prospects.forEach(p => {" },
-                    { type: "removed", num: 3, code: "    sendgrid.send({ to: p.email, html: template });" },
-                    { type: "removed", num: 4, code: "});" },
-                    { type: "added", num: 1, code: "// [EMA LEAK-PROOF QUEUE]: Rate-limited Token Bucket" },
-                    { type: "added", num: 2, code: "const bucket = new TokenBucket({ rate: 10, capacity: 50 });" },
-                    { type: "added", num: 3, code: "for (const prospect of prospects) {" },
-                    { type: "added", num: 4, code: "    await bucket.take(1);" },
-                    { type: "added", num: 5, code: "    await mailQueue.push({ to: prospect.email, retry: 3 });" },
-                    { type: "added", num: 6, code: "}" }
-                ]
-            },
-            simpleide: {
-                title: "AGENT COPILOT // SIMPLEIDE LOCAL AST TRIAGE",
-                prompt: "Dispatch SimpleIDE local agent copilot to lint active workspace code without remote telemetry.",
-                removedText: "-22 lines (telemetry bloat)",
-                addedText: "+11 lines (local IndexedDB)",
-                bundle: "-52.1%",
-                latency: "8.6ms",
-                determinism: "100.0%",
-                logs: [
-                    { time: "0.00ms", text: "SimpleIDE Editor keystroke hook invoked in renderer thread.", color: "text-slate-400" },
-                    { time: "0.90ms", text: "Inter-Process Communication (IPC) bridge: main <-> renderer.", color: "text-blue-400" },
-                    { time: "3.20ms", text: "Local tree-sitter syntax validation executed in memory.", color: "text-purple-400" },
-                    { time: "6.50ms", text: "No cloud telemetry leaked. Local IndexedDB cache updated.", color: "text-[#e4ff00]" },
-                    { time: "8.60ms", text: "Copilot suggestions ready in 8.6ms. Zero latency lag.", color: "text-emerald-400" }
-                ],
-                diff: [
-                    { type: "removed", num: 1, code: "// [AI TELEMETRY BLOAT]: Sends developer code to remote server" },
-                    { type: "removed", num: 2, code: "fetch('https://remote-ai-logger.com/telemetry', {" },
-                    { type: "removed", num: 3, code: "    method: 'POST', body: JSON.stringify(window.editorCode)" },
-                    { type: "removed", num: 4, code: "});" },
-                    { type: "added", num: 1, code: "// [SIMPLEIDE PRIVATE]: Local IndexedDB Cache & Offline AST" },
-                    { type: "added", num: 2, code: "const astTree = localTreeSitter.parse(activeBuffer);" },
-                    { type: "added", num: 3, code: "await offlineVault.save('ast_snapshot', astTree);" },
-                    { type: "added", num: 4, code: "return astTree.getDiagnostics();" }
-                ]
-            }
-        };
-
-        function renderDiff(data) {
-            if (!diffContainer) return;
-            diffContainer.innerHTML = "";
-
-            data.diff.forEach((item, idx) => {
-                const row = document.createElement("div");
-                row.className = `diff-line ${item.type}`;
-                
-                const numSpan = document.createElement("span");
-                numSpan.className = "diff-num";
-                numSpan.textContent = item.num;
-
-                const codeSpan = document.createElement("span");
-                codeSpan.className = "diff-code flex-1";
-                codeSpan.textContent = item.code;
-
-                row.appendChild(numSpan);
-                row.appendChild(codeSpan);
-                diffContainer.appendChild(row);
-            });
-
-            if (diffCardTitle) diffCardTitle.textContent = data.title;
-            if (diffRemovedStat) diffRemovedStat.textContent = data.removedText;
-            if (diffAddedStat) diffAddedStat.textContent = data.addedText;
-            if (statBundle) statBundle.textContent = data.bundle;
-            if (statLatency) statLatency.textContent = data.latency;
-            if (statDeterminism) statDeterminism.textContent = data.determinism;
-        }
-
-        function streamLogs(logs) {
-            if (!telemetryLogStream) return;
-            telemetryLogStream.innerHTML = "";
-            let idx = 0;
-
-            function nextLog() {
-                if (idx >= logs.length) return;
-                const log = logs[idx];
-                const div = document.createElement("div");
-                div.className = log.color;
-                div.textContent = `[${log.time}] ${log.text}`;
-                telemetryLogStream.appendChild(div);
-                telemetryLogStream.scrollTop = telemetryLogStream.scrollHeight;
-                sound.playBlip();
-                idx++;
-                setTimeout(nextLog, 120);
-            }
-
-            nextLog();
-        }
-
-        function executePipeline(pipeKey) {
-            const data = pipelineDatasets[pipeKey];
-            if (!data) return;
-
+    if (stageVideoBtn && stage3DBtn && heroVideoWrapper && heroSplineWrapper) {
+        stageVideoBtn.addEventListener("click", () => {
             sound.playClick();
-            if (runBtn) {
-                runBtn.classList.add("opacity-70");
-                if (runText) runText.textContent = "EXECUTING...";
-            }
+            stageVideoBtn.classList.add("bg-a1", "text-black");
+            stageVideoBtn.classList.remove("bg-card", "text-text");
+            stage3DBtn.classList.remove("bg-a1", "text-black");
+            stage3DBtn.classList.add("bg-card", "text-text");
 
-            if (promptInput) promptInput.value = data.prompt;
-            renderDiff(data);
-            streamLogs(data.logs);
-
-            setTimeout(() => {
-                if (runBtn) {
-                    runBtn.classList.remove("opacity-70");
-                    if (runText) runText.textContent = "EXECUTE PIPELINE";
-                }
-                sound.playSuccess();
-            }, 800);
-        }
-
-        // Preset button click
-        presetBtns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const pipe = btn.getAttribute("data-pipeline");
-                presetBtns.forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                activePipeline = pipe;
-                executePipeline(pipe);
-            });
+            heroVideoWrapper.style.display = "block";
+            heroSplineWrapper.style.display = "none";
         });
 
-        // Model selector click
-        modelBtns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const model = btn.getAttribute("data-model");
-                modelBtns.forEach(b => {
-                    b.classList.remove("active");
-                    const dot = b.querySelector("span:first-child");
-                    if (dot) dot.className = "w-2 h-2 rounded-full bg-slate-400";
-                });
-                btn.classList.add("active");
-                const activeDot = btn.querySelector("span:first-child");
-                if (activeDot) activeDot.className = "w-2 h-2 rounded-full bg-[#e4ff00]";
-                sound.playClick();
-                activeModel = model;
+        stage3DBtn.addEventListener("click", () => {
+            sound.playClick();
+            stage3DBtn.classList.add("bg-a1", "text-black");
+            stage3DBtn.classList.remove("bg-card", "text-text");
+            stageVideoBtn.classList.remove("bg-a1", "text-black");
+            stageVideoBtn.classList.add("bg-card", "text-text");
 
-                // Stream notification log
-                const div = document.createElement("div");
-                div.className = "text-[#e4ff00] font-bold";
-                div.textContent = `[SYS] Switched active LLM provider to: ${btn.querySelector('span:nth-child(2)').textContent}`;
-                if (telemetryLogStream) {
-                    telemetryLogStream.appendChild(div);
-                    telemetryLogStream.scrollTop = telemetryLogStream.scrollHeight;
-                }
-            });
+            heroVideoWrapper.style.display = "none";
+            heroSplineWrapper.style.display = "block";
         });
-
-        // Run button click
-        if (runBtn) {
-            runBtn.addEventListener("click", () => {
-                executePipeline(activePipeline);
-            });
-        }
-
-        // Ctrl + Enter shortcut
-        if (promptInput) {
-            promptInput.addEventListener("keydown", (e) => {
-                if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
-                    e.preventDefault();
-                    executePipeline(activePipeline);
-                }
-            });
-        }
-
-        // Initial render
-        renderDiff(pipelineDatasets.ast);
     }
-    initKokonutAIConsole();
+
+
+    /* ========================================================
+       6. INTERACTIVE AI AUTOMATION TERMINAL SIMULATOR
+       ======================================================== */
+    const automationWorkflows = {
+        simpleide: {
+            title: "SimpleIDE - AI Agent Desktop Workflow",
+            desc: "Electron & Vite environment dispatching local AI reasoning to parse code, run AST diffs, and generate unit tests.",
+            steps: [
+                { delay: 300, text: "[INIT] Starting SimpleIDE Agent Core v2.4 (Electron IPC Bridge)..." },
+                { delay: 700, text: "[AST_SCAN] Parsing workspace AST: 32 files mapped. Resolving dependencies..." },
+                { delay: 1200, text: "[AGENT] Context window loaded: React 18, Vite, Tailwind CSS config." },
+                { delay: 1800, text: "[AI_REASONING] Generating intelligent refactor proposal for state synchronization..." },
+                { delay: 2400, text: "[DIFF_CHECK] 14 lines added, 3 redundant re-renders pruned. Linting PASSED." },
+                { delay: 3000, text: "[SUCCESS] Workspace updated cleanly. Latency: 420ms. Ready for user preview." }
+            ]
+        },
+        whatsapp: {
+            title: "WhatsApp AI Autonomous Bot Pipeline",
+            desc: "Webhook listener receiving inbound customer messages, running LLM intent classification, and routing responses.",
+            steps: [
+                { delay: 300, text: "[WEBHOOK_IN] POST /api/whatsapp/webhook received from client +91-XXXXXXXXXX" },
+                { delay: 800, text: "[INTENT_CLASSIFIER] Message: 'Need pricing and integration timeline for inventory portal.'" },
+                { delay: 1400, text: "[NLP_ENGINE] Detected intent: LEAD_INQUIRY_HIGH_PRIORITY (Confidence: 98.4%)" },
+                { delay: 2100, text: "[AGENT_ACTION] Synthesizing context-aware personalized quote & booking link..." },
+                { delay: 2700, text: "[CRM_SYNC] Created lead record #8491 in database with tag: 'Commercial Quote'" },
+                { delay: 3200, text: "[DISPATCH] WhatsApp Cloud API message transmitted successfully (HTTP 200 OK)." }
+            ]
+        },
+        ema: {
+            title: "EMA - Email Marketing Automation Engine",
+            desc: "TypeScript automation pipeline executing cold outreach segmentation, dynamic content injection, and webhook scheduling.",
+            steps: [
+                { delay: 300, text: "[CRON_TRIGGER] Executing batch cycle 'Q4 Developer Outreach Pipeline'..." },
+                { delay: 800, text: "[SEGMENTATION] Filtered 4,200 leads down to 350 active tech founders." },
+                { delay: 1500, text: "[DYNAMIC_GEN] Injecting custom GitHub portfolio references into template body..." },
+                { delay: 2200, text: "[DKIM_SPF] Validating DNS deliverability scores... Sender score: 99.8/100." },
+                { delay: 2800, text: "[QUEUE_DISPATCH] 350 personalized emails queued across 10 rolling worker threads." },
+                { delay: 3300, text: "[METRIC] Predicted open rate: 46.2%. Webhook tracking listeners live." }
+            ]
+        },
+        rewritebot: {
+            title: "RewriteBot - AI Semantic Rewrite Engine",
+            desc: "Next.js & Vercel deployment optimizing drafts into crisp, brutalist, high-converting copy.",
+            steps: [
+                { delay: 300, text: "[INGEST] Ingesting source draft: 480 words, Flesch Reading Ease: 42." },
+                { delay: 800, text: "[SEMANTIC_MAP] Detecting passive voice and redundant corporate filler..." },
+                { delay: 1500, text: "[AI_PASS] Transforming into punchy, active, developer-first communication." },
+                { delay: 2300, text: "[DIFF] Word count reduced: 480 -> 210. Readability score improved: +38%." },
+                { delay: 3000, text: "[EXPORT] Deployed to https://rewritebot-client.vercel.app with instant copy." }
+            ]
+        }
+    };
+
+    let activeSimTimeout = null;
+
+    function startSimulatedWorkflow(key) {
+        const wf = automationWorkflows[key] || automationWorkflows.simpleide;
+        const terminalOutput = document.getElementById("terminalOutput");
+        const simMetaTitle = document.getElementById("simMetaTitle");
+        const simMetaDesc = document.getElementById("simMetaDesc");
+
+        if (simMetaTitle) simMetaTitle.innerText = wf.title;
+        if (simMetaDesc) simMetaDesc.innerText = wf.desc;
+
+        // Clear existing running scripts
+        if (activeSimTimeout) {
+            clearTimeout(activeSimTimeout);
+            activeSimTimeout = null;
+        }
+
+        if (terminalOutput) {
+            terminalOutput.innerHTML = `
+                <div class="terminal-log-line text-slate-400 font-mono text-xs">
+                    [${new Date().toLocaleTimeString()}] INITIATING: ${wf.title}
+                </div>
+            `;
+
+            wf.steps.forEach((step, idx) => {
+                setTimeout(() => {
+                    const isLast = idx === wf.steps.length - 1;
+                    const colorClass = isLast ? "text-a4 font-bold" : "text-slate-200";
+                    const line = document.createElement("div");
+                    line.className = `terminal-log-line ${colorClass}`;
+                    line.innerHTML = `<span class="opacity-40">[${new Date().toLocaleTimeString()}]</span> ${step.text}`;
+                    terminalOutput.appendChild(line);
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    sound.playBlip();
+
+                    if (isLast) sound.playSuccess();
+                }, step.delay);
+            });
+        }
+    }
+
+    // Bind tab clicks in simulator
+    document.querySelectorAll(".sim-tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+            document.querySelectorAll(".sim-tab").forEach(t => {
+                t.classList.remove("bg-a1", "text-black");
+                t.classList.add("bg-card", "text-text");
+            });
+            tab.classList.add("bg-a1", "text-black");
+            tab.classList.remove("bg-card", "text-text");
+
+            const workflowKey = tab.getAttribute("data-workflow");
+            startSimulatedWorkflow(workflowKey);
+        });
+    });
+
+    const runSimBtn = document.getElementById("runSimBtn");
+    if (runSimBtn) {
+        runSimBtn.addEventListener("click", () => {
+            sound.playClick();
+            const activeTab = document.querySelector(".sim-tab.bg-a1");
+            const key = activeTab ? activeTab.getAttribute("data-workflow") : "simpleide";
+            startSimulatedWorkflow(key);
+        });
+    }
+
 
     /* ========================================================
        7. PROJECT DATA & DEEP-DIVE MODAL GALLERY
@@ -1380,110 +926,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* ========================================================
-       9. GSAP CINEMATIC CHAPTER STORYTELLING (Chapters A - G)
+       9. GSAP REVEALS & ENTRANCE ANIMATIONS
        ======================================================== */
     if (motionEnabled) {
-        // Chapter A: Opening Hero Entrance
-        const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-        heroTl
-            .from(".hero-badge", { y: 24, opacity: 0, duration: 0.6, delay: 0.15 })
-            .from(".hero-title-main", { y: 40, opacity: 0, duration: 0.8 }, "-=0.35")
-            .from(".hero-status-pill", { scale: 0.9, opacity: 0, duration: 0.5 }, "-=0.4")
-            .from(".hero-desc", { y: 24, opacity: 0, duration: 0.6 }, "-=0.3")
-            .from(".hero-ctas", { y: 20, opacity: 0, duration: 0.5 }, "-=0.3")
-            .from(".stage-container", { scale: 0.96, y: 30, opacity: 0, duration: 0.9 }, "-=0.6");
+        gsap.from(".hero-anim", {
+            y: 60,
+            opacity: 0,
+            duration: 0.9,
+            stagger: 0.12,
+            ease: "power3.out",
+            delay: 0.1
+        });
 
-        // Section Headers (Unified Editorial Title Reveal)
         gsap.utils.toArray(".gs-section-header").forEach(header => {
             gsap.from(header, {
                 scrollTrigger: {
                     trigger: header,
-                    start: "top 86%"
-                },
-                y: 35,
-                opacity: 0,
-                duration: 0.75,
-                ease: "power3.out"
-            });
-        });
-
-        // Chapter C: About & Identity Reveal
-        const aboutCards = document.querySelectorAll("#about .hover-target");
-        if (aboutCards.length > 0) {
-            gsap.from(aboutCards, {
-                scrollTrigger: {
-                    trigger: "#about",
-                    start: "top 78%"
+                    start: "top 85%"
                 },
                 y: 40,
                 opacity: 0,
                 duration: 0.7,
-                stagger: 0.14,
                 ease: "power3.out"
             });
-        }
+        });
 
-        // Chapter D: Curated Projects Showcase (Staggered Cards)
-        gsap.utils.toArray(".project-card-wrap").forEach((card, idx) => {
+        gsap.utils.toArray(".project-card-wrap").forEach(card => {
             gsap.from(card, {
                 scrollTrigger: {
                     trigger: card,
                     start: "top 88%"
                 },
-                y: 45,
+                y: 50,
                 opacity: 0,
                 duration: 0.65,
-                delay: (idx % 2) * 0.1,
                 ease: "power3.out"
             });
         });
-
-        // Chapter E: AI Automations Terminal Reveal
-        const simTerminal = document.querySelector(".sim-terminal");
-        if (simTerminal) {
-            gsap.from(simTerminal, {
-                scrollTrigger: {
-                    trigger: "#automations",
-                    start: "top 75%"
-                },
-                scale: 0.97,
-                y: 30,
-                opacity: 0,
-                duration: 0.8,
-                ease: "power3.out"
-            });
-        }
-
-        // Chapter F: Journey & Milestones (Timeline Node Stagger)
-        const journeyNodes = document.querySelectorAll("#journey .relative.pl-8");
-        if (journeyNodes.length > 0) {
-            gsap.from(journeyNodes, {
-                scrollTrigger: {
-                    trigger: "#journey",
-                    start: "top 80%"
-                },
-                x: -30,
-                opacity: 0,
-                duration: 0.6,
-                stagger: 0.15,
-                ease: "power2.out"
-            });
-        }
-
-        // Chapter G: Contact Finale Transition
-        const contactBox = document.querySelector("#contact .brutal-shadow-lg");
-        if (contactBox) {
-            gsap.from(contactBox, {
-                scrollTrigger: {
-                    trigger: "#contact",
-                    start: "top 82%"
-                },
-                y: 40,
-                opacity: 0,
-                duration: 0.8,
-                ease: "power3.out"
-            });
-        }
     }
 
 

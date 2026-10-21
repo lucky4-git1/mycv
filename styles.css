@@ -759,11 +759,32 @@ html.dark .grid-bg {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 40;
+  z-index: 15;
   overflow: hidden;
   background-color: #000;
   transform-origin: top left;
   will-change: transform, width, height;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#stageToolbar {
+  position: relative;
+  z-index: 20;
+  border-bottom: 2px solid var(--color-border);
+}
+
+#heroVideoWrapper {
+  position: relative;
+  background-color: #000;
+  overflow: hidden;
+  z-index: 10;
+}
+
+#stageCaption {
+  position: relative;
+  z-index: 20;
+  border-top: 2px solid var(--color-border);
 }
 
 .cinematic-hud-top {

@@ -406,10 +406,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const dRect = destWrapper.getBoundingClientRect();
             const pRect = pinnedViewport.getBoundingClientRect();
             return {
-                x: dRect.left - pRect.left,
-                y: dRect.top - pRect.top,
-                width: dRect.width,
-                height: dRect.height
+                x: Math.round(dRect.left - pRect.left),
+                y: Math.round(dRect.top - pRect.top),
+                width: Math.round(dRect.width),
+                height: Math.round(dRect.height)
             };
         }
 
@@ -432,9 +432,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 y: metrics.y,
                 width: metrics.width,
                 height: metrics.height,
-                borderWidth: "3px",
-                borderColor: "var(--color-border)",
-                boxShadow: "8px 8px 0 0 var(--shadow-color)"
+                borderWidth: "0px",
+                borderColor: "transparent",
+                boxShadow: "none"
             });
             if (nav) gsap.set(nav, { opacity: 1, y: 0 });
             if (heroLeftCol) gsap.set(heroLeftCol, { opacity: 1, x: 0 });
@@ -483,9 +483,9 @@ document.addEventListener("DOMContentLoaded", () => {
             y: () => getDestMetrics().y,
             width: () => getDestMetrics().width,
             height: () => getDestMetrics().height,
-            borderWidth: "3px",
-            borderColor: "var(--color-border)",
-            boxShadow: "8px 8px 0 0 var(--shadow-color)",
+            borderWidth: "0px",
+            borderColor: "transparent",
+            boxShadow: "0px 0px 0px transparent",
             ease: "power2.inOut",
             duration: 0.95
         }, 0);

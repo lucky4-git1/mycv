@@ -322,36 +322,214 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* ========================================================
-       5. HERO STAGE TOGGLE (Spline 3D Robot vs Ambient Video)
+       5. CINEMATIC FULLSCREEN VIDEO-TO-HERO TRANSITION
        ======================================================== */
-    const stageVideoBtn = document.getElementById("stageVideoBtn");
-    const stage3DBtn = document.getElementById("stage3DBtn");
-    const heroVideoWrapper = document.getElementById("heroVideoWrapper");
-    const heroSplineWrapper = document.getElementById("heroSplineWrapper");
+    function initCinematicHeroTransition() {
+        const stageContainer = document.getElementById("hero-cinematic-stage");
+        const pinnedViewport = document.getElementById("hero-pinned-viewport");
+        const videoShell = document.getElementById("cinematicVideoShell");
+        const destWrapper = document.getElementById("heroVideoWrapper");
+        const hudTop = document.getElementById("cinematicHudTop");
+        const hudBottom = document.getElementById("cinematicHudBottom");
+        const dockedLabel = document.getElementById("cinematicDockedLabel");
+        const stageToolbar = document.getElementById("stageToolbar");
+        const stageCaption = document.getElementById("stageCaption");
+        const heroLeftCol = document.getElementById("heroLeftCol");
+        const stageVideoBtn = document.getElementById("stageVideoBtn");
+        const stage3DBtn = document.getElementById("stage3DBtn");
+        const heroSplineWrapper = document.getElementById("heroSplineWrapper");
+        const nav = document.querySelector("nav");
 
-    if (stageVideoBtn && stage3DBtn && heroVideoWrapper && heroSplineWrapper) {
-        stageVideoBtn.addEventListener("click", () => {
-            sound.playClick();
-            stageVideoBtn.classList.add("bg-a1", "text-black");
-            stageVideoBtn.classList.remove("bg-card", "text-text");
-            stage3DBtn.classList.remove("bg-a1", "text-black");
-            stage3DBtn.classList.add("bg-card", "text-text");
+        if (!stageContainer || !pinnedViewport || !videoShell || !destWrapper) return;
 
-            heroVideoWrapper.style.display = "block";
-            heroSplineWrapper.style.display = "none";
+        function getDestMetrics() {
+            const dRect = destWrapper.getBoundingClientRect();
+            const pRect = pinnedViewport.getBoundingClientRect();
+            return {
+                x: dRect.left - pRect.left,
+                y: dRect.top - pRect.top,
+                width: dRect.width,
+                height: dRect.height
+            };
+        }
+
+        const videoEl = document.getElementById("heroVideo");
+        if (videoEl) {
+            videoEl.play().catch(e => {
+                console.log("Autoplay policy handled:", e);
+            });
+            videoEl.onerror = () => {
+                console.warn("Hero video failed to load, displaying poster.");
+                videoEl.style.backgroundImage = "url('images/robot.png')";
+                videoEl.style.backgroundSize = "cover";
+            };
+        }
+
+        function setupStageButtons() {
+            if (!stageVideoBtn || !stage3DBtn || !heroSplineWrapper) return;
+
+            stageVideoBtn.addEventListener("click", () => {
+                sound.playClick();
+                stageVideoBtn.classList.add("bg-a1", "text-black");
+                stageVideoBtn.classList.remove("bg-card", "text-text");
+                stage3DBtn.classList.remove("bg-a1", "text-black");
+                stage3DBtn.classList.add("bg-card", "text-text");
+
+                videoShell.style.display = "block";
+                heroSplineWrapper.style.display = "none";
+            });
+
+            stage3DBtn.addEventListener("click", () => {
+                sound.playClick();
+                stage3DBtn.classList.add("bg-a1", "text-black");
+                stage3DBtn.classList.remove("bg-card", "text-text");
+                stageVideoBtn.classList.remove("bg-a1", "text-black");
+                stageVideoBtn.classList.add("bg-card", "text-text");
+
+                videoShell.style.display = "none";
+                heroSplineWrapper.style.display = "block";
+            });
+        }
+
+        if (!motionEnabled) {
+            const metrics = getDestMetrics();
+            gsap.set(videoShell, {
+                x: metrics.x,
+                y: metrics.y,
+                width: metrics.width,
+                height: metrics.height,
+                borderWidth: "3px",
+                borderColor: "var(--color-border)",
+                boxShadow: "8px 8px 0 0 var(--shadow-color)"
+            });
+            if (hudTop) hudTop.style.display = "none";
+            if (hudBottom) hudBottom.style.display = "none";
+            if (dockedLabel) dockedLabel.style.opacity = "1";
+            if (nav) gsap.set(nav, { opacity: 1, y: 0 });
+            if (heroLeftCol) gsap.set(heroLeftCol, { opacity: 1, x: 0 });
+            if (stageToolbar) gsap.set(stageToolbar, { opacity: 1, y: 0 });
+            if (stageCaption) gsap.set(stageCaption, { opacity: 1, y: 0 });
+
+            setupStageButtons();
+            return;
+        }
+
+        const isMobile = window.innerWidth < 768;
+        const pinScrollDistance = isMobile ? 450 : 1000;
+
+        gsap.set(videoShell, {
+            top: 0,
+            left: 0,
+            x: 0,
+            y: 0,
+            width: "100vw",
+            height: "100vh",
+            borderWidth: "0px",
+            borderColor: "transparent",
+            boxShadow: "0px 0px 0px transparent"
+        });
+        if (hudTop) gsap.set(hudTop, { opacity: 1 });
+        if (hudBottom) gsap.set(hudBottom, { opacity: 1 });
+        if (dockedLabel) gsap.set(dockedLabel, { opacity: 0 });
+        if (nav) gsap.set(nav, { opacity: 0, y: -40 });
+        if (stageToolbar) gsap.set(stageToolbar, { opacity: 0, y: -12 });
+        if (stageCaption) gsap.set(stageCaption, { opacity: 0, y: 12 });
+
+        gsap.set("#heroStatusBadge", { opacity: 0, y: 24 });
+        gsap.set("#heroHeadline", { opacity: 0, x: -30 });
+        gsap.set(".hero-role-badge", { opacity: 0, y: 16, scale: 0.95 });
+        gsap.set("#heroBio", { opacity: 0, y: 20 });
+        gsap.set("#heroCtas", { opacity: 0, y: 20 });
+        gsap.set("#heroMetaBar", { opacity: 0, y: 15 });
+
+        const heroTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: stageContainer,
+                pin: pinnedViewport,
+                start: "top top",
+                end: () => `+=${pinScrollDistance}`,
+                scrub: isMobile ? 0.4 : 0.8,
+                invalidateOnRefresh: true,
+                onUpdate: (self) => {
+                    if (hudBottom) {
+                        hudBottom.style.pointerEvents = self.progress > 0.08 ? "none" : "auto";
+                    }
+                }
+            }
         });
 
-        stage3DBtn.addEventListener("click", () => {
-            sound.playClick();
-            stage3DBtn.classList.add("bg-a1", "text-black");
-            stage3DBtn.classList.remove("bg-card", "text-text");
-            stageVideoBtn.classList.remove("bg-a1", "text-black");
-            stageVideoBtn.classList.add("bg-card", "text-text");
+        heroTl.to([hudTop, hudBottom], {
+            opacity: 0,
+            duration: 0.15,
+            ease: "power1.out"
+        }, 0);
 
-            heroVideoWrapper.style.display = "none";
-            heroSplineWrapper.style.display = "block";
-        });
+        heroTl.to(videoShell, {
+            x: () => getDestMetrics().x,
+            y: () => getDestMetrics().y,
+            width: () => getDestMetrics().width,
+            height: () => getDestMetrics().height,
+            borderWidth: "3px",
+            borderColor: "var(--color-border)",
+            boxShadow: "8px 8px 0 0 var(--shadow-color)",
+            ease: "power2.inOut",
+            duration: 0.95
+        }, 0);
+
+        if (stageToolbar && stageCaption) {
+            heroTl.to([stageToolbar, stageCaption], {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                ease: "power2.out"
+            }, 0.35);
+        }
+
+        if (dockedLabel) {
+            heroTl.to(dockedLabel, {
+                opacity: 1,
+                duration: 0.2,
+                ease: "power1.out"
+            }, 0.75);
+        }
+
+        if (nav) {
+            heroTl.to(nav, {
+                opacity: 1,
+                y: 0,
+                duration: 0.35,
+                ease: "power2.out"
+            }, 0.25);
+        }
+
+        heroTl.to("#heroStatusBadge", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.20);
+        heroTl.to("#heroHeadline", { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 0.30);
+        heroTl.to(".hero-role-badge", { opacity: 1, y: 0, scale: 1, stagger: 0.05, duration: 0.25, ease: "power2.out" }, 0.45);
+        heroTl.to("#heroBio", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.55);
+        heroTl.to("#heroCtas", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.65);
+        heroTl.to("#heroMetaBar", { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 0.75);
+
+        if (hudBottom) {
+            const triggerScroll = () => {
+                sound.playClick();
+                window.scrollTo({
+                    top: stageContainer.offsetTop + pinScrollDistance,
+                    behavior: "smooth"
+                });
+            };
+            hudBottom.addEventListener("click", triggerScroll);
+            hudBottom.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    triggerScroll();
+                }
+            });
+        }
+
+        setupStageButtons();
     }
+
+    initCinematicHeroTransition();
 
 
     /* ========================================================
@@ -929,14 +1107,7 @@ document.addEventListener("DOMContentLoaded", () => {
        9. GSAP REVEALS & ENTRANCE ANIMATIONS
        ======================================================== */
     if (motionEnabled) {
-        gsap.from(".hero-anim", {
-            y: 60,
-            opacity: 0,
-            duration: 0.9,
-            stagger: 0.12,
-            ease: "power3.out",
-            delay: 0.1
-        });
+        // .hero-anim reveal is handled by initCinematicHeroTransition scroll timeline
 
         gsap.utils.toArray(".gs-section-header").forEach(header => {
             gsap.from(header, {
@@ -975,7 +1146,9 @@ document.addEventListener("DOMContentLoaded", () => {
             // Hyderabad is IST (UTC+5:30)
             const now = new Date();
             const options = { timeZone: "Asia/Kolkata", hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" };
-            timeEl.innerText = now.toLocaleTimeString("en-US", options);
+            const timeStr = now.toLocaleTimeString("en-US", options);
+            if (timeEl) timeEl.innerText = timeStr;
+            document.querySelectorAll(".currentTimeStream").forEach(el => el.innerText = timeStr);
         };
         updateTime();
         setInterval(updateTime, 1000);

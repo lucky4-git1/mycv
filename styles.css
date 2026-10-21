@@ -512,6 +512,72 @@ html.dark .grid-bg {
   50% { opacity: 0; }
 }
 
+/* ─── Cinematic Fullscreen Video-to-Hero Stage ─── */
+#hero-cinematic-stage {
+  position: relative;
+  width: 100%;
+}
+
+#hero-pinned-viewport {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.cinematic-video-shell {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 40;
+  overflow: hidden;
+  background-color: #000;
+  transform-origin: top left;
+  will-change: transform, width, height;
+}
+
+.cinematic-hud-top {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.cinematic-hud-bottom {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+@media (max-width: 640px) {
+  .cinematic-hud-top {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+  }
+  .cinematic-hud-bottom {
+    bottom: 1.5rem;
+    width: 90%;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #hero-cinematic-stage {
+    position: relative !important;
+  }
+  .cinematic-hud-top,
+  .cinematic-hud-bottom {
+    display: none !important;
+  }
+}
+
 /* ─── Hero Video & 3D Stage ─── */
 .stage-container {
   position: relative;

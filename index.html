@@ -207,122 +207,160 @@
     <main id="main-content">
 
     <!-- ========================================================
-         HERO SECTION: High-Octane Statement & Interactive Stage
+         HERO SECTION: Cinematic Fullscreen-to-Hero Stage
          ======================================================== -->
-    <section id="hero" class="relative min-h-screen pt-28 pb-16 flex flex-col justify-center grid-bg px-4 md:px-8 border-b-4 border-border">
-        
-        <div class="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <div id="hero-cinematic-stage" class="relative">
+        <div id="hero-pinned-viewport" class="relative w-full min-h-screen overflow-hidden">
             
-            <!-- Left Column: Bio & Core Pitch -->
-            <div class="lg:col-span-7 flex flex-col items-start hero-anim">
+            <section id="hero" class="relative min-h-screen pt-28 pb-16 flex flex-col justify-center grid-bg px-4 md:px-8 border-b-4 border-border">
                 
-                <!-- Availability & Role Status -->
-                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 bg-card brutal-border brutal-shadow-sm mb-6">
-                    <span class="w-3 h-3 bg-a4 rounded-full animate-pulse border border-border"></span>
-                    <span class="font-mono-label text-xs md:text-sm font-bold uppercase tracking-wider">
-                        STATUS: READY TO SHIP • MCA FIRST YEAR ('27)
-                    </span>
-                </div>
-
-                <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-black leading-[0.92] tracking-tighter mb-6 text-shadow-solid">
-                    K. SRIYUTH.
-                </h1>
-
-                <!-- Crisp Multi-Role Badges (Strict alignment, no awkward misaligned pills) -->
-                <div class="flex flex-wrap gap-2.5 mb-8">
-                    <span class="brutal-badge badge-lime text-xs md:text-sm px-3.5 py-1.5">INTUITIVE & PASSIONATE DEV</span>
-                    <span class="brutal-badge badge-coral text-xs md:text-sm px-3.5 py-1.5">AI AUTOMATIONS ARCHITECT</span>
-                    <span class="brutal-badge badge-cobalt text-xs md:text-sm px-3.5 py-1.5">FRONT-END ENGINEER</span>
-                </div>
-
-                <p class="font-mono-label text-base md:text-lg text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed mb-10">
-                    I don't assemble generic templates. I build tactile, ultra-fast web experiences and autonomous AI workflows. By reverse-engineering production architectures and wiring real LLM pipelines, I create software that feels physical, reliable, and unmistakable.
-                </p>
-
-                <!-- Call to Action Buttons -->
-                <div class="flex flex-wrap items-center gap-4 mb-10">
-                    <a href="#projects" class="brutal-btn brutal-btn-primary hover-target">
-                        <i class="ph-bold ph-diamonds-four text-lg"></i> EXPLORE WORK (10+)
-                    </a>
-                    <a href="#automations" class="brutal-btn brutal-btn-coral hover-target">
-                        <i class="ph-bold ph-lightning text-lg"></i> TEST AI AUTOMATIONS
-                    </a>
-                    <a href="K_Sriyuth_Resume.pdf" target="_blank" rel="noopener noreferrer" class="brutal-btn hover-target">
-                        <i class="ph-bold ph-download-simple text-lg"></i> RESUME (.PDF)
-                    </a>
-                </div>
-
-                <!-- Live Meta Bar -->
-                <div class="w-full flex flex-wrap items-center justify-between gap-4 pt-6 border-t-2 border-border font-mono-label text-xs font-bold text-slate-600 dark:text-slate-400">
-                    <div class="flex items-center gap-2">
-                        <i class="ph-bold ph-map-pin text-a2 text-base"></i>
-                        <span>HYDERABAD, INDIA</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <i class="ph-bold ph-clock text-a3 text-base"></i>
-                        <span>IST: <strong id="currentTime" class="text-text">00:00:00</strong></span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <i class="ph-bold ph-git-branch text-a4 text-base"></i>
-                        <span>32 PUBLIC REPOSITORIES</span>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Right Column: Interactive Dual-Mode Showcase Stage (Robot Video & Spline 3D) -->
-            <div class="lg:col-span-5 hero-anim">
-                <div class="stage-container">
+                <div class="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     
-                    <!-- Stage Switcher Toolbar -->
-                    <div class="p-3 bg-gray dark:bg-card brutal-border-b flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <span class="w-3 h-3 bg-a2 rounded-full border border-border"></span>
-                            <span class="w-3 h-3 bg-a1 rounded-full border border-border"></span>
-                            <span class="w-3 h-3 bg-a4 rounded-full border border-border"></span>
-                            <span class="font-mono-label text-xs font-bold uppercase ml-2">ROBOTICS LAB // STAGE</span>
+                    <!-- Left Column: Bio & Core Pitch -->
+                    <div id="heroLeftCol" class="lg:col-span-7 flex flex-col items-start hero-anim">
+                        
+                        <!-- Availability & Role Status -->
+                        <div id="heroStatusBadge" class="inline-flex items-center gap-2.5 px-4 py-1.5 bg-card brutal-border brutal-shadow-sm mb-6">
+                            <span class="w-3 h-3 bg-a4 rounded-full animate-pulse border border-border"></span>
+                            <span class="font-mono-label text-xs md:text-sm font-bold uppercase tracking-wider">
+                                STATUS: READY TO SHIP • MCA FIRST YEAR ('27)
+                            </span>
                         </div>
-                        <div class="flex items-center gap-1.5">
-                            <button id="stageVideoBtn" class="font-mono-label text-[11px] font-bold px-2.5 py-1 brutal-border bg-a1 text-black hover-target" aria-label="Show video stream">
-                                VIDEO
-                            </button>
-                            <button id="stage3DBtn" class="font-mono-label text-[11px] font-bold px-2.5 py-1 brutal-border bg-card text-text hover-target" aria-label="Show interactive 3D robot">
-                                3D SPLINE
-                            </button>
+
+                        <h1 id="heroHeadline" class="text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-black leading-[0.92] tracking-tighter mb-6 text-shadow-solid">
+                            K. SRIYUTH.
+                        </h1>
+
+                        <!-- Crisp Multi-Role Badges (Strict alignment, no awkward misaligned pills) -->
+                        <div id="heroRoleBadges" class="flex flex-wrap gap-2.5 mb-8">
+                            <span class="hero-role-badge brutal-badge badge-lime text-xs md:text-sm px-3.5 py-1.5">INTUITIVE & PASSIONATE DEV</span>
+                            <span class="hero-role-badge brutal-badge badge-coral text-xs md:text-sm px-3.5 py-1.5">AI AUTOMATIONS ARCHITECT</span>
+                            <span class="hero-role-badge brutal-badge badge-cobalt text-xs md:text-sm px-3.5 py-1.5">FRONT-END ENGINEER</span>
                         </div>
+
+                        <p id="heroBio" class="font-mono-label text-base md:text-lg text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed mb-10">
+                            I don't assemble generic templates. I build tactile, ultra-fast web experiences and autonomous AI workflows. By reverse-engineering production architectures and wiring real LLM pipelines, I create software that feels physical, reliable, and unmistakable.
+                        </p>
+
+                        <!-- Call to Action Buttons -->
+                        <div id="heroCtas" class="flex flex-wrap items-center gap-4 mb-10">
+                            <a href="#projects" class="brutal-btn brutal-btn-primary hover-target">
+                                <i class="ph-bold ph-diamonds-four text-lg"></i> EXPLORE WORK (10+)
+                            </a>
+                            <a href="#automations" class="brutal-btn brutal-btn-coral hover-target">
+                                <i class="ph-bold ph-lightning text-lg"></i> TEST AI AUTOMATIONS
+                            </a>
+                            <a href="K_Sriyuth_Resume.pdf" target="_blank" rel="noopener noreferrer" class="brutal-btn hover-target">
+                                <i class="ph-bold ph-download-simple text-lg"></i> RESUME (.PDF)
+                            </a>
+                        </div>
+
+                        <!-- Live Meta Bar -->
+                        <div id="heroMetaBar" class="w-full flex flex-wrap items-center justify-between gap-4 pt-6 border-t-2 border-border font-mono-label text-xs font-bold text-slate-600 dark:text-slate-400">
+                            <div class="flex items-center gap-2">
+                                <i class="ph-bold ph-map-pin text-a2 text-base"></i>
+                                <span>HYDERABAD, INDIA</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="ph-bold ph-clock text-a3 text-base"></i>
+                                <span>IST: <strong id="currentTime" class="text-text">00:00:00</strong></span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="ph-bold ph-git-branch text-a4 text-base"></i>
+                                <span>32 PUBLIC REPOSITORIES</span>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <!-- Mode 1: Authentic Video Loop -->
-                    <div id="heroVideoWrapper" class="relative aspect-square md:aspect-[4/3] bg-black">
-                        <video id="heroVideo" class="stage-video" autoplay loop muted playsinline preload="auto">
-                            <source src="images/robot.webm" type="video/webm">
-                            <source src="images/robot.mp4" type="video/mp4">
-                        </video>
-                        <div class="absolute bottom-4 left-4 bg-black/80 text-white font-mono-label text-xs px-3 py-1 border border-white/30 backdrop-blur">
-                            FEED: ROBOTIC AGENT AMBIENT
-                        </div>
-                    </div>
+                    <!-- Right Column: Interactive Dual-Mode Showcase Stage (Robot Video & Spline 3D) -->
+                    <div id="heroRightCol" class="lg:col-span-5 hero-anim">
+                        <div class="stage-container">
+                            
+                            <!-- Stage Switcher Toolbar -->
+                            <div id="stageToolbar" class="p-3 bg-gray dark:bg-card brutal-border-b flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 bg-a2 rounded-full border border-border"></span>
+                                    <span class="w-3 h-3 bg-a1 rounded-full border border-border"></span>
+                                    <span class="w-3 h-3 bg-a4 rounded-full border border-border"></span>
+                                    <span class="font-mono-label text-xs font-bold uppercase ml-2">ROBOTICS LAB // STAGE</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <button id="stageVideoBtn" class="font-mono-label text-[11px] font-bold px-2.5 py-1 brutal-border bg-a1 text-black hover-target" aria-label="Show video stream">
+                                        VIDEO
+                                    </button>
+                                    <button id="stage3DBtn" class="font-mono-label text-[11px] font-bold px-2.5 py-1 brutal-border bg-card text-text hover-target" aria-label="Show interactive 3D robot">
+                                        3D SPLINE
+                                    </button>
+                                </div>
+                            </div>
 
-                    <!-- Mode 2: Interactive Spline 3D Embed -->
-                    <div id="heroSplineWrapper" class="relative aspect-square md:aspect-[4/3] bg-black" style="display: none;">
-                        <iframe src="https://my.spline.design/genkubgreetingrobot-uAKQWOq6pjWkdL6MMZJFthqQ/" frameborder="0" width="100%" height="100%" loading="lazy" title="GenKub Greeting Robot 3D Model"></iframe>
-                        <div class="absolute bottom-4 left-4 bg-black/80 text-white font-mono-label text-xs px-3 py-1 border border-white/30 backdrop-blur">
-                            LIVE 3D: DRAG / ROTATE MODEL
-                        </div>
-                    </div>
+                            <!-- Mode 1: Authentic Video Loop Destination Aperture -->
+                            <div id="heroVideoWrapper" class="relative aspect-square md:aspect-[4/3] bg-black">
+                                <!-- The morphing video shell docks directly into this bounding box -->
+                            </div>
 
-                    <!-- Stage Footer Caption -->
-                    <div class="p-3 bg-card font-mono-label text-xs text-center border-t-2 border-border flex justify-between items-center px-4">
-                        <span class="text-slate-500 font-bold">K. SRIYUTH LABS</span>
-                        <span class="text-a3 font-bold">VERIFIED REPO ASSET</span>
+                            <!-- Mode 2: Interactive Spline 3D Embed -->
+                            <div id="heroSplineWrapper" class="relative aspect-square md:aspect-[4/3] bg-black" style="display: none;">
+                                <iframe src="https://my.spline.design/genkubgreetingrobot-uAKQWOq6pjWkdL6MMZJFthqQ/" frameborder="0" width="100%" height="100%" loading="lazy" title="GenKub Greeting Robot 3D Model"></iframe>
+                                <div class="absolute bottom-4 left-4 bg-black/80 text-white font-mono-label text-xs px-3 py-1 border border-white/30 backdrop-blur">
+                                    LIVE 3D: DRAG / ROTATE MODEL
+                                </div>
+                            </div>
+
+                            <!-- Stage Footer Caption -->
+                            <div id="stageCaption" class="p-3 bg-card font-mono-label text-xs text-center border-t-2 border-border flex justify-between items-center px-4">
+                                <span class="text-slate-500 font-bold">K. SRIYUTH LABS</span>
+                                <span class="text-a3 font-bold">VERIFIED REPO ASSET</span>
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>
+
+            </section>
+
+            <!-- Dedicated Transition Video Shell (Continuous Video Surface) -->
+            <div id="cinematicVideoShell" class="cinematic-video-shell" aria-label="Cinematic Robotics Lab Stream">
+                <video id="heroVideo" class="stage-video" autoplay loop muted playsinline preload="auto" poster="images/robot.png">
+                    <source src="images/robot.webm" type="video/webm">
+                    <source src="images/robot.mp4" type="video/mp4">
+                </video>
+
+                <!-- Opening State Cinematic HUD -->
+                <div id="cinematicHudTop" class="cinematic-hud-top flex justify-between items-center">
+                    <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-black/85 text-white brutal-border backdrop-blur-md font-mono-label text-xs font-bold">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#66ff99] animate-pulse"></span>
+                        <span class="text-[#66ff99]">FEED:</span>
+                        <span>SRIYUTH.LABS // ROBOTIC_AGENT_01</span>
+                    </div>
+                    <div class="hidden sm:inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-black/85 text-white brutal-border backdrop-blur-md font-mono-label text-xs font-bold">
+                        <span class="text-[#66ff99]">STATUS: 60 FPS</span>
+                        <span class="text-white/40">|</span>
+                        <span>IST: <strong class="currentTimeStream text-[#66ff99]">00:00:00</strong></span>
+                    </div>
+                </div>
+
+                <div id="cinematicHudBottom" class="cinematic-hud-bottom" role="button" tabindex="0" aria-label="Scroll to enter portfolio">
+                    <div class="inline-flex items-center gap-3 px-5 py-2.5 bg-black/90 text-white brutal-border backdrop-blur-md hover:bg-black transition-colors cursor-pointer group shadow-2xl">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#66ff99] animate-ping"></span>
+                        <span class="font-mono-label text-xs md:text-sm font-bold tracking-widest uppercase text-[#66ff99] group-hover:underline">
+                            SCROLL TO DOCK INTO INTERFACE
+                        </span>
+                        <i class="ph-bold ph-arrow-down text-base text-[#66ff99] animate-bounce"></i>
+                    </div>
+                </div>
+
+                <!-- Docked Feed Indicator (emerges when docked in the right-column stage) -->
+                <div id="cinematicDockedLabel" class="absolute bottom-4 left-4 bg-black/80 text-white font-mono-label text-xs px-3 py-1 border border-white/30 backdrop-blur pointer-events-none opacity-0">
+                    FEED: ROBOTIC AGENT AMBIENT
+                </div>
+
             </div>
 
         </div>
-
-    </section>
+    </div>
 
     <!-- Marquee Ticker -->
     <div class="marquee-container" aria-hidden="true">

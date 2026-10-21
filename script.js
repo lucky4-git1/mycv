@@ -1979,34 +1979,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 ease: "power3.out"
             });
         });
-
-        // Side-Entry Left Reveals
-        gsap.utils.toArray(".reveal-from-left").forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%"
-                },
-                x: -50,
-                opacity: 0,
-                duration: 0.75,
-                ease: "power2.out"
-            });
-        });
-
-        // Side-Entry Right Reveals
-        gsap.utils.toArray(".reveal-from-right").forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%"
-                },
-                x: 50,
-                opacity: 0,
-                duration: 0.75,
-                ease: "power2.out"
-            });
-        });
+        // About Section Reveals (bulletproof fromTo with once: true)
+        const aboutPhoto = document.getElementById("aboutPhotoCard");
+        const aboutText = document.getElementById("aboutTextCol");
+        if (aboutPhoto && aboutText) {
+            gsap.fromTo(aboutPhoto,
+                { opacity: 0, x: -40 },
+                {
+                    scrollTrigger: {
+                        trigger: "#about",
+                        start: "top 85%",
+                        once: true
+                    },
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.8,
+                    ease: "power2.out"
+                }
+            );
+            gsap.fromTo(aboutText,
+                { opacity: 0, x: 40 },
+                {
+                    scrollTrigger: {
+                        trigger: "#about",
+                        start: "top 85%",
+                        once: true
+                    },
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.8,
+                    ease: "power2.out"
+                }
+            );
+        }
 
         // Curated Project Cards Stagger
         gsap.utils.toArray(".project-card-wrap").forEach(card => {

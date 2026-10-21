@@ -992,3 +992,22 @@ html.dark .grid-bg {
 html.dark .timeline-node {
   box-shadow: 0 0 24px rgba(228, 255, 0, 0.85);
 }
+
+/* Ultra-smooth hardware-accelerated reveals */
+.gs-section-header,
+.about-metric-card,
+#aboutPhotoCard,
+#aboutTextCol,
+.project-card-wrap,
+.timeline-step,
+.timeline-left-col,
+.timeline-right-col,
+.timeline-node {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+#aboutMatrixCanvas {
+  filter: contrast(110%);
+}

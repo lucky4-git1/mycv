@@ -2042,9 +2042,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ========================================================
-       7b. CMATRIX DIGITAL RAIN (High-Performance Canvas)
+       7b. CMATRIX DIGITAL RAIN (Signature Red & Site Accents)
        Authentic falling terminal matrix code in #about background.
-       Throttled to 28fps and paused when offscreen for 0% CPU footprint.
+       Styled in the portfolio's signature Coral Red (#FF4757) with
+       glowing electric white and acid lime accents.
+       Throttled to 30fps and auto-paused offscreen for 0% CPU overhead.
        ======================================================== */
     function initAboutMatrixCanvas() {
         const canvas = document.getElementById("aboutMatrixCanvas");
@@ -2055,15 +2057,17 @@ document.addEventListener("DOMContentLoaded", () => {
         let animationFrameId = null;
         let isVisible = false;
         let lastTime = 0;
-        const fps = 28;
+        const fps = 30;
         const interval = 1000 / fps;
 
+        // Katakana, Binary, Hex, & Tech glyphs
         const glyphs = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ0123456789ABCDEF{}[]<>$~#!*+=/AI.TS.AST.MCA.DEV.DOM.GIT";
         const glyphArray = glyphs.split("");
 
-        let fontSize = 14;
+        let fontSize = 15;
         let columns = 0;
         let drops = [];
+        let speeds = [];
         let mouseX = -9999;
         let mouseY = -9999;
 
@@ -2073,8 +2077,10 @@ document.addEventListener("DOMContentLoaded", () => {
             canvas.height = rect.height;
             columns = Math.max(10, Math.floor(canvas.width / fontSize));
             drops = [];
+            speeds = [];
             for (let i = 0; i < columns; i++) {
-                drops[i] = Math.floor(Math.random() * -50);
+                drops[i] = Math.floor(Math.random() * -60);
+                speeds[i] = 0.85 + Math.random() * 0.65; // Natural staggered column velocities
             }
         }
 
@@ -2103,33 +2109,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const isDark = document.documentElement.classList.contains("dark");
             
-            ctx.fillStyle = isDark ? "rgba(10, 11, 14, 0.16)" : "rgba(244, 240, 230, 0.22)";
+            // Fading trail clear: lower alpha gives longer, vivid falling rain trails
+            ctx.fillStyle = isDark ? "rgba(10, 11, 14, 0.09)" : "rgba(244, 240, 230, 0.13)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
+            ctx.font = `bold ${fontSize}px 'JetBrains Mono', monospace`;
 
             for (let i = 0; i < drops.length; i++) {
                 const text = glyphArray[Math.floor(Math.random() * glyphArray.length)];
                 const x = i * fontSize;
-                const y = drops[i] * fontSize;
+                const y = Math.floor(drops[i]) * fontSize;
 
                 const distToMouse = Math.hypot(x - mouseX, y - mouseY);
-                const nearMouse = distToMouse < 80;
+                const nearMouse = distToMouse < 85;
 
+                // Color system: Signature Red (#FF4757) with white & acid-lime highlights
                 if (nearMouse) {
-                    ctx.fillStyle = "#E4FF00"; // Electric acid lime near mouse
+                    ctx.fillStyle = "#E4FF00"; // Electric acid-lime near cursor
                 } else if (Math.random() > 0.88) {
-                    ctx.fillStyle = isDark ? "#FFFFFF" : "#0f172a"; // Glowing white/black head
+                    // Leading head character: bright glowing white or electric lime
+                    ctx.fillStyle = isDark ? (Math.random() > 0.5 ? "#FFFFFF" : "#E4FF00") : "#1E293B";
+                } else if (Math.random() > 0.4) {
+                    // Primary body: Vibrant Signal Red (#FF4757 / #FF2A3D)
+                    ctx.fillStyle = isDark ? "#FF4757" : "#DC2626";
                 } else {
-                    ctx.fillStyle = isDark ? "#00FF66" : "#059669"; // Emerald matrix body
+                    // Trail glow: Deep Coral (#FF6B81 / #E83845)
+                    ctx.fillStyle = isDark ? "#FF6B81" : "#B91C1C";
                 }
 
                 ctx.fillText(text, x, y);
 
+                // Reset drop to top with random delay once past bottom
                 if (y > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
+                    speeds[i] = 0.85 + Math.random() * 0.65;
                 }
-                drops[i]++;
+                drops[i] += speeds[i];
             }
         }
 
@@ -2172,8 +2187,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             tiltWrap.style.transform = `
                 perspective(1000px)
-                rotateX(${-(center.y / 15).toFixed(2)}deg)
-                rotateY(${(center.x / 15).toFixed(2)}deg)
+                rotateX(${-(center.y / 18).toFixed(2)}deg)
+                rotateY(${(center.x / 18).toFixed(2)}deg)
                 scale3d(1.02, 1.02, 1.02)
             `;
         }
@@ -2186,33 +2201,22 @@ document.addEventListener("DOMContentLoaded", () => {
         tiltWrap.addEventListener("mousemove", rotateToMouse);
 
         tiltWrap.addEventListener("mouseleave", () => {
-            tiltWrap.style.transition = "transform 0.45s ease-out";
+            tiltWrap.style.transition = "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
             tiltWrap.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
         });
     }
     initAboutCardTilt();
 
     /* ========================================================
-       9. AWWWARDS-LEVEL REUSABLE MOTION & SCROLL REVEALS
-       Comprehensive on-scroll reveal system across ALL page sections:
-       Hero, Marquee, About, Automations, Projects, Skills, Journey,
-       GitHub Repositories, and Contact Channels.
+       9. AWWWARDS-LEVEL SILKY SMOOTH ON-SCROLL REVEALS
+       Cinematic, organic decelerations with cubic-bezier / power3 easing
+       and subtle 24-36px translational glides across all sections.
        ======================================================== */
-    const progressIndicator = document.getElementById("scrollProgressIndicator");
-    if (progressIndicator) {
-        window.addEventListener("scroll", () => {
-            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-            progressIndicator.style.width = scrolled + "%";
-        }, { passive: true });
-    }
-
     if (motionEnabled) {
         // Section Headers Entrance
         gsap.utils.toArray(".gs-section-header").forEach(header => {
             gsap.fromTo(header, 
-                { y: 35, opacity: 0 },
+                { y: 28, opacity: 0 },
                 {
                     scrollTrigger: {
                         trigger: header,
@@ -2221,7 +2225,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                     y: 0,
                     opacity: 1,
-                    duration: 0.7,
+                    duration: 1.1,
                     ease: "power3.out"
                 }
             );
@@ -2232,31 +2236,33 @@ document.addEventListener("DOMContentLoaded", () => {
         const aboutText = document.getElementById("aboutTextCol");
         if (aboutPhoto && aboutText) {
             gsap.fromTo(aboutPhoto,
-                { opacity: 0, x: -80 },
+                { opacity: 0, x: -45, y: 15 },
                 {
                     scrollTrigger: {
                         trigger: "#about",
-                        start: "top 78%",
+                        start: "top 80%",
                         once: true
                     },
                     opacity: 1,
                     x: 0,
-                    duration: 1.0,
+                    y: 0,
+                    duration: 1.2,
                     ease: "power3.out"
                 }
             );
             gsap.fromTo(aboutText,
-                { opacity: 0, x: 80 },
+                { opacity: 0, x: 45, y: 15 },
                 {
                     scrollTrigger: {
                         trigger: "#about",
-                        start: "top 78%",
+                        start: "top 80%",
                         once: true
                     },
                     opacity: 1,
                     x: 0,
-                    duration: 1.0,
-                    delay: 0.1,
+                    y: 0,
+                    duration: 1.2,
+                    delay: 0.08,
                     ease: "power3.out"
                 }
             );
@@ -2264,19 +2270,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // About Section 4 Metrics Cards Stagger
         gsap.fromTo(".about-metric-card",
-            { opacity: 0, y: 35, scale: 0.95 },
+            { opacity: 0, y: 25, scale: 0.98 },
             {
                 scrollTrigger: {
                     trigger: "#about",
-                    start: "top 72%",
+                    start: "top 75%",
                     once: true
                 },
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                duration: 0.75,
-                stagger: 0.1,
-                ease: "back.out(1.4)"
+                duration: 0.95,
+                stagger: 0.08,
+                ease: "power3.out"
             }
         );
 
@@ -2285,26 +2291,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const autoCard = document.querySelector("#automations .bg-card.brutal-border");
         if (autoTabs) {
             gsap.fromTo(autoTabs,
-                { opacity: 0, y: 25 },
+                { opacity: 0, y: 20 },
                 {
                     opacity: 1,
                     y: 0,
-                    duration: 0.7,
-                    ease: "power2.out",
-                    scrollTrigger: { trigger: "#automations", start: "top 78%", once: true }
+                    duration: 0.9,
+                    ease: "power3.out",
+                    scrollTrigger: { trigger: "#automations", start: "top 80%", once: true }
                 }
             );
         }
         if (autoCard) {
             gsap.fromTo(autoCard,
-                { opacity: 0, y: 40 },
+                { opacity: 0, y: 30 },
                 {
                     opacity: 1,
                     y: 0,
-                    duration: 0.85,
-                    delay: 0.1,
+                    duration: 1.1,
+                    delay: 0.08,
                     ease: "power3.out",
-                    scrollTrigger: { trigger: "#automations", start: "top 72%", once: true }
+                    scrollTrigger: { trigger: "#automations", start: "top 75%", once: true }
                 }
             );
         }
@@ -2312,7 +2318,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Curated Project Cards Stagger
         gsap.utils.toArray(".project-card-wrap").forEach((card, idx) => {
             gsap.fromTo(card,
-                { opacity: 0, y: 45, scale: 0.97 },
+                { opacity: 0, y: 32, scale: 0.98 },
                 {
                     scrollTrigger: {
                         trigger: card,
@@ -2322,7 +2328,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 0.7,
+                    duration: 1.0,
                     ease: "power3.out"
                 }
             );
@@ -2331,7 +2337,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Skills Bento Grid Cards Reveal
         gsap.utils.toArray("#skills .grid > div").forEach((bentoCard, idx) => {
             gsap.fromTo(bentoCard,
-                { opacity: 0, y: 35, scale: 0.98 },
+                { opacity: 0, y: 26, scale: 0.98 },
                 {
                     scrollTrigger: {
                         trigger: bentoCard,
@@ -2341,9 +2347,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 0.65,
-                    delay: (idx % 3) * 0.08,
-                    ease: "power2.out"
+                    duration: 0.9,
+                    delay: (idx % 3) * 0.07,
+                    ease: "power3.out"
                 }
             );
         });
@@ -2361,13 +2367,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         trigger: timelineSpine,
                         start: "top 75%",
                         end: "bottom 80%",
-                        scrub: 0.3
+                        scrub: 0.4
                     }
                 }
             );
         }
 
-        // Animate each Journey milestone level individually on scroll
+        // Animate each Journey milestone level with buttery-smooth glide
         gsap.utils.toArray(".timeline-step").forEach((step, idx) => {
             const leftCol = step.querySelector(".timeline-left-col");
             const rightCol = step.querySelector(".timeline-right-col");
@@ -2376,32 +2382,32 @@ document.addEventListener("DOMContentLoaded", () => {
             const stepTL = gsap.timeline({
                 scrollTrigger: {
                     trigger: step,
-                    start: "top 72%",
+                    start: "top 75%",
                     once: true
                 }
             });
 
             if (leftCol) {
                 stepTL.fromTo(leftCol,
-                    { opacity: 0, x: -70, y: 20 },
-                    { opacity: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
+                    { opacity: 0, x: -45, y: 15 },
+                    { opacity: 1, x: 0, y: 0, duration: 1.1, ease: "power3.out" },
                     0
                 );
             }
 
             if (rightCol) {
                 stepTL.fromTo(rightCol,
-                    { opacity: 0, x: 70, y: 20 },
-                    { opacity: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
-                    0.08
+                    { opacity: 0, x: 45, y: 15 },
+                    { opacity: 1, x: 0, y: 0, duration: 1.1, ease: "power3.out" },
+                    0.06
                 );
             }
 
             if (node) {
                 stepTL.fromTo(node,
-                    { opacity: 0, scale: 0, rotation: -90 },
-                    { opacity: 1, scale: 1, rotation: 0, duration: 0.7, ease: "back.out(2.2)" },
-                    0.12
+                    { opacity: 0, scale: 0.3, rotation: -45 },
+                    { opacity: 1, scale: 1, rotation: 0, duration: 0.85, ease: "back.out(1.8)" },
+                    0.1
                 );
             }
         });
@@ -2409,7 +2415,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // GitHub Verification Activity & Repos Reveal
         gsap.utils.toArray("#github .grid > div").forEach((ghCard, idx) => {
             gsap.fromTo(ghCard,
-                { opacity: 0, y: 35 },
+                { opacity: 0, y: 26 },
                 {
                     scrollTrigger: {
                         trigger: ghCard,
@@ -2418,9 +2424,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                     opacity: 1,
                     y: 0,
-                    duration: 0.65,
-                    delay: (idx % 3) * 0.08,
-                    ease: "power2.out"
+                    duration: 0.9,
+                    delay: (idx % 3) * 0.07,
+                    ease: "power3.out"
                 }
             );
         });
@@ -2428,19 +2434,19 @@ document.addEventListener("DOMContentLoaded", () => {
         // Contact Section Channels & Transmission Card Reveal
         gsap.utils.toArray("#contact .grid > div, #contact .grid > a").forEach((contactCard, idx) => {
             gsap.fromTo(contactCard,
-                { opacity: 0, y: 30, scale: 0.95 },
+                { opacity: 0, y: 24, scale: 0.97 },
                 {
                     scrollTrigger: {
                         trigger: "#contact",
-                        start: "top 78%",
+                        start: "top 80%",
                         once: true
                     },
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 0.65,
-                    delay: idx * 0.06,
-                    ease: "back.out(1.4)"
+                    duration: 0.85,
+                    delay: idx * 0.05,
+                    ease: "power3.out"
                 }
             );
         });
@@ -2448,7 +2454,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const contactMsgForm = document.querySelector("#contact .bg-card.brutal-border.brutal-shadow.p-8");
         if (contactMsgForm) {
             gsap.fromTo(contactMsgForm,
-                { opacity: 0, y: 40 },
+                { opacity: 0, y: 30 },
                 {
                     scrollTrigger: {
                         trigger: contactMsgForm,
@@ -2457,8 +2463,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                     opacity: 1,
                     y: 0,
-                    duration: 0.8,
-                    delay: 0.15,
+                    duration: 1.0,
+                    delay: 0.1,
                     ease: "power3.out"
                 }
             );

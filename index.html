@@ -221,23 +221,14 @@
                     
                                         <!-- Left Column: Bio & Core Pitch -->
                     <div id="heroLeftCol" class="lg:col-span-7 flex flex-col items-start hero-anim">
-                        <!-- Real Availability Status Pill -->
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="inline-flex items-center gap-2 px-3 py-1 bg-accent-1 text-black font-mono font-bold text-[11px] sm:text-xs uppercase border-2 border-black shadow-[2px_2px_0_0_#000]">
-                                <span class="w-2 h-2 rounded-full bg-black animate-ping"></span>
-                                <span class="w-2 h-2 rounded-full bg-black -ml-4"></span>
-                                AVAILABLE FOR MCA 2026 CONTRACTS & FULL-STACK ROLES
-                            </span>
-                        </div>
                         <h1 id="heroHeadline" class="text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-black leading-[0.92] tracking-tighter mb-6 text-shadow-solid">
                             K. SRIYUTH.
                         </h1>
 
                         <!-- Crisp Multi-Role Badges -->
                         <div id="heroRoleBadges" class="flex flex-wrap gap-2.5 mb-8">
-                            <span class="hero-role-badge brutal-badge badge-coral text-xs md:text-sm px-3.5 py-1.5 font-bold">AI AUTOMATIONS ARCHITECT</span>
-                            <span class="hero-role-badge brutal-badge badge-cobalt text-xs md:text-sm px-3.5 py-1.5 font-bold">FRONT-END ENGINEER</span>
-                            <span class="hero-role-badge brutal-badge badge-lime text-xs md:text-sm px-3.5 py-1.5 font-bold">DESKTOP & ELECTRON TOOLING</span>
+                            <span class="hero-role-badge brutal-badge badge-coral text-xs md:text-sm px-3.5 py-1.5">AI AUTOMATIONS ARCHITECT</span>
+                            <span class="hero-role-badge brutal-badge badge-cobalt text-xs md:text-sm px-3.5 py-1.5">FRONT-END ENGINEER</span>
                         </div>
 
                         <p id="heroBio" class="font-mono-label text-base md:text-lg text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed mb-10">
@@ -293,11 +284,8 @@
                             </div>
 
                             <!-- Mode 1: Authentic Video Loop Destination Aperture -->
-                            <div id="heroVideoWrapper" class="relative aspect-square md:aspect-[4/3] bg-black overflow-hidden">
-                                <video id="heroVideo" class="stage-video w-full h-full object-cover" autoplay loop muted playsinline preload="auto" poster="images/robot.png">
-                                    <source src="images/robot.webm" type="video/webm">
-                                    <source src="images/robot.mp4" type="video/mp4">
-                                </video>
+                            <div id="heroVideoWrapper" class="relative aspect-square md:aspect-[4/3] bg-black">
+                                <!-- The morphing video shell docks directly into this bounding box -->
                             </div>
 
                             <!-- Spline 3D removed from hero -->
@@ -315,7 +303,15 @@
 
             </section>
 
-            
+            <!-- Dedicated Transition Video Shell (Continuous Video Surface) -->
+            <div id="cinematicVideoShell" class="cinematic-video-shell" aria-label="Cinematic Robotics Lab Stream">
+                <video id="heroVideo" class="stage-video" autoplay loop muted playsinline preload="auto" poster="images/robot.png">
+                    <source src="images/robot.webm" type="video/webm">
+                    <source src="images/robot.mp4" type="video/mp4">
+                </video>
+
+
+            </div>
 
         </div>
     </div>
@@ -324,6 +320,7 @@
          AWWWARDS-LEVEL KINETIC MARQUEE REDESIGN
          Three-Tier Industrial Editorial Ticker with GSAP Velocity
          ======================================================== -->
+
     <section id="marqueeSection" class="marquee-wrapper relative overflow-hidden select-none border-y-4 border-black" aria-label="Core Competencies & Engineering Capabilities">
         <!-- Hidden Accessible Summary for Screen Readers -->
         <div class="sr-only">
@@ -627,100 +624,443 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gs-section-header">
             <div>
                 <div class="flex items-center gap-2 mb-3">
-                    <span class="brutal-badge badge-mint">CURATED EXHIBITION // 12 REPOSITORIES</span>
-                    <span class="font-mono-label text-xs font-bold text-slate-500">[ REAL VERIFIED WORK ]</span>
+                    <span class="brutal-badge badge-mint">CURATED REPOSITORIES</span>
+                    <span class="font-mono-label text-xs font-bold text-slate-500">[ REAL PROJECTS ]</span>
                 </div>
-                <h2 class="text-5xl md:text-7xl font-black text-text">FEATURED WORK.</h2>
+                <h2 class="text-5xl md:text-7xl font-black">FEATURED WORK.</h2>
             </div>
 
             <!-- Filter Tabs -->
             <div class="flex flex-wrap gap-2 mt-6 md:mt-0 font-mono-label text-xs font-bold">
                 <button class="filter-tab px-4 py-2 bg-a1 text-black brutal-border hover-target" data-filter="all">ALL (12)</button>
-                <button class="filter-tab px-4 py-2 bg-card text-text brutal-border hover-target" data-filter="ai">AI & DESKTOP (3)</button>
+                <button class="filter-tab px-4 py-2 bg-card text-text brutal-border hover-target" data-filter="clone">UI CLONES (6)</button>
                 <button class="filter-tab px-4 py-2 bg-card text-text brutal-border hover-target" data-filter="app">WEB APPS (3)</button>
-                <button class="filter-tab px-4 py-2 bg-card text-text brutal-border hover-target" data-filter="clone">COMMERCIAL CLONES (6)</button>
+                <button class="filter-tab px-4 py-2 bg-card text-text brutal-border hover-target" data-filter="ai">AI & AUTOMATIONS (3)</button>
             </div>
         </div>
 
-        <!-- Curated Exhibition Asymmetric Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8" id="projectsGrid">
+        <!-- Project Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projectsGrid">
             
-            <!-- SPOTLIGHT 1 (8-Column Major Feature): SimpleIDE -->
-            <div class="project-card-wrap col-span-1 md:col-span-2 lg:col-span-8" data-category="ai">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target overflow-hidden">
+            <!-- Project 1: Hyperpure UI/UX Clone -->
+            <div class="project-card-wrap" data-category="clone">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
                     <div>
-                        <div class="aspect-[16/9] overflow-hidden bg-black brutal-border-b relative">
-                            <img src="images/simpleide-hero.png" alt="SimpleIDE AI Desktop Editor" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
-                            <div class="absolute top-4 left-4 flex flex-wrap gap-2">
-                                <span class="brutal-badge badge-lime text-xs font-black">FLAGSHIP AI DESKTOP TOOL</span>
-                                <span class="brutal-badge badge-mint text-xs">161 TESTS PASSING</span>
-                            </div>
+                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
+                            <img src="images/hyperpure1.png" alt="Hyperpure UI/UX Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 brutal-badge badge-cobalt">UI/UX CLONE</span>
                         </div>
-                        <div class="p-6 md:p-8">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-mono-label text-xs font-bold text-accent-1 bg-black px-2 py-0.5 uppercase">SPOTLIGHT 01 // DESKTOP IDE</span>
-                                <span class="font-mono text-xs text-slate-400 font-bold">ELECTRON 28 • REACT 18 • VITE</span>
-                            </div>
-                            <h3 class="text-3xl md:text-4xl font-black mb-3 text-text">SimpleIDE — Autonomous Desktop Coding Agent</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-                                Built from scratch as an open-source desktop code editor featuring an embedded autonomous AI coding agent ("Prime AI"). SimpleIDE bridges the React UI to the Node OS layer via a strict contextBridge IPC boundary (preload.js), streaming plan generation, verifying local AST differences, and enforcing strict human-in-the-loop permission.
+                        <div class="p-6">
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">01 / E-COMMERCE CLONE</div>
+                            <h3 class="text-2xl font-black mb-3">Hyperpure UI/UX Clone</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                A complete UI recreation of the Hyperpure platform built using HTML, CSS, JavaScript and Bootstrap. Includes responsive layouts, product sections, cart UI and checkout page design.
                             </p>
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="brutal-badge">Electron 28</span>
-                                <span class="brutal-badge">React 18</span>
-                                <span class="brutal-badge">Vite Engine</span>
-                                <span class="brutal-badge">Prime AI Agent</span>
-                                <span class="brutal-badge">IPC Conduits</span>
-                                <span class="brutal-badge">safeStorage</span>
+                            <div class="flex flex-wrap gap-1.5 mb-6">
+                                <span class="brutal-badge">HTML</span>
+                                <span class="brutal-badge">CSS</span>
+                                <span class="brutal-badge">JavaScript</span>
+                                <span class="brutal-badge">Bootstrap</span>
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 md:p-8 pt-0 flex flex-wrap items-center justify-between gap-4 border-t-2 border-border/50">
-                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="simpleide">
-                            VIEW ARCHITECTURE DETAILS ➔
+                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="hyperpure">
+                            VIEW DETAILS ➔
                         </button>
-                        <div class="flex gap-3">
-                            <a href="https://github.com/lucky4-git1/SimpleIDE" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-2 px-4 flex items-center gap-1.5 font-bold">
-                                <i class="ph-bold ph-github-logo text-base"></i>
-                                <span>INSPECT REPO</span>
+                        <div class="flex gap-2">
+                            <a href="https://lucky4-git1.github.io/Hyperpure/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
+                                LIVE
+                            </a>
+                            <a href="https://github.com/lucky4-git1/Hyperpure" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1.5 px-3">
+                                <i class="ph-bold ph-github-logo"></i>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SPOTLIGHT 2 (4-Column Feature): RewriteBot AI -->
-            <div class="project-card-wrap col-span-1 md:col-span-2 lg:col-span-4" data-category="ai">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target overflow-hidden">
+            <!-- Project 2: MuTube personal media player -->
+            <div class="project-card-wrap" data-category="app">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
                     <div>
-                        <div class="aspect-[16/10] overflow-hidden bg-[#0C0D10] brutal-border-b relative p-6 flex flex-col justify-between text-white">
-                            <div class="flex justify-between items-start">
-                                <span class="brutal-badge badge-amber text-xs">LIVE SAAS • VERCEL</span>
-                                <i class="ph-bold ph-sparkle text-2xl text-amber-400"></i>
-                            </div>
-                            <div>
-                                <div class="text-3xl font-black tracking-tight text-white mb-1">RewriteBot</div>
-                                <div class="font-mono text-[11px] text-amber-300">rewritebot-client.vercel.app</div>
-                            </div>
+                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
+                            <img src="images/mutube.png" alt="MuTube personal media player" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 brutal-badge badge-mint">JAVASCRIPT APP</span>
                         </div>
                         <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">SPOTLIGHT 02 // NLP SUITE</div>
-                            <h3 class="text-2xl font-black mb-3 text-text">RewriteBot Paraphrase Suite</h3>
-                            <p class="font-mono-label text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-                                Open-source, privacy-first AI paraphrasing suite with zero subscriptions, BYO-AI flexibility, and Turnitin-grade originality auditing. Built with Fastify 4.x and React 18.
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">02 / MEDIA PLAYER & INDEXEDDB</div>
+                            <h3 class="text-2xl font-black mb-3">MuTube Media Player</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                A personal media player web app built with HTML, CSS and JavaScript. Dark theme, offline playback, and persistent data storage using IndexedDB to save user playlists and preferences.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
+                            <div class="flex flex-wrap gap-1.5 mb-6">
+                                <span class="brutal-badge">HTML</span>
+                                <span class="brutal-badge">CSS</span>
+                                <span class="brutal-badge">JavaScript</span>
+                                <span class="brutal-badge">IndexedDB</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="mutube">
+                            VIEW DETAILS ➔
+                        </button>
+                        <div class="flex gap-2">
+                            <a href="https://lucky4-git1.github.io/MuTube-media-player-v1.0/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
+                                LIVE
+                            </a>
+                            <a href="https://github.com/lucky4-git1/MuTube-media-player-v1.0.git" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1.5 px-3">
+                                <i class="ph-bold ph-github-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: Atherone 3D scrollytelling -->
+            <div class="project-card-wrap" data-category="app">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
+                    <div>
+                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
+                            <img src="images/atherone1.jpeg" alt="Atherone 3D Scrollytelling" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 brutal-badge badge-cobalt">EXPERIMENTS & 3D</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">03 / SPLINE & SCROLLYTELLING</div>
+                            <h3 class="text-2xl font-black mb-3">Atherone 3D Web-App</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                A 3D scrollytelling web-app made with Spline, showcasing a fictional space exploration company called Atherone with interactive 3D models and smooth scrolling animations.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-6">
+                                <span class="brutal-badge">React</span>
+                                <span class="brutal-badge">GSAP</span>
+                                <span class="brutal-badge">Spline</span>
+                                <span class="brutal-badge">Tailwind</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="atherone">
+                            VIEW DETAILS ➔
+                        </button>
+                        <div class="flex gap-2">
+                            <a href="https://atherone-scrolly-app.netlify.app/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
+                                LIVE
+                            </a>
+                            <a href="https://github.com/lucky4-git1/atherone.git" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1.5 px-3">
+                                <i class="ph-bold ph-github-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: District UI/UX Clone -->
+            <div class="project-card-wrap" data-category="clone">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
+                    <div>
+                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
+                            <img src="images/district (1).png" alt="District UI/UX Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 brutal-badge badge-violet">UI/UX CLONE</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">04 / RESPONSIVE UI CLONE</div>
+                            <h3 class="text-2xl font-black mb-3">District UI/UX Clone</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                District UI/UX clone made using HTML, CSS, JavaScript, made fully responsive with modern aesthetics, interactive cards, and micro-animations.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-6">
+                                <span class="brutal-badge">HTML</span>
+                                <span class="brutal-badge">CSS</span>
+                                <span class="brutal-badge">JavaScript</span>
+                                <span class="brutal-badge">Bootstrap</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="district">
+                            VIEW DETAILS ➔
+                        </button>
+                        <div class="flex gap-2">
+                            <a href="https://lucky4-git1.github.io/District-UI-clone/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
+                                LIVE
+                            </a>
+                            <a href="https://github.com/lucky4-git1/District-UI-clone.git" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1.5 px-3">
+                                <i class="ph-bold ph-github-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5: YouTube UI/UX Clone -->
+            <div class="project-card-wrap" data-category="clone">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
+                    <div>
+                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
+                            <img src="images/yt1 (2).png" alt="YouTube UI/UX Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 brutal-badge badge-coral">UI/UX CLONE</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">05 / VIDEO BROWSING CLONE</div>
+                            <h3 class="text-2xl font-black mb-3">YouTube UI/UX Clone</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                A fully responsive YouTube-style video browsing interface developed with vanilla HTML, CSS, and JavaScript. Sticky glass navbar, collapsible sidebar, and dynamic search suggestions.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-6">
+                                <span class="brutal-badge">HTML</span>
+                                <span class="brutal-badge">CSS</span>
+                                <span class="brutal-badge">JavaScript</span>
+                                <span class="brutal-badge">Bootstrap</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="youtube">
+                            VIEW DETAILS ➔
+                        </button>
+                        <div class="flex gap-2">
+                            <a href="https://lucky4-git1.github.io/Youtube-UI-clone-/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
+                                LIVE
+                            </a>
+                            <a href="https://github.com/lucky4-git1/Youtube-UI-clone-.git" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1.5 px-3">
+                                <i class="ph-bold ph-github-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6: Blinkit Clone -->
+            <div class="project-card-wrap" data-category="clone">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
+                    <div>
+                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
+                            <img src="images/blinkit1.jpeg" alt="Blinkit Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 brutal-badge badge-amber">UI/UX CLONE</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">06 / QUICK COMMERCE CLONE</div>
+                            <h3 class="text-2xl font-black mb-3">Blinkit Clone</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                Blinkit UI-clone for learning: fully optimized, easy to understand, and responsive design using HTML, CSS, JavaScript, and Bootstrap.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-6">
+                                <span class="brutal-badge">HTML</span>
+                                <span class="brutal-badge">CSS</span>
+                                <span class="brutal-badge">Bootstrap</span>
+                                <span class="brutal-badge">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="blinkit">
+                            VIEW DETAILS ➔
+                        </button>
+                        <div class="flex gap-2">
+                            <a href="https://lucky4-git1.github.io/Blinkit-UI-clone/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
+                                LIVE
+                            </a>
+                            <a href="https://github.com/lucky4-git1/Blinkit-UI-clone.git" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1.5 px-3">
+                                <i class="ph-bold ph-github-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 7: TSPSC Clone -->
+            <div class="project-card-wrap" data-category="clone">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
+                    <div>
+                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
+                            <img src="images/tspschome.jpeg" alt="TSPSC Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 brutal-badge badge-mint">UI/UX CLONE</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">07 / PORTAL UI CLONE</div>
+                            <h3 class="text-2xl font-black mb-3">TSPSC Clone</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                UI clone of the TSPSC website made by me as a front-end project. It is coded in HTML, CSS, and Bootstrap. Focus on responsive design and portal aesthetics.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-6">
+                                <span class="brutal-badge">HTML</span>
+                                <span class="brutal-badge">CSS</span>
+                                <span class="brutal-badge">Bootstrap</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="tspsc">
+                            VIEW DETAILS ➔
+                        </button>
+                        <div class="flex gap-2">
+                            <a href="https://lucky4-git1.github.io/Tspsc-UI-clone-/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
+                                LIVE
+                            </a>
+                            <a href="https://github.com/lucky4-git1/Tspsc-UI-clone-.git" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1.5 px-3">
+                                <i class="ph-bold ph-github-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 8: Amazon UI Clone -->
+            <div class="project-card-wrap" data-category="clone">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
+                    <div>
+                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
+                            <img src="images/amazon2.jpeg" alt="Amazon UI Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 brutal-badge badge-coral">UI/UX CLONE</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">08 / MEGA E-COMMERCE CLONE</div>
+                            <h3 class="text-2xl font-black mb-3">Amazon UI Clone</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                UI recreation of Amazon website UI clone using pure HTML and CSS. Featuring multi-tier navigation, mega menus, delivery selector, and responsive layouts.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-6">
+                                <span class="brutal-badge">HTML</span>
+                                <span class="brutal-badge">CSS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="amazon">
+                            VIEW DETAILS ➔
+                        </button>
+                        <div class="flex gap-2">
+                            <a href="https://lucky4-git1.github.io/amazon-ui-clone/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
+                                LIVE
+                            </a>
+                            <a href="https://github.com/lucky4-git1/amazon-ui-clone.git" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1.5 px-3">
+                                <i class="ph-bold ph-github-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 9: TOP INDIAN CRICKETERS -->
+            <div class="project-card-wrap" data-category="app">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
+                    <div>
+                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
+                            <img src="images/cricket.jpeg" alt="TOP INDIAN CRICKETERS" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 brutal-badge badge-cobalt">EXPERIMENTS</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">09 / INTERACTIVE CARDS</div>
+                            <h3 class="text-2xl font-black mb-3">TOP INDIAN CRICKETERS</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                A modern cards list of famous Indian Cricketers with changing gradient background and live Wikipedia page links, and an about me section.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-6">
+                                <span class="brutal-badge">HTML</span>
+                                <span class="brutal-badge">CSS</span>
+                                <span class="brutal-badge">JavaScript</span>
+                                <span class="brutal-badge">Bootstrap</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="cricket">
+                            VIEW DETAILS ➔
+                        </button>
+                        <div class="flex gap-2">
+                            <a href="https://lucky4-git1.github.io/my-top-Indian-Cricketers-list/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
+                                LIVE
+                            </a>
+                            <a href="https://github.com/lucky4-git1/my-top-Indian-Cricketers-list" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1.5 px-3">
+                                <i class="ph-bold ph-github-logo"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 10: SimpleIDE -->
+            <div class="project-card-wrap" data-category="ai">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
+                    <div>
+                        <div class="aspect-[16/10] bg-[#10121a] text-slate-200 brutal-border-b p-6 flex flex-col justify-between font-mono relative">
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-1.5">
+                                    <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                                </div>
+                                <span class="text-[10px] text-slate-400 uppercase">ELECTRON • VITE</span>
+                            </div>
+                            <div class="my-auto text-center py-4">
+                                <div class="text-2xl font-black text-a1 tracking-wider uppercase mb-1">SimpleIDE</div>
+                                <div class="text-[11px] text-slate-400">AI-Powered Desktop IDE</div>
+                            </div>
+                            <span class="absolute top-3 right-3 brutal-badge badge-coral text-[10px]">AI TOOL</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">10 / DESKTOP AI IDE</div>
+                            <h3 class="text-2xl font-black mb-3">SimpleIDE</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                Open-source AI-powered desktop IDE built with Electron, React, and Vite. Integrated autonomous AI coding agent with rapid local prototyping.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-6">
+                                <span class="brutal-badge">Electron</span>
+                                <span class="brutal-badge">React</span>
+                                <span class="brutal-badge">Vite</span>
+                                <span class="brutal-badge">AI Agent</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
+                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="simpleide">
+                            VIEW DETAILS ➔
+                        </button>
+                        <a href="https://github.com/lucky4-git1/SimpleIDE" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
+                            <i class="ph-bold ph-github-logo"></i> GITHUB
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 11: RewriteBot -->
+            <div class="project-card-wrap" data-category="ai">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
+                    <div>
+                        <div class="aspect-[16/10] bg-[#14121e] text-slate-200 brutal-border-b p-6 flex flex-col justify-between font-mono relative">
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-1.5">
+                                    <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                                </div>
+                                <span class="text-[10px] text-green-400 uppercase">VERCEL DEPLOYED</span>
+                            </div>
+                            <div class="my-auto text-center py-4">
+                                <div class="text-2xl font-black text-a4 tracking-wider uppercase mb-1">RewriteBot</div>
+                                <div class="text-[11px] text-slate-400">rewritebot-client.vercel.app</div>
+                            </div>
+                            <span class="absolute top-3 right-3 brutal-badge badge-mint text-[10px]">LIVE SAAS</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">11 / AI COPY REFACTOR</div>
+                            <h3 class="text-2xl font-black mb-3">RewriteBot</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                AI-powered writing and copy refactor tool deployed live on Vercel. Transforms text into clear, punchy, professional output.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-6">
                                 <span class="brutal-badge">TypeScript</span>
-                                <span class="brutal-badge">Fastify 4.x</span>
-                                <span class="brutal-badge">React 18</span>
-                                <span class="brutal-badge">Prisma</span>
+                                <span class="brutal-badge">Next.js</span>
                                 <span class="brutal-badge">Vercel</span>
+                                <span class="brutal-badge">AI</span>
                             </div>
                         </div>
                     </div>
                     <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="rewritebot">
-                            DETAILS ➔
+                            VIEW DETAILS ➔
                         </button>
                         <div class="flex gap-2">
                             <a href="https://rewritebot-client.vercel.app" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
@@ -734,63 +1074,36 @@
                 </div>
             </div>
 
-            <!-- CARD 3 (6-Column Span): MuTube Media Hub -->
-            <div class="project-card-wrap col-span-1 md:col-span-1 lg:col-span-6" data-category="app">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target overflow-hidden">
+            <!-- Project 12: WhatsApp AI & EMA Automation -->
+            <div class="project-card-wrap" data-category="ai">
+                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
                     <div>
-                        <div class="aspect-[16/9] overflow-hidden bg-black brutal-border-b relative">
-                            <img src="images/mutube.png" alt="MuTube personal media player" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 brutal-badge badge-mint font-bold">OFFLINE VAULT • INDEXEDDB</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">03 / JAVASCRIPT APPLICATION</div>
-                            <h3 class="text-2xl font-black mb-3 text-text">MuTube — Media Hub & IndexedDB Vault</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-                                Custom HTML5 video playback suite with YouTube-inspired interface, custom playlists, and direct offline binary video caching powered by client-side IndexedDB persistence.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
-                                <span class="brutal-badge">HTML5 Video</span>
-                                <span class="brutal-badge">IndexedDB API</span>
-                                <span class="brutal-badge">Vanilla JS</span>
-                                <span class="brutal-badge">CSS Grid</span>
+                        <div class="aspect-[16/10] bg-[#0c1815] text-slate-200 brutal-border-b p-6 flex flex-col justify-between font-mono relative">
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-1.5">
+                                    <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                                </div>
+                                <span class="text-[10px] text-a1 uppercase">AUTONOMOUS PIPES</span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
-                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="mutube">
-                            VIEW DETAILS ➔
-                        </button>
-                        <div class="flex gap-2">
-                            <a href="https://lucky4-git1.github.io/MuTube/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
-                                LIVE
-                            </a>
-                            <a href="https://github.com/lucky4-git1/MuTube" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1.5 px-3">
-                                <i class="ph-bold ph-github-logo"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARD 4 (6-Column Span): WhatsApp AI & EMA Automation -->
-            <div class="project-card-wrap col-span-1 md:col-span-1 lg:col-span-6" data-category="ai">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target overflow-hidden">
-                    <div>
-                        <div class="aspect-[16/9] overflow-hidden bg-black brutal-border-b relative">
-                            <img src="images/robot.png" alt="WhatsApp AI Automation" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 brutal-badge badge-coral font-bold">META CLOUD API & EMA</span>
+                            <div class="my-auto text-center py-4">
+                                <div class="text-xl font-black text-[#25D366] tracking-wider uppercase mb-1">WhatsApp & EMA</div>
+                                <div class="text-[11px] text-slate-400">Automations & Workflows</div>
+                            </div>
+                            <span class="absolute top-3 right-3 brutal-badge badge-cobalt text-[10px]">PIPELINES</span>
                         </div>
                         <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">04 / AUTONOMOUS WORKFLOWS</div>
-                            <h3 class="text-2xl font-black mb-3 text-text">WhatsApp AI Bot & EMA Pipeline</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-                                Production-grade Meta WhatsApp Business Cloud API integration with HMAC-SHA256 signature auth, paired with TypeScript Email Marketing Automation (EMA) queue workers.
+                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">12 / AI MESSAGING & OUTREACH</div>
+                            <h3 class="text-2xl font-black mb-3">AI Automations (WhatsApp & EMA)</h3>
+                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                                Automated WhatsApp conversation pipelines and Email Marketing Automation (EMA) systems built with TypeScript for automated customer communications.
                             </p>
                             <div class="flex flex-wrap gap-1.5 mb-6">
                                 <span class="brutal-badge">TypeScript</span>
-                                <span class="brutal-badge">Meta Cloud API</span>
                                 <span class="brutal-badge">Node.js</span>
-                                <span class="brutal-badge">HMAC Auth</span>
+                                <span class="brutal-badge">Webhooks</span>
+                                <span class="brutal-badge">Automation</span>
                             </div>
                         </div>
                     </div>
@@ -798,453 +1111,267 @@
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="whatsappai">
                             VIEW DETAILS ➔
                         </button>
-                        <div class="flex gap-2">
-                            <a href="https://github.com/lucky4-git1/whatsapp-ai-automation" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
-                                GITHUB
-                            </a>
-                        </div>
+                        <a href="https://github.com/lucky4-git1/whatsapp-ai-automation" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3">
+                            <i class="ph-bold ph-github-logo"></i> GITHUB
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- CARD 5 (4-Column Span): Hyperpure UI/UX Clone -->
-            <div class="project-card-wrap col-span-1 md:col-span-1 lg:col-span-4" data-category="clone">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
-                    <div>
-                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
-                            <img src="images/hyperpure1.png" alt="Hyperpure UI/UX Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 brutal-badge badge-cobalt">UI/UX CLONE</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">05 / COMMERCE CLONE</div>
-                            <h3 class="text-2xl font-black mb-2 text-text">Hyperpure (Zomato)</h3>
-                            <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
-                                Full responsive recreation of the B2B kitchen supply portal with cart states and order checkout workflows.
-                            </p>
-                            <div class="flex flex-wrap gap-1 mb-4">
-                                <span class="brutal-badge text-[10px]">HTML5</span>
-                                <span class="brutal-badge text-[10px]">Bootstrap</span>
-                                <span class="brutal-badge text-[10px]">JavaScript</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
-                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="hyperpure">DETAILS ➔</button>
-                        <div class="flex gap-2">
-                            <a href="https://lucky4-git1.github.io/Hyperpure/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1 px-2.5">LIVE</a>
-                            <a href="https://github.com/lucky4-git1/Hyperpure" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1 px-2.5"><i class="ph-bold ph-github-logo"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARD 6 (4-Column Span): Ather Energy EV Portal -->
-            <div class="project-card-wrap col-span-1 md:col-span-1 lg:col-span-4" data-category="clone">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
-                    <div>
-                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
-                            <img src="images/atherone1.jpeg" alt="Ather Energy EV Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 brutal-badge badge-lime">EV PORTAL</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">06 / TELEMETRY UI</div>
-                            <h3 class="text-2xl font-black mb-2 text-text">Ather Energy Portal</h3>
-                            <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
-                                EV ecosystem landing clone with interactive booking modules, scooter specification comparisons, and responsive CSS geometry.
-                            </p>
-                            <div class="flex flex-wrap gap-1 mb-4">
-                                <span class="brutal-badge text-[10px]">HTML5</span>
-                                <span class="brutal-badge text-[10px]">CSS3</span>
-                                <span class="brutal-badge text-[10px]">JavaScript</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
-                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="ather">DETAILS ➔</button>
-                        <div class="flex gap-2">
-                            <a href="https://lucky4-git1.github.io/ather-energy/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1 px-2.5">LIVE</a>
-                            <a href="https://github.com/lucky4-git1/ather-energy" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1 px-2.5"><i class="ph-bold ph-github-logo"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARD 7 (4-Column Span): Blinkit 10-Min Commerce -->
-            <div class="project-card-wrap col-span-1 md:col-span-1 lg:col-span-4" data-category="clone">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
-                    <div>
-                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
-                            <img src="images/blinkit1.jpeg" alt="Blinkit Quick Commerce" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 brutal-badge badge-coral">QUICK COMMERCE</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">07 / SPEED ARCHITECTURE</div>
-                            <h3 class="text-2xl font-black mb-2 text-text">Blinkit Clone</h3>
-                            <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
-                                10-minute grocery delivery UI recreation featuring multi-category navigation, category drawer modals, and sticky cart state.
-                            </p>
-                            <div class="flex flex-wrap gap-1 mb-4">
-                                <span class="brutal-badge text-[10px]">HTML5</span>
-                                <span class="brutal-badge text-[10px]">Bootstrap</span>
-                                <span class="brutal-badge text-[10px]">JavaScript</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
-                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="blinkit">DETAILS ➔</button>
-                        <div class="flex gap-2">
-                            <a href="https://lucky4-git1.github.io/blinkit/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1 px-2.5">LIVE</a>
-                            <a href="https://github.com/lucky4-git1/blinkit" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1 px-2.5"><i class="ph-bold ph-github-logo"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARD 8 (4-Column Span): Amazon Commerce Giant -->
-            <div class="project-card-wrap col-span-1 md:col-span-1 lg:col-span-4" data-category="clone">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
-                    <div>
-                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
-                            <img src="images/amazon2.jpeg" alt="Amazon Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 brutal-badge badge-amber">MEGA PORTAL</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">08 / RETAIL ENGINE</div>
-                            <h3 class="text-2xl font-black mb-2 text-text">Amazon E-Commerce</h3>
-                            <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
-                                Desktop Amazon storefront layout clone with navigation flyouts, product carousel grids, and account authentication screen.
-                            </p>
-                            <div class="flex flex-wrap gap-1 mb-4">
-                                <span class="brutal-badge text-[10px]">HTML5</span>
-                                <span class="brutal-badge text-[10px]">CSS3</span>
-                                <span class="brutal-badge text-[10px]">JavaScript</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
-                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="amazon">DETAILS ➔</button>
-                        <div class="flex gap-2">
-                            <a href="https://lucky4-git1.github.io/amazon-clone/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1 px-2.5">LIVE</a>
-                            <a href="https://github.com/lucky4-git1/amazon-clone" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1 px-2.5"><i class="ph-bold ph-github-logo"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARD 9 (4-Column Span): TSPSC Government Portal -->
-            <div class="project-card-wrap col-span-1 md:col-span-1 lg:col-span-4" data-category="clone">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
-                    <div>
-                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
-                            <img src="images/tspschome.jpeg" alt="TSPSC Government Portal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 brutal-badge badge-cobalt">GOV PORTAL</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">09 / PUBLIC UTILITY</div>
-                            <h3 class="text-2xl font-black mb-2 text-text">TSPSC Portal</h3>
-                            <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
-                                High-density Telangana Public Service Commission portal recreation with notification marquees, candidate login, and application status.
-                            </p>
-                            <div class="flex flex-wrap gap-1 mb-4">
-                                <span class="brutal-badge text-[10px]">HTML5</span>
-                                <span class="brutal-badge text-[10px]">Bootstrap</span>
-                                <span class="brutal-badge text-[10px]">JavaScript</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
-                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="tspsc">DETAILS ➔</button>
-                        <div class="flex gap-2">
-                            <a href="https://lucky4-git1.github.io/tspsc-web-clone/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1 px-2.5">LIVE</a>
-                            <a href="https://github.com/lucky4-git1/tspsc-web-clone" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1 px-2.5"><i class="ph-bold ph-github-logo"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARD 10 (4-Column Span): District Administration Portal -->
-            <div class="project-card-wrap col-span-1 md:col-span-1 lg:col-span-4" data-category="clone">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
-                    <div>
-                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
-                            <img src="images/district (1).png" alt="District Administration Portal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 brutal-badge badge-mint">ADMIN PORTAL</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">10 / GOVERNMENT SERVICES</div>
-                            <h3 class="text-2xl font-black mb-2 text-text">District Admin Portal</h3>
-                            <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
-                                Official district administration interface clone with citizen service navigation, demographic charts, and departmental links.
-                            </p>
-                            <div class="flex flex-wrap gap-1 mb-4">
-                                <span class="brutal-badge text-[10px]">HTML5</span>
-                                <span class="brutal-badge text-[10px]">CSS3</span>
-                                <span class="brutal-badge text-[10px]">Bootstrap</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
-                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="district">DETAILS ➔</button>
-                        <div class="flex gap-2">
-                            <a href="https://lucky4-git1.github.io/distric-telangana-web-clone/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1 px-2.5">LIVE</a>
-                            <a href="https://github.com/lucky4-git1/distric-telangana-web-clone" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1 px-2.5"><i class="ph-bold ph-github-logo"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARD 11 (4-Column Span): Indian Cricketers Cards -->
-            <div class="project-card-wrap col-span-1 md:col-span-1 lg:col-span-4" data-category="app">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
-                    <div>
-                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
-                            <img src="images/cricket.jpeg" alt="Indian Cricketers Cards" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 brutal-badge badge-violet">DYNAMIC UI</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">11 / ATHLETE SHOWCASE</div>
-                            <h3 class="text-2xl font-black mb-2 text-text">Indian Cricketers List</h3>
-                            <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
-                                Dynamic interactive cards with shifting animated gradients, Wikipedia data links, and responsive grid geometry.
-                            </p>
-                            <div class="flex flex-wrap gap-1 mb-4">
-                                <span class="brutal-badge text-[10px]">JavaScript</span>
-                                <span class="brutal-badge text-[10px]">CSS Animations</span>
-                                <span class="brutal-badge text-[10px]">Bootstrap</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
-                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="cricket">DETAILS ➔</button>
-                        <div class="flex gap-2">
-                            <a href="https://lucky4-git1.github.io/my-top-Indian-Cricketers-list/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1 px-2.5">LIVE</a>
-                            <a href="https://github.com/lucky4-git1/my-top-Indian-Cricketers-list" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1 px-2.5"><i class="ph-bold ph-github-logo"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARD 12 (4-Column Span): Rihanna Concept Portfolio -->
-            <div class="project-card-wrap col-span-1 md:col-span-1 lg:col-span-4" data-category="clone">
-                <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
-                    <div>
-                        <div class="aspect-[16/10] overflow-hidden bg-black brutal-border-b relative">
-                            <img src="images/p-riri.jpg" alt="Rihanna Editorial Concept" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 brutal-badge badge-coral">EDITORIAL CONCEPT</span>
-                        </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">12 / FASHION & MUSIC</div>
-                            <h3 class="text-2xl font-black mb-2 text-text">Rihanna Portfolio</h3>
-                            <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
-                                High-fashion editorial portfolio concept featuring bold typography, dark imagery framing, and discography showcase.
-                            </p>
-                            <div class="flex flex-wrap gap-1 mb-4">
-                                <span class="brutal-badge text-[10px]">HTML5</span>
-                                <span class="brutal-badge text-[10px]">CSS Grid</span>
-                                <span class="brutal-badge text-[10px]">Typography</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0 flex items-center justify-between border-t-2 border-border/50">
-                        <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="riri">DETAILS ➔</button>
-                        <div class="flex gap-2">
-                            <a href="https://lucky4-git1.github.io/rihanna-portfolio/" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1 px-2.5">LIVE</a>
-                            <a href="https://github.com/lucky4-git1/rihanna-portfolio" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1 px-2.5"><i class="ph-bold ph-github-logo"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
+
+        <!-- GitHub Archive Callout -->
+        <div class="mt-16 p-8 bg-card brutal-border brutal-shadow flex flex-col sm:flex-row justify-between items-center gap-6">
+            <div>
+                <h3 class="text-2xl md:text-3xl font-black mb-1">LOOKING FOR MORE REPOSITORIES?</h3>
+                <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400">
+                    Explore all 32 public repositories including Gitdrop, BrandForge AI, ResMax, SMS Automations, and more.
+                </p>
+            </div>
+            <a href="https://github.com/lucky4-git1" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-sm whitespace-nowrap">
+                <i class="ph-bold ph-github-logo text-lg"></i> VISIT GITHUB (lucky4-git1)
+            </a>
+        </div>
+
     </section>
 
     <!-- ========================================================
          ENGINEERING SKILLS: Production-Grade Architectural Deck
          Verified Breadth, Disciplines & Zero Fake Percentage Bars
          ======================================================== -->
-    <section id="skills" class="py-24 px-4 md:px-8 border-t-4 border-b-4 border-border bg-[#0C0D10] text-[#E0E2EC]">
+    <section id="skills" class="py-24 px-4 md:px-8 border-t-4 border-b-4 border-border bg-text text-bg">
         <div class="max-w-[1500px] mx-auto">
             
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gs-section-header">
                 <div>
                     <div class="flex items-center gap-3 mb-3">
-                        <span class="brutal-badge badge-lime text-black font-black">TECHNICAL ARSENAL</span>
-                        <span class="font-mono text-xs font-bold text-accent-1">[ VERIFIED PRODUCTION STACK ]</span>
+                        <span class="brutal-badge badge-cobalt">TECHNICAL ARSENAL</span>
+                        <span class="font-mono-label text-xs font-bold text-slate-400">[ STACK & TOOLS ]</span>
                     </div>
-                    <h2 class="text-5xl md:text-7xl font-black text-white">WHAT I ENGINEER.</h2>
+                    <h2 class="text-5xl md:text-7xl font-black">WHAT I ENGINEER.</h2>
                 </div>
-                <p class="font-mono text-xs sm:text-sm text-slate-400 max-w-md mt-4 md:mt-0 text-left md:text-right leading-relaxed">
-                    Zero fake proficiency percentages. Rigorous frontend systems, native desktop tooling, and autonomous AI pipelines verified across 32+ repositories.
+                <p class="font-mono-label text-sm text-slate-400 max-w-sm mt-4 md:mt-0 text-left md:text-right">
+                    Rigorous frontend execution coupled with full-stack AI automation architectures.
                 </p>
             </div>
 
-            <!-- Architectural Disciplines Deck (4 Master Pillars) -->
+            <!-- Bento Quadrants Grid (Strict alignment!) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <!-- Pillar 1: Frontend Systems & Scrollytelling -->
-                <div class="skill-card bg-[#14161F] text-white p-6 sm:p-8 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-accent-1 hover:-translate-y-1.5 hover:shadow-[6px_6px_0_0_#E4FF00]">
+                <!-- Quadrant 1: Core Frontend -->
+                <div class="skill-card bg-card text-text p-6 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
                     <div>
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="font-mono text-xs font-bold text-accent-1 uppercase">DISCIPLINE // 01</span>
-                            <span class="w-8 h-8 bg-accent-1 text-black brutal-border flex items-center justify-center font-black text-lg">
-                                <i class="ph-bold ph-browser"></i>
-                            </span>
+                        <div class="w-12 h-12 bg-a1 text-black brutal-border flex items-center justify-center font-black text-2xl mb-6">
+                            <i class="ph-bold ph-code"></i>
                         </div>
-                        <h3 class="text-2xl font-black mb-2 text-white">Frontend Systems & Motion</h3>
-                        <p class="font-mono text-xs text-slate-400 mb-6 leading-relaxed">
-                            High-performance DOM manipulation, hardware-accelerated animations, and responsive geometry.
-                        </p>
+                        <h3 class="text-2xl font-black mb-2">Core Frontend</h3>
+                        <p class="font-mono-label text-xs text-slate-500 mb-6">Semantic markup, responsive geometry & async flows.</p>
                         
-                        <!-- Technology Tags -->
-                        <div class="flex flex-wrap gap-1.5 mb-6">
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-1 hover:text-accent-1">React 18 / 19</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-1 hover:text-accent-1">TypeScript Strict</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-1 hover:text-accent-1">Vite Engine</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-1 hover:text-accent-1">GSAP 3 + ScrollTrigger</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-1 hover:text-accent-1">Tailwind CSS</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-1 hover:text-accent-1">Web Audio FX</span>
+                        <div class="space-y-4 font-mono-label text-xs font-bold">
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">HTML5 / Semantics</span>
+                                    <span class="skill-pct font-mono">95%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a1 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="95%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">CSS3 / Grid / Flex</span>
+                                    <span class="skill-pct font-mono">92%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a2 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="92%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">JavaScript (ES6+)</span>
+                                    <span class="skill-pct font-mono">88%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a3 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="88%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">TypeScript</span>
+                                    <span class="skill-pct font-mono">82%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a4 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="82%" style="width: 0%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="pt-4 border-t border-white/10 font-mono text-xs text-slate-300 space-y-2">
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-1">✦</span>
-                            <span>GPU translate3d compositing</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-1">✦</span>
-                            <span>Scroll velocity physics</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-1">✦</span>
-                            <span>WCAG 2.1 AA keyboard access</span>
-                        </div>
+                    <div class="pt-6 mt-6 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
+                        Zero layout thrashing • Cross-browser tested
                     </div>
                 </div>
 
-                <!-- Pillar 2: Desktop & Electron Tooling -->
-                <div class="skill-card bg-[#14161F] text-white p-6 sm:p-8 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-accent-2 hover:-translate-y-1.5 hover:shadow-[6px_6px_0_0_#FF4757]">
+                <!-- Quadrant 2: Frameworks & Motion -->
+                <div class="skill-card bg-card text-text p-6 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
                     <div>
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="font-mono text-xs font-bold text-accent-2 uppercase">DISCIPLINE // 02</span>
-                            <span class="w-8 h-8 bg-accent-2 text-white brutal-border flex items-center justify-center font-black text-lg">
-                                <i class="ph-bold ph-laptop"></i>
-                            </span>
+                        <div class="w-12 h-12 bg-a2 text-white brutal-border flex items-center justify-center font-black text-2xl mb-6">
+                            <i class="ph-bold ph-paint-brush-broad"></i>
                         </div>
-                        <h3 class="text-2xl font-black mb-2 text-white">Desktop & Electron Tooling</h3>
-                        <p class="font-mono text-xs text-slate-400 mb-6 leading-relaxed">
-                            Native OS bridges, sandboxed IPC protocols, and local AST code intelligence tools.
-                        </p>
+                        <h3 class="text-2xl font-black mb-2">Frameworks & UI</h3>
+                        <p class="font-mono-label text-xs text-slate-500 mb-6">Modern reactive component trees & smooth physics.</p>
                         
-                        <!-- Technology Tags -->
-                        <div class="flex flex-wrap gap-1.5 mb-6">
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-2 hover:text-accent-2">Electron 28</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-2 hover:text-accent-2">contextBridge IPC</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-2 hover:text-accent-2">AST Diff Engine</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-2 hover:text-accent-2">safeStorage Crypto</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-2 hover:text-accent-2">Node.js OS Layer</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-2 hover:text-accent-2">Jest (161 Tests)</span>
+                        <div class="space-y-4 font-mono-label text-xs font-bold">
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">React & Vite</span>
+                                    <span class="skill-pct font-mono">86%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a3 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="86%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">GSAP & ScrollTrigger</span>
+                                    <span class="skill-pct font-mono">85%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a4 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="85%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">Bootstrap 5 & Tailwind</span>
+                                    <span class="skill-pct font-mono">94%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a1 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="94%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">Spline 3D Integration</span>
+                                    <span class="skill-pct font-mono">80%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a5 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="80%" style="width: 0%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="pt-4 border-t border-white/10 font-mono text-xs text-slate-300 space-y-2">
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-2">✦</span>
-                            <span>Zero raw nodeIntegration</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-2">✦</span>
-                            <span>In-memory AST lexical parsing</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-2">✦</span>
-                            <span>Atomic file system mutations</span>
-                        </div>
+                    <div class="pt-6 mt-6 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
+                        Hardware-accelerated transforms
                     </div>
                 </div>
 
-                <!-- Pillar 3: AI Workflows & Automation -->
-                <div class="skill-card bg-[#14161F] text-white p-6 sm:p-8 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-accent-3 hover:-translate-y-1.5 hover:shadow-[6px_6px_0_0_#2E5BFF]">
+                <!-- Quadrant 3: AI & Automations -->
+                <div class="skill-card bg-card text-text p-6 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
                     <div>
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="font-mono text-xs font-bold text-accent-3 uppercase">DISCIPLINE // 03</span>
-                            <span class="w-8 h-8 bg-accent-3 text-white brutal-border flex items-center justify-center font-black text-lg">
-                                <i class="ph-bold ph-cpu"></i>
-                            </span>
+                        <div class="w-12 h-12 bg-a4 text-black brutal-border flex items-center justify-center font-black text-2xl mb-6">
+                            <i class="ph-bold ph-cpu"></i>
                         </div>
-                        <h3 class="text-2xl font-black mb-2 text-white">AI Agents & Webhooks</h3>
-                        <p class="font-mono text-xs text-slate-400 mb-6 leading-relaxed">
-                            Autonomous task orchestration, Meta Cloud API integrations, and streaming responses.
-                        </p>
+                        <h3 class="text-2xl font-black mb-2">AI Automations</h3>
+                        <p class="font-mono-label text-xs text-slate-500 mb-6">Intelligent agents, webhook pipes & API routing.</p>
                         
-                        <!-- Technology Tags -->
-                        <div class="flex flex-wrap gap-1.5 mb-6">
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-3 hover:text-accent-3">LLM Orchestration</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-3 hover:text-accent-3">Meta Cloud API</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-3 hover:text-accent-3">Fastify 4.x SSE</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-3 hover:text-accent-3">HMAC-SHA256 Auth</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-3 hover:text-accent-3">Webhook Routing</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-3 hover:text-accent-3">Human-in-the-Loop</span>
+                        <div class="space-y-4 font-mono-label text-xs font-bold">
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">WhatsApp AI Agents</span>
+                                    <span class="skill-pct font-mono">90%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a4 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="90%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">Email Pipelines (EMA)</span>
+                                    <span class="skill-pct font-mono">88%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a1 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="88%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">Electron AI Desktop Apps</span>
+                                    <span class="skill-pct font-mono">84%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a2 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="84%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">LLM APIs & Prompting</span>
+                                    <span class="skill-pct font-mono">88%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a3 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="88%" style="width: 0%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="pt-4 border-t border-white/10 font-mono text-xs text-slate-300 space-y-2">
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-3">✦</span>
-                            <span>Bounded multi-step execution</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-3">✦</span>
-                            <span>Official Meta Graph API v19</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-3">✦</span>
-                            <span>Sub-50ms lexical tokenization</span>
-                        </div>
+                    <div class="pt-6 mt-6 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
+                        Autonomous lead qualification & CRMs
                     </div>
                 </div>
 
-                <!-- Pillar 4: Persistence & Full-Stack Deployment -->
-                <div class="skill-card bg-[#14161F] text-white p-6 sm:p-8 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-accent-4 hover:-translate-y-1.5 hover:shadow-[6px_6px_0_0_#00E575]">
+                <!-- Quadrant 4: Architecture & Systems -->
+                <div class="skill-card bg-card text-text p-6 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
                     <div>
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="font-mono text-xs font-bold text-accent-4 uppercase">DISCIPLINE // 04</span>
-                            <span class="w-8 h-8 bg-accent-4 text-black brutal-border flex items-center justify-center font-black text-lg">
-                                <i class="ph-bold ph-database"></i>
-                            </span>
+                        <div class="w-12 h-12 bg-a3 text-white brutal-border flex items-center justify-center font-black text-2xl mb-6">
+                            <i class="ph-bold ph-database"></i>
                         </div>
-                        <h3 class="text-2xl font-black mb-2 text-white">Persistence & Cloud</h3>
-                        <p class="font-mono text-xs text-slate-400 mb-6 leading-relaxed">
-                            Offline client storage, database ORMs, and automated deployment pipelines.
-                        </p>
+                        <h3 class="text-2xl font-black mb-2">Systems & Data</h3>
+                        <p class="font-mono-label text-xs text-slate-500 mb-6">Client-side persistence, version control & design.</p>
                         
-                        <!-- Technology Tags -->
-                        <div class="flex flex-wrap gap-1.5 mb-6">
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-4 hover:text-accent-4">IndexedDB Storage</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-4 hover:text-accent-4">Prisma ORM</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-4 hover:text-accent-4">PostgreSQL / SQLite</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-4 hover:text-accent-4">REST & WebSockets</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-4 hover:text-accent-4">Git CI / GitHub Actions</span>
-                            <span class="brutal-badge bg-black text-white border-white/20 hover:border-accent-4 hover:text-accent-4">Vercel & Netlify</span>
+                        <div class="space-y-4 font-mono-label text-xs font-bold">
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">Git & GitHub Workflows</span>
+                                    <span class="skill-pct font-mono">90%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a1 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="90%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">IndexedDB API</span>
+                                    <span class="skill-pct font-mono">86%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a4 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="86%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">Node.js / Express</span>
+                                    <span class="skill-pct font-mono">80%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a2 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="80%" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-row group cursor-pointer">
+                                <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
+                                    <span class="skill-label font-bold">Figma UI/UX Prototyping</span>
+                                    <span class="skill-pct font-mono">84%</span>
+                                </div>
+                                <div class="w-full bg-gray dark:bg-card h-2.5 brutal-border overflow-hidden">
+                                    <div class="skill-bar-fill bg-a5 h-full transition-colors duration-300 group-hover:bg-[#DE1A45]" data-width="84%" style="width: 0%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="pt-4 border-t border-white/10 font-mono text-xs text-slate-300 space-y-2">
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-4">✦</span>
-                            <span>Offline media blob caching</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-4">✦</span>
-                            <span>Multi-tenant schema relational ACID</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-accent-4">✦</span>
-                            <span>Automated continuous deployment</span>
-                        </div>
+                    <div class="pt-6 mt-6 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
+                        Zero server latency architectures
                     </div>
                 </div>
 
             </div>
+
         </div>
     </section>
 

@@ -741,11 +741,18 @@ html.dark .grid-bg {
 #hero-pinned-viewport {
   position: relative;
   width: 100%;
-  min-height: auto;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .cinematic-video-shell {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 40;
+  overflow: hidden;
   background-color: #000;
   transform-origin: top left;
   will-change: transform, width, height;

@@ -3449,13 +3449,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 ease: "none",
                 transformOrigin: "top center",
                 scrollTrigger: {
+                    id: "journeySpine",
                     trigger: timelineSpine,
                     start: "top 72%",
                     end: "bottom 75%",
-                    scrub: 0.25,
+                    scrub: true,
+                    invalidateOnRefresh: true,
+                    fastScrollEnd: true,
                     onUpdate: (self) => {
+                        const p = Math.max(0, Math.min(1, self.progress));
                         if (timelineHead) {
-                            timelineHead.style.top = `${self.progress * 100}%`;
+                            timelineHead.style.top = `${p * 100}%`;
                         }
                     }
                 }
@@ -3476,6 +3480,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ScrollTrigger.create({
                 trigger: step,
                 start: "top 72%",
+                invalidateOnRefresh: true,
                 onEnter: () => {
                     if (leftCol) gsap.to(leftCol, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: "power3.out" });
                     if (rightCol) gsap.to(rightCol, { opacity: 1, x: 0, y: 0, duration: 0.8, delay: 0.08, ease: "power3.out" });
@@ -3649,4 +3654,24 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
         initSignatureArchitectureExhibit();
     }, 1200);
+
+    // Ensure all ScrollTrigger geometries are refreshed after initial render and async asset settlement
+    if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+    }
+});
+
+// Window load and periodic layout-shift reconciliation (catches fonts, canvases, dynamic heights)
+window.addEventListener("load", () => {
+    if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+    }
+});
+
+[300, 800, 1800, 3200].forEach((delay) => {
+    setTimeout(() => {
+        if (typeof ScrollTrigger !== "undefined") {
+            ScrollTrigger.refresh();
+        }
+    }, delay);
 });

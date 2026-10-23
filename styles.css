@@ -1274,7 +1274,11 @@ html.dark .grid-bg {
 }
 
 #timelineSpine {
-  overflow: hidden;
+  overflow: visible;
+}
+
+.timeline-node {
+  box-sizing: border-box;
 }
 
 #timelineProgressLine {

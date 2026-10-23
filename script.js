@@ -2115,45 +2115,77 @@ document.addEventListener("DOMContentLoaded", () => {
 
     
     /* ========================================================
-       8b. ANIMATED SKILL BARS (ScrollTrigger)
+       8b. ANIMATED SKILL BARS & ENTRANCE (ScrollTrigger)
+       Subtle, performant viewport-triggered staggered reveals
+       with animated skill progress bars and counter animation.
+       Respects motionEnabled and triggers once without restarting.
        ======================================================== */
-    const skillBars = document.querySelectorAll(".skill-bar-fill");
-    if (skillBars.length) {
-        ScrollTrigger.create({
-            trigger: "#skills",
-            start: "top 80%",
-            once: true,
-            onEnter: () => {
-                skillBars.forEach((bar, idx) => {
-                    const targetWidth = bar.getAttribute("data-width") || "80%";
-                    const targetNum = parseInt(targetWidth, 10) || 80;
-                    const row = bar.closest(".skill-row");
-                    const pctEl = row ? row.querySelector(".skill-pct") : null;
+    const skillCards = document.querySelectorAll("#skills .skill-card");
+    const skillBars = document.querySelectorAll("#skills .skill-bar-fill");
 
-                    // Animate the bar width with smooth spring-like ease
-                    gsap.to(bar, {
-                        width: targetWidth,
-                        duration: 1.2,
-                        delay: (idx % 4) * 0.1 + Math.floor(idx / 4) * 0.15,
-                        ease: "power2.out"
-                    });
-
-                    // Animate the percentage number counting up
-                    if (pctEl && motionEnabled) {
-                        const counterObj = { val: 0 };
-                        gsap.to(counterObj, {
-                            val: targetNum,
-                            duration: 1.2,
-                            delay: (idx % 4) * 0.1 + Math.floor(idx / 4) * 0.15,
-                            ease: "power2.out",
-                            onUpdate: () => {
-                                pctEl.innerText = `${Math.round(counterObj.val)}%`;
-                            }
-                        });
+    if (skillCards.length) {
+        if (!motionEnabled) {
+            // Respect reduced-motion: set bars and counts directly
+            skillBars.forEach(bar => {
+                const w = bar.getAttribute("data-width") || "85%";
+                bar.style.width = w;
+                const row = bar.closest(".skill-row");
+                const pct = row ? row.querySelector(".skill-pct") : null;
+                if (pct) pct.innerText = w;
+            });
+        } else {
+            // Subtle, performant staggered entrance reveal for the 4 bento cards
+            gsap.fromTo(skillCards,
+                { opacity: 0, y: 22 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.7,
+                    stagger: 0.08,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: "#skills",
+                        start: "top 78%",
+                        once: true
                     }
-                });
-            }
-        });
+                }
+            );
+
+            // Animate skill bars and count up numbers smoothly when entering view
+            ScrollTrigger.create({
+                trigger: "#skills",
+                start: "top 72%",
+                once: true,
+                onEnter: () => {
+                    skillBars.forEach((bar, idx) => {
+                        const targetWidth = bar.getAttribute("data-width") || "80%";
+                        const targetNum = parseInt(targetWidth, 10) || 80;
+                        const row = bar.closest(".skill-row");
+                        const pctEl = row ? row.querySelector(".skill-pct") : null;
+
+                        gsap.to(bar, {
+                            width: targetWidth,
+                            duration: 1.1,
+                            delay: (idx % 4) * 0.06 + Math.floor(idx / 4) * 0.1,
+                            ease: "power2.out"
+                        });
+
+                        if (pctEl) {
+                            const counterObj = { val: 0 };
+                            gsap.to(counterObj, {
+                                val: targetNum,
+                                duration: 1.1,
+                                delay: (idx % 4) * 0.06 + Math.floor(idx / 4) * 0.1,
+                                ease: "power2.out",
+                                onUpdate: () => {
+                                    pctEl.innerText = `${Math.round(counterObj.val)}%`;
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
     }
 
     /* ========================================================
@@ -3454,6 +3486,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (rightCol) gsap.to(rightCol, { opacity: 0, x: 35, y: 15, duration: 0.5, ease: "power2.in" });
                     if (node) gsap.to(node, { opacity: 0, scale: 0.3, xPercent: -50, yPercent: -50, duration: 0.4, ease: "power2.in" });
                 }
+            });
+
+            // Smooth tactile hover on milestone card scaling node while locking exact center
+            step.addEventListener("mouseenter", () => {
+                if (node) gsap.to(node, { scale: 1.25, xPercent: -50, yPercent: -50, duration: 0.25, ease: "power2.out" });
+            });
+            step.addEventListener("mouseleave", () => {
+                if (node) gsap.to(node, { scale: 1, xPercent: -50, yPercent: -50, duration: 0.25, ease: "power2.out" });
             });
         });
 

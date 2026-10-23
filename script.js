@@ -268,15 +268,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const isDark = html.classList.contains("dark");
         localStorage.setItem("sriyuth_theme", isDark ? "dark" : "light");
 
-        // Update GitHub stats theme dynamically
+        // Update GitHub stats theme dynamically with vibrant high-contrast colors
         const gitStats = document.getElementById("githubStatsImg");
         const gitLangs = document.getElementById("githubLangsImg");
-        const themeParam = isDark ? "dark" : "default";
         if (gitStats) {
-            gitStats.src = `https://github-readme-stats-eight-theta.vercel.app/api?username=lucky4-git1&show_icons=true&theme=${themeParam}&bg_color=00000000&hide_border=true`;
+            gitStats.src = isDark
+                ? `https://github-readme-stats-eight-theta.vercel.app/api?username=lucky4-git1&show_icons=true&title_color=E4FF00&icon_color=00FF96&text_color=FFFFFF&bg_color=00000000&hide_border=true`
+                : `https://github-readme-stats-eight-theta.vercel.app/api?username=lucky4-git1&show_icons=true&title_color=DE1A45&icon_color=008050&text_color=121316&bg_color=00000000&hide_border=true`;
         }
         if (gitLangs) {
-            gitLangs.src = `https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=lucky4-git1&layout=compact&theme=${themeParam}&bg_color=00000000&hide_border=true`;
+            gitLangs.src = isDark
+                ? `https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=lucky4-git1&layout=compact&title_color=E4FF00&text_color=FFFFFF&bg_color=00000000&hide_border=true`
+                : `https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=lucky4-git1&layout=compact&title_color=DE1A45&text_color=121316&bg_color=00000000&hide_border=true`;
         }
     }
 
@@ -1167,63 +1170,63 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // 1. Featured Project Card
             html += `
-                <div class="p-6 md:p-8 bg-card brutal-border brutal-shadow">
-                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-4">
+                <div class="p-4 sm:p-5 bg-card brutal-border brutal-shadow">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 mb-3">
                         <div class="flex flex-wrap items-center gap-2">
                             <span class="text-xs font-mono font-bold uppercase px-2 py-0.5 border border-border ${data.tagClass}">${data.tag}</span>
                             ${data.badges.map(b => `<span class="brutal-badge ${b.class}">${b.text}</span>`).join("")}
                         </div>
-                        <div class="flex flex-wrap items-center gap-2.5">
-                            <a href="${data.githubUrl}" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-3 flex items-center gap-1.5">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <a href="${data.githubUrl}" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1 px-2.5 flex items-center gap-1.5">
                                 <i class="ph-bold ph-github-logo text-sm"></i>
                                 <span>INSPECT REPO</span>
                             </a>
                             ${data.liveUrl ? `
-                                <a href="${data.liveUrl}" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-mint text-xs py-1.5 px-3 flex items-center gap-1.5">
+                                <a href="${data.liveUrl}" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-mint text-xs py-1 px-2.5 flex items-center gap-1.5">
                                     <i class="ph-bold ph-arrow-square-out text-sm"></i>
                                     <span>LIVE APP</span>
                                 </a>
                             ` : ""}
                             ${data.auditDoc ? `
-                                <a href="${data.auditDoc}" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1.5 px-3 flex items-center gap-1.5 bg-card hover:bg-slate-200 dark:hover:bg-slate-800">
+                                <a href="${data.auditDoc}" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1 px-2.5 flex items-center gap-1.5 bg-card hover:bg-slate-200 dark:hover:bg-slate-800">
                                     <i class="ph-bold ph-file-text text-sm"></i>
-                                    <span>ARCHITECTURE AUDIT</span>
+                                    <span>AUDIT</span>
                                 </a>
                             ` : ""}
                         </div>
                     </div>
 
-                    <h3 class="text-2xl sm:text-3xl md:text-4xl font-black mb-3 text-text">${data.title}</h3>
-                    <p class="font-mono-label text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-5xl mb-6">
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-black mb-2 text-text">${data.title}</h3>
+                    <p class="font-mono-label text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-5xl mb-4">
                         ${data.summary}
                     </p>
 
                     <!-- Interactive Workflow Explorer -->
-                    <div class="mt-8 pt-6 border-t-2 border-border">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
+                    <div class="mt-4 pt-3 border-t-2 border-border">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
                             <div class="font-mono text-xs font-bold uppercase tracking-wider text-text flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 bg-accent-1 rounded-none border border-black inline-block"></span>
                                 <span>${data.diagramHeadline}</span>
                             </div>
-                            <span class="font-mono text-[11px] text-slate-400">CLICK STAGE NODE TO INSPECT SUBSYSTEM</span>
+                            <span class="font-mono text-[10px] text-slate-400">CLICK STAGE NODE TO INSPECT SUBSYSTEM</span>
                         </div>
 
                         <!-- Conduits & Nodes Grid -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3" id="workflowNodesGrid">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5" id="workflowNodesGrid">
                             ${data.stages.map((st, idx) => `
-                                <div class="workflow-node p-3.5 sm:p-4 font-mono ${idx === activeStageIndex ? "active-stage" : ""}" data-stage="${idx}">
-                                    <div class="flex justify-between items-center mb-1.5">
-                                        <span class="text-xs font-black opacity-60">STAGE ${st.num}</span>
-                                        <span class="text-[10px] font-bold px-1.5 py-0.5 bg-white/20 uppercase tracking-widest">${st.metric}</span>
+                                <div class="workflow-node p-2.5 sm:p-3 font-mono ${idx === activeStageIndex ? "active-stage" : ""}" data-stage="${idx}">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-[11px] font-black opacity-60">STAGE ${st.num}</span>
+                                        <span class="text-[9px] font-bold px-1.5 py-0.5 bg-white/20 uppercase tracking-widest">${st.metric}</span>
                                     </div>
-                                    <div class="font-black text-sm text-text leading-tight mb-1">${st.name}</div>
-                                    <div class="text-[11px] opacity-70 font-bold truncate">${st.sub}</div>
+                                    <div class="font-black text-xs sm:text-sm text-text leading-tight mb-0.5">${st.name}</div>
+                                    <div class="text-[10px] opacity-70 font-bold truncate">${st.sub}</div>
                                 </div>
                             `).join("")}
                         </div>
 
                         <!-- Active Stage Telemetry Detail Card -->
-                        <div class="p-4 bg-bg brutal-border mt-3 font-mono" id="stageDetailCard">
+                        <div class="p-3 bg-bg brutal-border mt-2.5 font-mono" id="stageDetailCard">
                             <!-- Populated dynamically via updateStageDetailCard() -->
                         </div>
                     </div>
@@ -1234,67 +1237,67 @@ document.addEventListener("DOMContentLoaded", () => {
             if (key === "simpleide") {
                 const sc = data.scenarios[activeScenarioIndex];
                 html += `
-                    <div class="p-6 md:p-8 bg-card brutal-border brutal-shadow">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                    <div class="p-4 sm:p-5 bg-card brutal-border brutal-shadow">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
                             <div>
                                 <div class="flex items-center gap-2 mb-1">
                                     <span class="brutal-badge badge-lime">BOUNDED SANDBOX</span>
-                                    <span class="font-mono text-[11px] text-slate-400 font-bold">[ DETERMINISTIC AST REFACTOR ENGINE ]</span>
+                                    <span class="font-mono text-[10px] text-slate-400 font-bold">[ DETERMINISTIC AST REFACTOR ENGINE ]</span>
                                 </div>
-                                <h4 class="text-xl sm:text-2xl font-black text-text">Prime AI Interactive Code Refactor & Diff Inspector</h4>
+                                <h4 class="text-lg sm:text-xl font-black text-text">Prime AI Interactive Code Refactor & Diff Inspector</h4>
                             </div>
-                            <div class="font-mono text-xs text-slate-400 bg-bg px-3 py-1.5 brutal-border">
+                            <div class="font-mono text-xs text-slate-400 bg-bg px-2.5 py-1 brutal-border">
                                 <i class="ph-bold ph-shield-check text-green-500 mr-1.5"></i>SAFE BOUNDED EXECUTION
                             </div>
                         </div>
 
                         <!-- Scenario Selector Pills -->
-                        <div class="flex flex-wrap items-center gap-2 mb-4">
-                            <span class="font-mono text-xs font-bold uppercase text-slate-500 mr-2">SELECT CODE SCENARIO:</span>
+                        <div class="flex flex-wrap items-center gap-1.5 mb-3">
+                            <span class="font-mono text-xs font-bold uppercase text-slate-500 mr-1">SCENARIO:</span>
                             ${data.scenarios.map((s, sIdx) => `
-                                <button class="scenario-btn font-mono text-xs font-bold px-3 py-1.5 brutal-border transition-all ${sIdx === activeScenarioIndex ? "bg-a1 text-black font-black" : "bg-bg text-text hover:bg-slate-200 dark:hover:bg-slate-800"}" data-scenario="${sIdx}">
+                                <button class="scenario-btn font-mono text-xs font-bold px-2.5 py-1 brutal-border transition-all ${sIdx === activeScenarioIndex ? "bg-a1 text-black font-black" : "bg-bg text-text hover:bg-slate-200 dark:hover:bg-slate-800"}" data-scenario="${sIdx}">
                                     ${s.name}
                                 </button>
                             `).join("")}
                         </div>
 
-                        <p class="font-mono text-xs text-slate-500 mb-4" id="scenarioDescText">
+                        <p class="font-mono text-xs text-slate-500 mb-3" id="scenarioDescText">
                             ${sc.desc}
                         </p>
 
                         <!-- Code Workbench Grid -->
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
                             <!-- Left: Editable Code Buffer -->
                             <div class="lg:col-span-6 flex flex-col code-workbench brutal-border">
-                                <div class="flex items-center justify-between p-2.5 bg-[#171922] border-b border-[#252836] text-xs">
+                                <div class="flex items-center justify-between p-2 bg-[#171922] border-b border-[#252836] text-xs">
                                     <div class="flex items-center gap-2">
                                         <i class="ph-bold ph-file-code text-accent-1"></i>
                                         <span class="font-bold text-white">workspace/activeBuffer.js</span>
                                     </div>
-                                    <span class="text-[11px] text-slate-400 font-mono" id="charCountDisplay">Tokens ~54</span>
+                                    <span class="text-[10px] text-slate-400 font-mono" id="charCountDisplay">Tokens ~54</span>
                                 </div>
-                                <textarea id="sandboxCodeInput" class="code-editor-area p-3 w-full h-[240px] focus:outline-none" spellcheck="false">${sc.inputCode}</textarea>
-                                <div class="p-3 bg-[#13151D] border-t border-[#252836] flex flex-wrap items-center justify-between gap-2">
-                                    <span class="telemetry-bar-pill">
-                                        <i class="ph-bold ph-cpu text-accent-1"></i>DIRECTIVE: <strong id="currentDirectiveText">${sc.directive}</strong>
+                                <textarea id="sandboxCodeInput" class="code-editor-area p-2.5 w-full h-[140px] focus:outline-none" spellcheck="false">${sc.inputCode}</textarea>
+                                <div class="p-2.5 bg-[#13151D] border-t border-[#252836] flex flex-wrap items-center justify-between gap-2">
+                                    <span class="telemetry-bar-pill text-[11px]">
+                                        <i class="ph-bold ph-cpu text-accent-1"></i><strong id="currentDirectiveText">${sc.directive}</strong>
                                     </span>
-                                    <button id="executeRefactorBtn" class="brutal-btn brutal-btn-primary text-xs py-1.5 px-4 font-mono font-bold flex items-center gap-1.5">
+                                    <button id="executeRefactorBtn" class="brutal-btn brutal-btn-primary text-xs py-1 px-3 font-mono font-bold flex items-center gap-1.5">
                                         <i class="ph-bold ph-lightning text-sm"></i>
-                                        <span>EXECUTE PRIME AGENT PASS</span>
+                                        <span>EXECUTE AGENT PASS</span>
                                     </button>
                                 </div>
                             </div>
 
                             <!-- Right: Unified Diff Inspector -->
                             <div class="lg:col-span-6 flex flex-col code-workbench brutal-border">
-                                <div class="flex items-center justify-between p-2.5 bg-[#171922] border-b border-[#252836] text-xs">
+                                <div class="flex items-center justify-between p-2 bg-[#171922] border-b border-[#252836] text-xs">
                                     <div class="flex items-center gap-2">
                                         <i class="ph-bold ph-git-diff text-green-400"></i>
                                         <span class="font-bold text-white">Unified AST Diff Review</span>
                                     </div>
-                                    <span class="text-[11px] text-accent-1 font-mono font-bold" id="diffStatusTag">IPC_READY</span>
+                                    <span class="text-[10px] text-accent-1 font-mono font-bold" id="diffStatusTag">IPC_READY</span>
                                 </div>
-                                <div class="diff-viewer p-2" id="sandboxDiffViewer">
+                                <div class="diff-viewer p-2 h-[140px] overflow-y-auto" id="sandboxDiffViewer">
                                     ${sc.diffLines.map(dl => `
                                         <div class="diff-line diff-line-${dl.type}">
                                             <span class="diff-line-num">${dl.num}</span>
@@ -1302,12 +1305,12 @@ document.addEventListener("DOMContentLoaded", () => {
                                         </div>
                                     `).join("")}
                                 </div>
-                                <div class="p-3 bg-[#13151D] border-t border-[#252836] flex flex-wrap items-center justify-between text-xs text-slate-400 font-mono gap-2">
+                                <div class="p-2.5 bg-[#13151D] border-t border-[#252836] flex flex-wrap items-center justify-between text-xs text-slate-400 font-mono gap-2">
                                     <div class="flex items-center gap-3">
                                         <span class="text-green-400 font-bold" id="diffStatsAdd">+${sc.stats.added} additions</span>
                                         <span class="text-red-400 font-bold" id="diffStatsDel">-${sc.stats.removed} deletions</span>
                                     </div>
-                                    <span class="text-[11px] text-slate-400" id="measuredLatencyText">LATENCY: 14.8ms (CLIENT LEXICAL)</span>
+                                    <span class="text-[10px] text-slate-400" id="measuredLatencyText">LATENCY: 14.8ms</span>
                                 </div>
                             </div>
                         </div>
@@ -1316,14 +1319,14 @@ document.addEventListener("DOMContentLoaded", () => {
             } else if (key === "rewritebot") {
                 const md = data.modes[activeRewriteModeIndex];
                 html += `
-                    <div class="p-6 md:p-8 bg-card brutal-border brutal-shadow">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                    <div class="p-4 sm:p-5 bg-card brutal-border brutal-shadow">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
                             <div>
                                 <div class="flex items-center gap-2 mb-1">
                                     <span class="brutal-badge badge-amber">LIVE DEMO REPRODUCIBLE</span>
-                                    <span class="font-mono text-[11px] text-slate-400 font-bold">[ CLIENT-SIDE SEMANTIC ENGINE ]</span>
+                                    <span class="font-mono text-[10px] text-slate-400 font-bold">[ CLIENT-SIDE SEMANTIC ENGINE ]</span>
                                 </div>
-                                <h4 class="text-xl sm:text-2xl font-black text-text">RewriteBot Semantic Paraphrase & Tone Transformer</h4>
+                                <h4 class="text-lg sm:text-xl font-black text-text">RewriteBot Semantic Paraphrase & Tone Transformer</h4>
                             </div>
                             <a href="https://rewritebot-client.vercel.app/" target="_blank" rel="noopener noreferrer" class="font-mono text-xs text-amber-500 hover:underline flex items-center gap-1 font-bold">
                                 <span>OPEN PRODUCTION APP</span>
@@ -1332,10 +1335,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
 
                         <!-- Mode Selector Pills -->
-                        <div class="flex flex-wrap items-center gap-2 mb-4">
-                            <span class="font-mono text-xs font-bold uppercase text-slate-500 mr-2">SELECT TONE DIRECTIVE:</span>
+                        <div class="flex flex-wrap items-center gap-1.5 mb-3">
+                            <span class="font-mono text-xs font-bold uppercase text-slate-500 mr-1">TONE:</span>
                             ${data.modes.map((m, mIdx) => `
-                                <button class="rewrite-mode-btn font-mono text-xs font-bold px-3 py-1.5 brutal-border transition-all ${mIdx === activeRewriteModeIndex ? "bg-amber-400 text-black font-black" : "bg-bg text-text hover:bg-slate-200 dark:hover:bg-slate-800"}" data-mode="${mIdx}">
+                                <button class="rewrite-mode-btn font-mono text-xs font-bold px-2.5 py-1 brutal-border transition-all ${mIdx === activeRewriteModeIndex ? "bg-amber-400 text-black font-black" : "bg-bg text-text hover:bg-slate-200 dark:hover:bg-slate-800"}" data-mode="${mIdx}">
                                     ${m.label}
                                 </button>
                             `).join("")}
@@ -1372,48 +1375,48 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
             } else if (key === "whatsapp") {
                 html += `
-                    <div class="p-6 md:p-8 bg-card brutal-border brutal-shadow">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                    <div class="p-4 sm:p-5 bg-card brutal-border brutal-shadow">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
                             <div>
                                 <div class="flex items-center gap-2 mb-1">
                                     <span class="brutal-badge badge-mint">WEBHOOK PAYLOAD INSPECTOR</span>
-                                    <span class="font-mono text-[11px] text-slate-400 font-bold">[ VERIFIED META GRAPH API SCHEMA ]</span>
+                                    <span class="font-mono text-[10px] text-slate-400 font-bold">[ VERIFIED META GRAPH API SCHEMA ]</span>
                                 </div>
-                                <h4 class="text-xl sm:text-2xl font-black text-text">Meta WhatsApp Business Cloud API Inbound Pipeline</h4>
+                                <h4 class="text-lg sm:text-xl font-black text-text">Meta WhatsApp Business Cloud API Inbound Pipeline</h4>
                             </div>
-                            <div class="font-mono text-xs text-slate-400 bg-bg px-3 py-1.5 brutal-border">
+                            <div class="font-mono text-xs text-slate-400 bg-bg px-2.5 py-1 brutal-border">
                                 <i class="ph-bold ph-key text-amber-500 mr-1.5"></i>HMAC-SHA256 AUTHENTICATED
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                            <div class="lg:col-span-7 code-workbench p-4 brutal-border">
-                                <div class="flex justify-between items-center text-xs text-slate-400 mb-2 border-b border-white/10 pb-2">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
+                            <div class="lg:col-span-7 code-workbench p-3 brutal-border">
+                                <div class="flex justify-between items-center text-xs text-slate-400 mb-1.5 border-b border-white/10 pb-1.5">
                                     <span class="text-green-400 font-bold">POST /api/whatsapp/webhook</span>
                                     <span>HEADER: X-Hub-Signature-256</span>
                                 </div>
-                                <pre class="text-[11px] font-mono overflow-x-auto text-slate-300 leading-relaxed max-h-[260px]">${JSON.stringify(data.payloadSample, null, 2)}</pre>
+                                <pre class="text-[10px] font-mono overflow-x-auto text-slate-300 leading-relaxed max-h-[160px]">${JSON.stringify(data.payloadSample, null, 2)}</pre>
                             </div>
-                            <div class="lg:col-span-5 p-4 bg-bg brutal-border flex flex-col justify-between font-mono">
+                            <div class="lg:col-span-5 p-3 bg-bg brutal-border flex flex-col justify-between font-mono">
                                 <div>
-                                    <span class="text-xs font-bold uppercase text-slate-500 mb-2 block">INTENT CLASSIFIER & ROUTING TELEMETRY:</span>
-                                    <div class="space-y-2 text-xs">
-                                        <div class="p-2 bg-card brutal-border">
-                                            <span class="text-slate-500 text-[10px] block">DETECTED INTENT</span>
-                                            <strong class="text-green-600 dark:text-green-400">COMMERCIAL_INQUIRY [HIGH_PRIORITY]</strong>
+                                    <span class="text-[11px] font-bold uppercase text-slate-500 mb-1.5 block">INTENT CLASSIFIER TELEMETRY:</span>
+                                    <div class="space-y-1.5 text-xs">
+                                        <div class="p-1.5 bg-card brutal-border">
+                                            <span class="text-slate-500 text-[9px] block">DETECTED INTENT</span>
+                                            <strong class="text-green-600 dark:text-green-400 text-xs">COMMERCIAL_INQUIRY [HIGH_PRIORITY]</strong>
                                         </div>
-                                        <div class="p-2 bg-card brutal-border">
-                                            <span class="text-slate-500 text-[10px] block">ROUTING TARGET</span>
-                                            <strong class="text-text">Hyderabad Enterprise Sales Tier-1</strong>
+                                        <div class="p-1.5 bg-card brutal-border">
+                                            <span class="text-slate-500 text-[9px] block">ROUTING TARGET</span>
+                                            <strong class="text-text text-xs">Enterprise Sales Tier-1</strong>
                                         </div>
-                                        <div class="p-2 bg-card brutal-border">
-                                            <span class="text-slate-500 text-[10px] block">DISPATCH ACTION</span>
-                                            <strong class="text-accent-3">Meta Graph API v19.0 Template Response</strong>
+                                        <div class="p-1.5 bg-card brutal-border">
+                                            <span class="text-slate-500 text-[9px] block">DISPATCH ACTION</span>
+                                            <strong class="text-accent-3 text-xs">Meta Graph API v19.0 Template Response</strong>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-4 pt-3 border-t border-border text-[11px] text-slate-500 flex justify-between">
-                                    <span>STATUS: HTTP 200 HANDSHAKE</span>
+                                <div class="mt-2 pt-2 border-t border-border text-[10px] text-slate-500 flex justify-between">
+                                    <span>STATUS: HTTP 200</span>
                                     <span>DB: PRISMA / POSTGRES</span>
                                 </div>
                             </div>
@@ -1422,16 +1425,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
             } else if (key === "ema") {
                 html += `
-                    <div class="p-6 md:p-8 bg-card brutal-border brutal-shadow">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                    <div class="p-4 sm:p-5 bg-card brutal-border brutal-shadow">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
                             <div>
                                 <div class="flex items-center gap-2 mb-1">
                                     <span class="brutal-badge badge-cobalt">QUEUE TELEMETRY</span>
-                                    <span class="font-mono text-[11px] text-slate-400 font-bold">[ TYPESCRIPT CRON & WORKER POOL ]</span>
+                                    <span class="font-mono text-[10px] text-slate-400 font-bold">[ TYPESCRIPT CRON & WORKER POOL ]</span>
                                 </div>
-                                <h4 class="text-xl sm:text-2xl font-black text-text">EMA Campaign Queue & Deliverability Pipeline</h4>
+                                <h4 class="text-lg sm:text-xl font-black text-text">EMA Campaign Queue & Deliverability Pipeline</h4>
                             </div>
-                            <div class="font-mono text-xs text-slate-400 bg-bg px-3 py-1.5 brutal-border">
+                            <div class="font-mono text-xs text-slate-400 bg-bg px-2.5 py-1 brutal-border">
                                 <i class="ph-bold ph-clock text-blue-500 mr-1.5"></i>SCHEDULED CONCURRENCY
                             </div>
                         </div>
@@ -2272,10 +2275,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!ctx) return;
 
         const ADVANCED_DEFAULTS = {
-            halfTurnMs: 6200,
+            halfTurnMs: 4400,
             radius: 224,
             halfPitch: 900,
-            rungsPerHalf: 40,
+            rungsPerHalf: 24,
             glyphSize: 12,
             charShare: 100,
             outlineShare: 20,
@@ -2305,7 +2308,7 @@ document.addEventListener("DOMContentLoaded", () => {
             haloOpacity: 40,
             hazeColor: "#1E3F6A",
             haze: 22,
-            dustCount: 60,
+            dustCount: 26,
             seed: 7,
             lightRadius: 170,
             parallax: 10,
@@ -2500,9 +2503,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const v = {
-            speed: 100,
+            speed: 130,
             scale: 79,
-            density: 30,
+            density: 16,
             hotColor: "#FF2600",
             coolColor: "#00FF25",
             focusBlur: 41,
@@ -2518,7 +2521,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const rect = root.getBoundingClientRect();
             W = Math.round(root.offsetWidth || rect.width || window.innerWidth);
             H = Math.round(root.offsetHeight || rect.height || 800);
-            dpr = Math.min(2, window.devicePixelRatio || 1);
+            dpr = Math.min(1.25, window.devicePixelRatio || 1);
             if (W > 0 && H > 0) {
                 canvas.width = Math.round(W * dpr);
                 canvas.height = Math.round(H * dpr);
@@ -2922,6 +2925,275 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(root);
     }
     initSkillsHelixBackground();
+
+    /* ========================================================
+       8d. SPIDER WEB — INTERACTIVE PHYSICS BACKGROUND (#contact)
+       Originkit Spring-Mass Web lattice with cursor repulsion,
+       sagging quadratic curves, and auto-sleep physics loop.
+       ======================================================== */
+    function initContactSpiderWeb() {
+        const root = document.getElementById("contact");
+        const canvas = document.getElementById("contactWebCanvas");
+        if (!root || !canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        const DEFAULTS = {
+            color: "#DCE6FF",
+            opacity: 60,
+            segments: 26,
+            rings: 12,
+            thickness: 2.2,
+            sag: 20,
+            irregularity: 2,
+            hoverIntensity: 20,
+            nodes: true,
+            nodeColor: "#00FF96",
+            nodeSize: 3,
+        };
+
+        const STIFFNESS = 460;
+        const DAMPING = 2 * Math.sqrt(STIFFNESS) * 0.05;
+        const REACH = 370;
+        const PUSH = 90;
+
+        function clamp(v, lo, hi, fallback) {
+            const n = typeof v === "number" && isFinite(v) ? v : fallback;
+            return Math.max(lo, Math.min(hi, n));
+        }
+
+        function hash(a, b) {
+            const s = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
+            return s - Math.floor(s);
+        }
+
+        const S = {
+            color: DEFAULTS.color,
+            opacity: clamp(DEFAULTS.opacity, 0, 100, 60) / 100,
+            segments: Math.round(clamp(DEFAULTS.segments, 5, 28, 26)),
+            rings: Math.round(clamp(DEFAULTS.rings, 3, 14, 12)),
+            thickness: 0.3 + clamp(DEFAULTS.thickness, 1, 10, 2.2) * 0.22,
+            sag: clamp(DEFAULTS.sag, 0, 20, 20) * 0.011,
+            irregularity: clamp(DEFAULTS.irregularity, 0, 20, 2) * 0.02,
+            push: (PUSH * clamp(DEFAULTS.hoverIntensity, 0, 20, 20)) / 10,
+            nodes: !!DEFAULTS.nodes,
+            nodeColor: DEFAULTS.nodeColor,
+            nodeSize: 0.4 + clamp(DEFAULTS.nodeSize, 1, 10, 3) * 0.18,
+        };
+
+        let grid = [];
+        let width = 0;
+        let height = 0;
+        let dpr = 1;
+
+        let pointerX = 0;
+        let pointerY = 0;
+        let pointerIn = false;
+
+        let frameId = 0;
+        let lastT = 0;
+        let running = false;
+        let isVisible = false;
+
+        function build() {
+            const cx = width / 2;
+            const cy = height / 2;
+            const outer = Math.hypot(width, height) * 0.58;
+
+            grid = [];
+            for (let i = 0; i < S.rings; i++) {
+                const row = [];
+                const t = (i + 1) / S.rings;
+                const radius = outer * Math.pow(t, 1.35);
+                for (let j = 0; j < S.segments; j++) {
+                    const wobbleA = (hash(i, j) - 0.5) * S.irregularity;
+                    const wobbleR = 1 + (hash(j, i) - 0.5) * S.irregularity;
+                    const angle = (j / S.segments) * Math.PI * 2 + wobbleA;
+                    const r = radius * wobbleR;
+                    const x = cx + Math.cos(angle) * r;
+                    const y = cy + Math.sin(angle) * r;
+                    row.push({
+                        restX: x,
+                        restY: y,
+                        x,
+                        y,
+                        vx: 0,
+                        vy: 0,
+                        pinned: i === S.rings - 1,
+                    });
+                }
+                grid.push(row);
+            }
+        }
+
+        function setSize() {
+            const rect = root.getBoundingClientRect();
+            width = Math.round(root.offsetWidth || rect.width || window.innerWidth);
+            height = Math.round(root.offsetHeight || rect.height || 700);
+            if (width <= 0 || height <= 0) return;
+            dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            canvas.width = Math.round(width * dpr);
+            canvas.height = Math.round(height * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            build();
+            wake();
+        }
+
+        function wake() {
+            if (running || !isVisible) return;
+            running = true;
+            lastT = performance.now();
+            frameId = requestAnimationFrame(loop);
+        }
+
+        function step() {
+            const now = performance.now();
+            let dt = (now - lastT) / 1000;
+            lastT = now;
+            if (!isFinite(dt) || dt < 0) dt = 0;
+            if (dt > 0.033) dt = 0.033;
+
+            const reach2 = REACH * REACH;
+            let energy = 0;
+
+            for (const row of grid) {
+                for (const n of row) {
+                    if (n.pinned) continue;
+
+                    let ax = (n.restX - n.x) * STIFFNESS - n.vx * DAMPING;
+                    let ay = (n.restY - n.y) * STIFFNESS - n.vy * DAMPING;
+
+                    if (pointerIn && S.push > 0) {
+                        const dx = n.x - pointerX;
+                        const dy = n.y - pointerY;
+                        const d2 = dx * dx + dy * dy;
+                        if (d2 < reach2) {
+                            const d = Math.sqrt(d2) || 0.0001;
+                            const fall = 1 - d / REACH;
+                            const f = (S.push * fall * fall * STIFFNESS) / 40;
+                            ax += (dx / d) * f;
+                            ay += (dy / d) * f;
+                        }
+                    }
+
+                    n.vx += ax * dt;
+                    n.vy += ay * dt;
+                    n.x += n.vx * dt;
+                    n.y += n.vy * dt;
+                    energy += Math.abs(n.vx) + Math.abs(n.vy);
+                }
+            }
+
+            draw();
+
+            if ((!pointerIn || S.push <= 0) && energy < 0.5) {
+                running = false;
+                cancelAnimationFrame(frameId);
+            }
+        }
+
+        function draw() {
+            const cx = width / 2;
+            const cy = height / 2;
+            ctx.clearRect(0, 0, width, height);
+            if (!grid.length) return;
+
+            ctx.strokeStyle = S.color;
+            ctx.globalAlpha = S.opacity;
+            ctx.lineWidth = S.thickness;
+            ctx.lineCap = "round";
+            ctx.lineJoin = "round";
+
+            const rings = grid.length;
+            const segments = grid[0].length;
+
+            for (let j = 0; j < segments; j++) {
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                for (let i = 0; i < rings; i++) {
+                    const n = grid[i][j];
+                    ctx.lineTo(n.x, n.y);
+                }
+                ctx.stroke();
+            }
+
+            for (let i = 0; i < rings; i++) {
+                const row = grid[i];
+                ctx.beginPath();
+                for (let j = 0; j < segments; j++) {
+                    const a = row[j];
+                    const b = row[(j + 1) % segments];
+                    const mx = (a.x + b.x) / 2;
+                    const my = (a.y + b.y) / 2;
+                    const cxp = mx + (cx - mx) * S.sag;
+                    const cyp = my + (cy - my) * S.sag;
+                    if (j === 0) ctx.moveTo(a.x, a.y);
+                    ctx.quadraticCurveTo(cxp, cyp, b.x, b.y);
+                }
+                ctx.stroke();
+            }
+
+            if (S.nodes) {
+                ctx.fillStyle = S.nodeColor;
+                for (const row of grid) {
+                    for (const n of row) {
+                        ctx.beginPath();
+                        ctx.arc(n.x, n.y, S.nodeSize, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+
+            ctx.globalAlpha = 1;
+        }
+
+        function loop() {
+            if (!running) return;
+            frameId = requestAnimationFrame(loop);
+            step();
+        }
+
+        const move = (e) => {
+            const rect = root.getBoundingClientRect();
+            pointerX = e.clientX - rect.left;
+            pointerY = e.clientY - rect.top;
+            pointerIn = true;
+            wake();
+        };
+
+        const leave = () => {
+            pointerIn = false;
+            wake();
+        };
+
+        root.addEventListener("pointermove", move, { passive: true });
+        root.addEventListener("pointerleave", leave, { passive: true });
+        root.addEventListener("pointercancel", leave, { passive: true });
+
+        if (window.ResizeObserver) {
+            const ro = new ResizeObserver(setSize);
+            ro.observe(root);
+        } else {
+            window.addEventListener("resize", setSize, { passive: true });
+        }
+        setSize();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isVisible = entry.isIntersecting;
+                if (isVisible) {
+                    setSize();
+                    wake();
+                } else {
+                    running = false;
+                    if (frameId) cancelAnimationFrame(frameId);
+                }
+            });
+        }, { threshold: 0.05 });
+
+        observer.observe(root);
+    }
+    initContactSpiderWeb();
 
     /* ========================================================
        7c. ABOUT 3D PHOTO CARD TILT INTERACTION

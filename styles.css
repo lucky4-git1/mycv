@@ -1039,6 +1039,122 @@ html.dark .grid-bg {
   border-color: rgba(255, 255, 255, 0.16) !important;
 }
 
+/* Enhanced Cybernetic Telemetry Bars in Skills Section */
+#skills .skill-row .w-full {
+  height: 9px !important;
+  background-color: rgba(5, 7, 12, 0.75) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+  border-radius: 2px !important;
+  position: relative !important;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(255, 255, 255, 0.05) !important;
+  overflow: hidden !important;
+}
+
+#skills .skill-row .w-full::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(90deg, transparent 0, transparent 7px, rgba(255, 255, 255, 0.07) 8px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+#skills .skill-bar-fill {
+  position: relative;
+  height: 100%;
+  border-radius: 1px;
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.18), transparent 85%);
+  box-shadow: 0 0 12px currentColor;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+#skills .skill-bar-fill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -1px;
+  bottom: -1px;
+  width: 4px;
+  background: #ffffff;
+  border-radius: 1px;
+  box-shadow: 0 0 6px #ffffff, 0 0 14px currentColor;
+  z-index: 4;
+}
+
+#skills .skill-row:hover .w-full {
+  border-color: #DE1A45 !important;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(222, 26, 69, 0.35) !important;
+}
+
+#skills .skill-row:hover .skill-bar-fill {
+  background-color: #DE1A45 !important;
+  box-shadow: 0 0 16px rgba(222, 26, 69, 0.8) !important;
+}
+
+/* ─── GitHub Analytics & Repo Vibrant Elevation ─── */
+#githubStatsImg,
+#githubLangsImg {
+  filter: contrast(1.15) brightness(1.1) drop-shadow(0 4px 14px rgba(0, 0, 0, 0.5));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+#github .bg-card {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+#github .bg-card:hover {
+  transform: translateY(-3px);
+  border-color: #DE1A45;
+  box-shadow: 6px 6px 0 0 #DE1A45;
+}
+
+/* ─── Spider Web — Interactive Contact Section Background ─── */
+#contact {
+  position: relative;
+  background-color: #030408 !important;
+  color: #f8fafc !important;
+  overflow: hidden;
+}
+
+#contactWebCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#contact .bg-card {
+  background-color: rgba(14, 17, 26, 0.82) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 3px solid rgba(255, 255, 255, 0.18) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+#contact .bg-card:hover {
+  transform: translateY(-3px);
+  border-color: #DE1A45 !important;
+  box-shadow: 6px 6px 0 0 #DE1A45;
+}
+
+#contact input,
+#contact textarea {
+  background-color: rgba(5, 7, 12, 0.85) !important;
+  border: 2px solid rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+}
+
+#contact input:focus,
+#contact textarea:focus {
+  border-color: #DE1A45 !important;
+  box-shadow: 0 0 10px rgba(222, 26, 69, 0.4);
+}
+
 
 
 /* ─── Awwwards-Level Editorial Motion & Interactions ─── */

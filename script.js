@@ -389,6 +389,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* ========================================================
        5. CINEMATIC FULLSCREEN VIDEO-TO-HERO TRANSITION
+       Resilient hardware video playback watchdog, bulletproof metrics
+       caching (prevents offscreen corruption on scroll up), and
+       instant robot poster fallback.
        ======================================================== */
     function initCinematicHeroTransition() {
         const stageContainer = document.getElementById("hero-cinematic-stage");
@@ -399,29 +402,87 @@ document.addEventListener("DOMContentLoaded", () => {
         const stageCaption = document.getElementById("stageCaption");
         const heroLeftCol = document.getElementById("heroLeftCol");
         const nav = document.querySelector("nav");
+        const videoEl = document.getElementById("heroVideo");
 
         if (!stageContainer || !pinnedViewport || !videoShell || !destWrapper) return;
 
-        function getDestMetrics() {
-            const dRect = destWrapper.getBoundingClientRect();
-            const pRect = pinnedViewport.getBoundingClientRect();
-            return {
-                x: Math.round(dRect.left - pRect.left),
-                y: Math.round(dRect.top - pRect.top),
-                width: Math.round(dRect.width),
-                height: Math.round(dRect.height)
+        // Video playback watchdog - ensures video NEVER stays paused or stalled
+        function ensureHeroVideoPlayback() {
+            if (!videoEl) return;
+            if (videoEl.paused || videoEl.ended) {
+                const playPromise = videoEl.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        // Handled: background poster guarantees visuals
+                    });
+                }
+            }
+        }
+
+        if (videoEl) {
+            ensureHeroVideoPlayback();
+
+            videoEl.addEventListener("ended", () => {
+                videoEl.currentTime = 0;
+                ensureHeroVideoPlayback();
+            });
+
+            videoEl.addEventListener("suspend", () => {
+                if (window.scrollY < 1400) {
+                    ensureHeroVideoPlayback();
+                }
+            });
+
+            videoEl.addEventListener("stalled", () => {
+                ensureHeroVideoPlayback();
+            });
+
+            videoEl.onerror = () => {
+                console.warn("Hero video encountered an error, falling back to robot.mp4.");
+                if (videoEl.currentSrc && !videoEl.currentSrc.includes("robot.mp4")) {
+                    videoEl.src = "images/robot.mp4";
+                    videoEl.load();
+                    ensureHeroVideoPlayback();
+                }
             };
         }
 
-        const videoEl = document.getElementById("heroVideo");
-        if (videoEl) {
-            videoEl.play().catch(e => {
-                console.log("Autoplay policy handled:", e);
-            });
-            videoEl.onerror = () => {
-                console.warn("Hero video failed to load, displaying poster.");
-                videoEl.style.backgroundImage = "url('images/robot.png')";
-                videoEl.style.backgroundSize = "cover";
+        // Rock-solid metrics caching to prevent offscreen measurement corruption
+        let cachedDestMetrics = null;
+
+        function measureDestMetrics() {
+            const dRect = destWrapper.getBoundingClientRect();
+            const pRect = pinnedViewport.getBoundingClientRect();
+            if (dRect.width > 0 && dRect.height > 0) {
+                cachedDestMetrics = {
+                    x: Math.round(dRect.left - pRect.left),
+                    y: Math.round(dRect.top - pRect.top),
+                    width: Math.round(dRect.width),
+                    height: Math.round(dRect.height)
+                };
+            }
+            return cachedDestMetrics;
+        }
+
+        // Measure immediately and on load
+        measureDestMetrics();
+        window.addEventListener("load", measureDestMetrics);
+        window.addEventListener("resize", () => {
+            measureDestMetrics();
+            if (typeof ScrollTrigger !== "undefined") {
+                ScrollTrigger.refresh();
+            }
+        }, { passive: true });
+
+        function getDestMetrics() {
+            if (window.scrollY < 100 || !cachedDestMetrics) {
+                measureDestMetrics();
+            }
+            return cachedDestMetrics || {
+                x: 0,
+                y: 0,
+                width: window.innerWidth,
+                height: window.innerHeight
             };
         }
 
@@ -474,7 +535,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 start: "top top",
                 end: () => `+=${pinScrollDistance}`,
                 scrub: isMobile ? 0.4 : 0.8,
-                invalidateOnRefresh: true
+                invalidateOnRefresh: false, // Prevents corrupting target metrics when refreshed while scrolled down!
+                fastScrollEnd: true,
+                onEnter: () => ensureHeroVideoPlayback(),
+                onEnterBack: () => ensureHeroVideoPlayback(),
+                onLeaveBack: () => ensureHeroVideoPlayback(),
+                onUpdate: (self) => {
+                    // When scrolling back up towards hero, ensure video decoder is active
+                    if (self.direction === -1) {
+                        ensureHeroVideoPlayback();
+                    }
+                }
             }
         });
 
@@ -513,6 +584,27 @@ document.addEventListener("DOMContentLoaded", () => {
         heroTl.to("#heroBio", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.55);
         heroTl.to("#heroCtas", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.65);
         heroTl.to("#heroMetaBar", { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 0.75);
+
+        // Global scroll-up watchdog: whenever scrolling near the top, wake video
+        window.addEventListener("scroll", () => {
+            const st = window.pageYOffset || document.documentElement.scrollTop;
+            if (st < pinScrollDistance + 400) {
+                ensureHeroVideoPlayback();
+            }
+        }, { passive: true });
+
+        // Tab visibility and mobile touch wakeups
+        document.addEventListener("visibilitychange", () => {
+            if (!document.hidden && (window.pageYOffset || document.documentElement.scrollTop) < pinScrollDistance + 400) {
+                ensureHeroVideoPlayback();
+            }
+        });
+
+        window.addEventListener("touchstart", () => {
+            if ((window.pageYOffset || document.documentElement.scrollTop) < pinScrollDistance + 400) {
+                ensureHeroVideoPlayback();
+            }
+        }, { passive: true });
     }
 
     initCinematicHeroTransition();

@@ -793,6 +793,10 @@ html.dark .grid-bg {
   z-index: 15;
   overflow: hidden;
   background-color: #000;
+  background-image: url('images/robot.png');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
   transform-origin: top left;
   will-change: transform, width, height;
   border: none !important;
@@ -808,6 +812,10 @@ html.dark .grid-bg {
 #heroVideoWrapper {
   position: relative;
   background-color: #000;
+  background-image: url('images/robot.png');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
   overflow: hidden;
   z-index: 10;
 }

@@ -537,15 +537,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 pin: pinnedViewport,
                 start: "top top",
                 end: () => `+=${pinScrollDistance}`,
-                scrub: isMobile ? 0.4 : 0.8,
-                invalidateOnRefresh: false, // Prevents corrupting target metrics when refreshed while scrolled down!
-                fastScrollEnd: true,
+                scrub: isMobile ? 0.3 : 0.6,
+                anticipatePin: 1,
+                invalidateOnRefresh: false,
                 onEnter: () => ensureHeroVideoPlayback(),
                 onEnterBack: () => ensureHeroVideoPlayback(),
-                onLeaveBack: () => ensureHeroVideoPlayback(),
+                onLeaveBack: () => {
+                    ensureHeroVideoPlayback();
+                    heroTl.progress(0);
+                    gsap.set(videoShell, {
+                        x: 0,
+                        y: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        borderWidth: "0px",
+                        borderColor: "transparent",
+                        boxShadow: "none"
+                    });
+                },
                 onUpdate: (self) => {
-                    // When scrolling back up towards hero, ensure video decoder is active
                     if (self.direction === -1) {
+                        ensureHeroVideoPlayback();
+                    }
+                    if (self.progress <= 0.01) {
                         ensureHeroVideoPlayback();
                     }
                 }
@@ -591,7 +605,12 @@ document.addEventListener("DOMContentLoaded", () => {
         // Global scroll-up watchdog: whenever scrolling near the top, wake video
         window.addEventListener("scroll", () => {
             const st = window.pageYOffset || document.documentElement.scrollTop;
-            if (st < pinScrollDistance + 400) {
+            if (st <= 4) {
+                if (heroTl.progress() > 0 && heroTl.progress() < 0.08) {
+                    heroTl.progress(0);
+                }
+                ensureHeroVideoPlayback();
+            } else if (st < pinScrollDistance + 400) {
                 ensureHeroVideoPlayback();
             }
         }, { passive: true });
@@ -2206,8 +2225,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const isDark = document.documentElement.classList.contains("dark");
             
-            // Fading trail clear: lower alpha gives longer, vivid falling rain trails
-            ctx.fillStyle = isDark ? "rgba(10, 11, 14, 0.09)" : "rgba(244, 240, 230, 0.13)";
+            // Fading trail clear: gentle fade for subtle, non-distracting background atmosphere
+            ctx.fillStyle = isDark ? "rgba(10, 11, 14, 0.16)" : "rgba(244, 240, 230, 0.22)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             ctx.font = `bold ${fontSize}px 'JetBrains Mono', monospace`;
@@ -2275,7 +2294,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!ctx) return;
 
         const ADVANCED_DEFAULTS = {
-            halfTurnMs: 4400,
+            halfTurnMs: 6000,
             radius: 224,
             halfPitch: 900,
             rungsPerHalf: 24,
@@ -2503,7 +2522,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const v = {
-            speed: 130,
+            speed: 85,
             scale: 79,
             density: 16,
             hotColor: "#FF2600",

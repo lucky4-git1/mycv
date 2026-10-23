@@ -244,7 +244,19 @@ html.dark .grid-bg {
 
 .brutal-btn-primary {
   background-color: var(--color-accent-1);
-  color: #121316 !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+  box-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 0 #000000 !important;
+}
+
+.brutal-btn-primary:hover {
+  border-color: #000000 !important;
+  box-shadow: calc(var(--shadow-offset-sm) + 3px) calc(var(--shadow-offset-sm) + 3px) 0 0 #000000 !important;
+}
+
+.brutal-btn-primary:active {
+  border-color: #000000 !important;
+  box-shadow: 0 0 0 0 #000000 !important;
 }
 
 .brutal-btn-coral {
@@ -1126,20 +1138,95 @@ html.dark .grid-bg {
   z-index: 0;
 }
 
-#contact .bg-card {
-  background-color: rgba(14, 17, 26, 0.82) !important;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 3px solid rgba(255, 255, 255, 0.18) !important;
-  color: #f8fafc !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+#contact .contact-form-card {
+  background-color: rgba(14, 17, 26, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  color: #f8fafc;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
 }
 
-#contact .bg-card:hover {
-  transform: translateY(-3px);
-  border-color: #DE1A45 !important;
-  box-shadow: 6px 6px 0 0 #DE1A45;
+/* Tactile brand-filling social contact buttons */
+.contact-channel-card {
+  background-color: rgba(14, 17, 26, 0.84);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 3px solid rgba(255, 255, 255, 0.22);
+  color: #f8fafc;
+  box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.7);
+  transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.18s ease,
+              border-color 0.18s ease,
+              box-shadow 0.14s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.18s ease;
+  user-select: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.contact-channel-card * {
+  transition: color 0.18s ease;
+}
+
+.contact-channel-card:hover {
+  transform: translate(-3px, -3px);
+  color: #ffffff !important;
+}
+
+.contact-channel-card:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.9) !important;
+}
+
+/* GitHub - rich charcoal fill */
+.contact-channel-github:hover {
+  background-color: #24292e !important;
+  border-color: #ffffff !important;
+  box-shadow: 5px 5px 0 0 #ffffff !important;
+}
+.contact-channel-github:hover * {
+  color: #ffffff !important;
+}
+
+/* LinkedIn - rich blue fill */
+.contact-channel-linkedin:hover {
+  background-color: #0077b5 !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 5px 5px 0 0 #38bdf8 !important;
+}
+.contact-channel-linkedin:hover * {
+  color: #ffffff !important;
+}
+
+/* X / Twitter - pure black fill with sharp white border */
+.contact-channel-x:hover {
+  background-color: #000000 !important;
+  border-color: #ffffff !important;
+  box-shadow: 5px 5px 0 0 #ffffff !important;
+}
+.contact-channel-x:hover * {
+  color: #ffffff !important;
+}
+
+/* Email - signal coral fill */
+.contact-channel-email:hover {
+  background-color: #DE1A45 !important;
+  border-color: #ff6b81 !important;
+  box-shadow: 5px 5px 0 0 #ff6b81 !important;
+}
+.contact-channel-email:hover * {
+  color: #ffffff !important;
+}
+
+/* Discord - blurple fill */
+.contact-channel-discord:hover {
+  background-color: #5865F2 !important;
+  border-color: #8585f6 !important;
+  box-shadow: 5px 5px 0 0 #8585f6 !important;
+}
+.contact-channel-discord:hover * {
+  color: #ffffff !important;
 }
 
 #contact input,

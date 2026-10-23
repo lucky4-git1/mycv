@@ -3,10 +3,6 @@
 html {
   font-size: 15px; /* Subtle proportional reduction across all elements */
   background-color: var(--color-bg);
-  overscroll-behavior-y: none;
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100vw;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -24,10 +20,8 @@ html {
 
 body {
   background-color: var(--color-bg);
-  overscroll-behavior-y: none;
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
-  max-width: 100vw;
   position: relative;
   -webkit-font-smoothing: antialiased;
 }

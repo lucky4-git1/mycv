@@ -255,20 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const themeToggle = document.getElementById("themeToggle");
     const html = document.documentElement;
 
-    const savedTheme = localStorage.getItem("sriyuth_theme");
-    if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-        html.classList.add("dark");
-    } else {
-        html.classList.remove("dark");
-    }
-
-    function toggleTheme() {
-        sound.playClick();
-        html.classList.toggle("dark");
-        const isDark = html.classList.contains("dark");
-        localStorage.setItem("sriyuth_theme", isDark ? "dark" : "light");
-
-        // Update GitHub stats theme dynamically with vibrant high-contrast colors
+    function updateGitHubStatsTheme(isDark) {
         const gitStats = document.getElementById("githubStatsImg");
         const gitLangs = document.getElementById("githubLangsImg");
         if (gitStats) {
@@ -281,6 +268,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? `https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=lucky4-git1&layout=compact&title_color=E4FF00&text_color=FFFFFF&bg_color=00000000&hide_border=true`
                 : `https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=lucky4-git1&layout=compact&title_color=DE1A45&text_color=121316&bg_color=00000000&hide_border=true`;
         }
+    }
+
+    const savedTheme = localStorage.getItem("sriyuth_theme");
+    const initialIsDark = savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    if (initialIsDark) {
+        html.classList.add("dark");
+    } else {
+        html.classList.remove("dark");
+    }
+    updateGitHubStatsTheme(initialIsDark);
+
+    function toggleTheme() {
+        sound.playClick();
+        html.classList.toggle("dark");
+        const isDark = html.classList.contains("dark");
+        localStorage.setItem("sriyuth_theme", isDark ? "dark" : "light");
+        updateGitHubStatsTheme(isDark);
     }
 
     if (themeToggle) themeToggle.addEventListener("click", toggleTheme);
@@ -602,24 +606,10 @@ document.addEventListener("DOMContentLoaded", () => {
         heroTl.to("#heroCtas", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.65);
         heroTl.to("#heroMetaBar", { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 0.75);
 
-        // Global scroll-up watchdog: whenever scrolling near the top, wake video and ensure fullscreen
+        // Global scroll watchdog: wake video whenever in or near hero viewport
         window.addEventListener("scroll", () => {
             const st = window.pageYOffset || document.documentElement.scrollTop;
-            if (st <= 12) {
-                if (heroTl.progress() > 0) {
-                    heroTl.progress(0);
-                    gsap.set(videoShell, {
-                        x: 0,
-                        y: 0,
-                        width: "100vw",
-                        height: "100vh",
-                        borderWidth: "0px",
-                        borderColor: "transparent",
-                        boxShadow: "none"
-                    });
-                }
-                ensureHeroVideoPlayback();
-            } else if (st < pinScrollDistance + 400) {
+            if (st < pinScrollDistance + 400) {
                 ensureHeroVideoPlayback();
             }
         }, { passive: true });

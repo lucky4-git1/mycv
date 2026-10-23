@@ -3403,21 +3403,28 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
 
-        // Journey Timeline Animated Line Draw & Step-by-Step Level Reveal (Up & Down Scrubbing)
+        // Journey Timeline Animated Line Draw & Glowing Bead Trajectory
         const timelineProgress = document.getElementById("timelineProgressLine");
         const timelineHead = document.getElementById("timelineProgressHead");
         const timelineSpine = document.getElementById("timelineSpine");
+
         if (timelineProgress && timelineSpine) {
-            ScrollTrigger.create({
-                trigger: timelineSpine,
-                start: "top 75%",
-                end: "bottom 80%",
-                scrub: 0.15,
-                onUpdate: (self) => {
-                    const p = Math.max(0, Math.min(1, self.progress));
-                    gsap.set(timelineProgress, { scaleY: p, transformOrigin: "top center" });
-                    if (timelineHead) {
-                        gsap.set(timelineHead, { top: `${p * 100}%` });
+            gsap.set(timelineProgress, { scaleY: 0, transformOrigin: "top center" });
+            if (timelineHead) gsap.set(timelineHead, { top: "0%" });
+
+            gsap.to(timelineProgress, {
+                scaleY: 1,
+                ease: "none",
+                transformOrigin: "top center",
+                scrollTrigger: {
+                    trigger: timelineSpine,
+                    start: "top 72%",
+                    end: "bottom 75%",
+                    scrub: 0.25,
+                    onUpdate: (self) => {
+                        if (timelineHead) {
+                            timelineHead.style.top = `${self.progress * 100}%`;
+                        }
                     }
                 }
             });
@@ -3429,37 +3436,25 @@ document.addEventListener("DOMContentLoaded", () => {
             const rightCol = step.querySelector(".timeline-right-col");
             const node = step.querySelector(".timeline-node");
 
-            const stepTL = gsap.timeline({
-                scrollTrigger: {
-                    trigger: step,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse"
+            // Set initial offscreen states
+            if (leftCol) gsap.set(leftCol, { opacity: 0, x: -35, y: 15 });
+            if (rightCol) gsap.set(rightCol, { opacity: 0, x: 35, y: 15 });
+            if (node) gsap.set(node, { opacity: 0, scale: 0.3, xPercent: -50, yPercent: -50 });
+
+            ScrollTrigger.create({
+                trigger: step,
+                start: "top 72%",
+                onEnter: () => {
+                    if (leftCol) gsap.to(leftCol, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: "power3.out" });
+                    if (rightCol) gsap.to(rightCol, { opacity: 1, x: 0, y: 0, duration: 0.8, delay: 0.08, ease: "power3.out" });
+                    if (node) gsap.to(node, { opacity: 1, scale: 1, xPercent: -50, yPercent: -50, duration: 0.7, delay: 0.04, ease: "back.out(1.8)" });
+                },
+                onLeaveBack: () => {
+                    if (leftCol) gsap.to(leftCol, { opacity: 0, x: -35, y: 15, duration: 0.5, ease: "power2.in" });
+                    if (rightCol) gsap.to(rightCol, { opacity: 0, x: 35, y: 15, duration: 0.5, ease: "power2.in" });
+                    if (node) gsap.to(node, { opacity: 0, scale: 0.3, xPercent: -50, yPercent: -50, duration: 0.4, ease: "power2.in" });
                 }
             });
-
-            if (leftCol) {
-                stepTL.fromTo(leftCol,
-                    { opacity: 0, x: -30, y: 15 },
-                    { opacity: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
-                    0
-                );
-            }
-
-            if (rightCol) {
-                stepTL.fromTo(rightCol,
-                    { opacity: 0, x: 30, y: 15 },
-                    { opacity: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
-                    0.05
-                );
-            }
-
-            if (node) {
-                stepTL.fromTo(node,
-                    { opacity: 0, scale: 0.3, rotation: -45 },
-                    { opacity: 1, scale: 1, rotation: 0, duration: 0.7, ease: "back.out(1.8)" },
-                    0.08
-                );
-            }
         });
 
         // GitHub Verification Activity & Repos Reveal

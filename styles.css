@@ -978,6 +978,67 @@ html.dark .grid-bg {
   will-change: width;
 }
 
+/* ─── Neon Helix Drift — Skills Section Background & Cybernetic Bento Deck ─── */
+#skills {
+  position: relative;
+  background-color: #030408 !important;
+  color: #f8fafc !important;
+  overflow: hidden;
+}
+
+#skillsHelixCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#skills .skill-card {
+  background-color: rgba(14, 17, 26, 0.82) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 3px solid rgba(255, 255, 255, 0.18) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+#skills .skill-card:hover {
+  transform: translateY(-4px);
+  border-color: #DE1A45 !important;
+  box-shadow: 6px 6px 0 0 #DE1A45;
+}
+
+#skills .skill-card h3 {
+  color: #ffffff;
+}
+
+#skills .skill-card:hover h3 {
+  color: #DE1A45;
+}
+
+#skills .skill-row .skill-label {
+  color: #f1f5f9;
+}
+
+#skills .skill-row .skill-pct {
+  color: #94a3b8;
+}
+
+#skills .skill-row:hover .skill-label,
+#skills .skill-row:hover .skill-pct {
+  color: #DE1A45 !important;
+  text-shadow: 0 0 10px rgba(222, 26, 69, 0.4);
+}
+
+#skills .skill-card .bg-gray,
+#skills .skill-card .dark\:bg-card {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
 
 
 /* ─── Awwwards-Level Editorial Motion & Interactions ─── */

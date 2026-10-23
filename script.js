@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sound = new SoundEngine();
 
     // Attach sound triggers
-    document.querySelectorAll(".brutal-btn, .icon-btn, .cmd-item, .filter-tab, .sim-tab").forEach(el => {
+    document.querySelectorAll(".brutal-btn, .icon-btn, .cmd-item, .filter-tab, .sim-tab, .contact-channel-card").forEach(el => {
         el.addEventListener("mouseenter", () => sound.playBlip());
         el.addEventListener("click", () => sound.playClick());
     });
@@ -602,12 +602,21 @@ document.addEventListener("DOMContentLoaded", () => {
         heroTl.to("#heroCtas", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.65);
         heroTl.to("#heroMetaBar", { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 0.75);
 
-        // Global scroll-up watchdog: whenever scrolling near the top, wake video
+        // Global scroll-up watchdog: whenever scrolling near the top, wake video and ensure fullscreen
         window.addEventListener("scroll", () => {
             const st = window.pageYOffset || document.documentElement.scrollTop;
-            if (st <= 4) {
-                if (heroTl.progress() > 0 && heroTl.progress() < 0.08) {
+            if (st <= 12) {
+                if (heroTl.progress() > 0) {
                     heroTl.progress(0);
+                    gsap.set(videoShell, {
+                        x: 0,
+                        y: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        borderWidth: "0px",
+                        borderColor: "transparent",
+                        boxShadow: "none"
+                    });
                 }
                 ensureHeroVideoPlayback();
             } else if (st < pinScrollDistance + 400) {
@@ -3404,26 +3413,27 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
 
-        // Journey Timeline Animated Line Draw & Step-by-Step Level Reveal
+        // Journey Timeline Animated Line Draw & Step-by-Step Level Reveal (Up & Down Scrubbing)
         const timelineProgress = document.getElementById("timelineProgressLine");
+        const timelineHead = document.getElementById("timelineProgressHead");
         const timelineSpine = document.getElementById("timelineSpine");
         if (timelineProgress && timelineSpine) {
-            gsap.fromTo(timelineProgress, 
-                { scaleY: 0 },
-                {
-                    scaleY: 1,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: timelineSpine,
-                        start: "top 75%",
-                        end: "bottom 80%",
-                        scrub: 0.4
+            ScrollTrigger.create({
+                trigger: timelineSpine,
+                start: "top 75%",
+                end: "bottom 80%",
+                scrub: 0.15,
+                onUpdate: (self) => {
+                    const p = Math.max(0, Math.min(1, self.progress));
+                    gsap.set(timelineProgress, { scaleY: p, transformOrigin: "top center" });
+                    if (timelineHead) {
+                        gsap.set(timelineHead, { top: `${p * 100}%` });
                     }
                 }
-            );
+            });
         }
 
-        // Animate each Journey milestone level with buttery-smooth glide
+        // Animate each Journey milestone level with buttery-smooth glide on BOTH scroll up and scroll down
         gsap.utils.toArray(".timeline-step").forEach((step, idx) => {
             const leftCol = step.querySelector(".timeline-left-col");
             const rightCol = step.querySelector(".timeline-right-col");
@@ -3432,32 +3442,33 @@ document.addEventListener("DOMContentLoaded", () => {
             const stepTL = gsap.timeline({
                 scrollTrigger: {
                     trigger: step,
-                    start: "top 75%",
-                    once: true
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play reverse play reverse"
                 }
             });
 
             if (leftCol) {
                 stepTL.fromTo(leftCol,
-                    { opacity: 0, x: -45, y: 15 },
-                    { opacity: 1, x: 0, y: 0, duration: 1.1, ease: "power3.out" },
+                    { opacity: 0, x: -35, y: 15 },
+                    { opacity: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
                     0
                 );
             }
 
             if (rightCol) {
                 stepTL.fromTo(rightCol,
-                    { opacity: 0, x: 45, y: 15 },
-                    { opacity: 1, x: 0, y: 0, duration: 1.1, ease: "power3.out" },
-                    0.06
+                    { opacity: 0, x: 35, y: 15 },
+                    { opacity: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
+                    0.05
                 );
             }
 
             if (node) {
                 stepTL.fromTo(node,
                     { opacity: 0, scale: 0.3, rotation: -45 },
-                    { opacity: 1, scale: 1, rotation: 0, duration: 0.85, ease: "back.out(1.8)" },
-                    0.1
+                    { opacity: 1, scale: 1, rotation: 0, duration: 0.7, ease: "back.out(1.8)" },
+                    0.08
                 );
             }
         });

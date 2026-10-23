@@ -231,7 +231,7 @@
             
             <section id="hero" class="relative min-h-[100svh] pt-24 sm:pt-28 pb-12 sm:pb-16 flex flex-col justify-center grid-bg px-4 sm:px-6 md:px-8 border-b-4 border-border">
                 
-                <div class="max-w-[1500px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="max-w-[1360px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     
                                         <!-- Left Column: Bio & Core Pitch -->
                     <div id="heroLeftCol" class="lg:col-span-7 flex flex-col items-start hero-anim">
@@ -535,7 +535,7 @@
     <!-- ========================================================
          ABOUT & PHILOSOPHY: Real Identity & High Metrics
          ======================================================== -->
-    <section id="about" class="py-16 sm:py-24 px-4 sm:px-6 md:px-8 max-w-[1500px] mx-auto overflow-hidden relative">
+    <section id="about" class="py-12 sm:py-20 px-4 sm:px-6 md:px-8 max-w-[1360px] mx-auto overflow-hidden relative">
         <!-- CMatrix Digital Rain Canvas Background (Subtle cybernetic texture) -->
         <canvas id="aboutMatrixCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-25 dark:opacity-35" aria-hidden="true"></canvas>
 
@@ -614,7 +614,7 @@
          Unified Diff Inspector & Progressive Project Switching.
          ======================================================== -->
     <section id="automations" class="py-10 sm:py-14 px-4 sm:px-6 md:px-8 border-t-4 border-b-4 border-border bg-bg-alt relative overflow-hidden" aria-label="AI Systems Architecture & Engineering Exhibit">
-        <div class="max-w-[1500px] mx-auto">
+        <div class="max-w-[1360px] mx-auto">
             
             <!-- Section Header: Brutalist Editorial -->
             <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-6 pb-4 border-b-2 border-border gs-section-header">
@@ -697,7 +697,7 @@
          FEATURED WORK: Awwwards-Level Curated Digital Exhibition
          Asymmetric Grid Spans, High-Contrast Badges & Visual Depth
          ======================================================== -->
-    <section id="projects" class="py-16 sm:py-24 px-4 sm:px-6 md:px-8 max-w-[1500px] mx-auto">
+    <section id="projects" class="py-12 sm:py-20 px-4 sm:px-6 md:px-8 max-w-[1360px] mx-auto">
         
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gs-section-header">
             <div>
@@ -1221,7 +1221,7 @@
         <!-- Neon Helix Drift Canvas Background -->
         <canvas id="skillsHelixCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
 
-        <div class="max-w-[1500px] mx-auto relative z-10">
+        <div class="max-w-[1360px] mx-auto relative z-10">
             
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gs-section-header">
                 <div>
@@ -1470,15 +1470,17 @@
         </div>
 
         <div class="relative">
-            <!-- Central Animated Spine for Desktop -->
-            <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-border/20 transform -translate-x-1/2" id="timelineSpine">
-                <div class="w-full bg-accent-1 h-full origin-top" id="timelineProgressLine"></div>
+            <!-- Central Animated Spine for Desktop & Mobile -->
+            <div class="block absolute left-3 sm:left-4 md:left-1/2 top-0 bottom-0 w-1.5 bg-border/20 md:-translate-x-1/2 rounded-full overflow-visible" id="timelineSpine">
+                <div class="w-full bg-a1 h-full origin-top shadow-[0_0_14px_var(--color-accent-1)]" id="timelineProgressLine"></div>
+                <!-- Glowing Pulsing Tip Bead -->
+                <div id="timelineProgressHead" class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-a1 rounded-full border-2 border-black shadow-[0_0_18px_var(--color-accent-1)] transition-transform pointer-events-none" style="top: 0; transform: translate(-50%, -50%);"></div>
             </div>
             
             <div class="space-y-16 sm:space-y-24">
                 
                 <!-- Stage 1: The Frontier (Present - MCA) -->
-                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group">
+                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group pl-8 sm:pl-10 md:pl-0">
                     <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-9 h-9 bg-a1 text-black brutal-border rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center font-black text-xs shadow-[0_0_22px_rgba(228,255,0,0.85)] transition-transform duration-300 group-hover:scale-125" style="background-color: var(--color-accent-1); color: #0C0D10;">
                         01
                     </div>
@@ -1510,7 +1512,7 @@
                 </div>
 
                 <!-- Stage 2: The Foundation (BCA) -->
-                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group">
+                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group pl-8 sm:pl-10 md:pl-0">
                     <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-9 h-9 bg-a4 text-black brutal-border rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center font-black text-xs shadow-[0_0_18px_rgba(0,229,117,0.5)] transition-transform duration-300 group-hover:scale-125">
                         02
                     </div>
@@ -1542,7 +1544,7 @@
                 </div>
 
                 <!-- Stage 3: The Spark (Intermediate) -->
-                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group">
+                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group pl-8 sm:pl-10 md:pl-0">
                     <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-9 h-9 bg-a2 text-white brutal-border rounded-full transform -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center font-black text-xs shadow-[0_0_18px_rgba(255,71,87,0.5)] transition-transform duration-300 group-hover:scale-125">
                         03
                     </div>
@@ -1794,7 +1796,7 @@
 
     <!-- Footer -->
     <footer class="border-t-4 border-border bg-card py-16 px-4 md:px-8">
-        <div class="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-12">
+        <div class="max-w-[1360px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-12">
             
             <div class="md:col-span-8">
                 <div class="text-5xl sm:text-6xl md:text-8xl font-black leading-none mb-3">SRIYUTH.</div>
@@ -1812,7 +1814,7 @@
 
         </div>
 
-        <div class="max-w-[1500px] mx-auto pt-8 border-t-2 border-border/40 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono-label text-xs font-bold text-slate-500">
+        <div class="max-w-[1360px] mx-auto pt-8 border-t-2 border-border/40 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono-label text-xs font-bold text-slate-500">
             <div>
                 © 2026 K. Sriyuth • Hyderabad, India. All rights reserved.
             </div>

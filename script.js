@@ -3423,7 +3423,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // Animate each Journey milestone level with buttery-smooth glide on BOTH scroll up and scroll down
+        // Animate each Journey milestone level with buttery-smooth glide
         gsap.utils.toArray(".timeline-step").forEach((step, idx) => {
             const leftCol = step.querySelector(".timeline-left-col");
             const rightCol = step.querySelector(".timeline-right-col");
@@ -3432,15 +3432,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const stepTL = gsap.timeline({
                 scrollTrigger: {
                     trigger: step,
-                    start: "top 80%",
-                    end: "bottom 20%",
-                    toggleActions: "play reverse play reverse"
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
                 }
             });
 
             if (leftCol) {
                 stepTL.fromTo(leftCol,
-                    { opacity: 0, x: -35, y: 15 },
+                    { opacity: 0, x: -30, y: 15 },
                     { opacity: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
                     0
                 );
@@ -3448,7 +3447,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (rightCol) {
                 stepTL.fromTo(rightCol,
-                    { opacity: 0, x: 35, y: 15 },
+                    { opacity: 0, x: 30, y: 15 },
                     { opacity: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
                     0.05
                 );

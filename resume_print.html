@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>K. Sriyuth - Resume</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
 
         @page {
             size: A4 portrait;
-            margin: 7mm 11mm 7mm 11mm;
+            margin: 6mm 10mm 6mm 10mm;
         }
 
         *, *::before, *::after {
@@ -18,17 +18,17 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             color: #0f172a;
             background: #ffffff;
-            font-size: 8.5pt;
-            line-height: 1.34;
+            font-size: 8.2pt;
+            line-height: 1.32;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
 
         a {
-            color: #0284c7;
+            color: #0369a1;
             text-decoration: none;
             font-weight: 600;
         }
@@ -36,8 +36,8 @@
         /* ─── Header ─── */
         .header {
             border-bottom: 2px solid #0f172a;
-            padding-bottom: 5px;
-            margin-bottom: 7px;
+            padding-bottom: 4px;
+            margin-bottom: 5.5px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
@@ -45,48 +45,49 @@
 
         .name-title h1 {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 21pt;
+            font-size: 20pt;
             font-weight: 800;
             letter-spacing: -0.03em;
             color: #0f172a;
             line-height: 1;
-            margin-bottom: 3px;
+            margin-bottom: 2.5px;
         }
 
         .name-title .subtitle {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 9.5pt;
+            font-size: 9.2pt;
             font-weight: 700;
             color: #0284c7;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.02em;
         }
 
         .contact-info {
             text-align: right;
-            font-size: 7.8pt;
-            line-height: 1.45;
+            font-size: 7.4pt;
+            line-height: 1.42;
             color: #334155;
             font-family: 'JetBrains Mono', monospace;
         }
 
         .contact-info a {
             color: #0f172a;
+            font-weight: 600;
         }
 
         .badge-row {
             display: flex;
             gap: 4px;
-            margin-top: 4px;
+            margin-top: 3.5px;
         }
 
         .pill {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 6.8pt;
+            font-size: 6.5pt;
             font-weight: 700;
             background: #f1f5f9;
             color: #0f172a;
-            padding: 1.5px 6px;
+            padding: 1px 5px;
             border: 1px solid #cbd5e1;
             border-radius: 2px;
             text-transform: uppercase;
@@ -94,19 +95,19 @@
 
         /* ─── Sections ─── */
         .section {
-            margin-bottom: 6.5px;
+            margin-bottom: 5.5px;
         }
 
         .section-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 9.2pt;
+            font-size: 8.8pt;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.04em;
             color: #0f172a;
             border-bottom: 1.5px solid #cbd5e1;
-            padding-bottom: 2px;
-            margin-bottom: 4.5px;
+            padding-bottom: 1.5px;
+            margin-bottom: 4px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -114,7 +115,7 @@
 
         .section-title span.tag {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 6.5pt;
+            font-size: 6.2pt;
             font-weight: 700;
             color: #64748b;
         }
@@ -122,8 +123,8 @@
         /* ─── Summary ─── */
         .summary-text {
             color: #334155;
-            font-size: 8.2pt;
-            line-height: 1.36;
+            font-size: 7.9pt;
+            line-height: 1.34;
             text-align: justify;
         }
 
@@ -131,34 +132,39 @@
         .skills-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 7.8pt;
+            font-size: 7.6pt;
         }
 
         .skills-table tr {
             border-bottom: 1px solid #f1f5f9;
         }
 
+        .skills-table tr:last-child {
+            border-bottom: none;
+        }
+
         .skills-table td {
-            padding: 2.2px 0;
+            padding: 1.8px 0;
             vertical-align: top;
         }
 
         .skills-table td.category {
             font-weight: 700;
             color: #0f172a;
-            width: 23%;
+            width: 25%;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 7.2pt;
+            font-size: 7.1pt;
         }
 
         .skills-table td.items {
             color: #334155;
-            width: 77%;
+            width: 75%;
+            line-height: 1.3;
         }
 
         /* ─── Project Items ─── */
         .item {
-            margin-bottom: 5.5px;
+            margin-bottom: 4.8px;
         }
 
         .item:last-child {
@@ -173,7 +179,7 @@
         }
 
         .item-title {
-            font-size: 8.8pt;
+            font-size: 8.4pt;
             font-weight: 700;
             color: #0f172a;
         }
@@ -184,14 +190,14 @@
 
         .item-meta {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 7.2pt;
+            font-size: 6.9pt;
             color: #64748b;
             font-weight: 600;
         }
 
         .item-tech {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 6.8pt;
+            font-size: 6.5pt;
             color: #0284c7;
             font-weight: 700;
             margin-bottom: 1.5px;
@@ -204,10 +210,10 @@
 
         .item-desc li {
             position: relative;
-            padding-left: 11px;
-            font-size: 7.9pt;
+            padding-left: 10px;
+            font-size: 7.6pt;
             color: #334155;
-            line-height: 1.32;
+            line-height: 1.3;
             margin-bottom: 1px;
         }
 
@@ -216,37 +222,37 @@
             position: absolute;
             left: 0;
             color: #0284c7;
-            font-size: 7.5pt;
+            font-size: 7pt;
         }
 
         /* ─── Education Grid ─── */
         .two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
         }
 
         .edu-card {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
-            padding: 5px 8px;
+            padding: 4px 7px;
             border-left: 3px solid #0284c7;
         }
 
         .edu-degree {
             font-weight: 700;
-            font-size: 8.4pt;
+            font-size: 8.1pt;
             color: #0f172a;
         }
 
         .edu-inst {
-            font-size: 7.8pt;
+            font-size: 7.5pt;
             color: #475569;
         }
 
         .edu-time {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 6.8pt;
+            font-size: 6.6pt;
             color: #64748b;
             font-weight: 600;
         }
@@ -258,18 +264,19 @@
     <div class="header">
         <div class="name-title">
             <h1>K. SRIYUTH</h1>
-            <div class="subtitle">Intuitive Front-End Developer & AI Automations Architect</div>
+            <div class="subtitle">AI-Enabled Software Engineer & Creative Developer</div>
             <div class="badge-row">
-                <span class="pill">MCA Student ('27)</span>
-                <span class="pill">32 GitHub Repositories</span>
-                <span class="pill">Front-End & AI Tooling</span>
+                <span class="pill">MCA Student (2025–2027)</span>
+                <span class="pill">32 Public GitHub Repos</span>
+                <span class="pill">Full-Stack & Generative AI</span>
             </div>
         </div>
         <div class="contact-info">
             <div>📍 Hyderabad, India</div>
             <div>✉️ <a href="mailto:sriyuthk122@gmail.com">sriyuthk122@gmail.com</a></div>
             <div>📞 <a href="https://wa.me/916309524564">+91 6309524564 (WhatsApp)</a></div>
-            <div>🌐 <a href="https://github.com/lucky4-git1">github.com/lucky4-git1</a></div>
+            <div>🌐 <a href="https://sriyuth.vercel.app">sriyuth.vercel.app</a></div>
+            <div>💻 <a href="https://github.com/lucky4-git1">github.com/lucky4-git1</a></div>
             <div>💼 <a href="https://www.linkedin.com/in/sriyuth-lucky-88b40a244">linkedin.com/in/sriyuth-lucky-88b40a244</a></div>
         </div>
     </div>
@@ -281,7 +288,7 @@
             <span class="tag">PROFILE</span>
         </div>
         <p class="summary-text">
-            Intuitive, passionate Front-End Developer and AI Automations Engineer from Hyderabad with proven expertise in reverse-engineering commercial platforms (Amazon, YouTube, Blinkit, Hyperpure by Zomato) to master layout math, responsive state flows, and tactile UX. Creator of open-source developer tooling (<strong>SimpleIDE</strong>) and zero-server client-side media storage using IndexedDB. Proven track record deploying production web applications across GitHub, Vercel, and Netlify with 32 public repositories.
+            Multidisciplinary Software Engineer and Creative Developer with demonstrated work across Generative AI systems, full-stack web applications, desktop developer tools, and immersive user experiences. Pragmatic practitioner who leverages AI to accelerate technical research, prototyping, and debugging while taking rigorous ownership of code quality, architecture, and systems reliability. Experienced in reverse-engineering commercial platforms (Amazon, YouTube, Zomato Hyperpure) to master DOM layout geometry and state flows from first principles. Author of 32 public repositories with verified production deployments across Vercel, Netlify, and GitHub.
         </p>
     </div>
 
@@ -289,24 +296,24 @@
     <div class="section">
         <div class="section-title">
             <span>Technical Skills Matrix</span>
-            <span class="tag">CAPABILITIES</span>
+            <span class="tag">CORE COMPETENCIES</span>
         </div>
         <table class="skills-table">
             <tr>
-                <td class="category">Core Web & Languages</td>
-                <td class="items">HTML5 (Semantic & Accessible), CSS3 (Modern Flexbox, CSS Grid), JavaScript (ES6+, Async, DOM APIs), TypeScript, Python</td>
+                <td class="category">Languages & Core</td>
+                <td class="items">TypeScript (Strict Mode), JavaScript (ES6+, Async, DOM APIs), Python, HTML5 (Semantic & Accessible), CSS3 (Modern Grid / Flexbox)</td>
             </tr>
             <tr>
-                <td class="category">Frameworks & UI</td>
-                <td class="items">React, Vite, Bootstrap 5, Tailwind CSS, GSAP (Motion & ScrollTrigger), Spline 3D Integration, Web Audio API</td>
+                <td class="category">Frontend & Creative</td>
+                <td class="items">React 19, Vite, Next.js, Tailwind CSS, Bootstrap 5, GSAP (ScrollTrigger & Motion Physics), Spline 3D Integration, Web Audio API</td>
             </tr>
             <tr>
-                <td class="category">AI & Automations</td>
-                <td class="items">Autonomous Coding Agents, WhatsApp Cloud API Automations, Email Marketing Automation (EMA), Electron AI Desktop Tools, LLM APIs (OpenAI / Claude / Gemini), Webhook Routing</td>
+                <td class="category">AI & Intelligent Systems</td>
+                <td class="items">Autonomous Coding Agents, LLM APIs (OpenAI / Claude / Gemini), Model Evaluation, Bounded AST Diffing, Meta WhatsApp Cloud API Webhooks, Email Marketing Automations (EMA)</td>
             </tr>
             <tr>
-                <td class="category">Architecture & Tools</td>
-                <td class="items">Git & GitHub, IndexedDB Persistent Client Storage, Node.js, Express, RESTful APIs, Figma UI/UX Prototyping</td>
+                <td class="category">Backend, Data & Tooling</td>
+                <td class="items">Node.js, Fastify 4.x, Express, IndexedDB (Offline Persistence), Redis, PostgreSQL / Prisma, RESTful APIs, SSE, Electron 28 Desktop Tooling, Git & CI/CD</td>
             </tr>
         </table>
     </div>
@@ -314,98 +321,85 @@
     <!-- Featured Projects -->
     <div class="section">
         <div class="section-title">
-            <span>Flagship Projects & Systems</span>
-            <span class="tag">GITHUB REPOSITORIES</span>
+            <span>Featured Software Engineering Projects</span>
+            <span class="tag">VERIFIED SYSTEMS</span>
         </div>
 
-        <!-- Project 1: Hyperpure UI/UX Clone -->
+        <!-- Project 1: SimpleIDE -->
         <div class="item">
             <div class="item-header">
                 <div>
-                    <span class="item-title"><a href="https://lucky4-git1.github.io/Hyperpure/">Hyperpure UI/UX Clone</a></span>
+                    <span class="item-title"><a href="https://github.com/lucky4-git1/SimpleIDE">SimpleIDE — Desktop AI Code Editor & Autonomous Agent</a></span>
                 </div>
-                <span class="item-meta"><a href="https://lucky4-git1.github.io/Hyperpure/">Live Demo</a> • github.com/lucky4-git1/Hyperpure</span>
+                <span class="item-meta">github.com/lucky4-git1/SimpleIDE • 161 Passing Tests</span>
             </div>
-            <div class="item-tech">HTML5 • CSS3 • JavaScript • Bootstrap 5 • Responsive Architecture</div>
+            <div class="item-tech">Electron 28 • React 18 • Vite • Node.js IPC • AST Diff Engine • safeStorage</div>
             <ul class="item-desc">
-                <li>Complete UI recreation of Hyperpure by Zomato with responsive layouts, product sections, dynamic cart UI, and checkout page design.</li>
-                <li>Engineered dynamic cart state recalculations (subtotals, taxes, item thresholds) and realistic e-commerce interface behavior.</li>
+                <li>Engineered an open-source desktop code editor embedding an autonomous coding agent (&ldquo;Prime AI&rdquo;) backed by 161 automated unit tests.</li>
+                <li>Architected secure contextBridge IPC boundaries between the React renderer and Node.js OS layer, eliminating arbitrary execution vulnerabilities.</li>
+                <li>Implemented unified AST diff inspection and syntax lint verification to enforce human confirmation before committing multi-step code mutations to disk.</li>
             </ul>
         </div>
 
-        <!-- Project 2: MuTube personal media player -->
+        <!-- Project 2: RewriteBot -->
         <div class="item">
             <div class="item-header">
                 <div>
-                    <span class="item-title"><a href="https://lucky4-git1.github.io/MuTube-media-player-v1.0/">MuTube personal media player</a></span>
+                    <span class="item-title"><a href="https://rewritebot-client.vercel.app">RewriteBot — Production AI Paraphrasing & Writing Suite</a></span>
+                </div>
+                <span class="item-meta"><a href="https://rewritebot-client.vercel.app">rewritebot-client.vercel.app</a> • Live Vercel SaaS</span>
+            </div>
+            <div class="item-tech">TypeScript • Fastify 4.x • React 18 • Redis • Server-Sent Events (SSE) • Prisma</div>
+            <ul class="item-desc">
+                <li>Architected and deployed a self-hostable, privacy-first AI rewriting platform on Vercel with zero third-party tracking or subscription paywalls.</li>
+                <li>Built a high-throughput Fastify backend streaming transformed text via SSE with sub-50ms lexical tokenization latency and Redis queue buffering.</li>
+                <li>Implemented Flesch-Kincaid readability scoring and word-level Levenshtein similarity diffing to audit originality and prevent content duplication.</li>
+            </ul>
+        </div>
+
+        <!-- Project 3: WhatsApp AI & EMA Engine -->
+        <div class="item">
+            <div class="item-header">
+                <div>
+                    <span class="item-title"><a href="https://github.com/lucky4-git1/whatsapp-ai-automation">Meta WhatsApp AI Automation & EMA Campaign Pipeline</a></span>
+                </div>
+                <span class="item-meta">github.com/lucky4-git1/whatsapp-ai-automation • Meta Cloud API</span>
+            </div>
+            <div class="item-tech">TypeScript • Node.js • Webhooks • HMAC-SHA256 • PostgreSQL • Cron Workers</div>
+            <ul class="item-desc">
+                <li>Developed enterprise customer messaging automation interfacing with the official Meta WhatsApp Business Cloud API with cryptographic HMAC-SHA256 verification.</li>
+                <li>Engineered multilingual intent classification (English, Telugu, Hindi) and PostgreSQL CRM lead synchronization with automated failover to human agents.</li>
+                <li>Built a companion email marketing campaign worker (EMA) featuring cron scheduling, dynamic template injection, and DNS deliverability auditing (SPF, DKIM).</li>
+            </ul>
+        </div>
+
+        <!-- Project 4: MuTube Media Player -->
+        <div class="item">
+            <div class="item-header">
+                <div>
+                    <span class="item-title"><a href="https://lucky4-git1.github.io/MuTube-media-player-v1.0/">MuTube — Zero-Server Offline Media Vault & Player</a></span>
                 </div>
                 <span class="item-meta"><a href="https://lucky4-git1.github.io/MuTube-media-player-v1.0/">Live Demo</a> • github.com/lucky4-git1/MuTube-media-player-v1.0</span>
             </div>
-            <div class="item-tech">HTML5 • CSS3 • JavaScript • Bootstrap • IndexedDB API</div>
+            <div class="item-tech">JavaScript ES6+ • HTML5 Media API • IndexedDB API • Client-Side Architecture</div>
             <ul class="item-desc">
-                <li>Offline MP3/MP4 media player web app built to store files in IndexedDB and provide truly offline playback with custom theme system.</li>
-                <li>Interactive controls for audio/video playback, playlist creation, track shuffle, and persistent user preferences without servers.</li>
+                <li>Engineered a client-side media player providing completely offline MP3/MP4 playback with zero external server dependencies.</li>
+                <li>Implemented persistent client storage using browser-native IndexedDB for audio files, custom playlists, equalizer settings, and user preferences.</li>
             </ul>
         </div>
 
-        <!-- Project 3: Atherone 3D scrollytelling web-app -->
+        <!-- Project 5: Creative Web & Architecture Studies -->
         <div class="item">
             <div class="item-header">
                 <div>
-                    <span class="item-title"><a href="https://atherone-scrolly-app.netlify.app/">Atherone 3D scrollytelling web-app made with spline</a></span>
+                    <span class="item-title"><a href="https://atherone-scrolly-app.netlify.app/">Atherone 3D Web-App & High-Density UI Architecture Studies</a></span>
                 </div>
-                <span class="item-meta"><a href="https://atherone-scrolly-app.netlify.app/">Netlify Live</a> • github.com/lucky4-git1/atherone</span>
+                <span class="item-meta">Netlify Live • 5+ Production Clones • github.com/lucky4-git1</span>
             </div>
-            <div class="item-tech">HTML • React • GSAP • Spline 3D • TypeScript • Tailwind CSS</div>
+            <div class="item-tech">React • GSAP ScrollTrigger • Spline 3D • Semantic HTML5 • CSS Grid & Flexbox</div>
             <ul class="item-desc">
-                <li>3D scrollytelling web application showcasing a fictional space exploration venture with interactive 3D models and smooth scrolling animations.</li>
-                <li>Integrated Spline 3D viewport canvas models with GSAP ScrollTrigger timeline bindings for continuous cinematic camera shifts.</li>
-            </ul>
-        </div>
-
-        <!-- Project 4: SimpleIDE -->
-        <div class="item">
-            <div class="item-header">
-                <div>
-                    <span class="item-title"><a href="https://github.com/lucky4-git1/SimpleIDE">SimpleIDE (Open-Source AI Desktop IDE)</a></span>
-                </div>
-                <span class="item-meta">github.com/lucky4-git1/SimpleIDE</span>
-            </div>
-            <div class="item-tech">Electron • React • Vite • JavaScript • Autonomous AI Agent</div>
-            <ul class="item-desc">
-                <li>Open-source AI-powered desktop IDE featuring an integrated AI coding agent, lightweight modern UI, and rapid prototyping workflows.</li>
-                <li>Built for local developer productivity with modular multi-file editing and automated reasoning capabilities.</li>
-            </ul>
-        </div>
-
-        <!-- Project 5: UI/UX Clones -->
-        <div class="item">
-            <div class="item-header">
-                <div>
-                    <span class="item-title">Production UI Clones (District, YouTube, Blinkit, TSPSC, Amazon)</span>
-                </div>
-                <span class="item-meta">github.com/lucky4-git1</span>
-            </div>
-            <div class="item-tech">HTML5 • CSS3 • JavaScript • Bootstrap 5 • Responsive Design</div>
-            <ul class="item-desc">
-                <li><strong>District UI/UX Clone:</strong> Fully responsive lifestyle platform clone with interactive cards, navigation, and micro-animations.</li>
-                <li><strong>YouTube UI/UX Clone:</strong> Sticky glass navbar, collapsible dual-state sidebar, responsive video grid, and search suggestions.</li>
-                <li><strong>Blinkit & Amazon Clones:</strong> Quick-commerce category carousels, item adders, and mega-menu e-commerce navigation.</li>
-            </ul>
-        </div>
-
-        <!-- Project 6: AI Automations & Deployed Apps -->
-        <div class="item">
-            <div class="item-header">
-                <div>
-                    <span class="item-title">AI Automations & Deployed Web Apps (WhatsApp AI, EMA, RewriteBot, Gitdrop)</span>
-                </div>
-                <span class="item-meta">Vercel & Netlify Deployed</span>
-            </div>
-            <div class="item-tech">TypeScript • Node.js • Webhooks • LLM APIs • Next.js • Vercel</div>
-            <ul class="item-desc">
-                <li><strong>WhatsApp AI & EMA:</strong> Autonomous message pipelines, intent classification, customer replies, and email marketing workflows.</li>
-                <li><strong>RewriteBot & Gitdrop:</strong> Live production apps deployed on Vercel (<a href="https://rewritebot-client.vercel.app">rewritebot-client.vercel.app</a>, <a href="https://gitdrop-three.vercel.app">gitdrop-three.vercel.app</a>).</li>
+                <li><strong>Atherone 3D:</strong> Integrated Spline 3D viewport canvas into React, binding camera trajectories to GSAP ScrollTrigger for scrollytelling physics.</li>
+                <li><strong>Architecture Clones (Amazon, YouTube, Hyperpure, Blinkit, District):</strong> Reverse-engineered high-density commercial layouts without component libraries to master complex layout math, collapsible navigation hierarchies, and responsive state flows from first principles.</li>
             </ul>
         </div>
     </div>
@@ -414,20 +408,20 @@
     <div class="section">
         <div class="section-title">
             <span>Education & Academic Credentials</span>
-            <span class="tag">EDUCATION</span>
+            <span class="tag">ACADEMIC BACKGROUND</span>
         </div>
         <div class="two-col">
             <div class="edu-card">
                 <div class="edu-degree">Master of Computer Applications (MCA)</div>
                 <div class="edu-inst">First Year Student • Hyderabad, India</div>
-                <div class="edu-time">2025 – 2027 (Expected)</div>
-                <div style="font-size: 7.2pt; color: #475569; margin-top: 1.5px;">Advanced Web Architectures, Distributed Systems & AI Systems</div>
+                <div class="edu-time">2025 – 2027 (In Progress)</div>
+                <div style="font-size: 7.1pt; color: #475569; margin-top: 1px;">Focus: Distributed Software Architectures, AI Agent Workflows & Full-Stack Systems</div>
             </div>
             <div class="edu-card">
                 <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
-                <div class="edu-inst">Graduated with Distinction • Hyderabad, India</div>
+                <div class="edu-inst">Graduated with High Honors • Hyderabad, India</div>
                 <div class="edu-time">2022 – 2025</div>
-                <div style="font-size: 7.2pt; color: #475569; margin-top: 1.5px;">Core Software Engineering, Data Structures & Front-End Specialization</div>
+                <div style="font-size: 7.1pt; color: #475569; margin-top: 1px;">Foundations: Algorithms, Data Structures, Asynchronous JavaScript & Database Design</div>
             </div>
         </div>
     </div>

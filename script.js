@@ -903,7 +903,7 @@ document.addEventListener("DOMContentLoaded", () => {
             githubUrl: "https://github.com/lucky4-git1/rewritebot",
             liveUrl: "https://rewritebot-client.vercel.app/",
             auditDoc: null,
-            summary: "A high-performance, self-hostable alternative to commercial paraphrase tools with zero subscriptions, BYO-AI flexibility, and Turnitin-grade originality auditing. Architected with Fastify, React 18, and Redis queues, RewriteBot provides sub-50ms lexical tokenization and streaming semantic transformations.",
+            summary: "A high-performance, self-hostable alternative to commercial paraphrase tools with zero subscriptions, BYO-AI flexibility, and lexical originality auditing. Architected with Fastify, React 18, and Redis queues, RewriteBot provides sub-50ms lexical tokenization and streaming semantic transformations.",
             diagramHeadline: "FASTIFY REST / SSE STREAMING PIPELINE",
             stages: [
                 {
@@ -1641,26 +1641,26 @@ document.addEventListener("DOMContentLoaded", () => {
         hyperpure: {
             title: "Hyperpure UI/UX Clone",
             category: "clone",
-            badge: "UI/UX Clone",
+            badge: "UI Architecture",
             images: [
                 "images/hyperpure1.png",
                 "images/hyperpurecheckout.png",
                 "images/hyperpureorderplaced.png"
             ],
-            desc: "A complete UI recreation of the Hyperpure platform built using HTML, CSS, JavaScript and Bootstrap. The project includes responsive layouts, product sections, cart UI and checkout page design. It focuses on modern UI patterns and realistic e-commerce interface behavior.",
+            desc: "An architectural reproduction of Zomato's Hyperpure B2B platform. Built to master complex e-commerce layouts, dynamic multi-item cart state flows, and responsive desktop/mobile catalog views from scratch.",
             tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
             liveUrl: "https://lucky4-git1.github.io/Hyperpure/",
             gitUrl: "https://github.com/lucky4-git1/Hyperpure",
             highlights: [
-                "Complete UI recreation of Hyperpure website with product catalog and checkout flow",
-                "Dynamic cart functionality with live quantity adjustments and price calculations",
-                "Fully responsive design and realistic e-commerce interface behavior"
+                "Architectural reproduction of Hyperpure B2B e-commerce platform with catalog & checkout flow",
+                "Client-side cart state management with real-time quantity mutations and price calculations",
+                "Fully responsive multi-breakpoint layout developed without UI component libraries"
             ]
         },
         mutube: {
-            title: "MuTube personal media player",
+            title: "MuTube Media Player",
             category: "app",
-            badge: "JavaScript App",
+            badge: "Offline-First App",
             images: [
                 "images/mutube.png",
                 "images/mutubemodal.jpg",
@@ -1668,216 +1668,218 @@ document.addEventListener("DOMContentLoaded", () => {
                 "images/mutubeplaylist.jpeg",
                 "images/mutubeupload.jpeg"
             ],
-            desc: "A personal media player web app called MuTube built with HTML, CSS and JavaScript. It features a modern UI design with a dark theme, a responsive layout that works on all devices, and interactive controls for playing audio and video files. Users can create playlists, shuffle songs, and view media information. The app focuses on providing a sleek and user-friendly experience for managing and enjoying personal media collections, with persistent data storage using IndexedDB to save user playlists and preferences.",
+            desc: "A client-side media player engineered with vanilla JavaScript and the HTML5 Media API. Features zero-server offline playback, audio visualization themes, and persistent playlist storage using the browser's native IndexedDB.",
             tech: ["HTML", "CSS", "JavaScript", "Bootstrap", "IndexedDB"],
             liveUrl: "https://lucky4-git1.github.io/MuTube-media-player-v1.0/",
             gitUrl: "https://github.com/lucky4-git1/MuTube-media-player-v1.0.git",
             highlights: [
-                "Offline MP3 & MP4 media player with custom player controls and equalizer themes",
-                "Persistent client-side data storage using IndexedDB for playlists and user preferences",
-                "Interactive playlist creation, drag-and-drop, track shuffle, and dark theme UI"
+                "Zero-server client-side media player with HTML5 audio/video decoding and custom playback UI",
+                "Client-side persistence using native IndexedDB for playlists, media metadata, and user preferences",
+                "Interactive drag-and-drop playlist reordering, track shuffle, and responsive dark theme"
             ]
         },
         atherone: {
-            title: "Atherone 3D scrollytelling web-app made with spline",
+            title: "Atherone 3D Web-App",
             category: "app",
-            badge: "Experiments & 3D",
+            badge: "Creative Web & 3D",
             images: [
                 "images/atherone1.jpeg",
                 "images/atherone2.jpeg",
                 "images/atherone3.jpeg"
             ],
-            desc: "Web product design and development project. A 3D scrollytelling web-app made with Spline, showcasing a fictional space exploration company called Atherone. The app features interactive 3D models, smooth scrolling animations, and a modern design aesthetic. It serves as a portfolio piece demonstrating skills in 3D web development, user experience design, and creative storytelling through web technologies.",
+            desc: "An interactive 3D scrollytelling web experience built with React, GSAP ScrollTrigger, and Spline 3D. Explores fluid camera transitions, smooth physics-driven timeline animations, and modern digital brand storytelling.",
             tech: ["HTML", "React", "GSAP", "Spline", "TypeScript", "Tailwind CSS"],
             liveUrl: "https://atherone-scrolly-app.netlify.app/",
             gitUrl: "https://github.com/lucky4-git1/atherone.git",
             highlights: [
-                "Interactive 3D models integrated into React using Spline 3D viewport canvas",
-                "Smooth cinematic scrolling animations tied to GSAP ScrollTrigger",
-                "Deployed live on Netlify showcasing creative storytelling and modern aesthetics"
+                "Interactive 3D model canvas integrated into React using Spline 3D runtime",
+                "Cinematic camera trajectories and scrollytelling physics driven by GSAP ScrollTrigger",
+                "Production deployment on Netlify demonstrating creative development and spatial storytelling"
             ]
         },
         district: {
             title: "District UI/UX Clone",
             category: "clone",
-            badge: "UI/UX Clone",
+            badge: "UI Architecture",
             images: [
                 "images/district (1).png",
                 "images/district (2).png",
                 "images/district3.jpeg",
                 "images/district4.jpeg"
             ],
-            desc: "UI/UX recreation of District home page UI clone using pure HTML, CSS and JavaScript. Fully responsive and interactive clone with modern design and animations.",
+            desc: "Responsive event and nightlife portal interface. Engineered to study asymmetric card layout grids, CSS transitions, modal flows, and responsive breakpoint ergonomics.",
             tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
             liveUrl: "https://lucky4-git1.github.io/District-UI-clone/",
             gitUrl: "https://github.com/lucky4-git1/District-UI-clone.git",
             highlights: [
-                "Recreation of District lifestyle and event platform with micro-interactions",
-                "Fully responsive layout and navigation across mobile and desktop devices",
-                "Pure front-end engineering with clean modern aesthetics"
+                "Lifestyle and ticketing portal interface recreation featuring asymmetric layout grids",
+                "Responsive card micro-interactions, modal overlays, and clean state handling",
+                "Fluid layout adaptability across mobile, tablet, and desktop viewports"
             ]
         },
         youtube: {
             title: "YouTube UI/UX Clone",
             category: "clone",
-            badge: "UI/UX Clone",
+            badge: "UI Architecture",
             images: [
                 "images/yt1 (2).png",
                 "images/yt1 (1).png"
             ],
-            desc: "UI/UX recreation of YouTube home page UI clone using pure HTML, CSS and JavaScript. Fully responsive and interactive clone with modern design and animations. Features a collapsible sidebar, dynamic video browsing page with video player, and comments section.",
+            desc: "Recreation of YouTube's content feed and player UI. Features a collapsible dual-state sidebar, sticky glassmorphic navigation header, video grid hierarchy, and fluid search bar interactions.",
             tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
             liveUrl: "https://lucky4-git1.github.io/Youtube-UI-clone-/",
             gitUrl: "https://github.com/lucky4-git1/Youtube-UI-clone-.git",
             highlights: [
-                "Fully responsive YouTube video browsing layout with sticky glass navbar",
-                "Collapsible dual-state sidebar and dynamic video viewing interface",
-                "Hover video previews and search suggestion interactions"
+                "Responsive YouTube feed architecture with sticky glassmorphic navigation header",
+                "Collapsible dual-state sidebar navigation and responsive video card grid",
+                "Interactive search suggestions, hover preview states, and media player layout"
             ]
         },
         blinkit: {
             title: "Blinkit Clone",
             category: "clone",
-            badge: "UI/UX Clone",
+            badge: "UI Architecture",
             images: [
                 "images/blinkit1.jpeg",
                 "images/blinkit3.jpeg",
                 "images/blinkit2.jpeg"
             ],
-            desc: "UI recreation of Blinkit website using Bootstrap. Focus on responsive design and modern aesthetics. Fully optimized, easy to understand quick-commerce interface clone.",
+            desc: "Study in high-density instant commerce user interfaces. Built to replicate category navigation carousels, responsive item-card states, and fast checkout ergonomics with pure CSS and Bootstrap.",
             tech: ["HTML", "CSS", "Bootstrap", "JavaScript"],
             liveUrl: "https://lucky4-git1.github.io/Blinkit-UI-clone/",
             gitUrl: "https://github.com/lucky4-git1/Blinkit-UI-clone.git",
             highlights: [
-                "Optimized responsive layout recreating Blinkit quick-commerce homepage",
-                "Category carousels and quick-add product card interactions",
-                "Fast loading and mobile-first responsive architecture"
+                "High-density quick-commerce catalog layout with category carousel navigation",
+                "Interactive item counter states, instant cart drawer, and responsive product cards",
+                "Mobile-first responsive architecture optimized for minimal render overhead"
             ]
         },
         tspsc: {
             title: "TSPSC Clone",
             category: "clone",
-            badge: "UI/UX Clone",
+            badge: "UI Architecture",
             images: [
                 "images/tspschome.jpeg",
                 "images/tspsc landing pg.jpeg"
             ],
-            desc: "This is a UI clone of the TSPSC website made by me as a front-end project. It is coded in HTML, CSS, and Bootstrap. Focus on responsive design and modern portal aesthetics.",
+            desc: "Public service commission portal interface reproduction. Focused on accessible information architecture, structured table grids, and high-contrast design compliance.",
             tech: ["HTML", "CSS", "Bootstrap"],
             liveUrl: "https://lucky4-git1.github.io/Tspsc-UI-clone-/",
             gitUrl: "https://github.com/lucky4-git1/Tspsc-UI-clone-.git",
             highlights: [
-                "Government public service commission portal layout recreation",
-                "Responsive navigation, announcements feed, and candidate portal UI",
-                "Built with semantic HTML, CSS, and Bootstrap components"
+                "Public service commission portal reproduction focused on structured information architecture",
+                "Accessible navigation tables, alert tickers, and candidate examination feeds",
+                "Semantic HTML markup and clean CSS layout structure"
             ]
         },
         amazon: {
             title: "Amazon UI Clone",
             category: "clone",
-            badge: "UI/UX Clone",
+            badge: "UI Architecture",
             images: [
                 "images/amazon2.jpeg",
                 "images/Screenshot_6-2-2026_222837_lucky4-git1.github.io.jpeg"
             ],
-            desc: "UI recreation of Amazon website UI clone using pure HTML and CSS. Featuring multi-tier mega header, delivery selector, category banners, and responsive product grids.",
+            desc: "Pure CSS and semantic HTML recreation of Amazon's desktop interface. Reverse-engineered to master complex multi-tier dropdowns, delivery pickers, and responsive product grids without frameworks.",
             tech: ["HTML", "CSS"],
             liveUrl: "https://lucky4-git1.github.io/amazon-ui-clone/",
             gitUrl: "https://github.com/lucky4-git1/amazon-ui-clone.git",
             highlights: [
-                "Pure HTML & CSS recreation of Amazon e-commerce layout without frameworks",
-                "Complex header navigation, multi-column mega menu, and product grids",
-                "Accurate responsive breakpoints and layout precision"
+                "Framework-free HTML and CSS recreation of Amazon's multi-tier mega header and sub-navigation",
+                "Complex nested CSS hover menus, delivery location modals, and responsive layout math",
+                "Strict attention to semantic markup, spacing rhythm, and layout density"
             ]
         },
         cricket: {
             title: "TOP INDIAN CRICKETERS",
             category: "app",
-            badge: "Experiments",
+            badge: "Interactive Web",
             images: [
                 "images/cricket.jpeg",
                 "images/cricketcv.jpeg"
             ],
-            desc: "A modern cards list of famous Indian Cricketers with changing gradient background and live Wikipedia page link, and an about me section.",
+            desc: "Interactive profile card interface exploring dynamic animated gradient backgrounds, external reference deep-linking, and responsive component hierarchy.",
             tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
             liveUrl: "https://lucky4-git1.github.io/my-top-Indian-Cricketers-list/",
             gitUrl: "https://github.com/lucky4-git1/my-top-Indian-Cricketers-list",
             highlights: [
-                "Interactive athlete cards with dynamic animated gradient backgrounds",
-                "Live Wikipedia article links and profile information",
-                "Responsive card grid built with Bootstrap and JavaScript"
+                "Dynamic profile cards with interactive animated gradient backgrounds",
+                "Integrated encyclopedia reference deep-links and player statistics",
+                "Responsive card grid system built with clean modern front-end fundamentals"
             ]
         },
         simpleide: {
             title: "SimpleIDE",
             category: "ai",
-            badge: "AI Desktop Tool",
+            badge: "Desktop AI Agent",
             images: [],
-            desc: "SimpleIDE is an open-source AI-powered desktop IDE built with Electron, React, and Vite. It features an integrated AI agent, lightweight modern UI, and developer-focused workflows for rapid prototyping and productivity.",
+            desc: "SimpleIDE is an open-source desktop code editor and autonomous coding agent built with Electron, React, and Vite. Implements a secure contextBridge IPC conduit, AST diff inspection, automated unit tests, and human-in-the-loop file writes.",
             tech: ["Electron", "React", "Vite", "JavaScript", "AI Agent"],
             liveUrl: "https://github.com/lucky4-git1/SimpleIDE",
             gitUrl: "https://github.com/lucky4-git1/SimpleIDE",
             highlights: [
-                "Open-source AI-powered desktop code editor built on Electron & React",
-                "Integrated autonomous coding agent for rapid local developer productivity",
-                "Lightweight UI and modular developer workflow architecture"
+                "Open-source desktop code editor built on Electron 28, React 18, and Vite with 161 unit tests",
+                "Embedded 'Prime AI' autonomous agent running multi-step code plans through secure contextBridge IPC",
+                "Unified AST diff inspection, syntax lint validation, and safeStorage credential encryption"
             ]
         },
         rewritebot: {
             title: "RewriteBot",
             category: "ai",
-            badge: "AI Web App (Vercel)",
+            badge: "Production AI SaaS",
             images: [],
-            desc: "AI-powered writing and copy refactor tool deployed live on Vercel at rewritebot-client.vercel.app. Transforms text into clear, punchy, professional output.",
+            desc: "Privacy-first AI writing and semantic refactoring suite deployed in production on Vercel at rewritebot-client.vercel.app. Engineered with Fastify, React, and Redis for streaming lexical transforms, Flesch-Kincaid scoring, and originality auditing.",
             tech: ["TypeScript", "React", "Next.js", "Vercel", "AI"],
             liveUrl: "https://rewritebot-client.vercel.app",
             gitUrl: "https://github.com/lucky4-git1/rewritebot",
             highlights: [
-                "Deployed live in production on Vercel at rewritebot-client.vercel.app",
-                "Instant AI text refactoring with tone adjustments and copy optimization",
-                "Clean responsive interface built with TypeScript and Next.js"
+                "Production deployment on Vercel backed by Fastify and Redis streaming pipelines",
+                "Streaming semantic text refactoring with multi-mode tone adjustments and zero data retention",
+                "Flesch-Kincaid readability scoring and word-level Levenshtein similarity diffing"
             ]
         },
         gitdrop: {
             title: "Gitdrop",
             category: "ai",
-            badge: "Web App (Vercel)",
+            badge: "Web Application",
             images: [],
-            desc: "Web application built with TypeScript and deployed live on Vercel at gitdrop-three.vercel.app.",
+            desc: "Modern web application built with TypeScript and deployed in production on Vercel at gitdrop-three.vercel.app.",
             tech: ["TypeScript", "Next.js", "Vercel"],
             liveUrl: "https://gitdrop-three.vercel.app",
             gitUrl: "https://github.com/lucky4-git1/Gitdrop",
             highlights: [
-                "Deployed live on Vercel at gitdrop-three.vercel.app",
-                "Modern TypeScript web architecture with fast load times"
+                "Production deployment on Vercel with automated CI/CD pipeline",
+                "TypeScript architecture built for speed, responsiveness, and clean component state"
             ]
         },
         whatsappai: {
             title: "WhatsApp AI Automation",
             category: "ai",
-            badge: "AI Automation",
+            badge: "Intelligent Pipeline",
             images: [],
-            desc: "Automated WhatsApp workflow with AI integration for customer conversation and message handling. Built with TypeScript and Node.js.",
+            desc: "Enterprise WhatsApp automation infrastructure built in TypeScript and Node.js. Integrates with the official Meta WhatsApp Cloud API with cryptographic HMAC-SHA256 signature verification, multi-language intent classification, and CRM routing.",
             tech: ["TypeScript", "Node.js", "WhatsApp API", "AI"],
             liveUrl: "https://github.com/lucky4-git1/whatsapp-ai-automation",
             gitUrl: "https://github.com/lucky4-git1/whatsapp-ai-automation",
             highlights: [
-                "Autonomous WhatsApp message processing and customer conversation pipeline",
-                "Webhook-driven integration connecting to AI models for intelligent replies"
+                "Meta WhatsApp Business Cloud API integration with cryptographic HMAC-SHA256 payload verification",
+                "Multi-language intent classification engine and PostgreSQL CRM lead synchronization",
+                "Resilient webhook architecture with human takeover fallbacks and automated response templates"
             ]
         },
         ema: {
             title: "EMA (Email Market Automation)",
             category: "ai",
-            badge: "Marketing Pipeline",
+            badge: "Queue Pipeline",
             images: [],
-            desc: "Email marketing automation system built in TypeScript for campaign workflows and automated communications.",
+            desc: "High-throughput email marketing automation system written in TypeScript. Features scheduled batch workers, dynamic contact audience segmentation, and DNS deliverability monitoring (DKIM, SPF, DMARC).",
             tech: ["TypeScript", "Node.js", "Automation"],
             liveUrl: "https://github.com/lucky4-git1/EMA-email-market-automation",
             gitUrl: "https://github.com/lucky4-git1/EMA-email-market-automation",
             highlights: [
-                "Automated email marketing scheduling and campaign execution pipeline",
-                "TypeScript backend structured for reliable queue processing"
+                "TypeScript queue processing backend designed for reliable campaign scheduling and delivery",
+                "Dynamic audience segmentation engine with personalized template injection",
+                "Pre-flight DNS deliverability auditing verifying SPF, DKIM, and domain reputation"
             ]
         }
     };

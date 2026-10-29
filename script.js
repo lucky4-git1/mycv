@@ -2134,55 +2134,75 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (pct) pct.innerText = w;
             });
         } else {
-            // Subtle, performant staggered entrance reveal for the 4 bento cards
-            gsap.fromTo(skillCards,
-                { opacity: 0, y: 22 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.7,
-                    stagger: 0.08,
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: "#skills",
-                        start: "top 78%",
-                        once: true
+            // Unified, rock-solid entrance reveal & animated skill bars for #skills
+            let cardsAnimated = false;
+            const revealCards = () => {
+                if (cardsAnimated) return;
+                cardsAnimated = true;
+                gsap.fromTo(skillCards,
+                    { opacity: 0, y: 22 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.7,
+                        stagger: 0.08,
+                        ease: "power2.out"
                     }
-                }
-            );
+                );
+            };
 
-            // Animate skill bars and count up numbers smoothly when entering view
+            let barsAnimated = false;
+            const animateBars = () => {
+                if (barsAnimated) return;
+                barsAnimated = true;
+                skillBars.forEach((bar, idx) => {
+                    const targetWidth = bar.getAttribute("data-width") || "80%";
+                    const targetNum = parseInt(targetWidth, 10) || 80;
+                    const row = bar.closest(".skill-row");
+                    const pctEl = row ? row.querySelector(".skill-pct") : null;
+
+                    gsap.to(bar, {
+                        width: targetWidth,
+                        duration: 1.0,
+                        delay: (idx % 4) * 0.05 + Math.floor(idx / 4) * 0.08,
+                        ease: "power2.out"
+                    });
+
+                    if (pctEl) {
+                        const counterObj = { val: 0 };
+                        gsap.to(counterObj, {
+                            val: targetNum,
+                            duration: 1.0,
+                            delay: (idx % 4) * 0.05 + Math.floor(idx / 4) * 0.08,
+                            ease: "power2.out",
+                            onUpdate: () => {
+                                pctEl.innerText = `${Math.round(counterObj.val)}%`;
+                            }
+                        });
+                    }
+                });
+            };
+
             ScrollTrigger.create({
                 trigger: "#skills",
-                start: "top 72%",
+                start: "top 78%",
                 once: true,
+                invalidateOnRefresh: true,
                 onEnter: () => {
-                    skillBars.forEach((bar, idx) => {
-                        const targetWidth = bar.getAttribute("data-width") || "80%";
-                        const targetNum = parseInt(targetWidth, 10) || 80;
-                        const row = bar.closest(".skill-row");
-                        const pctEl = row ? row.querySelector(".skill-pct") : null;
-
-                        gsap.to(bar, {
-                            width: targetWidth,
-                            duration: 1.1,
-                            delay: (idx % 4) * 0.06 + Math.floor(idx / 4) * 0.1,
-                            ease: "power2.out"
-                        });
-
-                        if (pctEl) {
-                            const counterObj = { val: 0 };
-                            gsap.to(counterObj, {
-                                val: targetNum,
-                                duration: 1.1,
-                                delay: (idx % 4) * 0.06 + Math.floor(idx / 4) * 0.1,
-                                ease: "power2.out",
-                                onUpdate: () => {
-                                    pctEl.innerText = `${Math.round(counterObj.val)}%`;
-                                }
-                            });
-                        }
-                    });
+                    revealCards();
+                    animateBars();
+                },
+                onToggle: (self) => {
+                    if (self.isActive || self.progress > 0) {
+                        revealCards();
+                        animateBars();
+                    }
+                },
+                onRefresh: (self) => {
+                    if (self.progress > 0) {
+                        revealCards();
+                        animateBars();
+                    }
                 }
             });
         }
@@ -2567,14 +2587,23 @@ document.addEventListener("DOMContentLoaded", () => {
         let H = 0;
         let dpr = 1;
 
+        let curW = 0;
+        let curH = 0;
+
         const resize = () => {
             const rect = root.getBoundingClientRect();
-            W = Math.round(root.offsetWidth || rect.width || window.innerWidth);
-            H = Math.round(root.offsetHeight || rect.height || 800);
+            const newW = Math.round(root.offsetWidth || rect.width || window.innerWidth);
+            const newH = Math.round(root.offsetHeight || rect.height || 800);
             dpr = Math.min(1.25, window.devicePixelRatio || 1);
-            if (W > 0 && H > 0) {
-                canvas.width = Math.round(W * dpr);
-                canvas.height = Math.round(H * dpr);
+            if (Math.abs(newW - curW) > 6 || Math.abs(newH - curH) > 6) {
+                curW = newW;
+                curH = newH;
+                W = newW;
+                H = newH;
+                if (W > 0 && H > 0) {
+                    canvas.width = Math.round(W * dpr);
+                    canvas.height = Math.round(H * dpr);
+                }
             }
         };
         resize();
@@ -3415,26 +3444,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
 
-        // Skills Bento Grid Cards Reveal
-        gsap.utils.toArray("#skills .grid > div").forEach((bentoCard, idx) => {
-            gsap.fromTo(bentoCard,
-                { opacity: 0, y: 26, scale: 0.98 },
-                {
-                    scrollTrigger: {
-                        trigger: bentoCard,
-                        start: "top 85%",
-                        once: true
-                    },
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    duration: 0.9,
-                    delay: (idx % 3) * 0.07,
-                    ease: "power3.out"
-                }
-            );
-        });
-
         // Journey Timeline Animated Line Draw & Glowing Bead Trajectory
         const timelineProgress = document.getElementById("timelineProgressLine");
         const timelineHead = document.getElementById("timelineProgressHead");
@@ -3473,23 +3482,30 @@ document.addEventListener("DOMContentLoaded", () => {
             const node = step.querySelector(".timeline-node");
 
             // Set initial offscreen states
-            if (leftCol) gsap.set(leftCol, { opacity: 0, x: -35, y: 15 });
-            if (rightCol) gsap.set(rightCol, { opacity: 0, x: 35, y: 15 });
+            if (leftCol) gsap.set(leftCol, { opacity: 0, x: -28, y: 12 });
+            if (rightCol) gsap.set(rightCol, { opacity: 0, x: 28, y: 12 });
             if (node) gsap.set(node, { opacity: 0, scale: 0.3, xPercent: -50, yPercent: -50 });
+
+            let revealed = false;
+            const reveal = () => {
+                if (revealed) return;
+                revealed = true;
+                if (leftCol) gsap.to(leftCol, { opacity: 1, x: 0, y: 0, duration: 0.75, ease: "power3.out" });
+                if (rightCol) gsap.to(rightCol, { opacity: 1, x: 0, y: 0, duration: 0.75, delay: 0.06, ease: "power3.out" });
+                if (node) gsap.to(node, { opacity: 1, scale: 1, xPercent: -50, yPercent: -50, duration: 0.65, delay: 0.04, ease: "back.out(1.7)" });
+            };
 
             ScrollTrigger.create({
                 trigger: step,
-                start: "top 72%",
+                start: "top 80%",
+                once: true,
                 invalidateOnRefresh: true,
-                onEnter: () => {
-                    if (leftCol) gsap.to(leftCol, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: "power3.out" });
-                    if (rightCol) gsap.to(rightCol, { opacity: 1, x: 0, y: 0, duration: 0.8, delay: 0.08, ease: "power3.out" });
-                    if (node) gsap.to(node, { opacity: 1, scale: 1, xPercent: -50, yPercent: -50, duration: 0.7, delay: 0.04, ease: "back.out(1.8)" });
+                onEnter: reveal,
+                onToggle: (self) => {
+                    if (self.isActive || self.progress > 0) reveal();
                 },
-                onLeaveBack: () => {
-                    if (leftCol) gsap.to(leftCol, { opacity: 0, x: -35, y: 15, duration: 0.5, ease: "power2.in" });
-                    if (rightCol) gsap.to(rightCol, { opacity: 0, x: 35, y: 15, duration: 0.5, ease: "power2.in" });
-                    if (node) gsap.to(node, { opacity: 0, scale: 0.3, xPercent: -50, yPercent: -50, duration: 0.4, ease: "power2.in" });
+                onRefresh: (self) => {
+                    if (self.progress > 0) reveal();
                 }
             });
 

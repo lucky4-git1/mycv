@@ -1,20 +1,50 @@
 
 /* Global Viewport & Mobile Overflow Protection */
 html {
-  font-size: 15px; /* Subtle proportional reduction across all elements */
+  font-size: 14px; /* Crisp compact proportional scale across viewports */
   background-color: var(--color-bg);
   -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 64px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 639px) {
   html {
-    font-size: 14px;
+    font-size: 13.5px;
   }
 }
 
-@media (min-width: 1536px) {
+@media (min-width: 1024px) and (max-width: 1400px) {
   html {
-    font-size: 15.5px;
+    font-size: 13px; /* Optimised for 1280x720 and 1366x768 laptops so every 100vh section fits cleanly */
+  }
+}
+
+@media (min-width: 1401px) and (max-width: 1919px) {
+  html {
+    font-size: 14.25px;
+  }
+}
+
+@media (min-width: 1920px) {
+  html {
+    font-size: 15.5px; /* Balanced scale on 1080p/1440p/4K monitors */
+  }
+}
+
+/* Full-Viewport Section Framing (safe min-h-[100svh] avoids clipping on short screens) */
+.section-100vh {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-margin-top: 60px;
+}
+
+@media (max-width: 767px) {
+  .section-100vh {
+    min-height: 100svh;
+    justify-content: center;
   }
 }
 
@@ -220,13 +250,13 @@ html.dark .grid-bg {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   font-family: var(--font-mono);
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   letter-spacing: -0.01em;
-  padding: 0.75rem 1.4rem;
+  padding: 0.625rem 1.15rem;
   background-color: var(--color-card);
   color: var(--color-text);
   border: 3px solid var(--color-border);
@@ -558,12 +588,12 @@ html.dark .grid-bg {
 .marquee-display-term {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(2rem, 4.8vw, 4.25rem);
-  line-height: 1.1;
+  font-size: clamp(1.65rem, 3.8vw, 3.4rem);
+  line-height: 1.08;
   letter-spacing: -0.035em;
   color: #0C0D10;
   display: inline-block;
-  padding: 0 0.25rem;
+  padding: 0 0.2rem;
 }
 
 .marquee-outline-text {
@@ -732,12 +762,12 @@ html.dark .grid-bg {
 
 .diff-viewer {
   font-family: var(--font-mono);
-  font-size: 0.80rem;
-  line-height: 1.6;
+  font-size: 0.75rem;
+  line-height: 1.45;
   background-color: #0F1117;
   overflow-x: auto;
-  min-height: 220px;
-  max-height: 380px;
+  min-height: 72px;
+  max-height: 200px;
 }
 
 .diff-line {
@@ -917,6 +947,16 @@ html.dark .grid-bg {
 
 .carousel-img.active {
   display: block;
+}
+
+#projects .brutal-badge {
+  font-size: 0.68rem;
+  padding: 0.2rem 0.45rem;
+}
+
+#projects .brutal-btn {
+  padding: 0.42rem 0.85rem;
+  font-size: 0.74rem;
 }
 
 /* ─── Responsive & Spacing Fixes ─── */
@@ -1360,17 +1400,10 @@ html.dark .timeline-node {
   box-shadow: 0 0 24px rgba(228, 255, 0, 0.85);
 }
 
-/* Ultra-smooth hardware-accelerated reveals */
-.gs-section-header,
-.about-metric-card,
-#aboutPhotoCard,
-#aboutTextCol,
-.project-card-wrap,
-.timeline-step,
+/* Hardware-accelerated active timeline elements */
 .timeline-left-col,
 .timeline-right-col,
 .timeline-node {
-  will-change: transform, opacity;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }

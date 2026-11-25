@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K. SRIYUTH — AI-Enabled Software Engineer & Creative Developer</title>
     <meta name="description" content="Portfolio of K. Sriyuth — AI-Enabled Software Engineer & Creative Developer based in Hyderabad, India. Specializing in Generative AI systems, full-stack web applications, desktop developer tools, and immersive digital experiences.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23e4ff00' stroke='%23121316' stroke-width='6'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-weight='900' font-size='28' fill='%23121316'%3EKS%3C/text%3E%3C/svg%3E">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -125,7 +126,7 @@
             <!-- Media Carousel -->
             <div class="relative bg-black brutal-border-b">
                 <div class="carousel-viewport h-[300px] md:h-[460px] flex items-center justify-center">
-                    <img id="modalSliderImg" src="" alt="Project Screenshot" class="w-full h-full object-contain">
+                    <img id="modalSliderImg" alt="Project Screenshot" class="w-full h-full object-contain" style="display: none;">
                 </div>
                 <!-- Carousel Controls -->
                 <div class="absolute bottom-4 right-4 flex items-center gap-2 z-10">
@@ -160,17 +161,17 @@
     </div>
 
     <!-- Navigation Header -->
-    <nav class="fixed top-0 left-0 w-full z-50 bg-bg brutal-border-b px-3 sm:px-6 md:px-8 py-2.5 sm:py-3.5 flex justify-between items-center transition-colors">
-        <a href="#hero" class="flex items-center gap-3 hover-target group">
-            <span class="w-9 h-9 bg-a1 brutal-border flex items-center justify-center font-black text-black text-lg group-hover:rotate-6 transition-transform">KS</span>
+    <nav class="fixed top-0 left-0 w-full z-50 bg-bg brutal-border-b px-3 sm:px-6 md:px-8 py-2 sm:py-2.5 flex justify-between items-center transition-colors">
+        <a href="#hero" class="flex items-center gap-2.5 hover-target group">
+            <span class="w-8 h-8 bg-a1 brutal-border flex items-center justify-center font-black text-black text-base group-hover:rotate-6 transition-transform">KS</span>
             <div class="flex flex-col">
-                <span class="text-xl font-black uppercase tracking-tighter leading-none">SRIYUTH.</span>
-                <span class="font-mono-label text-[10px] font-bold text-slate-500 dark:text-slate-400">AI ENGINEER & CREATIVE DEV</span>
+                <span class="text-lg font-black uppercase tracking-tighter leading-none">SRIYUTH.</span>
+                <span class="font-mono-label text-[9px] font-bold text-slate-500 dark:text-slate-400">AI ENGINEER & CREATIVE DEV</span>
             </div>
         </a>
 
         <!-- Desktop Links -->
-        <div class="hidden lg:flex items-center gap-6 font-mono-label font-bold text-sm">
+        <div class="hidden lg:flex items-center gap-5 font-mono-label font-bold text-xs xl:text-sm">
             <a href="#about" class="hover-target hover:text-a2 transition-colors">/ABOUT</a>
             <a href="#automations" class="hover-target hover:text-a3 transition-colors">/SYSTEMS</a>
             <a href="#projects" class="hover-target hover:text-a4 transition-colors">/PROJECTS</a>
@@ -180,28 +181,28 @@
         </div>
 
         <!-- Action Controls -->
-        <div class="flex items-center gap-2.5">
+        <div class="flex items-center gap-2">
             <!-- Ctrl+K Quick Trigger -->
-            <button id="cmdTrigger" class="hidden sm:inline-flex items-center gap-2 font-mono-label text-xs font-bold px-3 py-2 bg-card brutal-border brutal-shadow-sm hover-target" aria-label="Open command palette">
-                <i class="ph-bold ph-command text-sm"></i>
+            <button id="cmdTrigger" class="hidden sm:inline-flex items-center gap-1.5 font-mono-label text-[11px] font-bold px-2.5 py-1.5 bg-card brutal-border brutal-shadow-sm hover-target" aria-label="Open command palette">
+                <i class="ph-bold ph-command text-xs"></i>
                 <span>CMD</span>
-                <kbd class="px-1.5 py-0.5 bg-gray dark:bg-card border border-border text-[10px]">CTRL+K</kbd>
+                <kbd class="px-1 py-0.5 bg-gray dark:bg-card border border-border text-[9px]">CTRL+K</kbd>
             </button>
 
             <!-- Sound FX Toggle -->
-            <button id="soundToggle" class="icon-btn w-10 h-10 hover-target" aria-label="Toggle Sound Effects">
-                <i id="soundIcon" class="ph-bold ph-speaker-slash text-xl opacity-60"></i>
+            <button id="soundToggle" class="icon-btn w-9 h-9 hover-target" aria-label="Toggle Sound Effects">
+                <i id="soundIcon" class="ph-bold ph-speaker-slash text-lg opacity-60"></i>
             </button>
 
             <!-- Theme Toggle -->
-            <button id="themeToggle" class="icon-btn w-10 h-10 bg-a1 text-black hover-target" aria-label="Toggle Dark / Light Mode">
-                <i class="ph-bold ph-moon-stars text-xl dark:hidden"></i>
-                <i class="ph-bold ph-sun text-xl hidden dark:block"></i>
+            <button id="themeToggle" class="icon-btn w-9 h-9 bg-a1 text-black hover-target" aria-label="Toggle Dark / Light Mode">
+                <i class="ph-bold ph-moon-stars text-lg dark:hidden"></i>
+                <i class="ph-bold ph-sun text-lg hidden dark:block"></i>
             </button>
 
             <!-- Mobile Hamburger -->
-            <button id="mobileMenuBtn" class="lg:hidden icon-btn w-10 h-10 bg-text text-bg hover-target" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
-                <i class="ph-bold ph-list text-xl"></i>
+            <button id="mobileMenuBtn" class="lg:hidden icon-btn w-9 h-9 bg-text text-bg hover-target" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
+                <i class="ph-bold ph-list text-lg"></i>
             </button>
         </div>
     </nav>
@@ -229,51 +230,51 @@
     <div id="hero-cinematic-stage" class="relative">
         <div id="hero-pinned-viewport" class="relative w-full min-h-screen overflow-hidden">
             
-            <section id="hero" class="relative min-h-[100svh] pt-24 sm:pt-28 pb-12 sm:pb-16 flex flex-col justify-center grid-bg px-4 sm:px-6 md:px-8 border-b-4 border-border">
+            <section id="hero" class="section-100vh relative pt-14 sm:pt-20 pb-5 sm:pb-10 grid-bg px-4 sm:px-6 md:px-8 border-b-4 border-border">
                 
-                <div class="max-w-[1360px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="max-w-[1320px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-center">
                     
                                         <!-- Left Column: Bio & Core Pitch -->
                     <div id="heroLeftCol" class="lg:col-span-7 flex flex-col items-start hero-anim">
-                        <h1 id="heroHeadline" class="text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-black leading-[0.95] sm:leading-[0.92] tracking-tight sm:tracking-tighter mb-4 sm:mb-6 text-shadow-solid">
+                        <h1 id="heroHeadline" class="text-3xl sm:text-6xl md:text-7xl lg:text-[5.25rem] xl:text-[6rem] font-black leading-[0.94] tracking-tight sm:tracking-tighter mb-2 sm:mb-4 text-shadow-solid">
                             K. SRIYUTH.
                         </h1>
 
                         <!-- Crisp Multi-Role Badges -->
-                        <div id="heroRoleBadges" class="flex flex-wrap gap-2.5 mb-8">
-                            <span class="hero-role-badge brutal-badge badge-coral text-xs md:text-sm px-3.5 py-1.5">AI-ENABLED SOFTWARE ENGINEER</span>
-                            <span class="hero-role-badge brutal-badge badge-cobalt text-xs md:text-sm px-3.5 py-1.5">CREATIVE FULL-STACK DEVELOPER</span>
+                        <div id="heroRoleBadges" class="flex flex-wrap gap-1.5 sm:gap-2 mb-2.5 sm:mb-5">
+                            <span class="hero-role-badge brutal-badge badge-coral text-[10px] sm:text-xs px-2.5 sm:px-3 py-1">AI-ENABLED SOFTWARE ENGINEER</span>
+                            <span class="hero-role-badge brutal-badge badge-cobalt text-[10px] sm:text-xs px-2.5 sm:px-3 py-1">CREATIVE FULL-STACK DEVELOPER</span>
                         </div>
 
-                        <p id="heroBio" class="font-mono-label text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed mb-6 sm:mb-10">
+                        <p id="heroBio" class="font-mono-label text-[11px] sm:text-sm md:text-base text-slate-700 dark:text-slate-300 max-w-2xl leading-snug sm:leading-relaxed mb-3.5 sm:mb-6">
                             I build intelligent web applications, desktop developer tools, and tactile digital experiences. Using Generative AI to accelerate prototyping, debugging, and systems design, I take full ownership of the underlying code, architecture, and production quality.
                         </p>
 
                         <!-- Call to Action Buttons with Instant Fallback -->
-                        <div id="heroCtas" class="w-full flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-10">
-                            <a href="#projects" class="brutal-btn brutal-btn-primary hover-target flex items-center gap-2">
-                                <i class="ph-bold ph-diamonds-four text-lg"></i> EXPLORE WORK (12)
+                        <div id="heroCtas" class="w-full flex flex-row flex-wrap items-center gap-2 sm:gap-3 mb-3.5 sm:mb-6">
+                            <a href="#projects" class="brutal-btn brutal-btn-primary hover-target flex items-center gap-1.5 text-[11px] sm:text-xs">
+                                <i class="ph-bold ph-diamonds-four text-sm sm:text-base"></i> EXPLORE WORK (12)
                             </a>
-                            <a href="#automations" class="brutal-btn brutal-btn-coral hover-target flex items-center gap-2">
-                                <i class="ph-bold ph-lightning text-lg"></i> INSPECT AI ARCHITECTURES
+                            <a href="#automations" class="brutal-btn brutal-btn-coral hover-target flex items-center gap-1.5 text-[11px] sm:text-xs">
+                                <i class="ph-bold ph-lightning text-sm sm:text-base"></i> AI ARCHITECTURES
                             </a>
-                            <a href="K_Sriyuth_Resume.pdf" target="_blank" rel="noopener noreferrer" class="brutal-btn hover-target flex items-center gap-2">
-                                <i class="ph-bold ph-download-simple text-lg"></i> RESUME (.PDF)
+                            <a href="K_Sriyuth_Resume.pdf" target="_blank" rel="noopener noreferrer" class="brutal-btn hover-target flex items-center gap-1.5 text-[11px] sm:text-xs">
+                                <i class="ph-bold ph-download-simple text-sm sm:text-base"></i> RESUME (.PDF)
                             </a>
                         </div>
 
                         <!-- Live Meta Bar -->
-                        <div id="heroMetaBar" class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-4 pt-4 sm:pt-6 border-t-2 border-border font-mono-label text-xs font-bold text-slate-600 dark:text-slate-400">
-                            <div class="flex items-center gap-2">
-                                <i class="ph-bold ph-map-pin text-a2 text-base"></i>
+                        <div id="heroMetaBar" class="w-full flex flex-wrap items-center justify-between gap-2 sm:gap-4 pt-2.5 sm:pt-4 border-t-2 border-border font-mono-label text-[10px] sm:text-xs font-bold text-slate-600 dark:text-slate-400">
+                            <div class="flex items-center gap-1.5">
+                                <i class="ph-bold ph-map-pin text-a2 text-sm"></i>
                                 <span>HYDERABAD, INDIA</span>
                             </div>
-                            <div class="flex items-center gap-2">
-                                <i class="ph-bold ph-clock text-a3 text-base"></i>
+                            <div class="flex items-center gap-1.5">
+                                <i class="ph-bold ph-clock text-a3 text-sm"></i>
                                 <span>IST: <strong id="currentTime" class="text-text">00:00:00</strong></span>
                             </div>
-                            <div class="flex items-center gap-2">
-                                <i class="ph-bold ph-code text-a4 text-base"></i>
+                            <div class="flex items-center gap-1.5">
+                                <i class="ph-bold ph-code text-a4 text-sm"></i>
                                 <span>AI SYSTEMS & FULL-STACK ENG</span>
                             </div>
                         </div>
@@ -284,28 +285,28 @@
                         <div class="stage-container">
                             
                             <!-- Stage Switcher Toolbar -->
-                            <div id="stageToolbar" class="p-3 bg-gray dark:bg-card border-b-2 border-border flex items-center justify-between relative z-20">
-                                <div class="flex items-center gap-2">
-                                    <span class="w-3 h-3 bg-a2 rounded-full border border-border"></span>
-                                    <span class="w-3 h-3 bg-a1 rounded-full border border-border"></span>
-                                    <span class="w-3 h-3 bg-a4 rounded-full border border-border"></span>
-                                    <span class="font-mono-label text-xs font-bold uppercase ml-2">ROBOTICS LAB // STAGE</span>
+                            <div id="stageToolbar" class="p-2.5 bg-gray dark:bg-card border-b-2 border-border flex items-center justify-between relative z-20">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 bg-a2 rounded-full border border-border"></span>
+                                    <span class="w-2.5 h-2.5 bg-a1 rounded-full border border-border"></span>
+                                    <span class="w-2.5 h-2.5 bg-a4 rounded-full border border-border"></span>
+                                    <span class="font-mono-label text-[11px] font-bold uppercase ml-1.5">ROBOTICS LAB // STAGE</span>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse border border-border"></span>
-                                    <span class="font-mono-label text-[11px] font-bold text-slate-500 dark:text-slate-400">FEED: ACTIVE</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse border border-border"></span>
+                                    <span class="font-mono-label text-[10px] font-bold text-slate-500 dark:text-slate-400">FEED: ACTIVE</span>
                                 </div>
                             </div>
 
                             <!-- Mode 1: Authentic Video Loop Destination Aperture -->
-                            <div id="heroVideoWrapper" class="relative aspect-[16/10] sm:aspect-square md:aspect-[4/3] bg-black overflow-hidden z-10">
+                            <div id="heroVideoWrapper" class="relative aspect-[16/9] sm:aspect-[4/3] max-h-[24vh] sm:max-h-[38vh] lg:max-h-[46vh] bg-black overflow-hidden z-10">
                                 <!-- The morphing video shell docks directly into this bounding box -->
                             </div>
 
                             <!-- Spline 3D removed from hero -->
 
                             <!-- Stage Footer Caption -->
-                            <div id="stageCaption" class="p-3 bg-card font-mono-label text-xs text-center border-t-2 border-border flex justify-between items-center px-4 relative z-20">
+                            <div id="stageCaption" class="p-2.5 bg-card font-mono-label text-[11px] text-center border-t-2 border-border flex justify-between items-center px-3.5 relative z-20">
                                 <span class="text-slate-500 font-bold">K. SRIYUTH LABS</span>
                                 <span class="text-a3 font-bold">VERIFIED REPO ASSET</span>
                             </div>
@@ -535,23 +536,23 @@
     <!-- ========================================================
          ABOUT & PHILOSOPHY: Real Identity & High Metrics
          ======================================================== -->
-    <section id="about" class="py-12 sm:py-20 px-4 sm:px-6 md:px-8 max-w-[1360px] mx-auto overflow-hidden relative">
+    <section id="about" class="section-100vh py-10 sm:py-14 px-4 sm:px-6 md:px-8 max-w-[1320px] mx-auto overflow-hidden relative">
         <!-- CMatrix Digital Rain Canvas Background (Subtle cybernetic texture) -->
         <canvas id="aboutMatrixCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-25 dark:opacity-35" aria-hidden="true"></canvas>
 
-        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
             
             <!-- Left: Real Photo Card -->
             <div id="aboutPhotoCard" class="lg:col-span-5 flex flex-col items-center">
-                <div class="about-card-tilt-wrap w-full max-w-[440px] bg-card brutal-border brutal-shadow p-4 relative group hover-target transition-all duration-300">
+                <div class="about-card-tilt-wrap w-full max-w-[280px] sm:max-w-[330px] lg:max-w-[360px] bg-card brutal-border brutal-shadow p-3 relative group hover-target transition-all duration-300">
                     <div class="aspect-[4/5] overflow-hidden brutal-border relative bg-gray">
                         <img src="images/profile.jpeg" alt="K. Sriyuth Portrait" class="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-500">
                         <!-- Neo-Brutalist Corner Stamp -->
-                        <div class="absolute bottom-3 right-3 bg-a1 text-black font-mono-label font-bold text-xs px-3 py-1 brutal-border transform -rotate-3">
+                        <div class="absolute bottom-2.5 right-2.5 bg-a1 text-black font-mono-label font-bold text-[11px] px-2.5 py-1 brutal-border transform -rotate-3">
                             K. SRIYUTH • HYD
                         </div>
                     </div>
-                    <div class="mt-4 pt-3 border-t-2 border-border flex justify-between items-center font-mono-label text-xs font-bold">
+                    <div class="mt-3 pt-2.5 border-t-2 border-border flex justify-between items-center font-mono-label text-[11px] font-bold">
                         <span>EST. 2022 ➔ PRESENT</span>
                         <span class="text-a2">MCA FIRST YEAR</span>
                     </div>
@@ -560,49 +561,45 @@
 
             <!-- Right: Authentic Narrative & Metrics -->
             <div id="aboutTextCol" class="lg:col-span-7 flex flex-col">
-                <div class="flex items-center gap-3 mb-4">
+                <div class="flex items-center gap-2.5 mb-2.5">
                     <span class="brutal-badge badge-violet">ENGINEERING PHILOSOPHY</span>
                     <span class="font-mono-label text-xs font-bold text-slate-500">[ IDENTITY ]</span>
                 </div>
 
-                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-3 sm:mb-4 leading-tight">ENGINEERING INTELLIGENT SYSTEMS & TACTILE UIs.</h2>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-black mb-2.5 sm:mb-3 leading-tight">ENGINEERING INTELLIGENT SYSTEMS & TACTILE UIs.</h2>
 
-                <p class="text-xl md:text-2xl font-bold leading-tight mb-6 text-text">
+                <p class="text-base sm:text-lg md:text-xl font-bold leading-snug mb-3 sm:mb-4 text-text">
                     "I build software at the intersection of rigorous engineering, practical Generative AI, and creative craft. AI accelerates my prototyping and iteration, while sound architectural discipline guarantees production reliability."
                 </p>
 
-                <p class="font-mono-label text-base text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
+                <p class="font-mono-label text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed mb-3">
                     Based in Hyderabad, India, I developed deep software fundamentals by dissecting high-scale web platforms—such as Amazon, YouTube, and Zomato Hyperpure—mastering DOM mechanics, asynchronous data flows, and performance constraints from first principles.
                 </p>
 
-                <p class="font-mono-label text-base text-slate-700 dark:text-slate-300 leading-relaxed mb-8">
+                <p class="font-mono-label text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed mb-5">
                     Today, my engineering spans the full product lifecycle: architecting desktop developer tools like <strong>SimpleIDE</strong> (Electron + React + AI Agent), building LLM writing suites like <strong>RewriteBot</strong>, wiring webhook automation engines, and deploying production web systems across Vercel and Netlify.
                 </p>
 
                 <!-- 4 Metrics Grid -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t-4 border-border">
-                    <div class="about-metric-card p-4 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
-                        <div class="text-4xl md:text-5xl font-black number-counter text-a3" data-target="32" data-suffix="+">32+</div>
-                        <div class="font-mono-label text-xs font-bold uppercase mt-1">Public Repos</div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t-4 border-border">
+                    <div class="about-metric-card p-3 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
+                        <div class="text-2xl sm:text-3xl md:text-4xl font-black number-counter text-a3" data-target="32" data-suffix="+">32+</div>
+                        <div class="font-mono-label text-[11px] font-bold uppercase mt-1">Public Repos</div>
                     </div>
-                    <div class="about-metric-card p-4 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
-                        <div class="text-4xl md:text-5xl font-black number-counter text-a2" data-target="161" data-suffix="">161</div>
-                        <div class="font-mono-label text-xs font-bold uppercase mt-1">Unit Tests (IDE)</div>
+                    <div class="about-metric-card p-3 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
+                        <div class="text-2xl sm:text-3xl md:text-4xl font-black number-counter text-a2" data-target="161" data-suffix="">161</div>
+                        <div class="font-mono-label text-[11px] font-bold uppercase mt-1">Unit Tests (IDE)</div>
                     </div>
-                    <div class="about-metric-card p-4 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
-                        <div class="text-4xl md:text-5xl font-black number-counter text-a4" data-target="100" data-suffix="%">100%</div>
-                        <div class="font-mono-label text-xs font-bold uppercase mt-1">Full-Stack & AI</div>
+                    <div class="about-metric-card p-3 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
+                        <div class="text-2xl sm:text-3xl md:text-4xl font-black number-counter text-a4" data-target="100" data-suffix="%">100%</div>
+                        <div class="font-mono-label text-[11px] font-bold uppercase mt-1">Full-Stack & AI</div>
                     </div>
-                    <div class="about-metric-card p-4 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
-                        <div class="text-4xl md:text-5xl font-black number-counter text-a1" data-target="2026" data-suffix="">2026</div>
-                        <div class="font-mono-label text-xs font-bold uppercase mt-1">MCA Student</div>
+                    <div class="about-metric-card p-3 bg-card brutal-border brutal-shadow hover-target transition-transform duration-200 hover:-translate-y-1">
+                        <div class="text-2xl sm:text-3xl md:text-4xl font-black number-counter text-a1" data-target="2026" data-suffix="">2026</div>
+                        <div class="font-mono-label text-[11px] font-bold uppercase mt-1">MCA Student</div>
                     </div>
                 </div>
             </div>
-        </div>
-
-            </div>
-
         </div>
     </section>
 
@@ -613,80 +610,80 @@
          Workflow Explorer, Live Bounded AST Refactoring Sandbox,
          Unified Diff Inspector & Progressive Project Switching.
          ======================================================== -->
-    <section id="automations" class="py-10 sm:py-14 px-4 sm:px-6 md:px-8 border-t-4 border-b-4 border-border bg-bg-alt relative overflow-hidden" aria-label="AI Systems Architecture & Engineering Exhibit">
-        <div class="max-w-[1360px] mx-auto">
+    <section id="automations" class="section-100vh py-5 sm:py-6 px-4 sm:px-6 md:px-8 border-t-4 border-b-4 border-border bg-bg-alt relative overflow-hidden" aria-label="AI Systems Architecture & Engineering Exhibit">
+        <div class="max-w-[1320px] w-full mx-auto">
             
             <!-- Section Header: Brutalist Editorial -->
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-6 pb-4 border-b-2 border-border gs-section-header">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-3 pb-2 border-b-2 border-border gs-section-header">
                 <div>
-                    <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <div class="flex flex-wrap items-center gap-2 mb-1">
                         <span class="brutal-badge badge-coral">SIGNATURE EXHIBIT // 02</span>
-                        <span class="font-mono-label text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider whitespace-nowrap">[ VERIFIED ARCHITECTURE & BOUNDED SANDBOX ]</span>
+                        <span class="font-mono-label text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">[ VERIFIED ARCHITECTURE & BOUNDED SANDBOX ]</span>
                     </div>
-                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-text">
+                    <h2 class="text-2xl sm:text-3xl font-black tracking-tight text-text">
                         AI SYSTEMS ARCHITECTURE.
                     </h2>
                 </div>
-                <div class="max-w-xl mt-3 lg:mt-0 font-mono-label text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                <div class="max-w-xl mt-1.5 lg:mt-0 font-mono-label text-[11px] text-slate-600 dark:text-slate-400 leading-snug">
                     Interactive architectural demonstrations of verified software I've engineered: desktop coding agents with secure IPC boundaries, Fastify paraphrase suites with semantic diffing, and webhook automation routers.
                 </div>
             </div>
 
             <!-- Project Selector Ribbon: Progressive Disclosure -->
-            <div class="mb-5">
-                <div class="flex items-center justify-between mb-2.5">
-                    <span class="font-mono text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
-                        <i class="ph-bold ph-stack text-sm text-accent-1"></i> SELECT ARCHITECTURE EXHIBIT:
+            <div class="mb-2.5">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="font-mono text-[10px] font-bold uppercase text-slate-500 tracking-wider flex items-center gap-1.5">
+                        <i class="ph-bold ph-stack text-xs text-accent-1"></i> SELECT ARCHITECTURE EXHIBIT:
                     </span>
-                    <span class="font-mono text-[11px] text-slate-400 hidden sm:inline">
+                    <span class="font-mono text-[10px] text-slate-400 hidden sm:inline">
                         CLICK TO SWITCH SYSTEM CONTEXT
                     </span>
                 </div>
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5" role="tablist" aria-label="Engineered Systems">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-2" role="tablist" aria-label="Engineered Systems">
                     <!-- Tab 1: SimpleIDE (Default Flagship) -->
-                    <button class="arch-tab active p-2.5 sm:p-3 bg-a1 text-black brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="simpleide" role="tab" aria-selected="true" id="tab-simpleide">
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[10px] font-black uppercase tracking-wider bg-black text-a1 px-1.5 py-0.5 rounded-sm">FLAGSHIP</span>
-                            <i class="ph-bold ph-laptop text-base"></i>
+                    <button class="arch-tab active p-2 sm:p-2.5 bg-a1 text-black brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="simpleide" role="tab" aria-selected="true" id="tab-simpleide">
+                        <div class="flex items-center justify-between mb-0.5">
+                            <span class="text-[9px] font-black uppercase tracking-wider bg-black text-a1 px-1.5 py-0.5 rounded-sm">FLAGSHIP</span>
+                            <i class="ph-bold ph-laptop text-sm"></i>
                         </div>
-                        <div class="text-xs sm:text-sm font-black truncate">SimpleIDE (Prime AI)</div>
+                        <div class="text-xs font-black truncate">SimpleIDE (Prime AI)</div>
                         <div class="text-[10px] opacity-80 truncate">Electron + React Desktop Agent</div>
                     </button>
 
                     <!-- Tab 2: RewriteBot -->
-                    <button class="arch-tab p-2.5 sm:p-3 bg-card text-text brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="rewritebot" role="tab" aria-selected="false" id="tab-rewritebot">
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-text px-1.5 py-0.5 rounded-sm">LIVE VERCEL</span>
-                            <i class="ph-bold ph-sparkle text-base text-amber-500"></i>
+                    <button class="arch-tab p-2 sm:p-2.5 bg-card text-text brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="rewritebot" role="tab" aria-selected="false" id="tab-rewritebot">
+                        <div class="flex items-center justify-between mb-0.5">
+                            <span class="text-[9px] font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-text px-1.5 py-0.5 rounded-sm">LIVE VERCEL</span>
+                            <i class="ph-bold ph-sparkle text-sm text-amber-500"></i>
                         </div>
-                        <div class="text-xs sm:text-sm font-black truncate">RewriteBot Suite</div>
+                        <div class="text-xs font-black truncate">RewriteBot Suite</div>
                         <div class="text-[10px] opacity-60 truncate">Fastify + React Paraphraser</div>
                     </button>
 
                     <!-- Tab 3: WhatsApp AI -->
-                    <button class="arch-tab p-2.5 sm:p-3 bg-card text-text brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="whatsapp" role="tab" aria-selected="false" id="tab-whatsapp">
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-text px-1.5 py-0.5 rounded-sm">CLOUD API</span>
-                            <i class="ph-bold ph-whatsapp-logo text-base text-green-500"></i>
+                    <button class="arch-tab p-2 sm:p-2.5 bg-card text-text brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="whatsapp" role="tab" aria-selected="false" id="tab-whatsapp">
+                        <div class="flex items-center justify-between mb-0.5">
+                            <span class="text-[9px] font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-text px-1.5 py-0.5 rounded-sm">CLOUD API</span>
+                            <i class="ph-bold ph-whatsapp-logo text-sm text-green-500"></i>
                         </div>
-                        <div class="text-xs sm:text-sm font-black truncate">WhatsApp AI Bot</div>
+                        <div class="text-xs font-black truncate">WhatsApp AI Bot</div>
                         <div class="text-[10px] opacity-60 truncate">Meta Webhook Router</div>
                     </button>
 
                     <!-- Tab 4: EMA Engine -->
-                    <button class="arch-tab p-2.5 sm:p-3 bg-card text-text brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="ema" role="tab" aria-selected="false" id="tab-ema">
-                        <div class="flex items-center justify-between mb-1">
-                            <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-text px-1.5 py-0.5 rounded-sm">CRON / QUEUE</span>
-                            <i class="ph-bold ph-envelope text-base text-blue-500"></i>
+                    <button class="arch-tab p-2 sm:p-2.5 bg-card text-text brutal-border brutal-shadow-sm font-mono text-left transition-all hover-target" data-system="ema" role="tab" aria-selected="false" id="tab-ema">
+                        <div class="flex items-center justify-between mb-0.5">
+                            <span class="text-[9px] font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-text px-1.5 py-0.5 rounded-sm">CRON / QUEUE</span>
+                            <i class="ph-bold ph-envelope text-sm text-blue-500"></i>
                         </div>
-                        <div class="text-xs sm:text-sm font-black truncate">EMA Engine</div>
+                        <div class="text-xs font-black truncate">EMA Engine</div>
                         <div class="text-[10px] opacity-60 truncate">TypeScript Campaign Worker</div>
                     </button>
                 </div>
             </div>
 
             <!-- Dynamic System Container (Replaced & Animated via JS) -->
-            <div id="archExhibitContent" class="space-y-8">
+            <div id="archExhibitContent" class="space-y-2.5">
                 <!-- Injected & driven dynamically via initSignatureArchitectureExhibit() in script.js -->
             </div>
 
@@ -697,28 +694,29 @@
          FEATURED WORK: Awwwards-Level Curated Digital Exhibition
          Asymmetric Grid Spans, High-Contrast Badges & Visual Depth
          ======================================================== -->
-    <section id="projects" class="py-12 sm:py-20 px-4 sm:px-6 md:px-8 max-w-[1360px] mx-auto">
+    <section id="projects" class="section-100vh py-10 sm:py-14 px-4 sm:px-6 md:px-8 max-w-[1360px] mx-auto">
         
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gs-section-header">
+        <div class="w-full">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-7 gs-section-header">
             <div>
-                <div class="flex items-center gap-2 mb-3">
+                <div class="flex items-center gap-2 mb-1.5">
                     <span class="brutal-badge badge-mint">CURATED REPOSITORIES</span>
                     <span class="font-mono-label text-xs font-bold text-slate-500">[ REAL PROJECTS ]</span>
                 </div>
-                <h2 class="text-5xl md:text-7xl font-black">FEATURED WORK.</h2>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black">FEATURED WORK.</h2>
             </div>
 
             <!-- Filter Tabs -->
-            <div class="flex flex-wrap gap-2 mt-6 md:mt-0 font-mono-label text-xs font-bold">
-                <button class="filter-tab px-4 py-2 bg-a1 text-black brutal-border hover-target" data-filter="all">ALL (12)</button>
-                <button class="filter-tab px-4 py-2 bg-card text-text brutal-border hover-target" data-filter="clone">UI CLONES (6)</button>
-                <button class="filter-tab px-4 py-2 bg-card text-text brutal-border hover-target" data-filter="app">WEB APPS (3)</button>
-                <button class="filter-tab px-4 py-2 bg-card text-text brutal-border hover-target" data-filter="ai">AI & AUTOMATIONS (3)</button>
+            <div class="flex flex-wrap gap-2 mt-3 md:mt-0 font-mono-label text-[11px] font-bold">
+                <button class="filter-tab px-3 py-1.5 bg-a1 text-black brutal-border hover-target" data-filter="all">ALL (12)</button>
+                <button class="filter-tab px-3 py-1.5 bg-card text-text brutal-border hover-target" data-filter="clone">UI CLONES (6)</button>
+                <button class="filter-tab px-3 py-1.5 bg-card text-text brutal-border hover-target" data-filter="app">WEB APPS (3)</button>
+                <button class="filter-tab px-3 py-1.5 bg-card text-text brutal-border hover-target" data-filter="ai">AI & AUTOMATIONS (3)</button>
             </div>
         </div>
 
         <!-- Project Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projectsGrid">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6" id="projectsGrid">
             
             <!-- Project 1: Hyperpure UI/UX Clone -->
             <div class="project-card-wrap" data-category="clone">
@@ -728,13 +726,13 @@
                             <img src="images/hyperpure1.png" alt="Hyperpure UI/UX Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute top-3 left-3 brutal-badge badge-cobalt">UI ARCHITECTURE</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">01 / E-COMMERCE ARCHITECTURE STUDY</div>
-                            <h3 class="text-2xl font-black mb-3">Hyperpure UI/UX Clone</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">01 / E-COMMERCE ARCHITECTURE STUDY</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">Hyperpure UI/UX Clone</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 An architectural reproduction of Zomato's Hyperpure B2B platform. Built to master complex e-commerce layouts, dynamic multi-item cart state flows, and responsive desktop/mobile catalog views from scratch.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">HTML</span>
                                 <span class="brutal-badge">CSS</span>
                                 <span class="brutal-badge">JavaScript</span>
@@ -742,7 +740,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="hyperpure">
                             VIEW DETAILS ➔
                         </button>
@@ -766,13 +764,13 @@
                             <img src="images/mutube.png" alt="MuTube personal media player" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute top-3 left-3 brutal-badge badge-mint">OFFLINE-FIRST APP</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">02 / MEDIA PLAYER & INDEXEDDB</div>
-                            <h3 class="text-2xl font-black mb-3">MuTube Media Player</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">02 / MEDIA PLAYER & INDEXEDDB</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">MuTube Media Player</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 A client-side media player engineered with vanilla JavaScript and the HTML5 Media API. Features zero-server offline playback, audio visualization themes, and persistent playlist storage using native IndexedDB.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">HTML</span>
                                 <span class="brutal-badge">CSS</span>
                                 <span class="brutal-badge">JavaScript</span>
@@ -780,7 +778,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="mutube">
                             VIEW DETAILS ➔
                         </button>
@@ -804,13 +802,13 @@
                             <img src="images/atherone1.jpeg" alt="Atherone 3D Scrollytelling" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute top-3 left-3 brutal-badge badge-cobalt">CREATIVE WEB & 3D</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">03 / SPLINE & SCROLLYTELLING</div>
-                            <h3 class="text-2xl font-black mb-3">Atherone 3D Web-App</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">03 / SPLINE & SCROLLYTELLING</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">Atherone 3D Web-App</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 An interactive 3D scrollytelling web experience built with React, GSAP ScrollTrigger, and Spline 3D. Explores fluid camera transitions, smooth physics-driven timeline animations, and modern digital brand storytelling.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">React</span>
                                 <span class="brutal-badge">GSAP</span>
                                 <span class="brutal-badge">Spline</span>
@@ -818,7 +816,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="atherone">
                             VIEW DETAILS ➔
                         </button>
@@ -842,13 +840,13 @@
                             <img src="images/district (1).png" alt="District UI/UX Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute top-3 left-3 brutal-badge badge-violet">UI ARCHITECTURE</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">04 / EVENT & TICKETING UI STUDY</div>
-                            <h3 class="text-2xl font-black mb-3">District UI/UX Clone</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">04 / EVENT & TICKETING UI STUDY</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">District UI/UX Clone</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 Responsive event and nightlife portal interface. Engineered to study asymmetric card layout grids, CSS transitions, modal flows, and responsive breakpoint ergonomics.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">HTML</span>
                                 <span class="brutal-badge">CSS</span>
                                 <span class="brutal-badge">JavaScript</span>
@@ -856,7 +854,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="district">
                             VIEW DETAILS ➔
                         </button>
@@ -880,13 +878,13 @@
                             <img src="images/yt1 (2).png" alt="YouTube UI/UX Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute top-3 left-3 brutal-badge badge-coral">UI ARCHITECTURE</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">05 / VIDEO STREAMING LAYOUT STUDY</div>
-                            <h3 class="text-2xl font-black mb-3">YouTube UI/UX Clone</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">05 / VIDEO STREAMING LAYOUT STUDY</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">YouTube UI/UX Clone</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 Recreation of YouTube's content feed and player UI. Features a collapsible dual-state sidebar, sticky glassmorphic navigation header, video grid hierarchy, and fluid search bar interactions.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">HTML</span>
                                 <span class="brutal-badge">CSS</span>
                                 <span class="brutal-badge">JavaScript</span>
@@ -894,7 +892,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="youtube">
                             VIEW DETAILS ➔
                         </button>
@@ -918,13 +916,13 @@
                             <img src="images/blinkit1.jpeg" alt="Blinkit Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute top-3 left-3 brutal-badge badge-amber">UI ARCHITECTURE</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">06 / QUICK-COMMERCE DENSITY STUDY</div>
-                            <h3 class="text-2xl font-black mb-3">Blinkit Clone</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">06 / QUICK-COMMERCE DENSITY STUDY</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">Blinkit Clone</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 Study in high-density instant commerce user interfaces. Built to replicate category navigation carousels, responsive item-card states, and fast checkout ergonomics with pure CSS and Bootstrap.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">HTML</span>
                                 <span class="brutal-badge">CSS</span>
                                 <span class="brutal-badge">Bootstrap</span>
@@ -932,7 +930,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="blinkit">
                             VIEW DETAILS ➔
                         </button>
@@ -956,20 +954,20 @@
                             <img src="images/tspschome.jpeg" alt="TSPSC Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute top-3 left-3 brutal-badge badge-mint">UI ARCHITECTURE</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">07 / GOVERNMENT PORTAL ARCHITECTURE</div>
-                            <h3 class="text-2xl font-black mb-3">TSPSC Clone</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">07 / GOVERNMENT PORTAL ARCHITECTURE</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">TSPSC Clone</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 Public service commission portal interface reproduction. Focused on accessible information architecture, structured table grids, and high-contrast design compliance.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">HTML</span>
                                 <span class="brutal-badge">CSS</span>
                                 <span class="brutal-badge">Bootstrap</span>
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="tspsc">
                             VIEW DETAILS ➔
                         </button>
@@ -993,19 +991,19 @@
                             <img src="images/amazon2.jpeg" alt="Amazon UI Clone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute top-3 left-3 brutal-badge badge-coral">UI ARCHITECTURE</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">08 / MEGA E-COMMERCE LAYOUT STUDY</div>
-                            <h3 class="text-2xl font-black mb-3">Amazon UI Clone</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">08 / MEGA E-COMMERCE LAYOUT STUDY</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">Amazon UI Clone</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 Pure CSS and semantic HTML recreation of Amazon's desktop interface. Reverse-engineered to master complex multi-tier dropdowns, delivery pickers, and responsive product grids without frameworks.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">HTML</span>
                                 <span class="brutal-badge">CSS</span>
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="amazon">
                             VIEW DETAILS ➔
                         </button>
@@ -1029,13 +1027,13 @@
                             <img src="images/cricket.jpeg" alt="TOP INDIAN CRICKETERS" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute top-3 left-3 brutal-badge badge-cobalt">INTERACTIVE WEB</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">09 / DYNAMIC DATA CARDS</div>
-                            <h3 class="text-2xl font-black mb-3">TOP INDIAN CRICKETERS</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">09 / DYNAMIC DATA CARDS</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">TOP INDIAN CRICKETERS</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 Interactive profile card interface exploring dynamic animated gradient backgrounds, external reference deep-linking, and responsive component hierarchy.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">HTML</span>
                                 <span class="brutal-badge">CSS</span>
                                 <span class="brutal-badge">JavaScript</span>
@@ -1043,7 +1041,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="cricket">
                             VIEW DETAILS ➔
                         </button>
@@ -1063,7 +1061,7 @@
             <div class="project-card-wrap" data-category="ai">
                 <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
                     <div>
-                        <div class="aspect-[16/10] bg-[#10121a] text-slate-200 brutal-border-b p-6 flex flex-col justify-between font-mono relative">
+                        <div class="aspect-[16/10] bg-[#10121a] text-slate-200 brutal-border-b p-5 flex flex-col justify-between font-mono relative">
                             <div class="flex items-center justify-between">
                                 <div class="flex gap-1.5">
                                     <span class="w-3 h-3 bg-red-500 rounded-full"></span>
@@ -1072,19 +1070,19 @@
                                 </div>
                                 <span class="text-[10px] text-slate-400 uppercase">ELECTRON • VITE</span>
                             </div>
-                            <div class="my-auto text-center py-4">
+                            <div class="my-auto text-center py-3">
                                 <div class="text-2xl font-black text-a1 tracking-wider uppercase mb-1">SimpleIDE</div>
                                 <div class="text-[11px] text-slate-400">AI-Powered Desktop IDE</div>
                             </div>
                             <span class="absolute top-3 right-3 brutal-badge badge-coral text-[10px]">AI AGENT</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">10 / DESKTOP AI IDE</div>
-                            <h3 class="text-2xl font-black mb-3">SimpleIDE</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">10 / DESKTOP AI IDE</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">SimpleIDE</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 Open-source desktop IDE engineered with Electron, React, and Vite. Features the embedded 'Prime AI' agent, contextBridge IPC boundaries, AST diffing, and automated unit test suites.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">Electron</span>
                                 <span class="brutal-badge">React</span>
                                 <span class="brutal-badge">Vite</span>
@@ -1092,7 +1090,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="simpleide">
                             VIEW DETAILS ➔
                         </button>
@@ -1107,7 +1105,7 @@
             <div class="project-card-wrap" data-category="ai">
                 <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
                     <div>
-                        <div class="aspect-[16/10] bg-[#14121e] text-slate-200 brutal-border-b p-6 flex flex-col justify-between font-mono relative">
+                        <div class="aspect-[16/10] bg-[#14121e] text-slate-200 brutal-border-b p-5 flex flex-col justify-between font-mono relative">
                             <div class="flex items-center justify-between">
                                 <div class="flex gap-1.5">
                                     <span class="w-3 h-3 bg-red-500 rounded-full"></span>
@@ -1116,19 +1114,19 @@
                                 </div>
                                 <span class="text-[10px] text-green-400 uppercase">VERCEL DEPLOYED</span>
                             </div>
-                            <div class="my-auto text-center py-4">
+                            <div class="my-auto text-center py-3">
                                 <div class="text-2xl font-black text-a4 tracking-wider uppercase mb-1">RewriteBot</div>
                                 <div class="text-[11px] text-slate-400">rewritebot-client.vercel.app</div>
                             </div>
                             <span class="absolute top-3 right-3 brutal-badge badge-mint text-[10px]">LIVE SAAS</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">11 / PRIVACY-FIRST AI PARAPHRASER</div>
-                            <h3 class="text-2xl font-black mb-3">RewriteBot</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">11 / PRIVACY-FIRST AI PARAPHRASER</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">RewriteBot</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 Self-hostable AI writing and semantic refactoring platform deployed live on Vercel. Engineered with Fastify, React, and Redis for streaming lexical transforms and readability auditing.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">TypeScript</span>
                                 <span class="brutal-badge">Next.js</span>
                                 <span class="brutal-badge">Vercel</span>
@@ -1136,7 +1134,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="rewritebot">
                             VIEW DETAILS ➔
                         </button>
@@ -1156,7 +1154,7 @@
             <div class="project-card-wrap" data-category="ai">
                 <div class="bg-card brutal-border brutal-shadow h-full flex flex-col justify-between group hover-target">
                     <div>
-                        <div class="aspect-[16/10] bg-[#0c1815] text-slate-200 brutal-border-b p-6 flex flex-col justify-between font-mono relative">
+                        <div class="aspect-[16/10] bg-[#0c1815] text-slate-200 brutal-border-b p-5 flex flex-col justify-between font-mono relative">
                             <div class="flex items-center justify-between">
                                 <div class="flex gap-1.5">
                                     <span class="w-3 h-3 bg-red-500 rounded-full"></span>
@@ -1165,19 +1163,19 @@
                                 </div>
                                 <span class="text-[10px] text-a1 uppercase">AUTONOMOUS PIPES</span>
                             </div>
-                            <div class="my-auto text-center py-4">
+                            <div class="my-auto text-center py-3">
                                 <div class="text-xl font-black text-[#25D366] tracking-wider uppercase mb-1">WhatsApp & EMA</div>
                                 <div class="text-[11px] text-slate-400">Automations & Workflows</div>
                             </div>
                             <span class="absolute top-3 right-3 brutal-badge badge-cobalt text-[10px]">PIPELINES</span>
                         </div>
-                        <div class="p-6">
-                            <div class="font-mono-label text-xs font-bold text-slate-500 mb-2">12 / AI MESSAGING & OUTREACH</div>
-                            <h3 class="text-2xl font-black mb-3">AI Automations (WhatsApp & EMA)</h3>
-                            <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                        <div class="p-4 sm:p-5">
+                            <div class="font-mono-label text-[11px] font-bold text-slate-500 mb-1.5">12 / AI MESSAGING & OUTREACH</div>
+                            <h3 class="text-xl font-black mb-2 leading-tight">AI Automations (WhatsApp & EMA)</h3>
+                            <p class="font-mono-label text-xs leading-relaxed text-slate-600 dark:text-slate-400 mb-3.5 line-clamp-3">
                                 Full-stack messaging and marketing automation infrastructure in TypeScript. Implements Meta WhatsApp Cloud API webhooks with HMAC-SHA256 authentication and rate-limited email queue workers.
                             </p>
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <div class="flex flex-wrap gap-1.5 mb-2">
                                 <span class="brutal-badge">TypeScript</span>
                                 <span class="brutal-badge">Node.js</span>
                                 <span class="brutal-badge">Webhooks</span>
@@ -1185,7 +1183,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 flex items-center justify-between border-t-2 border-border/50 min-h-[64px]">
+                    <div class="px-4 sm:px-5 py-3 flex items-center justify-between border-t-2 border-border/50 min-h-[54px]">
                         <button class="font-mono-label text-xs font-bold text-a3 underline open-modal-btn hover:text-a2" data-project="whatsappai">
                             VIEW DETAILS ➔
                         </button>
@@ -1199,16 +1197,17 @@
         </div>
 
         <!-- GitHub Archive Callout -->
-        <div class="mt-16 p-8 bg-card brutal-border brutal-shadow flex flex-col sm:flex-row justify-between items-center gap-6">
+        <div class="mt-8 p-5 sm:p-6 bg-card brutal-border brutal-shadow flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
-                <h3 class="text-2xl md:text-3xl font-black mb-1">LOOKING FOR MORE REPOSITORIES?</h3>
-                <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400">
+                <h3 class="text-lg sm:text-xl font-black mb-0.5">LOOKING FOR MORE REPOSITORIES?</h3>
+                <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400">
                     Explore all 32 public repositories including Gitdrop, BrandForge AI, ResMax, SMS Automations, and more.
                 </p>
             </div>
-            <a href="https://github.com/lucky4-git1" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-sm whitespace-nowrap">
-                <i class="ph-bold ph-github-logo text-lg"></i> VISIT GITHUB (lucky4-git1)
+            <a href="https://github.com/lucky4-git1" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs whitespace-nowrap">
+                <i class="ph-bold ph-github-logo text-base"></i> VISIT GITHUB (lucky4-git1)
             </a>
+        </div>
         </div>
 
     </section>
@@ -1217,38 +1216,38 @@
          ENGINEERING SKILLS: Production-Grade Architectural Deck
          Verified Breadth, Disciplines & Zero Fake Percentage Bars
          ======================================================== -->
-    <section id="skills" class="py-24 px-4 md:px-8 border-t-4 border-b-4 border-border bg-[#030408] text-white relative overflow-hidden">
+    <section id="skills" class="section-100vh py-10 sm:py-14 px-4 sm:px-6 md:px-8 border-t-4 border-b-4 border-border bg-[#030408] text-white relative overflow-hidden">
         <!-- Neon Helix Drift Canvas Background -->
         <canvas id="skillsHelixCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
 
-        <div class="max-w-[1360px] mx-auto relative z-10">
+        <div class="max-w-[1320px] w-full mx-auto relative z-10">
             
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gs-section-header">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gs-section-header">
                 <div>
-                    <div class="flex items-center gap-3 mb-3">
+                    <div class="flex items-center gap-2.5 mb-2">
                         <span class="brutal-badge badge-cobalt">TECHNICAL ARSENAL</span>
                         <span class="font-mono-label text-xs font-bold text-slate-400">[ STACK & CAPABILITIES ]</span>
                     </div>
-                    <h2 class="text-5xl md:text-7xl font-black">WHAT I ENGINEER.</h2>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black">WHAT I ENGINEER.</h2>
                 </div>
-                <p class="font-mono-label text-sm text-slate-400 max-w-sm mt-4 md:mt-0 text-left md:text-right">
+                <p class="font-mono-label text-xs sm:text-sm text-slate-400 max-w-sm mt-2 md:mt-0 text-left md:text-right">
                     Practical Generative AI and full-stack engineering executed with rigorous architectural discipline.
                 </p>
             </div>
 
             <!-- Bento Quadrants Grid (Strict alignment!) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                 
                 <!-- Quadrant 1: Software Engineering -->
-                <div class="skill-card bg-card text-text p-6 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
+                <div class="skill-card bg-card text-text p-4 sm:p-5 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
                     <div>
-                        <div class="w-12 h-12 bg-a1 text-black brutal-border flex items-center justify-center font-black text-2xl mb-6">
+                        <div class="w-10 h-10 bg-a1 text-black brutal-border flex items-center justify-center font-black text-xl mb-3">
                             <i class="ph-bold ph-code"></i>
                         </div>
-                        <h3 class="text-2xl font-black mb-2">SOFTWARE ENGINEERING</h3>
-                        <p class="font-mono-label text-xs text-slate-500 mb-6">Application architecture, type safety, debugging & maintainable code.</p>
+                        <h3 class="text-lg sm:text-xl font-black mb-1">SOFTWARE ENGINEERING</h3>
+                        <p class="font-mono-label text-[11px] text-slate-400 mb-3.5">Application architecture, type safety, debugging & maintainable code.</p>
                         
-                        <div class="space-y-4 font-mono-label text-xs font-bold">
+                        <div class="space-y-3 font-mono-label text-xs font-bold">
                             <div class="skill-row group cursor-pointer">
                                 <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
                                     <span class="skill-label font-bold">TypeScript (Strict Mode)</span>
@@ -1287,21 +1286,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pt-6 mt-6 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
+                    <div class="pt-4 mt-4 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
                         Application architecture & type-safe systems
                     </div>
                 </div>
 
                 <!-- Quadrant 2: Creative Development -->
-                <div class="skill-card bg-card text-text p-6 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
+                <div class="skill-card bg-card text-text p-4 sm:p-5 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
                     <div>
-                        <div class="w-12 h-12 bg-a2 text-white brutal-border flex items-center justify-center font-black text-2xl mb-6">
+                        <div class="w-10 h-10 bg-a2 text-white brutal-border flex items-center justify-center font-black text-xl mb-3">
                             <i class="ph-bold ph-paint-brush-broad"></i>
                         </div>
-                        <h3 class="text-2xl font-black mb-2">CREATIVE DEVELOPMENT</h3>
-                        <p class="font-mono-label text-xs text-slate-500 mb-6">Interactive interfaces, motion systems & immersive web experiences.</p>
+                        <h3 class="text-lg sm:text-xl font-black mb-1">CREATIVE DEVELOPMENT</h3>
+                        <p class="font-mono-label text-[11px] text-slate-400 mb-3.5">Interactive interfaces, motion systems & immersive web experiences.</p>
                         
-                        <div class="space-y-4 font-mono-label text-xs font-bold">
+                        <div class="space-y-3 font-mono-label text-xs font-bold">
                             <div class="skill-row group cursor-pointer">
                                 <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
                                     <span class="skill-label font-bold">React 19 & Next.js Ecosystem</span>
@@ -1340,21 +1339,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pt-6 mt-6 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
+                    <div class="pt-4 mt-4 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
                         Hardware-accelerated transforms & scrollytelling
                     </div>
                 </div>
 
                 <!-- Quadrant 3: AI Engineering -->
-                <div class="skill-card bg-card text-text p-6 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
+                <div class="skill-card bg-card text-text p-4 sm:p-5 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
                     <div>
-                        <div class="w-12 h-12 bg-a4 text-black brutal-border flex items-center justify-center font-black text-2xl mb-6">
+                        <div class="w-10 h-10 bg-a4 text-black brutal-border flex items-center justify-center font-black text-xl mb-3">
                             <i class="ph-bold ph-cpu"></i>
                         </div>
-                        <h3 class="text-2xl font-black mb-2">AI ENGINEERING</h3>
-                        <p class="font-mono-label text-xs text-slate-500 mb-6">Generative AI, intelligent workflows & practical model experimentation.</p>
+                        <h3 class="text-lg sm:text-xl font-black mb-1">AI ENGINEERING</h3>
+                        <p class="font-mono-label text-[11px] text-slate-400 mb-3.5">Generative AI, intelligent workflows & practical model experimentation.</p>
                         
-                        <div class="space-y-4 font-mono-label text-xs font-bold">
+                        <div class="space-y-3 font-mono-label text-xs font-bold">
                             <div class="skill-row group cursor-pointer">
                                 <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
                                     <span class="skill-label font-bold">LLM APIs & Prompt Chains</span>
@@ -1393,21 +1392,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pt-6 mt-6 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
+                    <div class="pt-4 mt-4 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
                         Intelligent workflows & practical experimentation
                     </div>
                 </div>
 
                 <!-- Quadrant 4: Full-Stack & Systems -->
-                <div class="skill-card bg-card text-text p-6 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
+                <div class="skill-card bg-card text-text p-4 sm:p-5 brutal-border flex flex-col justify-between transition-all duration-300 hover:border-[#DE1A45]">
                     <div>
-                        <div class="w-12 h-12 bg-a3 text-white brutal-border flex items-center justify-center font-black text-2xl mb-6">
+                        <div class="w-10 h-10 bg-a3 text-white brutal-border flex items-center justify-center font-black text-xl mb-3">
                             <i class="ph-bold ph-database"></i>
                         </div>
-                        <h3 class="text-2xl font-black mb-2">FULL-STACK & SYSTEMS</h3>
-                        <p class="font-mono-label text-xs text-slate-500 mb-6">Backend services, persistent data & application infrastructure.</p>
+                        <h3 class="text-lg sm:text-xl font-black mb-1">FULL-STACK & SYSTEMS</h3>
+                        <p class="font-mono-label text-[11px] text-slate-400 mb-3.5">Backend services, persistent data & application infrastructure.</p>
                         
-                        <div class="space-y-4 font-mono-label text-xs font-bold">
+                        <div class="space-y-3 font-mono-label text-xs font-bold">
                             <div class="skill-row group cursor-pointer">
                                 <div class="flex justify-between mb-1.5 transition-colors duration-200 group-hover:text-[#DE1A45]">
                                     <span class="skill-label font-bold">Node.js & APIs (Fastify / Express)</span>
@@ -1446,7 +1445,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pt-6 mt-6 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
+                    <div class="pt-4 mt-4 border-t border-border/40 font-mono-label text-[11px] text-slate-500">
                         Backend services & application infrastructure
                     </div>
                 </div>
@@ -1460,10 +1459,11 @@
          THE JOURNEY: Awwwards-Level Editorial Timeline
          Central Animated Spine, Milestone Radiance & Responsive Stagger
          ======================================================== -->
-    <section id="journey" class="py-16 sm:py-24 px-4 sm:px-6 md:px-8 max-w-[1300px] mx-auto overflow-hidden">
-        <div class="text-center max-w-xl mx-auto mb-20 gs-section-header">
-            <span class="brutal-badge badge-violet mb-3">ACADEMIC & CODE CHRONOLOGY</span>
-            <h2 class="text-5xl md:text-7xl font-black mb-4 text-text">THE JOURNEY.</h2>
+    <section id="journey" class="section-100vh py-10 sm:py-14 px-4 sm:px-6 md:px-8 max-w-[1260px] mx-auto overflow-hidden">
+        <div class="w-full">
+        <div class="text-center max-w-xl mx-auto mb-8 sm:mb-10 gs-section-header">
+            <span class="brutal-badge badge-violet mb-2">ACADEMIC & CODE CHRONOLOGY</span>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-2.5 text-text">THE JOURNEY.</h2>
             <p class="font-mono-label text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                 From computational foundations to engineering 32+ verified repositories, desktop AI agents, and production full-stack systems.
             </p>
@@ -1477,30 +1477,30 @@
                 <div id="timelineProgressHead" class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-a1 rounded-full border-2 border-black shadow-[0_0_18px_var(--color-accent-1)] transition-transform pointer-events-none" style="top: 0; transform: translate(-50%, -50%);"></div>
             </div>
             
-            <div class="space-y-16 sm:space-y-24">
+            <div class="space-y-8 sm:space-y-12">
                 
                 <!-- Stage 1: The Frontier (Present - MCA) -->
-                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group pl-8 sm:pl-10 md:pl-0">
-                    <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-9 h-9 bg-a1 text-black brutal-border rounded-full z-10 items-center justify-center font-black text-xs shadow-[0_0_22px_rgba(228,255,0,0.85)] cursor-default" style="background-color: var(--color-accent-1); color: #0C0D10;">
+                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 items-center group pl-8 sm:pl-10 md:pl-0">
+                    <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-8 h-8 bg-a1 text-black brutal-border rounded-full z-10 items-center justify-center font-black text-xs shadow-[0_0_22px_rgba(228,255,0,0.85)] cursor-default" style="background-color: var(--color-accent-1); color: #0C0D10;">
                         01
                     </div>
                     
-                    <div class="timeline-left-col md:text-right md:pr-12">
-                        <div class="inline-flex items-center gap-2 mb-2">
+                    <div class="timeline-left-col md:text-right md:pr-10">
+                        <div class="inline-flex flex-wrap items-center gap-2 mb-1.5">
                             <span class="md:hidden font-mono text-[10px] font-black bg-a1 text-black px-2 py-0.5 brutal-border">01</span>
-                            <span class="brutal-badge badge-coral text-[11px] font-bold">CURRENT FRONTIER</span>
-                            <span class="font-mono text-xs text-accent-1 font-bold bg-black px-2 py-0.5">2025 ➔ 2027</span>
+                            <span class="brutal-badge badge-coral text-[10px] font-bold">CURRENT FRONTIER</span>
+                            <span class="font-mono text-[11px] text-accent-1 font-bold bg-black px-2 py-0.5">2025 ➔ 2027</span>
                         </div>
-                        <h3 class="text-2xl sm:text-3xl font-black mb-2 text-text">Master of Computer Applications (MCA)</h3>
-                        <div class="font-mono-label font-bold text-a3 text-sm mb-3">First Year Student • Hyderabad, India</div>
-                        <p class="font-mono-label text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <h3 class="text-lg sm:text-xl md:text-2xl font-black mb-1 text-text">Master of Computer Applications (MCA)</h3>
+                        <div class="font-mono-label font-bold text-a3 text-xs sm:text-sm mb-2">First Year Student • Hyderabad, India</div>
+                        <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                             Focusing on distributed software architectures, autonomous AI agent workflows, Electron desktop tooling, and production-grade full-stack engineering.
                         </p>
                     </div>
 
-                    <div class="timeline-right-col md:pl-12">
-                        <div class="p-6 bg-card brutal-border brutal-shadow hover-target">
-                            <div class="font-mono text-xs font-bold uppercase text-slate-500 mb-2">KEY FOCUS AREAS:</div>
+                    <div class="timeline-right-col md:pl-10">
+                        <div class="p-4 sm:p-5 bg-card brutal-border brutal-shadow hover-target">
+                            <div class="font-mono text-[11px] font-bold uppercase text-slate-500 mb-2">KEY FOCUS AREAS:</div>
                             <div class="flex flex-wrap gap-1.5">
                                 <span class="brutal-badge">AI Coding Agents</span>
                                 <span class="brutal-badge">Distributed Systems</span>
@@ -1512,14 +1512,14 @@
                 </div>
 
                 <!-- Stage 2: The Foundation (BCA) -->
-                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group pl-8 sm:pl-10 md:pl-0">
-                    <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-9 h-9 bg-a4 text-black brutal-border rounded-full z-10 items-center justify-center font-black text-xs shadow-[0_0_18px_rgba(0,229,117,0.5)] cursor-default">
+                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 items-center group pl-8 sm:pl-10 md:pl-0">
+                    <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-8 h-8 bg-a4 text-black brutal-border rounded-full z-10 items-center justify-center font-black text-xs shadow-[0_0_18px_rgba(0,229,117,0.5)] cursor-default">
                         02
                     </div>
                     
-                    <div class="timeline-left-col md:text-right md:pr-12 md:order-1 order-2">
-                        <div class="p-6 bg-card brutal-border brutal-shadow hover-target md:text-left">
-                            <div class="font-mono text-xs font-bold uppercase text-slate-500 mb-2">PORTFOLIO PRODUCTION:</div>
+                    <div class="timeline-left-col md:text-right md:pr-10 md:order-1 order-2">
+                        <div class="p-4 sm:p-5 bg-card brutal-border brutal-shadow hover-target md:text-left">
+                            <div class="font-mono text-[11px] font-bold uppercase text-slate-500 mb-2">PORTFOLIO PRODUCTION:</div>
                             <div class="flex flex-wrap gap-1.5">
                                 <span class="brutal-badge">30+ Repositories</span>
                                 <span class="brutal-badge">DOM Architecture</span>
@@ -1529,42 +1529,42 @@
                         </div>
                     </div>
 
-                    <div class="timeline-right-col md:pl-12 md:order-2 order-1">
-                        <div class="inline-flex items-center gap-2 mb-2">
+                    <div class="timeline-right-col md:pl-10 md:order-2 order-1">
+                        <div class="inline-flex flex-wrap items-center gap-2 mb-1.5">
                             <span class="md:hidden font-mono text-[10px] font-black bg-a4 text-black px-2 py-0.5 brutal-border">02</span>
-                            <span class="brutal-badge badge-mint text-[11px] font-bold">CORE FOUNDATION</span>
-                            <span class="font-mono text-xs text-slate-500 font-bold">2022 ➔ 2025</span>
+                            <span class="brutal-badge badge-mint text-[10px] font-bold">CORE FOUNDATION</span>
+                            <span class="font-mono text-[11px] text-slate-500 font-bold">2022 ➔ 2025</span>
                         </div>
-                        <h3 class="text-2xl sm:text-3xl font-black mb-2 text-text">Bachelor of Computer Applications (BCA)</h3>
-                        <div class="font-mono-label font-bold text-a2 text-sm mb-3">Graduated with High Honors • Hyderabad</div>
-                        <p class="font-mono-label text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <h3 class="text-lg sm:text-xl md:text-2xl font-black mb-1 text-text">Bachelor of Computer Applications (BCA)</h3>
+                        <div class="font-mono-label font-bold text-a2 text-xs sm:text-sm mb-2">Graduated with High Honors • Hyderabad</div>
+                        <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                             Built rigorous foundations in algorithms, data structures, and asynchronous JavaScript. Authored 30+ repositories, including deep reverse-engineering of production e-commerce architectures (Amazon, Blinkit, Hyperpure) and offline IndexedDB systems.
                         </p>
                     </div>
                 </div>
 
                 <!-- Stage 3: The Spark (Intermediate) -->
-                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center group pl-8 sm:pl-10 md:pl-0">
-                    <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-9 h-9 bg-a2 text-white brutal-border rounded-full z-10 items-center justify-center font-black text-xs shadow-[0_0_18px_rgba(255,71,87,0.5)] cursor-default">
+                <div class="timeline-step relative grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 items-center group pl-8 sm:pl-10 md:pl-0">
+                    <div class="timeline-node hidden md:flex absolute left-1/2 top-1/2 w-8 h-8 bg-a2 text-white brutal-border rounded-full z-10 items-center justify-center font-black text-xs shadow-[0_0_18px_rgba(255,71,87,0.5)] cursor-default">
                         03
                     </div>
                     
-                    <div class="timeline-left-col md:text-right md:pr-12">
-                        <div class="inline-flex items-center gap-2 mb-2">
+                    <div class="timeline-left-col md:text-right md:pr-10">
+                        <div class="inline-flex flex-wrap items-center gap-2 mb-1.5">
                             <span class="md:hidden font-mono text-[10px] font-black bg-a2 text-white px-2 py-0.5 brutal-border">03</span>
-                            <span class="brutal-badge badge-coral text-[11px] font-bold">THE SPARK</span>
-                            <span class="font-mono text-xs text-slate-500 font-bold">2020 ➔ 2022</span>
+                            <span class="brutal-badge badge-coral text-[10px] font-bold">THE SPARK</span>
+                            <span class="font-mono text-[11px] text-slate-500 font-bold">2020 ➔ 2022</span>
                         </div>
-                        <h3 class="text-2xl sm:text-3xl font-black mb-2 text-text">Intermediate Education (MPC / Sciences)</h3>
-                        <div class="font-mono-label font-bold text-a3 text-sm mb-3">Computing Discovery • Mathematics & Physics</div>
-                        <p class="font-mono-label text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <h3 class="text-lg sm:text-xl md:text-2xl font-black mb-1 text-text">Intermediate Education (MPC / Sciences)</h3>
+                        <div class="font-mono-label font-bold text-a3 text-xs sm:text-sm mb-2">Computing Discovery • Mathematics & Physics</div>
+                        <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                             Rigorous grounding in mathematics, physical sciences, and analytical logic. Discovered programming and the creative potential of software engineering, launching a dedicated commitment to technical craftsmanship.
                         </p>
                     </div>
 
-                    <div class="timeline-right-col md:pl-12">
-                        <div class="p-6 bg-card brutal-border brutal-shadow hover-target">
-                            <div class="font-mono text-xs font-bold uppercase text-slate-500 mb-2">EARLY FOUNDATIONS:</div>
+                    <div class="timeline-right-col md:pl-10">
+                        <div class="p-4 sm:p-5 bg-card brutal-border brutal-shadow hover-target">
+                            <div class="font-mono text-[11px] font-bold uppercase text-slate-500 mb-2">EARLY FOUNDATIONS:</div>
                             <div class="flex flex-wrap gap-1.5">
                                 <span class="brutal-badge">Applied Mathematics</span>
                                 <span class="brutal-badge">Analytical Logic</span>
@@ -1576,115 +1576,157 @@
 
             </div>
         </div>
+        </div>
     </section>
 
     <!-- ========================================================
          GITHUB ACTIVITY: Real Verification & Repository Deck
          ======================================================== -->
-    <section id="github" class="py-24 px-4 md:px-8 border-t-4 border-border bg-bg-alt">
-        <div class="max-w-[1300px] mx-auto">
+    <section id="github" class="section-100vh py-10 sm:py-14 px-4 sm:px-6 md:px-8 border-t-4 border-border bg-bg-alt">
+        <div class="max-w-[1300px] w-full mx-auto">
             
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gs-section-header">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gs-section-header">
                 <div>
-                    <div class="flex items-center gap-2 mb-3">
+                    <div class="flex items-center gap-2 mb-2">
                         <span class="brutal-badge badge-cobalt">OPEN SOURCE VERIFICATION</span>
                         <span class="font-mono-label text-xs font-bold text-slate-500">[ REAL METRICS ]</span>
                     </div>
-                    <h2 class="text-4xl sm:text-6xl md:text-7xl font-black text-text">GITHUB ACTIVITY.</h2>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-text">GITHUB ACTIVITY.</h2>
                 </div>
-                <div class="font-mono text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md mt-4 md:mt-0">
+                <div class="font-mono text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md mt-2 md:mt-0">
                     Live analytics and verified repositories powered by GitHub for account <strong>@lucky4-git1</strong>.
                 </div>
             </div>
 
             <!-- Factual Repositories Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-5">
                 <!-- Repo 1: SimpleIDE -->
-                <a href="https://github.com/lucky4-git1/SimpleIDE" target="_blank" rel="noopener noreferrer" class="p-5 bg-card brutal-border brutal-shadow hover-target group flex flex-col justify-between">
+                <a href="https://github.com/lucky4-git1/SimpleIDE" target="_blank" rel="noopener noreferrer" class="p-4 bg-card brutal-border brutal-shadow hover-target group flex flex-col justify-between">
                     <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="font-mono text-xs font-bold text-accent-1 bg-black px-2 py-0.5">FLAGSHIP</span>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-mono text-[10px] font-bold text-accent-1 bg-black px-2 py-0.5">FLAGSHIP</span>
                             <i class="ph-bold ph-star text-amber-500 text-sm"></i>
                         </div>
-                        <h4 class="font-black text-lg text-text group-hover:text-a2 transition-colors mb-1">SimpleIDE</h4>
-                        <p class="font-mono text-xs text-slate-500 line-clamp-2 mb-4">
+                        <h4 class="font-black text-base text-text group-hover:text-a2 transition-colors mb-1">SimpleIDE</h4>
+                        <p class="font-mono text-[11px] text-slate-500 line-clamp-2 mb-3">
                             Open-source desktop AI code editor featuring the embedded Prime AI agent.
                         </p>
                     </div>
-                    <div class="pt-3 border-t border-border/40 flex justify-between items-center font-mono text-[11px] text-slate-400 font-bold">
+                    <div class="pt-2.5 border-t border-border/40 flex justify-between items-center font-mono text-[10px] text-slate-400 font-bold">
                         <span>Electron / React</span>
                         <span class="text-green-500">161 Tests</span>
                     </div>
                 </a>
 
                 <!-- Repo 2: RewriteBot -->
-                <a href="https://github.com/lucky4-git1/rewritebot" target="_blank" rel="noopener noreferrer" class="p-5 bg-card brutal-border brutal-shadow hover-target group flex flex-col justify-between">
+                <a href="https://github.com/lucky4-git1/rewritebot" target="_blank" rel="noopener noreferrer" class="p-4 bg-card brutal-border brutal-shadow hover-target group flex flex-col justify-between">
                     <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="font-mono text-xs font-bold text-black bg-amber-400 px-2 py-0.5">LIVE VERCEL</span>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-mono text-[10px] font-bold text-black bg-amber-400 px-2 py-0.5">LIVE VERCEL</span>
                             <i class="ph-bold ph-git-commit text-slate-400 text-sm"></i>
                         </div>
-                        <h4 class="font-black text-lg text-text group-hover:text-a2 transition-colors mb-1">rewritebot</h4>
-                        <p class="font-mono text-xs text-slate-500 line-clamp-2 mb-4">
+                        <h4 class="font-black text-base text-text group-hover:text-a2 transition-colors mb-1">rewritebot</h4>
+                        <p class="font-mono text-[11px] text-slate-500 line-clamp-2 mb-3">
                             Privacy-first AI writing, paraphrasing, and originality audit platform.
                         </p>
                     </div>
-                    <div class="pt-3 border-t border-border/40 flex justify-between items-center font-mono text-[11px] text-slate-400 font-bold">
+                    <div class="pt-2.5 border-t border-border/40 flex justify-between items-center font-mono text-[10px] text-slate-400 font-bold">
                         <span>TypeScript</span>
                         <span class="text-amber-500">Fastify 4.x</span>
                     </div>
                 </a>
 
                 <!-- Repo 3: WhatsApp AI -->
-                <a href="https://github.com/lucky4-git1/whatsapp-ai-automation" target="_blank" rel="noopener noreferrer" class="p-5 bg-card brutal-border brutal-shadow hover-target group flex flex-col justify-between">
+                <a href="https://github.com/lucky4-git1/whatsapp-ai-automation" target="_blank" rel="noopener noreferrer" class="p-4 bg-card brutal-border brutal-shadow hover-target group flex flex-col justify-between">
                     <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="font-mono text-xs font-bold text-white bg-green-600 px-2 py-0.5">META CLOUD</span>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-mono text-[10px] font-bold text-white bg-green-600 px-2 py-0.5">META CLOUD</span>
                             <i class="ph-bold ph-whatsapp-logo text-green-500 text-sm"></i>
                         </div>
-                        <h4 class="font-black text-lg text-text group-hover:text-a2 transition-colors mb-1">whatsapp-ai-automation</h4>
-                        <p class="font-mono text-xs text-slate-500 line-clamp-2 mb-4">
+                        <h4 class="font-black text-base text-text group-hover:text-a2 transition-colors mb-1">whatsapp-ai-automation</h4>
+                        <p class="font-mono text-[11px] text-slate-500 line-clamp-2 mb-3">
                             Meta WhatsApp Cloud API customer service automation with HMAC verification.
                         </p>
                     </div>
-                    <div class="pt-3 border-t border-border/40 flex justify-between items-center font-mono text-[11px] text-slate-400 font-bold">
+                    <div class="pt-2.5 border-t border-border/40 flex justify-between items-center font-mono text-[10px] text-slate-400 font-bold">
                         <span>TypeScript</span>
                         <span class="text-green-500">HMAC-SHA256</span>
                     </div>
                 </a>
 
                 <!-- Repo 4: EMA Automation -->
-                <a href="https://github.com/lucky4-git1/EMA-email-market-automation" target="_blank" rel="noopener noreferrer" class="p-5 bg-card brutal-border brutal-shadow hover-target group flex flex-col justify-between">
+                <a href="https://github.com/lucky4-git1/EMA-email-market-automation" target="_blank" rel="noopener noreferrer" class="p-4 bg-card brutal-border brutal-shadow hover-target group flex flex-col justify-between">
                     <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="font-mono text-xs font-bold text-white bg-blue-600 px-2 py-0.5">QUEUE WORKER</span>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-mono text-[10px] font-bold text-white bg-blue-600 px-2 py-0.5">QUEUE WORKER</span>
                             <i class="ph-bold ph-envelope text-blue-500 text-sm"></i>
                         </div>
-                        <h4 class="font-black text-lg text-text group-hover:text-a2 transition-colors mb-1">EMA-email-automation</h4>
-                        <p class="font-mono text-xs text-slate-500 line-clamp-2 mb-4">
+                        <h4 class="font-black text-base text-text group-hover:text-a2 transition-colors mb-1">EMA-email-automation</h4>
+                        <p class="font-mono text-[11px] text-slate-500 line-clamp-2 mb-3">
                             TypeScript email marketing campaign worker & deliverability pipeline.
                         </p>
                     </div>
-                    <div class="pt-3 border-t border-border/40 flex justify-between items-center font-mono text-[11px] text-slate-400 font-bold">
+                    <div class="pt-2.5 border-t border-border/40 flex justify-between items-center font-mono text-[10px] text-slate-400 font-bold">
                         <span>TypeScript</span>
                         <span class="text-blue-500">DKIM / SPF</span>
                     </div>
                 </a>
             </div>
 
-            <!-- Stats & Language Badges Deck -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                <div class="p-6 bg-card brutal-border brutal-shadow flex items-center justify-center min-h-[200px]">
-                    <img id="githubStatsImg" src="https://github-readme-stats-eight-theta.vercel.app/api?username=lucky4-git1&show_icons=true&title_color=DE1A45&icon_color=008050&text_color=121316&bg_color=00000000&hide_border=true" alt="K. Sriyuth GitHub Stats" class="max-w-full h-auto" loading="lazy">
+            <!-- Stats & Language Badges Deck (Live GitHub API synced with resilient preloaded defaults) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+                <div id="githubStatsCard" class="p-4 sm:p-5 bg-card brutal-border brutal-shadow flex flex-col justify-between min-h-[150px] font-mono">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-black uppercase text-[#DE1A45] dark:text-[#E4FF00] flex items-center gap-1.5">
+                            <i class="ph-bold ph-github-logo text-base"></i> K. SRIYUTH'S GITHUB STATS
+                        </span>
+                        <span class="text-[10px] font-bold px-2 py-0.5 bg-a4 text-black border border-border">API SYNCED</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2.5 text-center my-auto">
+                        <div class="p-2.5 bg-bg brutal-border">
+                            <div id="ghStatRepos" class="text-xl sm:text-2xl font-black text-text">41</div>
+                            <div class="text-[10px] font-bold text-slate-500 uppercase mt-0.5">Public Repos</div>
+                        </div>
+                        <div class="p-2.5 bg-bg brutal-border">
+                            <div id="ghStatStars" class="text-xl sm:text-2xl font-black text-[#008050] dark:text-[#00FF96]">16</div>
+                            <div class="text-[10px] font-bold text-slate-500 uppercase mt-0.5">Total Stars</div>
+                        </div>
+                        <div class="p-2.5 bg-bg brutal-border">
+                            <div id="ghStatFollowers" class="text-xl sm:text-2xl font-black text-a3">2</div>
+                            <div class="text-[10px] font-bold text-slate-500 uppercase mt-0.5">Followers</div>
+                        </div>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-border/30 flex justify-between text-[10px] text-slate-500 font-bold">
+                        <span>ACCOUNT: @lucky4-git1</span>
+                        <span class="text-[#008050] dark:text-[#00FF96]">VERIFIED PUBLIC PROFILE</span>
+                    </div>
                 </div>
-                <div class="p-6 bg-card brutal-border brutal-shadow flex items-center justify-center min-h-[200px]">
-                    <img id="githubLangsImg" src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=lucky4-git1&layout=compact&title_color=DE1A45&text_color=121316&bg_color=00000000&hide_border=true" alt="K. Sriyuth Top Languages" class="max-w-full h-auto" loading="lazy">
+
+                <div id="githubLangsCard" class="p-4 sm:p-5 bg-card brutal-border brutal-shadow flex flex-col justify-between min-h-[150px] font-mono">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-black uppercase text-[#DE1A45] dark:text-[#E4FF00] flex items-center gap-1.5">
+                            <i class="ph-bold ph-code text-base"></i> MOST USED LANGUAGES
+                        </span>
+                        <span id="ghLangTotalCount" class="text-[10px] font-bold text-slate-500">40 REPOS ANALYZED</span>
+                    </div>
+                    <div class="w-full h-3.5 bg-bg brutal-border flex overflow-hidden mb-3" id="ghLangProgressBar">
+                        <div style="width: 52.5%" class="bg-a3 h-full" title="TypeScript 52.5%"></div>
+                        <div style="width: 25%" class="bg-a2 h-full" title="HTML 25%"></div>
+                        <div style="width: 12.5%" class="bg-a1 h-full" title="JavaScript 12.5%"></div>
+                        <div style="width: 10%" class="bg-a4 h-full" title="Python & CSS 10%"></div>
+                    </div>
+                    <div id="ghLangLegend" class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] font-bold text-text">
+                        <div class="flex items-center justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-a3 inline-block border border-border"></span>TypeScript</span><span class="text-slate-500">52.5%</span></div>
+                        <div class="flex items-center justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-a2 inline-block border border-border"></span>HTML</span><span class="text-slate-500">25.0%</span></div>
+                        <div class="flex items-center justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-a1 inline-block border border-border"></span>JavaScript</span><span class="text-slate-500">12.5%</span></div>
+                        <div class="flex items-center justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-a4 inline-block border border-border"></span>Python / CSS</span><span class="text-slate-500">10.0%</span></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="mt-8 text-center">
-                <a href="https://github.com/lucky4-git1" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary hover-target inline-flex items-center gap-2">
-                    <i class="ph-bold ph-arrow-square-out text-lg"></i>
+            <div class="mt-5 text-center">
+                <a href="https://github.com/lucky4-git1" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary hover-target inline-flex items-center gap-2 text-xs">
+                    <i class="ph-bold ph-arrow-square-out text-base"></i>
                     <span>INSPECT FULL GITHUB PROFILE (@lucky4-git1)</span>
                 </a>
             </div>
@@ -1692,98 +1734,98 @@
         </div>
     </section>
 
-    <section id="contact" class="py-14 sm:py-18 px-4 sm:px-6 md:px-8 border-t-4 border-border bg-[#030408] text-white relative overflow-hidden">
+    <section id="contact" class="section-100vh py-10 sm:py-12 px-4 sm:px-6 md:px-8 border-t-4 border-border bg-[#030408] text-white relative overflow-hidden">
         <!-- Spider Web Interactive Canvas Background -->
         <canvas id="contactWebCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
 
-        <div class="max-w-[1100px] mx-auto relative z-10">
-            <div class="text-center max-w-xl mx-auto mb-10 gs-section-header">
-                <span class="brutal-badge badge-cobalt mb-2.5">ENGINEERING COLLABORATIONS</span>
-                <h2 class="text-4xl sm:text-5xl md:text-6xl font-black mb-3">LET'S CONNECT.</h2>
+        <div class="max-w-[1060px] w-full mx-auto relative z-10">
+            <div class="text-center max-w-xl mx-auto mb-6 gs-section-header">
+                <span class="brutal-badge badge-cobalt mb-2">ENGINEERING COLLABORATIONS</span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-2">LET'S CONNECT.</h2>
                 <p class="font-mono-label text-xs sm:text-sm text-slate-300">
                     Looking to hire an AI-enabled software engineer, creative developer, or builder for full-stack web and AI systems? Reach out directly.
                 </p>
             </div>
 
             <!-- 5 Direct Contact & Social Channels -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 mb-5">
                 <!-- GitHub -->
-                <a href="https://github.com/lucky4-git1" target="_blank" rel="noopener noreferrer" class="contact-channel-card contact-channel-github p-3.5 sm:p-4 brutal-border flex flex-col items-center text-center group hover-target">
-                    <i class="ph-bold ph-github-logo text-2xl mb-1.5 text-slate-200"></i>
-                    <h4 class="font-black text-sm mb-0.5">GitHub</h4>
-                    <span class="font-mono-label text-[11px] font-bold">lucky4-git1</span>
-                    <span class="font-mono-label text-[10px] opacity-70 mt-1 uppercase">Browse ➔</span>
+                <a href="https://github.com/lucky4-git1" target="_blank" rel="noopener noreferrer" class="contact-channel-card contact-channel-github p-3 brutal-border flex flex-col items-center text-center group hover-target">
+                    <i class="ph-bold ph-github-logo text-xl mb-1 text-slate-200"></i>
+                    <h4 class="font-black text-xs sm:text-sm mb-0.5">GitHub</h4>
+                    <span class="font-mono-label text-[10px] font-bold">lucky4-git1</span>
+                    <span class="font-mono-label text-[9px] opacity-70 mt-0.5 uppercase">Browse ➔</span>
                 </a>
 
                 <!-- LinkedIn -->
-                <a href="https://www.linkedin.com/in/sriyuth-lucky-88b40a244" target="_blank" rel="noopener noreferrer" class="contact-channel-card contact-channel-linkedin p-3.5 sm:p-4 brutal-border flex flex-col items-center text-center group hover-target">
-                    <i class="ph-bold ph-linkedin-logo text-2xl mb-1.5 text-slate-200"></i>
-                    <h4 class="font-black text-sm mb-0.5">LinkedIn</h4>
-                    <span class="font-mono-label text-[11px] font-bold">sriyuth-lucky</span>
-                    <span class="font-mono-label text-[10px] opacity-70 mt-1 uppercase">Connect ➔</span>
+                <a href="https://www.linkedin.com/in/sriyuth-lucky-88b40a244" target="_blank" rel="noopener noreferrer" class="contact-channel-card contact-channel-linkedin p-3 brutal-border flex flex-col items-center text-center group hover-target">
+                    <i class="ph-bold ph-linkedin-logo text-xl mb-1 text-slate-200"></i>
+                    <h4 class="font-black text-xs sm:text-sm mb-0.5">LinkedIn</h4>
+                    <span class="font-mono-label text-[10px] font-bold">sriyuth-lucky</span>
+                    <span class="font-mono-label text-[9px] opacity-70 mt-0.5 uppercase">Connect ➔</span>
                 </a>
 
                 <!-- X (Twitter) -->
-                <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="contact-channel-card contact-channel-x p-3.5 sm:p-4 brutal-border flex flex-col items-center text-center group hover-target">
-                    <i class="ph-bold ph-x-logo text-2xl mb-1.5 text-slate-200"></i>
-                    <h4 class="font-black text-sm mb-0.5">X (Twitter)</h4>
-                    <span class="font-mono-label text-[11px] font-bold">@sriyuth</span>
-                    <span class="font-mono-label text-[10px] opacity-70 mt-1 uppercase">Follow ➔</span>
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="contact-channel-card contact-channel-x p-3 brutal-border flex flex-col items-center text-center group hover-target">
+                    <i class="ph-bold ph-x-logo text-xl mb-1 text-slate-200"></i>
+                    <h4 class="font-black text-xs sm:text-sm mb-0.5">X (Twitter)</h4>
+                    <span class="font-mono-label text-[10px] font-bold">@sriyuth</span>
+                    <span class="font-mono-label text-[9px] opacity-70 mt-0.5 uppercase">Follow ➔</span>
                 </a>
 
                 <!-- Direct Email -->
-                <div class="contact-channel-card contact-channel-email p-3.5 sm:p-4 brutal-border flex flex-col items-center text-center group hover-target">
-                    <i class="ph-bold ph-envelope-simple text-2xl mb-1.5 text-slate-200"></i>
-                    <h4 class="font-black text-sm mb-0.5">Email</h4>
-                    <span class="font-mono-label text-[10px] font-bold break-all">sriyuthk122@gmail.com</span>
-                    <button id="copyEmailBtn" class="font-mono-label text-[10px] font-bold mt-1.5 py-0.5 px-2.5 brutal-border bg-black/40 text-white hover:bg-white hover:text-black transition-colors cursor-pointer">
+                <div class="contact-channel-card contact-channel-email p-3 brutal-border flex flex-col items-center text-center group hover-target">
+                    <i class="ph-bold ph-envelope-simple text-xl mb-1 text-slate-200"></i>
+                    <h4 class="font-black text-xs sm:text-sm mb-0.5">Email</h4>
+                    <span class="font-mono-label text-[9px] sm:text-[10px] font-bold break-all">sriyuthk122@gmail.com</span>
+                    <button id="copyEmailBtn" class="font-mono-label text-[9px] font-bold mt-1 py-0.5 px-2 brutal-border bg-black/40 text-white hover:bg-white hover:text-black transition-colors cursor-pointer">
                         COPY
                     </button>
                 </div>
 
                 <!-- Discord -->
-                <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="col-span-2 sm:col-span-1 contact-channel-card contact-channel-discord p-3.5 sm:p-4 brutal-border flex flex-col items-center text-center group hover-target">
-                    <i class="ph-bold ph-discord-logo text-2xl mb-1.5 text-slate-200"></i>
-                    <h4 class="font-black text-sm mb-0.5">Discord</h4>
-                    <span class="font-mono-label text-[11px] font-bold">sriyuth#0001</span>
-                    <span class="font-mono-label text-[10px] opacity-70 mt-1 uppercase">Join ➔</span>
+                <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="col-span-2 sm:col-span-1 contact-channel-card contact-channel-discord p-3 brutal-border flex flex-col items-center text-center group hover-target">
+                    <i class="ph-bold ph-discord-logo text-xl mb-1 text-slate-200"></i>
+                    <h4 class="font-black text-xs sm:text-sm mb-0.5">Discord</h4>
+                    <span class="font-mono-label text-[10px] font-bold">sriyuth#0001</span>
+                    <span class="font-mono-label text-[9px] opacity-70 mt-0.5 uppercase">Join ➔</span>
                 </a>
             </div>
 
             <!-- Transmission Message Form (Reduced compact console) -->
-            <div class="contact-form-card max-w-[760px] mx-auto brutal-border p-5 sm:p-7">
-                <h3 class="text-xl sm:text-2xl font-black mb-4 flex items-center gap-2.5">
-                    <i class="ph-bold ph-paper-plane-tilt text-a2 text-2xl"></i>
+            <div class="contact-form-card max-w-[700px] mx-auto brutal-border p-4 sm:p-5">
+                <h3 class="text-lg sm:text-xl font-black mb-3 flex items-center gap-2">
+                    <i class="ph-bold ph-paper-plane-tilt text-a2 text-xl"></i>
                     <span>DIRECT TRANSMISSION</span>
                 </h3>
 
-                <form id="contactForm" class="space-y-4 font-mono-label text-xs sm:text-sm">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <form id="contactForm" class="space-y-3 font-mono-label text-xs">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block mb-1 font-bold uppercase text-[11px]">Your Name / Org *</label>
-                            <input type="text" required class="w-full bg-bg text-text brutal-border p-2.5 outline-none focus:border-a3" placeholder="Jane Doe / Tech Corp">
+                            <label class="block mb-1 font-bold uppercase text-[10px]">Your Name / Org *</label>
+                            <input type="text" required class="w-full bg-bg text-text brutal-border p-2 outline-none focus:border-a3" placeholder="Jane Doe / Tech Corp">
                         </div>
                         <div>
-                            <label class="block mb-1 font-bold uppercase text-[11px]">Your Email Address *</label>
-                            <input type="email" required class="w-full bg-bg text-text brutal-border p-2.5 outline-none focus:border-a3" placeholder="jane@example.com">
+                            <label class="block mb-1 font-bold uppercase text-[10px]">Your Email Address *</label>
+                            <input type="email" required class="w-full bg-bg text-text brutal-border p-2 outline-none focus:border-a3" placeholder="jane@example.com">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block mb-1 font-bold uppercase text-[11px]">Subject / Scope *</label>
-                        <input type="text" required class="w-full bg-bg text-text brutal-border p-2.5 outline-none focus:border-a3" placeholder="Software Engineering Role / AI Product Project">
+                        <label class="block mb-1 font-bold uppercase text-[10px]">Subject / Scope *</label>
+                        <input type="text" required class="w-full bg-bg text-text brutal-border p-2 outline-none focus:border-a3" placeholder="Software Engineering Role / AI Product Project">
                     </div>
 
                     <div>
-                        <label class="block mb-1 font-bold uppercase text-[11px]">Message *</label>
-                        <textarea rows="3" required class="w-full bg-bg text-text brutal-border p-2.5 resize-none outline-none focus:border-a3" placeholder="Share your engineering goals, project scope, or role specifications..."></textarea>
+                        <label class="block mb-1 font-bold uppercase text-[10px]">Message *</label>
+                        <textarea rows="2" required class="w-full bg-bg text-text brutal-border p-2 resize-none outline-none focus:border-a3" placeholder="Share your engineering goals, project scope, or role specifications..."></textarea>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
-                        <button type="submit" class="brutal-btn brutal-btn-primary w-full sm:w-auto text-sm py-2 px-5 hover-target">
-                            <i class="ph-bold ph-paper-plane text-base"></i> TRANSMIT MESSAGE
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-2.5 pt-1">
+                        <button type="submit" class="brutal-btn brutal-btn-primary w-full sm:w-auto text-xs py-2 px-4 hover-target">
+                            <i class="ph-bold ph-paper-plane text-sm"></i> TRANSMIT MESSAGE
                         </button>
-                        <a href="K_Sriyuth_Resume.pdf" target="_blank" rel="noopener noreferrer" class="font-mono-label text-xs font-bold underline text-text hover:text-a2">
+                        <a href="K_Sriyuth_Resume.pdf" target="_blank" rel="noopener noreferrer" class="font-mono-label text-xs font-bold underline text-slate-300 hover:text-a1">
                             Download PDF Resume Instead ➔
                         </a>
                     </div>
@@ -1795,18 +1837,18 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t-4 border-border bg-card py-16 px-4 md:px-8">
-        <div class="max-w-[1360px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-12">
+    <footer class="border-t-4 border-border bg-card py-8 sm:py-10 px-4 md:px-8">
+        <div class="max-w-[1320px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 items-center mb-6">
             
             <div class="md:col-span-8">
-                <div class="text-5xl sm:text-6xl md:text-8xl font-black leading-none mb-3">SRIYUTH.</div>
-                <p class="font-mono-label text-sm text-slate-600 dark:text-slate-400 max-w-lg">
+                <div class="text-4xl sm:text-5xl md:text-6xl font-black leading-none mb-2">SRIYUTH.</div>
+                <p class="font-mono-label text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-lg">
                     AI-Enabled Software Engineer & Creative Developer. Engineering intelligent web applications, Generative AI pipelines, and tactile digital products with rigorous craft.
                 </p>
             </div>
 
-            <div class="md:col-span-4 flex flex-col md:items-end gap-3 font-mono-label text-sm font-bold">
-                <span class="text-xs text-slate-500 uppercase">DIRECT DISPATCH</span>
+            <div class="md:col-span-4 flex flex-col md:items-end gap-2 font-mono-label text-xs sm:text-sm font-bold">
+                <span class="text-[11px] text-slate-500 uppercase">DIRECT DISPATCH</span>
                 <a href="mailto:sriyuthk122@gmail.com" class="hover:text-a2 underline">sriyuthk122@gmail.com</a>
                 <a href="https://wa.me/916309524564" target="_blank" class="hover:text-a4 underline">+91 6309524564</a>
                 <a href="https://github.com/lucky4-git1" target="_blank" class="hover:text-a3 underline">github.com/lucky4-git1</a>
@@ -1814,11 +1856,11 @@
 
         </div>
 
-        <div class="max-w-[1360px] mx-auto pt-8 border-t-2 border-border/40 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono-label text-xs font-bold text-slate-500">
+        <div class="max-w-[1320px] mx-auto pt-5 border-t-2 border-border/40 flex flex-col sm:flex-row justify-between items-center gap-3 font-mono-label text-xs font-bold text-slate-500">
             <div>
                 © 2026 K. Sriyuth • Hyderabad, India. All rights reserved.
             </div>
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-5">
                 <span>PRESS <kbd class="px-1.5 py-0.5 bg-gray dark:bg-card border border-border text-text">CTRL+K</kbd></span>
                 <a href="#hero" class="hover:text-text flex items-center gap-1.5">
                     BACK TO TOP <i class="ph-bold ph-arrow-up"></i>

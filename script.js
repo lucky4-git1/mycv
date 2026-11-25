@@ -255,18 +255,73 @@ document.addEventListener("DOMContentLoaded", () => {
     const themeToggle = document.getElementById("themeToggle");
     const html = document.documentElement;
 
-    function updateGitHubStatsTheme(isDark) {
-        const gitStats = document.getElementById("githubStatsImg");
-        const gitLangs = document.getElementById("githubLangsImg");
-        if (gitStats) {
-            gitStats.src = isDark
-                ? `https://github-readme-stats-eight-theta.vercel.app/api?username=lucky4-git1&show_icons=true&title_color=E4FF00&icon_color=00FF96&text_color=FFFFFF&bg_color=00000000&hide_border=true`
-                : `https://github-readme-stats-eight-theta.vercel.app/api?username=lucky4-git1&show_icons=true&title_color=DE1A45&icon_color=008050&text_color=121316&bg_color=00000000&hide_border=true`;
-        }
-        if (gitLangs) {
-            gitLangs.src = isDark
-                ? `https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=lucky4-git1&layout=compact&title_color=E4FF00&text_color=FFFFFF&bg_color=00000000&hide_border=true`
-                : `https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=lucky4-git1&layout=compact&title_color=DE1A45&text_color=121316&bg_color=00000000&hide_border=true`;
+    function updateGitHubStatsTheme() {
+        // Native CSS dark:/light tokens style #githubStatsCard & #githubLangsCard automatically.
+        // Sync live GitHub REST API metrics once per session with resilient preloaded fallback.
+        if (window.__ghStatsLoaded) return;
+        window.__ghStatsLoaded = true;
+        try {
+            const cached = sessionStorage.getItem("sriyuth_gh_cache");
+            if (cached) {
+                applyGitHubData(JSON.parse(cached));
+                return;
+            }
+        } catch (e) {}
+
+        Promise.all([
+            fetch("https://api.github.com/users/lucky4-git1").then(r => (r.ok ? r.json() : null)),
+            fetch("https://api.github.com/users/lucky4-git1/repos?per_page=100").then(r => (r.ok ? r.json() : null))
+        ]).then(([user, repos]) => {
+            if (!user || !Array.isArray(repos)) return;
+            const langs = {};
+            let stars = 0;
+            repos.forEach(repo => {
+                stars += repo.stargazers_count || 0;
+                if (repo.language) langs[repo.language] = (langs[repo.language] || 0) + 1;
+            });
+            const payload = {
+                repos: user.public_repos || repos.length,
+                stars,
+                followers: user.followers || 0,
+                langs
+            };
+            try { sessionStorage.setItem("sriyuth_gh_cache", JSON.stringify(payload)); } catch (e) {}
+            applyGitHubData(payload);
+        }).catch(() => {});
+    }
+
+    function applyGitHubData(data) {
+        const reposEl = document.getElementById("ghStatRepos");
+        const starsEl = document.getElementById("ghStatStars");
+        const folEl = document.getElementById("ghStatFollowers");
+        if (reposEl && data.repos) reposEl.innerText = String(data.repos);
+        if (starsEl && typeof data.stars === "number") starsEl.innerText = String(data.stars);
+        if (folEl && typeof data.followers === "number") folEl.innerText = String(data.followers);
+
+        const entries = Object.entries(data.langs || {}).sort((a, b) => b[1] - a[1]);
+        const total = entries.reduce((acc, [, v]) => acc + v, 0);
+        if (total > 0) {
+            const top3 = entries.slice(0, 3);
+            const otherCount = entries.slice(3).reduce((acc, [, v]) => acc + v, 0);
+            const buckets = otherCount > 0 ? [...top3, ["Other", otherCount]] : top3;
+            const colors = ["bg-a3", "bg-a2", "bg-a1", "bg-a4"];
+
+            const bar = document.getElementById("ghLangProgressBar");
+            const legend = document.getElementById("ghLangLegend");
+            const countLabel = document.getElementById("ghLangTotalCount");
+            if (countLabel) countLabel.innerText = `${total} REPOS ANALYZED`;
+            if (bar) {
+                bar.innerHTML = buckets.map(([name, cnt], idx) => {
+                    const pct = ((cnt / total) * 100).toFixed(1);
+                    return `<div style="width: ${pct}%" class="${colors[idx % colors.length]} h-full" title="${name} ${pct}%"></div>`;
+                }).join("");
+            }
+            if (legend) {
+                legend.innerHTML = buckets.map(([name, cnt], idx) => {
+                    const pct = ((cnt / total) * 100).toFixed(1);
+                    return `<div class="flex items-center justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 ${colors[idx % colors.length]} inline-block border border-border"></span>${name}</span><span class="text-slate-500">${pct}%</span></div>`;
+                }).join("");
+            }
         }
     }
 
@@ -388,7 +443,8 @@ document.addEventListener("DOMContentLoaded", () => {
             } else if (action === "simulator") {
                 const el = document.querySelector("#automations");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
-                startSimulatedWorkflow("simpleide");
+                const simpleTab = document.getElementById("tab-simpleide");
+                if (simpleTab) simpleTab.click();
             }
         });
     });
@@ -1188,25 +1244,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // 1. Featured Project Card
             html += `
-                <div class="p-4 sm:p-5 bg-card brutal-border brutal-shadow">
-                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 mb-3">
-                        <div class="flex flex-wrap items-center gap-2">
-                            <span class="text-xs font-mono font-bold uppercase px-2 py-0.5 border border-border ${data.tagClass}">${data.tag}</span>
+                <div class="p-2.5 sm:p-3 bg-card brutal-border brutal-shadow">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-1.5 mb-1.5">
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <span class="text-[11px] font-mono font-bold uppercase px-2 py-0.5 border border-border ${data.tagClass}">${data.tag}</span>
                             ${data.badges.map(b => `<span class="brutal-badge ${b.class}">${b.text}</span>`).join("")}
                         </div>
-                        <div class="flex flex-wrap items-center gap-2">
-                            <a href="${data.githubUrl}" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-xs py-1 px-2.5 flex items-center gap-1.5">
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <a href="${data.githubUrl}" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-primary text-[11px] py-1 px-2.5 flex items-center gap-1">
                                 <i class="ph-bold ph-github-logo text-sm"></i>
                                 <span>INSPECT REPO</span>
                             </a>
                             ${data.liveUrl ? `
-                                <a href="${data.liveUrl}" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-mint text-xs py-1 px-2.5 flex items-center gap-1.5">
+                                <a href="${data.liveUrl}" target="_blank" rel="noopener noreferrer" class="brutal-btn brutal-btn-mint text-[11px] py-1 px-2.5 flex items-center gap-1">
                                     <i class="ph-bold ph-arrow-square-out text-sm"></i>
                                     <span>LIVE APP</span>
                                 </a>
                             ` : ""}
                             ${data.auditDoc ? `
-                                <a href="${data.auditDoc}" target="_blank" rel="noopener noreferrer" class="brutal-btn text-xs py-1 px-2.5 flex items-center gap-1.5 bg-card hover:bg-slate-200 dark:hover:bg-slate-800">
+                                <a href="${data.auditDoc}" target="_blank" rel="noopener noreferrer" class="brutal-btn text-[11px] py-1 px-2.5 flex items-center gap-1 bg-card hover:bg-slate-200 dark:hover:bg-slate-800">
                                     <i class="ph-bold ph-file-text text-sm"></i>
                                     <span>AUDIT</span>
                                 </a>
@@ -1214,37 +1270,37 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
 
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-black mb-2 text-text">${data.title}</h3>
-                    <p class="font-mono-label text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-5xl mb-4">
+                    <h3 class="text-lg sm:text-xl md:text-2xl font-black mb-1 text-text">${data.title}</h3>
+                    <p class="font-mono-label text-xs text-slate-600 dark:text-slate-400 leading-relaxed max-w-5xl mb-2.5 line-clamp-2 sm:line-clamp-none">
                         ${data.summary}
                     </p>
 
                     <!-- Interactive Workflow Explorer -->
-                    <div class="mt-4 pt-3 border-t-2 border-border">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
-                            <div class="font-mono text-xs font-bold uppercase tracking-wider text-text flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 bg-accent-1 rounded-none border border-black inline-block"></span>
+                    <div class="mt-2.5 pt-2.5 border-t-2 border-border">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 mb-2">
+                            <div class="font-mono text-[11px] font-bold uppercase tracking-wider text-text flex items-center gap-1.5">
+                                <span class="w-2 h-2 bg-accent-1 rounded-none border border-black inline-block"></span>
                                 <span>${data.diagramHeadline}</span>
                             </div>
                             <span class="font-mono text-[10px] text-slate-400">CLICK STAGE NODE TO INSPECT SUBSYSTEM</span>
                         </div>
 
                         <!-- Conduits & Nodes Grid -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5" id="workflowNodesGrid">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2" id="workflowNodesGrid">
                             ${data.stages.map((st, idx) => `
-                                <div class="workflow-node p-2.5 sm:p-3 font-mono ${idx === activeStageIndex ? "active-stage" : ""}" data-stage="${idx}">
-                                    <div class="flex justify-between items-center mb-1">
-                                        <span class="text-[11px] font-black opacity-60">STAGE ${st.num}</span>
-                                        <span class="text-[9px] font-bold px-1.5 py-0.5 bg-white/20 uppercase tracking-widest">${st.metric}</span>
+                                <div class="workflow-node p-2 sm:p-2.5 font-mono ${idx === activeStageIndex ? "active-stage" : ""}" data-stage="${idx}">
+                                    <div class="flex justify-between items-center mb-0.5">
+                                        <span class="text-[10px] font-black opacity-60">STAGE ${st.num}</span>
+                                        <span class="text-[9px] font-bold px-1 py-0.5 bg-white/20 uppercase tracking-wider">${st.metric}</span>
                                     </div>
-                                    <div class="font-black text-xs sm:text-sm text-text leading-tight mb-0.5">${st.name}</div>
+                                    <div class="font-black text-xs text-text leading-tight mb-0.5">${st.name}</div>
                                     <div class="text-[10px] opacity-70 font-bold truncate">${st.sub}</div>
                                 </div>
                             `).join("")}
                         </div>
 
                         <!-- Active Stage Telemetry Detail Card -->
-                        <div class="p-3 bg-bg brutal-border mt-2.5 font-mono" id="stageDetailCard">
+                        <div class="p-2.5 bg-bg brutal-border mt-2 font-mono" id="stageDetailCard">
                             <!-- Populated dynamically via updateStageDetailCard() -->
                         </div>
                     </div>
@@ -1255,52 +1311,52 @@ document.addEventListener("DOMContentLoaded", () => {
             if (key === "simpleide") {
                 const sc = data.scenarios[activeScenarioIndex];
                 html += `
-                    <div class="p-4 sm:p-5 bg-card brutal-border brutal-shadow">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
+                    <div class="p-2.5 sm:p-3 bg-card brutal-border brutal-shadow">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 mb-1.5">
                             <div>
-                                <div class="flex items-center gap-2 mb-1">
+                                <div class="flex items-center gap-2 mb-0.5">
                                     <span class="brutal-badge badge-lime">BOUNDED SANDBOX</span>
                                     <span class="font-mono text-[10px] text-slate-400 font-bold">[ DETERMINISTIC AST REFACTOR ENGINE ]</span>
                                 </div>
-                                <h4 class="text-lg sm:text-xl font-black text-text">Prime AI Interactive Code Refactor & Diff Inspector</h4>
+                                <h4 class="text-base sm:text-lg font-black text-text">Prime AI Interactive Code Refactor & Diff Inspector</h4>
                             </div>
-                            <div class="font-mono text-xs text-slate-400 bg-bg px-2.5 py-1 brutal-border">
-                                <i class="ph-bold ph-shield-check text-green-500 mr-1.5"></i>SAFE BOUNDED EXECUTION
+                            <div class="font-mono text-[11px] text-slate-400 bg-bg px-2 py-0.5 brutal-border">
+                                <i class="ph-bold ph-shield-check text-green-500 mr-1"></i>SAFE BOUNDED EXECUTION
                             </div>
                         </div>
 
                         <!-- Scenario Selector Pills -->
-                        <div class="flex flex-wrap items-center gap-1.5 mb-3">
-                            <span class="font-mono text-xs font-bold uppercase text-slate-500 mr-1">SCENARIO:</span>
+                        <div class="flex flex-wrap items-center gap-1.5 mb-2">
+                            <span class="font-mono text-[11px] font-bold uppercase text-slate-500 mr-1">SCENARIO:</span>
                             ${data.scenarios.map((s, sIdx) => `
-                                <button class="scenario-btn font-mono text-xs font-bold px-2.5 py-1 brutal-border transition-all ${sIdx === activeScenarioIndex ? "bg-a1 text-black font-black" : "bg-bg text-text hover:bg-slate-200 dark:hover:bg-slate-800"}" data-scenario="${sIdx}">
+                                <button class="scenario-btn font-mono text-[11px] font-bold px-2 py-0.5 brutal-border transition-all ${sIdx === activeScenarioIndex ? "bg-a1 text-black font-black" : "bg-bg text-text hover:bg-slate-200 dark:hover:bg-slate-800"}" data-scenario="${sIdx}">
                                     ${s.name}
                                 </button>
                             `).join("")}
                         </div>
 
-                        <p class="font-mono text-xs text-slate-500 mb-3" id="scenarioDescText">
+                        <p class="font-mono text-[11px] text-slate-500 mb-2" id="scenarioDescText">
                             ${sc.desc}
                         </p>
 
                         <!-- Code Workbench Grid -->
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5">
                             <!-- Left: Editable Code Buffer -->
                             <div class="lg:col-span-6 flex flex-col code-workbench brutal-border">
-                                <div class="flex items-center justify-between p-2 bg-[#171922] border-b border-[#252836] text-xs">
-                                    <div class="flex items-center gap-2">
+                                <div class="flex items-center justify-between p-1.5 bg-[#171922] border-b border-[#252836] text-[11px]">
+                                    <div class="flex items-center gap-1.5">
                                         <i class="ph-bold ph-file-code text-accent-1"></i>
                                         <span class="font-bold text-white">workspace/activeBuffer.js</span>
                                     </div>
                                     <span class="text-[10px] text-slate-400 font-mono" id="charCountDisplay">Tokens ~54</span>
                                 </div>
-                                <textarea id="sandboxCodeInput" class="code-editor-area p-2.5 w-full h-[140px] focus:outline-none" spellcheck="false">${sc.inputCode}</textarea>
-                                <div class="p-2.5 bg-[#13151D] border-t border-[#252836] flex flex-wrap items-center justify-between gap-2">
-                                    <span class="telemetry-bar-pill text-[11px]">
+                                <textarea id="sandboxCodeInput" class="code-editor-area p-2 w-full h-[72px] focus:outline-none" spellcheck="false">${sc.inputCode}</textarea>
+                                <div class="p-2 bg-[#13151D] border-t border-[#252836] flex flex-wrap items-center justify-between gap-2">
+                                    <span class="telemetry-bar-pill text-[10px]">
                                         <i class="ph-bold ph-cpu text-accent-1"></i><strong id="currentDirectiveText">${sc.directive}</strong>
                                     </span>
-                                    <button id="executeRefactorBtn" class="brutal-btn brutal-btn-primary text-xs py-1 px-3 font-mono font-bold flex items-center gap-1.5">
-                                        <i class="ph-bold ph-lightning text-sm"></i>
+                                    <button id="executeRefactorBtn" class="brutal-btn brutal-btn-primary text-[11px] py-1 px-2.5 font-mono font-bold flex items-center gap-1">
+                                        <i class="ph-bold ph-lightning text-xs"></i>
                                         <span>EXECUTE AGENT PASS</span>
                                     </button>
                                 </div>
@@ -1308,14 +1364,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
                             <!-- Right: Unified Diff Inspector -->
                             <div class="lg:col-span-6 flex flex-col code-workbench brutal-border">
-                                <div class="flex items-center justify-between p-2 bg-[#171922] border-b border-[#252836] text-xs">
-                                    <div class="flex items-center gap-2">
+                                <div class="flex items-center justify-between p-1.5 bg-[#171922] border-b border-[#252836] text-[11px]">
+                                    <div class="flex items-center gap-1.5">
                                         <i class="ph-bold ph-git-diff text-green-400"></i>
                                         <span class="font-bold text-white">Unified AST Diff Review</span>
                                     </div>
                                     <span class="text-[10px] text-accent-1 font-mono font-bold" id="diffStatusTag">IPC_READY</span>
                                 </div>
-                                <div class="diff-viewer p-2 h-[140px] overflow-y-auto" id="sandboxDiffViewer">
+                                <div class="diff-viewer p-2 h-[72px] overflow-y-auto" id="sandboxDiffViewer">
                                     ${sc.diffLines.map(dl => `
                                         <div class="diff-line diff-line-${dl.type}">
                                             <span class="diff-line-num">${dl.num}</span>
@@ -1323,7 +1379,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         </div>
                                     `).join("")}
                                 </div>
-                                <div class="p-2.5 bg-[#13151D] border-t border-[#252836] flex flex-wrap items-center justify-between text-xs text-slate-400 font-mono gap-2">
+                                <div class="p-2 bg-[#13151D] border-t border-[#252836] flex flex-wrap items-center justify-between text-[11px] text-slate-400 font-mono gap-2">
                                     <div class="flex items-center gap-3">
                                         <span class="text-green-400 font-bold" id="diffStatsAdd">+${sc.stats.added} additions</span>
                                         <span class="text-red-400 font-bold" id="diffStatsDel">-${sc.stats.removed} deletions</span>
@@ -1932,6 +1988,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     card.style.display = "none";
                 }
             });
+
+            if (typeof ScrollTrigger !== "undefined") {
+                setTimeout(() => ScrollTrigger.refresh(), 60);
+            }
         });
     });
 
@@ -3105,11 +3165,18 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
+        let curWebW = 0;
+        let curWebH = 0;
         function setSize() {
             const rect = root.getBoundingClientRect();
-            width = Math.round(root.offsetWidth || rect.width || window.innerWidth);
-            height = Math.round(root.offsetHeight || rect.height || 700);
-            if (width <= 0 || height <= 0) return;
+            const newW = Math.round(root.offsetWidth || rect.width || window.innerWidth);
+            const newH = Math.round(root.offsetHeight || rect.height || 700);
+            if (newW <= 0 || newH <= 0) return;
+            if (Math.abs(newW - curWebW) <= 6 && Math.abs(newH - curWebH) <= 6) return;
+            curWebW = newW;
+            curWebH = newH;
+            width = newW;
+            height = newH;
             dpr = Math.min(window.devicePixelRatio || 1, 1.5);
             canvas.width = Math.round(width * dpr);
             canvas.height = Math.round(height * dpr);
@@ -3326,16 +3393,17 @@ document.addEventListener("DOMContentLoaded", () => {
         // Section Headers Entrance
         gsap.utils.toArray(".gs-section-header").forEach(header => {
             gsap.fromTo(header, 
-                { y: 28, opacity: 0 },
+                { y: 20, opacity: 0 },
                 {
                     scrollTrigger: {
                         trigger: header,
-                        start: "top 85%",
-                        once: true
+                        start: "top 88%",
+                        once: true,
+                        invalidateOnRefresh: true
                     },
                     y: 0,
                     opacity: 1,
-                    duration: 1.1,
+                    duration: 0.85,
                     ease: "power3.out"
                 }
             );
@@ -3346,33 +3414,35 @@ document.addEventListener("DOMContentLoaded", () => {
         const aboutText = document.getElementById("aboutTextCol");
         if (aboutPhoto && aboutText) {
             gsap.fromTo(aboutPhoto,
-                { opacity: 0, x: -45, y: 15 },
+                { opacity: 0, x: -32, y: 12 },
                 {
                     scrollTrigger: {
                         trigger: "#about",
-                        start: "top 80%",
-                        once: true
+                        start: "top 84%",
+                        once: true,
+                        invalidateOnRefresh: true
                     },
                     opacity: 1,
                     x: 0,
                     y: 0,
-                    duration: 1.2,
+                    duration: 0.9,
                     ease: "power3.out"
                 }
             );
             gsap.fromTo(aboutText,
-                { opacity: 0, x: 45, y: 15 },
+                { opacity: 0, x: 32, y: 12 },
                 {
                     scrollTrigger: {
                         trigger: "#about",
-                        start: "top 80%",
-                        once: true
+                        start: "top 84%",
+                        once: true,
+                        invalidateOnRefresh: true
                     },
                     opacity: 1,
                     x: 0,
                     y: 0,
-                    duration: 1.2,
-                    delay: 0.08,
+                    duration: 0.9,
+                    delay: 0.06,
                     ease: "power3.out"
                 }
             );
@@ -3380,47 +3450,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // About Section 4 Metrics Cards Stagger
         gsap.fromTo(".about-metric-card",
-            { opacity: 0, y: 25, scale: 0.98 },
+            { opacity: 0, y: 20, scale: 0.98 },
             {
                 scrollTrigger: {
                     trigger: "#about",
-                    start: "top 75%",
-                    once: true
+                    start: "top 80%",
+                    once: true,
+                    invalidateOnRefresh: true
                 },
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                duration: 0.95,
-                stagger: 0.08,
+                duration: 0.8,
+                stagger: 0.06,
                 ease: "power3.out"
             }
         );
 
         // AI Automations Console Exhibit Reveal
-        const autoTabs = document.querySelector("#automations .overflow-x-auto");
-        const autoCard = document.querySelector("#automations .bg-card.brutal-border");
+        const autoTabs = document.querySelector("#automations [role='tablist']");
+        const autoCard = document.getElementById("archExhibitContent");
         if (autoTabs) {
             gsap.fromTo(autoTabs,
-                { opacity: 0, y: 20 },
+                { opacity: 0, y: 18 },
                 {
                     opacity: 1,
                     y: 0,
-                    duration: 0.9,
+                    duration: 0.75,
                     ease: "power3.out",
-                    scrollTrigger: { trigger: "#automations", start: "top 80%", once: true }
+                    scrollTrigger: { trigger: "#automations", start: "top 84%", once: true, invalidateOnRefresh: true }
                 }
             );
         }
         if (autoCard) {
             gsap.fromTo(autoCard,
-                { opacity: 0, y: 30 },
+                { opacity: 0, y: 22 },
                 {
                     opacity: 1,
                     y: 0,
-                    duration: 1.1,
-                    delay: 0.08,
+                    duration: 0.85,
+                    delay: 0.06,
                     ease: "power3.out",
-                    scrollTrigger: { trigger: "#automations", start: "top 75%", once: true }
+                    scrollTrigger: { trigger: "#automations", start: "top 82%", once: true, invalidateOnRefresh: true }
                 }
             );
         }
@@ -3428,17 +3499,19 @@ document.addEventListener("DOMContentLoaded", () => {
         // Curated Project Cards Stagger
         gsap.utils.toArray(".project-card-wrap").forEach((card, idx) => {
             gsap.fromTo(card,
-                { opacity: 0, y: 32, scale: 0.98 },
+                { opacity: 0, y: 24, scale: 0.98 },
                 {
                     scrollTrigger: {
                         trigger: card,
-                        start: "top 88%",
-                        once: true
+                        start: "top 90%",
+                        once: true,
+                        invalidateOnRefresh: true
                     },
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 1.0,
+                    duration: 0.75,
+                    delay: (idx % 4) * 0.04,
                     ease: "power3.out"
                 }
             );
@@ -3519,58 +3592,61 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // GitHub Verification Activity & Repos Reveal
-        gsap.utils.toArray("#github .grid > div").forEach((ghCard, idx) => {
+        gsap.utils.toArray("#github .grid > a, #github .grid > div").forEach((ghCard, idx) => {
             gsap.fromTo(ghCard,
-                { opacity: 0, y: 26 },
+                { opacity: 0, y: 20 },
                 {
                     scrollTrigger: {
-                        trigger: ghCard,
-                        start: "top 88%",
-                        once: true
+                        trigger: "#github",
+                        start: "top 84%",
+                        once: true,
+                        invalidateOnRefresh: true
                     },
                     opacity: 1,
                     y: 0,
-                    duration: 0.9,
-                    delay: (idx % 3) * 0.07,
+                    duration: 0.75,
+                    delay: (idx % 4) * 0.05,
                     ease: "power3.out"
                 }
             );
         });
 
         // Contact Section Channels & Transmission Card Reveal
-        gsap.utils.toArray("#contact .grid > div, #contact .grid > a").forEach((contactCard, idx) => {
+        gsap.utils.toArray("#contact .contact-channel-card").forEach((contactCard, idx) => {
             gsap.fromTo(contactCard,
-                { opacity: 0, y: 24, scale: 0.97 },
+                { opacity: 0, y: 20, scale: 0.98 },
                 {
                     scrollTrigger: {
                         trigger: "#contact",
-                        start: "top 80%",
-                        once: true
+                        start: "top 84%",
+                        once: true,
+                        invalidateOnRefresh: true
                     },
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    duration: 0.85,
-                    delay: idx * 0.05,
+                    duration: 0.75,
+                    delay: idx * 0.04,
                     ease: "power3.out"
                 }
             );
         });
 
-        const contactMsgForm = document.querySelector("#contact .bg-card.brutal-border.brutal-shadow.p-8");
+        const contactMsgForm = document.querySelector("#contact .contact-form-card");
         if (contactMsgForm) {
             gsap.fromTo(contactMsgForm,
-                { opacity: 0, y: 30 },
+                { opacity: 0, y: 24 },
                 {
                     scrollTrigger: {
-                        trigger: contactMsgForm,
-                        start: "top 85%",
-                        once: true
+                        trigger: "#contact",
+                        start: "top 80%",
+                        once: true,
+                        invalidateOnRefresh: true
                     },
                     opacity: 1,
                     y: 0,
-                    duration: 1.0,
-                    delay: 0.1,
+                    duration: 0.85,
+                    delay: 0.08,
                     ease: "power3.out"
                 }
             );
@@ -3666,10 +3742,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Auto-boot simulator on page load
-    setTimeout(() => {
-        initSignatureArchitectureExhibit();
-    }, 1200);
+    // Auto-boot simulator immediately on DOM ready to prevent delayed layout shifts
+    initSignatureArchitectureExhibit();
 
     // Ensure all ScrollTrigger geometries are refreshed after initial render and async asset settlement
     if (typeof ScrollTrigger !== "undefined") {

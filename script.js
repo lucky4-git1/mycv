@@ -518,18 +518,29 @@ document.addEventListener("DOMContentLoaded", () => {
             const pRect = pinnedViewport.getBoundingClientRect();
             if (dRect.width > 0 && dRect.height > 0) {
                 cachedDestMetrics = {
-                    x: Math.round(dRect.left - pRect.left),
-                    y: Math.round(dRect.top - pRect.top),
-                    width: Math.round(dRect.width),
-                    height: Math.round(dRect.height)
+                    x: Math.floor(dRect.left - pRect.left),
+                    y: Math.floor(dRect.top - pRect.top),
+                    width: Math.ceil(dRect.width),
+                    height: Math.ceil(dRect.height)
                 };
             }
             return cachedDestMetrics;
         }
 
-        // Measure immediately and on load
+        // Measure immediately, on refreshInit (at natural layout before pin), and on resize
+        let heroTl = null;
         measureDestMetrics();
-        window.addEventListener("load", measureDestMetrics);
+        if (typeof ScrollTrigger !== "undefined") {
+            ScrollTrigger.addEventListener("refreshInit", () => {
+                if ((window.pageYOffset || document.documentElement.scrollTop) < pinScrollDistance + 200) {
+                    measureDestMetrics();
+                }
+            });
+        }
+        window.addEventListener("load", () => {
+            measureDestMetrics();
+            if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
+        });
         window.addEventListener("resize", () => {
             measureDestMetrics();
             if (typeof ScrollTrigger !== "undefined") {
@@ -591,7 +602,7 @@ document.addEventListener("DOMContentLoaded", () => {
         gsap.set("#heroCtas", { opacity: 0, y: 20 });
         gsap.set("#heroMetaBar", { opacity: 0, y: 15 });
 
-        const heroTl = gsap.timeline({
+        heroTl = gsap.timeline({
             scrollTrigger: {
                 trigger: stageContainer,
                 pin: pinnedViewport,
@@ -599,7 +610,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 end: () => `+=${pinScrollDistance}`,
                 scrub: isMobile ? 0.3 : 0.6,
                 anticipatePin: 1,
-                invalidateOnRefresh: false,
+                invalidateOnRefresh: true,
                 onEnter: () => ensureHeroVideoPlayback(),
                 onEnterBack: () => ensureHeroVideoPlayback(),
                 onLeaveBack: () => {

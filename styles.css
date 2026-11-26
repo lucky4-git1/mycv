@@ -858,6 +858,8 @@ html.dark .grid-bg {
 
 #heroVideoWrapper {
   position: relative;
+  display: block;
+  width: 100% !important;
   background-color: #000;
   background-image: url('images/robot.png');
   background-position: center center;
